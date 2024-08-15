@@ -6,6 +6,7 @@ const screenOptions = {
   headerShown: false,
   tabBarShowLabel: false,
   tabBarActiveTintColor: "red",
+  tabBarStyle: { height: 60 },
 };
 
 const tabOptions = ({ title, icon }: TabItemProps) => {

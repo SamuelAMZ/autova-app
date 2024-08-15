@@ -19,15 +19,14 @@ const CustomButton = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 14,
-    paddingHorizontal: 20,
+    height: 48,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
     fontSize: 17,
-    fontWeight: "bold",
+    fontWeight: "semibold",
   },
 });
 

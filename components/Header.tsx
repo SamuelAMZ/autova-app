@@ -9,8 +9,8 @@ const Header = ({ children, ...rest }: PropsWithChildren & ViewProps) => {
 
   return (
     <View
-      className="flex flex-row justify-between items-center bg-[#5856D6] px-[16px] h-[90]"
-      style={{ paddingTop: insets.top }}
+      className="flex flex-col justify-between items-center bg-[#5856D6] p-[16px] min-h-[126]"
+      style={{ paddingTop: insets.top, paddingBottom: 20 }}
       {...rest}
     >
       <StatusBar style="light" translucent />

@@ -2,33 +2,33 @@ import BrandItem from "@/components/BrandItem";
 import CarItem from "@/components/CarItem";
 import FilterTag from "@/components/FilterTag";
 import Header from "@/components/Header";
-import { Car, Notification } from "iconsax-react-native";
+import { Notification } from "iconsax-react-native";
 import React from "react";
 import { View, Text, ScrollView, FlatList } from "react-native";
+import AppIcon from "@/assets/icons/app-logo.svg";
+import SearchCard from "@/components/SearchCard";
 
 const HomePage = () => {
   return (
     <View className="flex-1">
       <Header>
-        <View className="flex-1 flex-row items-center justify-between">
+        <View className="w-full flex-row items-center justify-between mb-6">
           <View className="items-center flex-row">
-            <Car size={25} color="white" />
-            <Text className="pl-2 text-[26px] font-extrabold text-white">
-              CARNEXT+
-            </Text>
+            <AppIcon height={36} />
           </View>
           <View className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
             <Notification color="white" size={20} />
           </View>
         </View>
+        <SearchCard></SearchCard>
       </Header>
-      <ScrollView className="mt-4 px-[16px]">
-        <View className="flex-1 flex-row justify-between items-end">
+      <ScrollView className="pt-4">
+        <View className="px-[16px] flex-1 flex-row justify-between items-end">
           <Text className="font-semibold text-[18px]">Featured Dealers</Text>
           <Text className="text-[#007AFF] font-medium">View All</Text>
         </View>
         <FlatList
-          className="my-5"
+          className="my-5 px-[16px]"
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -39,6 +39,7 @@ const HomePage = () => {
         />
 
         <FlatList
+          className="px-[16px]"
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -51,11 +52,11 @@ const HomePage = () => {
         />
 
         <FlatList
-          className="my-5"
+          className="my-5 px-[16px]"
           data={[{}, {}, {}, {}, {}, {}, {}]}
           renderItem={({ index, item }) => <CarItem />}
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-          // keyExtractor={(item) => item}
+          scrollEnabled={false}
         />
       </ScrollView>
     </View>
