@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 const CustomButton = ({
   title,
   onPress,
+  textFont,
   backgroundColor = "#5856D6",
   textColor = "#fff",
 }) => {
@@ -11,8 +12,13 @@ const CustomButton = ({
     <TouchableOpacity
       style={[styles.button, { backgroundColor }]}
       onPress={onPress}
+      className=""
     >
-      <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
+      <Text
+        style={[styles.buttonText, { color: textColor, fontWeight: textFont }]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -26,7 +32,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 17,
-    fontWeight: "semibold",
   },
 });
 

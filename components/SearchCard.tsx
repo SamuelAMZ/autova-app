@@ -23,7 +23,7 @@ const SearchCard = ({ children }: PropsWithChildren) => {
         </View>
       </View>
       {children}
-      <CustomButton onPress={() => {}} title="Search" />
+      <CustomButton title="Search" textFont="600" onPress={() => {}} />
     </View>
   );
 };
