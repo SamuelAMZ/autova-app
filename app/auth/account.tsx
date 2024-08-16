@@ -13,6 +13,7 @@ import ThemedText from "@/components/ThemedText";
 
 import { LinearGradient } from "expo-linear-gradient";
 import CustomButton from "@/components/CustomButton";
+import { router } from "expo-router";
 
 export default function Account() {
   return (
@@ -55,7 +56,7 @@ export default function Account() {
               title="Create account"
               textColor="#fff"
               textFont="600"
-              onPress={() => {}}
+              onPress={() => { router.navigate('/auth/notif')}}
             />
             <ThemedText className=" text-[#475467] text-[13px] font-[400]">
               By signing up, you agree to our{" "}

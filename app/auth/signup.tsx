@@ -51,19 +51,19 @@ export default function SignUp() {
           <View className="flex gap-[20px]">
             <View className="flex gap-[12px]">
               <TouchableOpacity className="border border-[#D8DADC] px-[32px] py-[20px] flex-row items-center justify-center gap-[12px] rounded-[28px]">
-                <Image source={require("@/assets/Google.png")} />
+                <Image source={require("@/assets/Google.png")} style={{ width:20, height:20 }} />
                 <ThemedText className="text-[16px] font-[600] text-center" style={{ fontFamily: 'PlusJakartaSans_600SemiBold'}}>
                   Continue with Google
                 </ThemedText>
               </TouchableOpacity>
               <TouchableOpacity className="border border-[#D8DADC] flex flex-row px-[32px] items-center justify-center gap-[12px] py-[20px] rounded-[28px]">
-                <Image source={require("@/assets/Vector.png")} />
+                <Image source={require("@/assets/apple.png")}  style={{ width:20, height:20 }} />
                 <ThemedText className="text-[16px] font-[600]" style={{ fontFamily: 'PlusJakartaSans_600SemiBold'}}>
                   Continue with Apple
                 </ThemedText>
               </TouchableOpacity>
               <TouchableOpacity className="border border-[#D8DADC] px-[32px] py-[20px] flex flex-row items-center justify-center gap-[12px] rounded-[28px]">
-                <Image source={require("@/assets/fb.png")} />
+                <Image source={require("@/assets/fb.png")}  style={{ width:20, height:20 }} />
                 <ThemedText className="text-[16px] font-[600]" style={{ fontFamily: 'PlusJakartaSans_600SemiBold'}}>
                   Continue with Facebook
                 </ThemedText>
