@@ -50,7 +50,7 @@ export default function Notif() {
               onPress={() => {
                 router.navigate("/(app)/(navs)/");
               }}
-              className="bg-[#fff] px-[20px] h-[48] justify-center rounded-[12px] border border-[#D0D5DD]  "
+              className="bg-[#fff] px-[20px]  py-[14px] h-[48] justify-center rounded-[12px] border border-[#D0D5DD]  "
             >
               <ThemedText
                 className="text-[17px] text-center font-[500] text-[#101828]"
