@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import CustomButton from "./CustomButton";
 import { Picker } from "@react-native-picker/picker";
 import RangeSlider from "./RangeSlider";
+import ThemedText from "./ThemedText";
 
 const SearchCard = ({ children }: PropsWithChildren) => {
   const [searchType, setSearchType] = useState("model");
@@ -31,7 +32,7 @@ const SearchCard = ({ children }: PropsWithChildren) => {
       <SearchContent type={searchType} />
 
       {/* {children} */}
-      <CustomButton title="Search" textFont="600" onPress={() => {}} />
+      <CustomButton title="Search" onPress={() => {}} />
     </View>
   );
 };
@@ -55,20 +56,26 @@ const MakeModelsSearch = () => {
     <View className="mb-3 flex-row justify-between">
       <View className="bg-white h-[80] w-[47%] shadow-sm rounded-lg">
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Make</Text>
+          <ThemedText className="text-[#344054] font-semibold">Make</ThemedText>
         </View>
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Any Make</Text>
+          <ThemedText className="text-[#344054] font-semibold">
+            Any Make
+          </ThemedText>
         </View>
       </View>
       <View className="bg-white h-[80] w-[47%] shadow-sm rounded-lg">
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Model</Text>
+          <ThemedText className="text-[#344054] font-semibold">
+            Model
+          </ThemedText>
         </View>
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Any Model</Text>
+          <ThemedText className="text-[#344054] font-semibold">
+            Any Model
+          </ThemedText>
         </View>
       </View>
     </View>
@@ -81,10 +88,12 @@ const PriceRangeSearch = () => {
       <RangeSlider from={0} to={500000} />
       <View className="w-full flex-row justify-between my-4">
         <View className="w-[45%] border border-[#D0D5DD] rounded-[80px] h-[33px] items-center justify-center">
-          <Text className="text-[#101828] font-semibold">$0k</Text>
+          <ThemedText className="text-[#101828] font-semibold">$0k</ThemedText>
         </View>
         <View className="w-[45%] border border-[#D0D5DD] rounded-[80px] h-[33px] items-center justify-center">
-          <Text className="text-[#101828] font-semibold">$50,000,00</Text>
+          <ThemedText className="text-[#101828] font-semibold">
+            $50,000,00
+          </ThemedText>
         </View>
       </View>
     </View>
@@ -96,24 +105,32 @@ const BodyStylesSearch = () => {
     <View className="mb-3 flex-col justify-between">
       <View className="bg-white h-[80] w-full shadow-sm rounded-lg">
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Doors</Text>
+          <ThemedText className="text-[#344054] font-semibold">
+            Doors
+          </ThemedText>
         </View>
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="flex-row h-[50%] w-full justify-between items-center px-3">
           {Array.from({ length: 5 }, (v, i) => (
             <View className="h-[30] w-[30] border border-[#D0D5DD] rounded-3xl justify-center items-center">
-              <Text className="text-[#344054] font-semibold"> {i + 2} </Text>
+              <ThemedText className="text-[#344054] font-semibold">
+                {i + 2}
+              </ThemedText>
             </View>
           ))}
         </View>
       </View>
       <View className="bg-white h-[80] w-full shadow-sm rounded-lg mt-3">
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Body Type</Text>
+          <ThemedText className="text-[#344054] font-semibold">
+            Body Type
+          </ThemedText>
         </View>
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="h-[50%] w-full justify-center ml-3">
-          <Text className="text-[#344054] font-semibold">Convertible</Text>
+          <ThemedText className="text-[#344054] font-semibold">
+            Convertible
+          </ThemedText>
         </View>
       </View>
     </View>

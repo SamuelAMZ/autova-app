@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+import ThemedText from "./ThemedText";
 
 const FilterTag = ({
   title,
@@ -13,7 +14,9 @@ const FilterTag = ({
       }`}
       {...rest}
     >
-      <Text className={`${active ? "text-white" : ""}`}>Discover</Text>
+      <ThemedText className={`${active ? "text-white" : ""}`}>
+        Discover
+      </ThemedText>
     </View>
   );
 };

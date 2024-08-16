@@ -1,15 +1,17 @@
-import { Text } from "react-native";
+import { Text, TextProps } from "react-native";
+
+type ThemedTextProps = TextProps & {
+  fontFamily?: string;
+};
 
 const ThemedText = ({
   children,
-  fontFamily = "PlusJakartaSans_400Regular",
+  fontFamily,
   ...otherProps
-}) => {
+}: ThemedTextProps) => {
   return (
     <Text
-      style={{
-        fontFamily: fontFamily,
-      }}
+      style={{ fontFamily: fontFamily ?? "PlusJakartaSans_400Regular" }}
       {...otherProps}
     >
       {children}

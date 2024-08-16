@@ -1,12 +1,13 @@
 import { Picker } from "@react-native-picker/picker";
 import { ArrowDown2 } from "iconsax-react-native";
 import { Text, View } from "react-native";
+import ThemedText from "./ThemedText";
 
 const DropDown = () => {
   return (
     <View className="flex-1 h-[25] relative overflow-hidden">
       <View className="flex-row items-center z-[1]">
-        <Text>Java</Text>
+        <ThemedText>Java</ThemedText>
         <ArrowDown2 color="black" size={18} />
       </View>
       <Picker
