@@ -44,7 +44,7 @@ export default function Notif() {
               </ThemedText>
             </TouchableOpacity>
 
-            <TouchableOpacity className="bg-[#fff] px-[20px] py-[14px] rounded-[12px] border border-[#D0D5DD]  ">
+            <TouchableOpacity onPress={() => { router.navigate('/(app)/(navs)/')}} className="bg-[#fff] px-[20px] py-[14px] rounded-[12px] border border-[#D0D5DD]  ">
               <ThemedText
                 className="text-[17px] text-center font-[500] text-[#101828]"
                 style={{ fontFamily: "PlusJakartaSans_500Medium" }}>

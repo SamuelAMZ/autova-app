@@ -41,10 +41,16 @@ export default function SignUp() {
       <ScrollView className="flex-1 bg-[#fff] px-[15px] pt-[100px]">
         <View className="items-start gap-[32px]">
           <View className="flex gap-[12px] items-start">
-            <ThemedText className="text-[#070C0F] text-[15px] font-[600]" style={{ fontFamily: 'PlusJakartaSans_600SemiBold'}}>
+            <ThemedText
+              className="text-[#070C0F] text-[15px] font-[600]"
+              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            >
               Step 1 of 2
             </ThemedText>
-            <ThemedText className="text-[#070C0F] text-[28px] font-[600]" style={{ fontFamily: 'PlusJakartaSans_600SemiBold'}}>
+            <ThemedText
+              className="text-[#070C0F] text-[28px] font-[600]"
+              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            >
               Create Your Account
             </ThemedText>
           </View>
@@ -79,7 +85,13 @@ export default function SignUp() {
               placeholderTextColor="#475467"
               className="bg-[#EFEFEF] rounded-[12px] py-[16px] px-[20px]"
             />
-            <CustomButton title="Continue" onPress={() => { router.navigate('/auth/account')}} textFont="600" />
+            <CustomButton
+              title="Continue"
+              onPress={() => {
+                router.navigate("/auth/account");
+              }}
+              textFont="600"
+            />
             <ThemedText className=" text-[#475467] text-[13px] font-[400]">
               By signing up, you agree to our{" "}
               <ThemedText className="text-[#101828] font-[500] underline">
