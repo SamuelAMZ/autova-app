@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 
 const CarItem = () => {
   return (
-    <View className="p-4 overflow-hidden shadow-sm relative">
+    <View className="bg-white p-4 overflow-hidden relative shadow-sm rounded-xl">
       <Image
         className="w-full h-[190] rounded-lg"
         source={require("@/assets/images/audi.png")}

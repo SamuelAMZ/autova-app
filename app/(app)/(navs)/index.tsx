@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <View className="flex-1">
       <Header>
-        <View className="w-full flex-row items-center justify-between mb-6">
+        <View className="w-full flex-row items-center justify-between mb-[15]">
           <View className="items-center flex-row">
             <AppIcon height={36} />
           </View>
