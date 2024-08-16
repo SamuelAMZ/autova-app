@@ -7,6 +7,7 @@ import React from "react";
 import { View, Text, ScrollView, FlatList } from "react-native";
 import AppIcon from "@/assets/icons/app-logo.svg";
 import SearchCard from "@/components/SearchCard";
+import ThemedText from "@/components/ThemedText";
 
 const HomePage = () => {
   return (
@@ -24,8 +25,12 @@ const HomePage = () => {
       </Header>
       <ScrollView className="pt-4">
         <View className="px-[16px] flex-1 flex-row justify-between items-end">
-          <Text className="font-semibold text-[18px]">Featured Dealers</Text>
-          <Text className="text-[#007AFF] font-medium">View All</Text>
+          <ThemedText className="font-semibold text-[18px]">
+            Featured Dealers
+          </ThemedText>
+          <ThemedText className="text-[#007AFF] font-medium">
+            View All
+          </ThemedText>
         </View>
         <FlatList
           className="my-5 px-[16px]"

@@ -1,5 +1,6 @@
 import * as Icon from "iconsax-react-native";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import ThemedText from "./ThemedText";
 
 const TabIcon = ({
   IconItem,
@@ -26,13 +27,13 @@ const TabItem = ({ focused, title, icon }: TabItemProps) => {
   return (
     <View className="items-center">
       <TabIcon IconItem={icon} focused={focused!} />
-      <Text
+      <ThemedText
         className={`text-[13px] ${
           focused ? "text-[#5856D6]" : "text-[#475467]"
         }`}
       >
         {title}
-      </Text>
+      </ThemedText>
     </View>
   );
 };
