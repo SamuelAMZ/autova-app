@@ -1,18 +1,21 @@
 import { PropsWithChildren } from "react";
-import { View, Text, Image } from "react-native";
-import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import ThemedText from "./ThemedText";
 
-const BrandItem = ({ children, ...rest }: PropsWithChildren & ViewProps) => {
+const BrandItem = ({
+  onPress,
+  h = 70,
+  w = 78,
+}: PropsWithChildren & { onPress: () => void; h?: number; w?: number }) => {
   return (
-    <View className="items-center" {...rest}>
-      <View className="h-[55] w-[55] border border-[#D0D5DD] rounded-[36] justify-center items-center">
-        <Image
-          height={40}
-          width={40}
-          source={require("@/assets/images/bmw.png")}
-        />
-      </View>
+    <View className="flex-1 items-center">
+      <TouchableOpacity
+        onPress={onPress}
+        style={{ height: h, width: w, borderRadius: 70 }}
+        className={` border border-[#D0D5DD] justify-center items-center`}
+      >
+        <Image source={require("@/assets/images/bmw.png")} />
+      </TouchableOpacity>
       <ThemedText className="font-semibold">BMW</ThemedText>
     </View>
   );
