@@ -112,7 +112,10 @@ const BodyStylesSearch = () => {
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="flex-row h-[50%] w-full justify-between items-center px-3">
           {Array.from({ length: 5 }, (v, i) => (
-            <View className="h-[30] w-[30] border border-[#D0D5DD] rounded-3xl justify-center items-center">
+            <View
+              key={i}
+              className="h-[30] w-[30] border border-[#D0D5DD] rounded-3xl justify-center items-center"
+            >
               <ThemedText className="text-[#344054] font-semibold">
                 {i + 2}
               </ThemedText>

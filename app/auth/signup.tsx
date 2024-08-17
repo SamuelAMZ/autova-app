@@ -16,26 +16,6 @@ import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 
 export default function SignUp() {
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    line: {
-      flex: 1,
-      height: 1,
-      backgroundColor: "#ccc", // Couleur de la ligne
-    },
-    text: {
-      fontSize: 15,
-      color: "#1D2939", // Couleur du texte
-      textAlign: "center",
-      marginHorizontal: 10,
-      fontFamily: "PlusJakartaSans_400Regular",
-    },
-  });
-
   return (
     <>
       <ScrollView className="flex-1 bg-[#fff] px-[15px] pt-[100px]">
@@ -135,3 +115,23 @@ export default function SignUp() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#ccc", // Couleur de la ligne
+  },
+  text: {
+    fontSize: 15,
+    color: "#1D2939", // Couleur du texte
+    textAlign: "center",
+    marginHorizontal: 10,
+    fontFamily: "PlusJakartaSans_400Regular",
+  },
+});

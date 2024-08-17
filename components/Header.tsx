@@ -14,7 +14,7 @@ const Header = ({
   return (
     <View
       className={`bg-[#5856D6] ${className}`}
-      style={{ paddingTop: insets.top, paddingBottom: 15 }}
+      style={{ paddingTop: insets.top,  }}
       {...rest}
     >
       <StatusBar style="light" translucent />
