@@ -23,7 +23,7 @@ export default function Account() {
               Create Your Account
             </ThemedText>
           </View>
-          <View className="flex gap-[8px] items-start">
+          <View className="flex gap-[8px] items-start w-[100%]">
             <ThemedText className="text-[15px] text-[#070C0F]">
               You are registering with{" "}
               <Text
@@ -44,7 +44,7 @@ export default function Account() {
               </Text>
             </ThemedText>
           </View>
-          <View className="flex gap-[20px]">
+          <View className="flex gap-[20px] w-[100%]">
             <View className="flex gap-4">
               <TextInput
                 placeholder="Full name"
