@@ -28,7 +28,7 @@ export default function Condition() {
       <HeaderListing>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
-            <TouchableOpacity className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full" style={{ backgroundColor:'#c1c1c1'}}>
+            <TouchableOpacity  onPress={() => { router.back()}} className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full" style={{ backgroundColor:'#c1c1c1'}}>
             <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
