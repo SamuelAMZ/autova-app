@@ -48,9 +48,14 @@ function CustomHeader({ title }: { title?: string }) {
           <ArrowLeft size={18} variant="Outline" color="#FFFFFF" />
         </TouchableOpacity>
         <ThemedText className="text-[#FFFFFF] text-[20px] font-[600]">
-          Tesla Brand Cars
+          Cars by body style
         </ThemedText>
       </View>
     </Header>
   );
+}
+
+
+function FilterCar() {
+  
 }

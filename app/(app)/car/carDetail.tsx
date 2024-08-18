@@ -8,39 +8,21 @@ import {
   useWindowDimensions,
   Pressable,
 } from "react-native";
+import { useState } from "react";
+
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
-import { router, useFocusEffect } from "expo-router";
+import { router } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
-import BottomSheet, {
-  BottomSheetModal,
-  useBottomSheetModal,
-} from "@gorhom/bottom-sheet";
 
 import ThemedText from "@/components/ThemedText";
 import RelatedCar from "@/components/brands/relatedCard";
-import ContactSellerModalView from "@/components/brands/contactSellerModal";
-import CustomBottomSheetModal from "@/components/BottomSheetModal";
-
-import React, { useMemo, useState, useEffect } from "react";
-
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function CarDetail() {
   const { width } = useWindowDimensions();
   const image = require("@/assets/cars/brandDetailCar.png");
   const [selected, setSelected] = useState("Details");
-
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
-
-  const handlePresentModalPress = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
 
   return (
     <>
@@ -252,10 +234,7 @@ export default function CarDetail() {
               </ThemedText>
             </View>
 
-            <TouchableOpacity
-              onPress={handlePresentModalPress}
-              className="bg-[#5856D6] p-[12px_20px] rounded-[12px] border border-solid border-[#5856D6]"
-            >
+            <TouchableOpacity className="bg-[#5856D6] p-[12px_20px] rounded-[12px] border border-solid border-[#5856D6]">
               <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
                 Contact Seller
               </ThemedText>
@@ -264,71 +243,6 @@ export default function CarDetail() {
           </View>
         </ScrollView>
       </View>
-
-      <CustomBottomSheetModal
-        isVisible={isModalVisible}
-        onClose={handleCloseModal}
-      >
-        <View
-          style={{
-            flex: 1,
-            // justifyContent: "space-between",
-            alignItems: "center",
-          }}
-          className="w-full px-[5%]"
-        >
-          <View className="flex-row justify-between items-center w-full">
-            <ThemedText className="text-[20px] font-[600] text-[#000000]">
-              Contact Dealer
-            </ThemedText>
-            <TouchableOpacity onPress={handleCloseModal}>
-              <View className="bg-[#7F7F7F33] rounded-full p-[4px]">
-                <AntDesign name="close" size={24} color="#3D3D3DF0" />
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <View className="flex gap-[26px] py-[32px]">
-            <ThemedText className="text-[#101828] text-[17px] font-[600]">
-              How would you like to contact the dealer?
-            </ThemedText>
-            <View className="flex items-start justify-center gap-[16px]">
-              <TouchableOpacity className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
-                <Image
-                  // style={{ width: 20 }}
-                  source={require("@/assets/logos_whatsapp-icon.png")}
-                />
-                <ThemedText className="text-[#344054] text-[19px]  font-[500]">
-                  Continue via WhatsApp
-                </ThemedText>
-              </TouchableOpacity>
-              <TouchableOpacity className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
-                <Image
-                  // style={{ width: 20 }}
-                  source={require("@/assets/logos_telegram.png")}
-                />
-                <ThemedText className="text-[#344054] text-[19px]  font-[500]">
-                  Continue via Telegram
-                </ThemedText>
-              </TouchableOpacity>
-              <TouchableOpacity className="flex-row items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
-                <Image
-                  // style={{ width: 20 }}
-                  source={require("@/assets/ion_call.png")}
-                />
-                <ThemedText className="text-[#344054] text-[19px]  font-[500]">
-                  Contact via phone call
-                </ThemedText>
-              </TouchableOpacity>
-            </View>
-
-            <ThemedText className="text-[#101828] text-[14px] font-[400] text-center text-clip">
-              * Keep your communication private. Avoid sharing sensitive
-              information with the seller.
-            </ThemedText>
-          </View>
-        </View>
-      </CustomBottomSheetModal>
     </>
   );
 }

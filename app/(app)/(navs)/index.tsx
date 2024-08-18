@@ -87,7 +87,12 @@ const HomePage = () => {
           <FlatList
             className="px-[4%]"
             data={CarData}
-            renderItem={({ item }) => <BrandCar car={item} />}
+            renderItem={({ item }) => (
+              <BrandCar
+                car={item}
+                onPress={() => router.navigate("/(app)/brands/carDetail")}
+              />
+            )}
             ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
