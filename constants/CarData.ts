@@ -8,21 +8,21 @@ const CarData = [
     name: "Tesla Model S",
     year: "2024",
     label: "After Est. Gas Savings $6,500",
-    price: " $68,490",
+    price: "68,490",
   },
   {
     img: teslaX,
     name: "Tesla Model X",
     year: "2024",
     label: "After Est. Gas Savings $6,500",
-    price: " $68,490",
+    price: "68,490",
   },
   {
     img: teslaY,
     name: "Tesla Model Y",
     year: "2024",
     label: "After Est. Gas Savings $6,500",
-    price: " $68,490",
+    price: "68,490",
   },
 ];
 
