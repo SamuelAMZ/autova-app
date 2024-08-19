@@ -58,7 +58,7 @@ export default function Contact() {
       </HeaderListing>
       <View
         className="flex  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 50 }}>
+        style={{ paddingTop: 30}}>
         <ScrollView className="w-full px-[16px] ">
           <View className="flex items-start gap-[12px]">
             <ThemedText
@@ -152,7 +152,7 @@ export default function Contact() {
               onPress={() => {
                 router.navigate("./submitted");
               }}
-              className="bg-[#5856D6] px-[20px] py-[12px] rounded-[12px] w-[100%] mb-[60px]">
+              className="bg-[#5856D6] px-[20px] py-[12px] rounded-[12px] w-[100%] mb-[80px]">
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
                 style={{ fontFamily: "Poppins_600SemiBold" }}>
