@@ -26,8 +26,7 @@ import Feather from "@expo/vector-icons/Feather";
 import BrandItem from "@/components/BrandItem";
 import { modelData } from "@/constants/data";
 
-export default function Description() {
-  const [text, setText] = useState("");
+export default function Upload() {
   return (
     <>
       <HeaderListing>
@@ -54,79 +53,37 @@ export default function Description() {
           </TouchableOpacity>
         </View>
       </HeaderListing>
-      <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
-        <View>
+      <ScrollView
+        className="flex px-[16px]  bg-[#fff]"
+        style={{ paddingVertical: 30 }}>
+        <View className="flex pb-[80px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "Poppins_600SemiBold" }}>
-              Description
+              Image/Video
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "Poppins_500Medium" }}>
-              Enter a description for your car
+              Upload the Image/Videos of your car
             </ThemedText>
           </View>
 
-          <Image
-            source={require("@/assets/comment.png")}
-            style={{
-              width: 150,
-              height: 150,
-              alignSelf: "center",
-              marginVertical: 30,
+         
+          <TouchableOpacity
+            onPress={() => {
+              router.navigate("./contact");
             }}
-          />
-
-          <TextArea text={text} setText={setText} />
+            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
+            <ThemedText
+              className="text-[17px] text-center font-[600] text-[#fff]"
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              Continue
+            </ThemedText>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            router.navigate("./price");
-          }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
-          <ThemedText
-            className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}>
-            Continue
-          </ThemedText>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </>
   );
 }
-
-const TextArea = ({ text, setText }: { text: string; setText: any }) => {
-  const maxLength = 150;
-  const [charCount, setCharCount] = useState(text.length);
-
-  const handleTextChange = (value: string) => {
-    setText(value);
-    setCharCount(value.length);
-  };
-
-  return (
-    <View className="bg-[#EFEFEF] rounded-[10px] px-[16px] py-[18px]">
-      <TextInput
-        style={{ textAlign: "left", textAlignVertical: "top" }}
-        multiline
-        className="h-[128px]"
-        maxLength={500}
-        numberOfLines={3}
-        onChangeText={handleTextChange}
-        value={text}
-        placeholder="Enter description"
-        placeholderTextColor="#475467"
-        blurOnSubmit={true}
-        onSubmitEditing={Keyboard.dismiss}
-      />
-      <Text style={{ textAlign: "right", color: "#475467", marginTop: 8 }}>
-        {text.length}/{maxLength}
-      </Text>
-    </View>
-  );
-};

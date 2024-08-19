@@ -60,9 +60,9 @@ export default function Brand() {
         </View>
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
+        className="flex   bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}>
-        <ScrollView className="flex pb-[80px] relative">
+        <ScrollView className="flex pb-[80px] relative px-[16px]">
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
@@ -131,17 +131,19 @@ export default function Brand() {
           </View>
         </ScrollView>
 
-        <TouchableOpacity
-          onPress={() => {
-            router.navigate("./Model");
-          }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
-          <ThemedText
-            className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}>
-            Continue
-          </ThemedText>
-        </TouchableOpacity>
+        <View className="px-[16px]">
+          <TouchableOpacity
+            onPress={() => {
+              router.navigate("./Model");
+            }}
+            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
+            <ThemedText
+              className="text-[17px] text-center font-[600] text-[#fff]"
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              Continue
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );

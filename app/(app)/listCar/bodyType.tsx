@@ -53,9 +53,9 @@ export default function BodyType() {
         </View>
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
+        className="flex   bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}>
-        <ScrollView>
+        <ScrollView className="px-[16px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
@@ -138,7 +138,7 @@ export default function BodyType() {
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
                   style={{ fontFamily: "Poppins_600SemiBold" }}>
-                 SUV/8X8
+                  SUV/8X8
                 </ThemedText>
                 <ArrowRight2 size="16" color="#1D2939" />
               </View>
@@ -193,18 +193,19 @@ export default function BodyType() {
             </TouchableOpacity>
           </View>
         </ScrollView>
-
-        <TouchableOpacity
-          onPress={() => {
-            router.navigate("./registration");
-          }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
-          <ThemedText
-            className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}>
-            Continue
-          </ThemedText>
-        </TouchableOpacity>
+        <View className="px-[16px]">
+          <TouchableOpacity
+            onPress={() => {
+              router.navigate("./registration");
+            }}
+            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
+            <ThemedText
+              className="text-[17px] text-center font-[600] text-[#fff]"
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              Continue
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
