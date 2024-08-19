@@ -82,7 +82,7 @@ export default function Condition() {
             >
               <View className="flex flex-row w-full justify-between">
                 <ThemedText
-                  className="px-[16px]"
+                  
                   className="text-[16px] text-[#1D2939]"
                   style={{ fontFamily: "Poppins_600SemiBold" }}
                 >
