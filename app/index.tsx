@@ -26,13 +26,14 @@ export default function Index() {
           end={{ x: 0.5, y: 1 }}
           locations={[0.3, 0.9, 1]}
           style={{ flex: 1 }}
+          className="w-full"
         >
           <View className="flex-1 items-center justify-between px-[15px] pb-[50px] ">
-            <ThemedText className="text-[#fff] w-[60%] text-center text-[15px]">
+            <ThemedText className="text-[#fff]  text-center text-[15px]">
               Verified cars, trusted history, and authentic users—all from your
               local area.
             </ThemedText>
-            <View className="px-[15px] w-[73%] gap-4">
+            <View className=" w-full gap-4">
               <CustomButton
                 title="Create an account"
                 onPress={() => {

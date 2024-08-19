@@ -24,7 +24,7 @@ export default function Account() {
             </ThemedText>
           </View>
           <View className="flex gap-[8px] items-start w-[100%]">
-            <ThemedText className="text-[15px] text-[#070C0F]">
+            <ThemedText className="text-[14px] text-[#070C0F]">
               You are registering with{" "}
               <Text
                 className="text-[#007AFF] underline"
@@ -33,7 +33,7 @@ export default function Account() {
                 example@email.com
               </Text>
             </ThemedText>
-            <ThemedText className="text-[15px] text-[#070C0F]">
+            <ThemedText className="text-[14px] text-[#070C0F]">
               Want to change?{" "}
               <Text
                 className="text-[#007AFF] underline"
@@ -62,7 +62,7 @@ export default function Account() {
                 placeholderTextColor="#475467"
                 className="bg-[#EFEFEF] rounded-[12px] py-[16px] px-[20px]"
               />
-              <ThemedText className="text-[#475467]">
+              <ThemedText className="text-[#475467] text-[12px]">
                 * Your password should be minimum 8 characters.
               </ThemedText>
             </View>

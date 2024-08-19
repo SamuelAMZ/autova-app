@@ -48,7 +48,7 @@ export default function SignUp() {
                   Continue with Google
                 </ThemedText>
               </TouchableOpacity>
-              <TouchableOpacity className="border border-[#D8DADC] flex flex-row px-[32px] items-center justify-center gap-[12px] py-[20px] rounded-[28px]">
+              <TouchableOpacity className="border border-[#D8DADC] flex flex-row px-[32px] justify-center gap-[12px] py-[20px] rounded-[28px]">
                 <Image
                   source={require("@/assets/apple.png")}
                   style={{ width: 20, height: 20 }}

@@ -23,12 +23,13 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import BrandItem from "@/components/BrandItem";
-import { fuel } from "@/constants/data";
+import { modelData } from "@/constants/data";
 
-export default function Fuel() {
-  const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
+export default function Registration() {
+  const currentYear = new Date().getFullYear();
+  const [selectedDegree, setSelectedDegree] = useState<number | null>(null);
 
-  const handleSelect = (degree: string) => {
+  const handleSelect = (degree: number) => {
     setSelectedDegree(degree);
   };
 
@@ -38,7 +39,9 @@ export default function Fuel() {
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity
-            onPress={() => { router.back()}}
+              onPress={() => {
+                router.back();
+              }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
               style={{ backgroundColor: "#c1c1c1" }}>
               <Feather name="arrow-left" size={20} color="black" />
@@ -63,16 +66,16 @@ export default function Fuel() {
           <ThemedText
             className="text-[#101828] text-[20px]"
             style={{ fontFamily: "Poppins_600SemiBold" }}>
-            Fuel Type
+            Registration Year
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
             style={{ fontFamily: "Poppins_500Medium" }}>
-            Select the fuel type of your car
+            Select the year of Registration for your car
           </ThemedText>
         </View>
         <Image
-          source={require("@/assets/fuel.png")}
+          source={require("@/assets/calander.png")}
           style={{
             width: 120,
             height: 120,
@@ -83,15 +86,18 @@ export default function Fuel() {
         <ScrollView className="flex pb-[80px] relative">
           <View className="flex gap-[20px]">
             <View className="">
-              {fuel.map((item) => (
+              {Array.from(
+                { length: 2026 - 1950 + 1 },
+                (_, index) => currentYear - index
+              ).map((item) => (
                 <TouchableOpacity
-                  key={item.name}
-                  onPress={() => handleSelect(item.name)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
+                  key={item}
+                  onPress={() => handleSelect(item)}
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full gap-[12px] justify-center ">
                   <ThemedText className="py-[16px] text-[#101828] text-[14px]">
-                    {item.name}
+                    {item}
                   </ThemedText>
-                  {selectedDegree === item.name && (
+                  {selectedDegree === item && (
                     <AntDesign name="check" size={20} color="#5856D6" />
                   )}
                 </TouchableOpacity>
@@ -102,7 +108,7 @@ export default function Fuel() {
 
         <TouchableOpacity
           onPress={() => {
-            router.navigate("./transmission");
+            router.navigate("./description");
           }}
           className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
           <ThemedText
