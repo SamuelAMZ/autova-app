@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Platform } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { Notification, Gps } from "iconsax-react-native";
@@ -33,7 +33,7 @@ const ListingPage = () => {
             <Gps
               size="24"
               color="#1D2939"
-              style={{ position: "absolute", right: 20, top: 15 }}
+              style={{ position: "absolute", right: 20, top: Platform.OS === "android" ? 15 : 10 }}
             />
             <TextInput
               className="bg-[#7878801F] relative border border-[#5856D6] py-[12px] px-[20px] rounded-[12px]"
