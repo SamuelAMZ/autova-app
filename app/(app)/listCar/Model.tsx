@@ -6,9 +6,7 @@ import {
   ScrollView,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import {
-  SearchNormal1,
-} from "iconsax-react-native";
+import { SearchNormal1 } from "iconsax-react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -38,7 +36,8 @@ export default function Model() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
               List Your Car
             </ThemedText>
           </View>
@@ -51,19 +50,21 @@ export default function Model() {
         </View>
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
+        className="flex   bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
-        <ScrollView className="flex pb-[80px] relative">
+        <ScrollView className="flex pb-[80px] relative px-[16px]">
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
               Model
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}>
+              style={{ fontFamily: "Poppins_500Medium" }}
+            >
               Select the model for your car
             </ThemedText>
           </View>
@@ -83,7 +84,8 @@ export default function Model() {
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
               All Model
             </ThemedText>
 
@@ -105,19 +107,26 @@ export default function Model() {
             </View>
           </View>
         </ScrollView>
-
-        <TouchableOpacity
-          onPress={() => {
-            router.navigate("./year");
+        <View
+          style={{
+            paddingBottom: 20,
           }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
+          className="px-[16px]"
         >
-          <ThemedText
-            className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}>
-            Continue
-          </ThemedText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              router.navigate("./year");
+            }}
+            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
+          >
+            <ThemedText
+              className="text-[17px] text-center font-[600] text-[#fff]"
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
+              Continue
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );

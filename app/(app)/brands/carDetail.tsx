@@ -49,8 +49,19 @@ export default function CarDetail() {
             />
           </View>
 
-          <View className="px-[5%] flex gap-[20px] py-[24px]">
-            <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
+          <View
+            style={{
+              paddingTop: 28,
+              paddingBottom: 60,
+            }}
+            className="px-[5%] flex gap-[20px]"
+          >
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="text-[#1D2939] text-[20px]"
+            >
               Tesla Model X Long Range 316kW
             </ThemedText>
 
@@ -134,7 +145,12 @@ export default function CarDetail() {
               </View>
             </View>
 
-            <ThemedText className="text-[#5856D6] text-[28px] font-[700]">
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="text-[#5856D6] text-[28px]"
+            >
               $68,490
             </ThemedText>
 
@@ -264,7 +280,12 @@ export default function CarDetail() {
           className="w-full px-[4%] "
         >
           <View className="pt-[1rem] flex-row justify-between items-center w-full">
-            <ThemedText className="text-[20px] font-[600] text-[#000000]">
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="text-[20px] text-[#000000]"
+            >
               Contact Dealer
             </ThemedText>
             <TouchableOpacity onPress={handleCloseModal}>
@@ -275,7 +296,12 @@ export default function CarDetail() {
           </View>
 
           <View className="flex justify-center gap-[26px] pt-[36px]">
-            <ThemedText className="text-[#101828] text-[17px] font-[600] text-center">
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="text-[#101828] text-[17px] text-center"
+            >
               How would you like to contact the dealer?
             </ThemedText>
             <View className="flex items-start justify-center gap-[16px]">

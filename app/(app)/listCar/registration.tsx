@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
@@ -7,7 +11,7 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 
-export default function YearProduction() {
+export default function Registration() {
   const currentYear = new Date().getFullYear();
   const [selectedDegree, setSelectedDegree] = useState<number | null>(null);
 
@@ -53,13 +57,13 @@ export default function YearProduction() {
             className="text-[#101828] text-[20px]"
             style={{ fontFamily: "Poppins_600SemiBold" }}
           >
-            Production Year
+            Registration Year
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
             style={{ fontFamily: "Poppins_500Medium" }}
           >
-            Select the year of production for your car
+            Select the year of Registration for your car
           </ThemedText>
         </View>
         <Image
@@ -102,7 +106,7 @@ export default function YearProduction() {
         >
           <TouchableOpacity
             onPress={() => {
-              router.navigate("./mileage");
+              router.navigate("./description");
             }}
             className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
           >

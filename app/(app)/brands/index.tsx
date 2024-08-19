@@ -37,7 +37,7 @@ export default function Brand() {
           scrollEnabled={false}
           keyExtractor={(_, index) => index.toString()}
           initialNumToRender={5}
-          ListFooterComponent={() => <View style={{ height: 40 }} />}
+          ListFooterComponent={() => <View style={{ height: 60 }} />}
         />
       </ScrollView>
     </View>

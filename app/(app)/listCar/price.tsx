@@ -1,13 +1,35 @@
-import React from "react";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  Pressable,
+  StyleSheet,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
+import {
+  ArrowDown2,
+} from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function Mileage() {
+function MyCheckbox() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Pressable
+      style={[styles.checkboxBase, checked && styles.checkboxChecked]}
+      onPress={() => setChecked(!checked)}
+    >
+      {checked && <Ionicons name="checkmark" size={20} color="white" />}
+    </Pressable>
+  );
+}
+
+export default function Price() {
   return (
     <>
       <HeaderListing>
@@ -47,18 +69,18 @@ export default function Mileage() {
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "Poppins_600SemiBold" }}
             >
-              Mileage
+              Price
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "Poppins_500Medium" }}
             >
-              Enter the mileage of your car
+              What is the price of your car
             </ThemedText>
           </View>
 
           <Image
-            source={require("@/assets/gauge.png")}
+            source={require("@/assets/money.png")}
             style={{
               width: 150,
               height: 150,
@@ -66,20 +88,32 @@ export default function Mileage() {
               marginVertical: 30,
             }}
           />
-
-          <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-            <TextInput
-              className="flex-1 py-[12px] px-[20px]"
-              placeholder="Enter mileage"
-              placeholderTextColor="#1D2939"
-            />
-            <View className="h-full w-[1px] bg-[#D0D5DD]" />
-            <View className="p-[12px]">
+          <View className="flex gap-[12px]">
+            <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
+              <View className="p-[12px] flex flex-row gap-[12px] items-center">
+                <ThemedText
+                  className="text-[15px]  font-[700] text-[#101828]"
+                  style={{ fontFamily: "Poppins_700Bold" }}
+                >
+                  USD
+                </ThemedText>
+                <ArrowDown2 size="20" color="#000" />
+              </View>
+              <View className="h-full w-[1px] bg-[#D0D5DD]" />
+              <TextInput
+                className="flex-1 py-[12px] px-[20px]"
+                placeholder="1000"
+                placeholderTextColor="#98A2B3"
+                keyboardType="decimal-pad"
+              />
+            </View>
+            <View className="flex flex-row gap-[8px] items-center">
+              <MyCheckbox />
               <ThemedText
-                className="text-[17px]  font-[700] text-[#101828]"
-                style={{ fontFamily: "Poppins_700Bold" }}
+                className="text-[#344054] text-[16px]"
+                style={{ fontFamily: "Poppins_500Medium" }}
               >
-                KM
+                Negotiable
               </ThemedText>
             </View>
           </View>
@@ -92,7 +126,7 @@ export default function Mileage() {
         >
           <TouchableOpacity
             onPress={() => {
-              router.navigate("./engine");
+              router.navigate("./upload");
             }}
             className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
           >
@@ -108,3 +142,29 @@ export default function Mileage() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  checkboxBase: {
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "#344054",
+    backgroundColor: "transparent",
+  },
+  checkboxChecked: {
+    backgroundColor: "#344054",
+  },
+  appContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});

@@ -10,6 +10,7 @@ import {
 import AppIcon from "@/assets/icons/app-logo.svg";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { BottomSheetView } from "@gorhom/bottom-sheet";
 
 import BrandItem from "@/components/BrandItem";
 import CarItem from "@/components/cars/CarItem";
@@ -39,7 +40,12 @@ const HomePage = () => {
       <ScrollView className="pt-4">
         <View className="flex gap-[20px]">
           <View className="px-[4%] flex-1 flex-row justify-between items-end">
-            <ThemedText className="font-semibold text-[18px]">
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="font-semibold text-[18px]"
+            >
               Featured Dealers
             </ThemedText>
             <TouchableOpacity onPress={handlePresentModalPress}>
@@ -109,8 +115,19 @@ const HomePage = () => {
         snapPoints={snapPoints}
         index={1}
       >
-        <View className="w-full flex-row justify-between items-center py-5 px-4">
-          <ThemedText className="font-semibold text-[18px]">
+        <View
+          style={{
+            paddingTop: 14,
+            paddingBottom: 30,
+          }}
+          className="w-full flex-row justify-between items-center px-4"
+        >
+          <ThemedText
+            style={{
+              fontFamily: "Poppins_600SemiBold",
+            }}
+            className="font-semibold text-[18px]"
+          >
             Top Brands
           </ThemedText>
           <TouchableOpacity onPress={handleCloseModal}>
@@ -127,6 +144,7 @@ const HomePage = () => {
             <BrandItem
               size={70}
               onPress={() => {
+                handleCloseModal();
                 router.navigate("/brands");
               }}
             />

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Keyboard,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
@@ -7,14 +13,8 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 
-export default function YearProduction() {
-  const currentYear = new Date().getFullYear();
-  const [selectedDegree, setSelectedDegree] = useState<number | null>(null);
-
-  const handleSelect = (degree: number) => {
-    setSelectedDegree(degree);
-  };
-
+export default function Description() {
+  const [text, setText] = useState("");
   return (
     <>
       <HeaderListing>
@@ -48,52 +48,34 @@ export default function YearProduction() {
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
-        <View className="flex items-start gap-[12px]">
-          <ThemedText
-            className="text-[#101828] text-[20px]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
-          >
-            Production Year
-          </ThemedText>
-          <ThemedText
-            className="text-[#344054] text-[16px]"
-            style={{ fontFamily: "Poppins_500Medium" }}
-          >
-            Select the year of production for your car
-          </ThemedText>
-        </View>
-        <Image
-          source={require("@/assets/calander.png")}
-          style={{
-            width: 120,
-            height: 120,
-            alignSelf: "center",
-            marginVertical: 50,
-          }}
-        />
-        <ScrollView className="flex pb-[80px] relative">
-          <View className="flex gap-[20px]">
-            <View className="">
-              {Array.from(
-                { length: 2026 - 1950 + 1 },
-                (_, index) => currentYear - index
-              ).map((item) => (
-                <TouchableOpacity
-                  key={item}
-                  onPress={() => handleSelect(item)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full gap-[12px] justify-center "
-                >
-                  <ThemedText className="py-[16px] text-[#101828] text-[14px]">
-                    {item}
-                  </ThemedText>
-                  {selectedDegree === item && (
-                    <AntDesign name="check" size={20} color="#5856D6" />
-                  )}
-                </TouchableOpacity>
-              ))}
-            </View>
+        <View>
+          <View className="flex items-start gap-[12px]">
+            <ThemedText
+              className="text-[#101828] text-[20px]"
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
+              Description
+            </ThemedText>
+            <ThemedText
+              className="text-[#344054] text-[16px]"
+              style={{ fontFamily: "Poppins_500Medium" }}
+            >
+              Enter a description for your car
+            </ThemedText>
           </View>
-        </ScrollView>
+
+          <Image
+            source={require("@/assets/comment.png")}
+            style={{
+              width: 150,
+              height: 150,
+              alignSelf: "center",
+              marginVertical: 30,
+            }}
+          />
+
+          <TextArea text={text} setText={setText} />
+        </View>
 
         <View
           style={{
@@ -102,7 +84,7 @@ export default function YearProduction() {
         >
           <TouchableOpacity
             onPress={() => {
-              router.navigate("./mileage");
+              router.navigate("./price");
             }}
             className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
           >
@@ -118,3 +100,34 @@ export default function YearProduction() {
     </>
   );
 }
+
+const TextArea = ({ text, setText }: { text: string; setText: any }) => {
+  const maxLength = 150;
+  const [charCount, setCharCount] = useState(text.length);
+
+  const handleTextChange = (value: string) => {
+    setText(value);
+    setCharCount(value.length);
+  };
+
+  return (
+    <View className="bg-[#EFEFEF] rounded-[10px] px-[16px] py-[18px]">
+      <TextInput
+        style={{ textAlign: "left", textAlignVertical: "top" }}
+        multiline
+        className="h-[128px]"
+        maxLength={500}
+        numberOfLines={3}
+        onChangeText={handleTextChange}
+        value={text}
+        placeholder="Enter description"
+        placeholderTextColor="#475467"
+        blurOnSubmit={true}
+        onSubmitEditing={Keyboard.dismiss}
+      />
+      <Text style={{ textAlign: "right", color: "#475467", marginTop: 8 }}>
+        {text.length}/{maxLength}
+      </Text>
+    </View>
+  );
+};

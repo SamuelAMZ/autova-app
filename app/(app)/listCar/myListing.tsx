@@ -74,7 +74,16 @@ export default function MyListing() {
             <FlatList
               className="w-full"
               data={[{}, {}, {}]}
-              renderItem={({ index, item }) => <CarItem car={CarData[0]} />}
+              renderItem={({ index, item }) => (
+                <CarItem
+                  car={CarData[0]}
+                  onPress={() => {
+                    router.navigate({
+                      pathname: "/(app)/brands/carDetail",
+                    });
+                  }}
+                />
+              )}
               ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
               scrollEnabled={false}
             />

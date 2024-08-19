@@ -1,9 +1,4 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Heart } from "iconsax-react-native";
 import { useState } from "react";
@@ -51,7 +46,12 @@ export default function CarItem({
         </View>
         <View className="flex-col gap-[15px] justify-center items-start">
           <View>
-            <ThemedText className="text-[#101828] text-[19px] font-[700] ">
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="text-[#101828] text-[19px]"
+            >
               {car.name}
             </ThemedText>
           </View>
@@ -71,7 +71,12 @@ export default function CarItem({
             </ThemedText>
           </View>
           <View>
-            <ThemedText className="text-[#101828] text-[17px] font-[800]">
+            <ThemedText
+              style={{
+                fontFamily: "Poppins_600SemiBold",
+              }}
+              className="text-[#101828] text-[17px]"
+            >
               ${car.price}
             </ThemedText>
           </View>

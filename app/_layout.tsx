@@ -7,9 +7,6 @@ import MySafeAreaView from "@/components/SafeAreaView";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import "../styles/global.css";
 
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-
 import {
   useFonts,
   Poppins_200ExtraLight,
@@ -52,11 +49,7 @@ export default function RootLayout() {
         <MySafeAreaView>
         </MySafeAreaView>
       </SafeAreaProvider> */}
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <Slot />
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      <Slot />
     </>
   );
 }
