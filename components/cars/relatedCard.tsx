@@ -1,7 +1,7 @@
 import { View, FlatList } from "react-native";
 import { router } from "expo-router";
 
-import BrandCar from "./car";
+import BrandCar from "./CarItem";
 import { CarData } from "@/constants/CarData";
 import ThemedText from "../ThemedText";
 

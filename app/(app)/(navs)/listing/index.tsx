@@ -17,7 +17,7 @@ const ListingPage = () => {
         />
         <View className="flex gap-[24px] ">
           <ThemedText
-            className="text-[#101828] text-[20px]"
+            className="text-[#101828] text-[20px] text-center"
             style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
           >
             You don’t have any listing yet!
@@ -33,14 +33,19 @@ const ListingPage = () => {
             <Gps
               size="24"
               color="#1D2939"
-              className="absolute right-0 top-[15px] "
+              style={{ position: "absolute", right: 20, top: 15 }}
             />
             <TextInput
               className="bg-[#7878801F] relative border border-[#5856D6] py-[12px] px-[20px] rounded-[12px]"
               placeholder="Enter ZIP code"
               placeholderTextColor="#1D2939"
             />
-            <TouchableOpacity className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]">
+            <TouchableOpacity
+              onPress={() => {
+                router.navigate("/(app)/listCar/myListing");
+              }}
+              className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
+            >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
                 style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}

@@ -2,7 +2,7 @@ import { View, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
 
-import BrandCar from "@/components/brands/car";
+import BrandCar from "@/components/cars/CarItem.ios";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 
@@ -55,7 +55,4 @@ function CustomHeader({ title }: { title?: string }) {
   );
 }
 
-
-function FilterCar() {
-  
-}
+function FilterCar() {}

@@ -1,19 +1,16 @@
 import {
   View,
-  ScrollView,
   Image,
   StyleSheet,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import MySafeAreaView from "@/components/SafeAreaView";
 import { Heart } from "iconsax-react-native";
 import { useState } from "react";
 
-import { Car } from "./types";
+import Car from "@/models/car.model";
 
-export default function BrandCar({
+export default function CarItem({
   car,
   onPress,
 }: {
@@ -75,7 +72,7 @@ export default function BrandCar({
           </View>
           <View>
             <ThemedText className="text-[#101828] text-[17px] font-[800]">
-              {car.price}
+              ${car.price}
             </ThemedText>
           </View>
         </View>
@@ -89,8 +86,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#fff",
     marginVertical: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 20,
 
     // Different borders for each side
     borderTopWidth: 1,

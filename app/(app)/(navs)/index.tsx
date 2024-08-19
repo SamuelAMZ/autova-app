@@ -1,143 +1,142 @@
-import BrandItem from "@/components/BrandItem";
-import CarItem from "@/components/CarItem";
-import FilterTag from "@/components/FilterTag";
-import Header from "@/components/Header";
 import { CloseCircle, Notification } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   View,
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Modal,
-  Dimensions,
+  Platform,
 } from "react-native";
-
-import { useWindowDimensions } from "react-native";
-
 import AppIcon from "@/assets/icons/app-logo.svg";
-import SearchCard from "@/components/SearchCard";
 import { router } from "expo-router";
+
+import BrandItem from "@/components/BrandItem";
+import CarItem from "@/components/cars/CarItem";
+import FilterTag from "@/components/FilterTag";
+import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
+import SearchCard from "@/components/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
+
 import { CarData } from "@/constants/CarData";
-import BrandCar from "@/components/brands/car";
+
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const HomePage = () => {
-  const [isSheetOpened, setIsSheetOpened] = useState(false);
-  const height = Dimensions.get("window").height;
-  const { width } = useWindowDimensions();
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
 
-  const openCloseModalSheet = () => {
-    setIsSheetOpened(!isSheetOpened);
-  };
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
 
   return (
-    <View
-      style={{
-        maxWidth: width,
-      }}
-      className="flex-1 bg-[#FFFFFF]"
-    >
-      <CustomHeader />
-      <ScrollView className="pt-4">
-        <View className="flex gap-[20px]">
-          <View className="px-[4%] flex-1 flex-row justify-between items-end">
-            <ThemedText className="font-semibold text-[18px]">
-              Featured Dealers
-            </ThemedText>
-            <TouchableOpacity onPress={openCloseModalSheet}>
-              <ThemedText className="text-[#007AFF] font-medium">
-                View All
-              </ThemedText>
-            </TouchableOpacity>
-          </View>
-          <FlatList
-            className="px-[4%]"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={Array.from({ length: 12 })}
-            renderItem={({ item }) => (
-              <BrandItem w={65} h={65} onPress={() => {}} />
-            )}
-            ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-          />
-
-          <FlatList
-            className="px-[4%]"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={[{}, {}, {}, {}, {}, {}, {}]}
-            renderItem={({ index, item }) => (
-              <FilterTag title="Title" active={index == 0} />
-            )}
-            ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-          />
-
-          {/* <FlatList
-          className="my-5 p-[8px]"
-          data={[{}, {}, {}, {}, {}, {}, {}]}
-          renderItem={({ index, item }) => <CarItem />}
-          ItemSeparatorComponent={() => <VerticalSeperator size={20} />}
-          scrollEnabled={false}
-        /> */}
-
-          <FlatList
-            className="px-[4%]"
-            data={CarData}
-            renderItem={({ item }) => (
-              <BrandCar
-                car={item}
-                onPress={() => router.navigate("/(app)/brands/carDetail")}
+    <GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <View className="w-full flex-1 bg-[#FFFFFF]">
+          <CustomHeader />
+          <ScrollView className="pt-4">
+            <View className="flex gap-[20px]">
+              <View className="px-[4%] flex-1 flex-row justify-between items-end">
+                <ThemedText className="font-semibold text-[18px]">
+                  Featured Dealers
+                </ThemedText>
+                <TouchableOpacity onPress={handlePresentModalPress}>
+                  <ThemedText className="text-[#007AFF] font-medium">
+                    View All
+                  </ThemedText>
+                </TouchableOpacity>
+              </View>
+              <FlatList
+                className="px-[4%]"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={Array.from({ length: 12 })}
+                renderItem={({ item }) => (
+                  <BrandItem size={70} onPress={() => {}} />
+                )}
+                ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
-            )}
-            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-            scrollEnabled={false}
-            keyExtractor={(_, index) => index.toString()}
-            initialNumToRender={5}
-            ListFooterComponent={() => <View style={{ height: 40 }} />}
-          />
-        </View>
-      </ScrollView>
-      <Modal
-        statusBarTranslucent
-        visible={isSheetOpened}
-        transparent
-        className="relative"
-      >
-        <View
-          style={{ maxHeight: height - 80 }}
-          className="absolute bottom-0 right-0 left-0 bg-white rounded-t-2xl"
-        >
-          <View className="w-full flex-row justify-between items-center py-5 px-4">
-            <ThemedText className="font-semibold text-[18px]">
-              Top Brands
-            </ThemedText>
-            <TouchableOpacity onPress={openCloseModalSheet}>
-              <CloseCircle size={26} variant="Bold" color="grey" />
-            </TouchableOpacity>
-          </View>
-          <FlatList
-            className="flex-1 py-3"
-            data={Array.from({ length: 8 })}
-            numColumns={4}
-            keyExtractor={(item, index) => "#" + index}
-            renderItem={() => (
-              <BrandItem
-                w={70}
-                h={70}
-                onPress={() => {
-                  router.navigate("/brands");
-                }}
+
+              <FlatList
+                className="px-[4%]"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={[{}, {}, {}, {}, {}, {}, {}]}
+                renderItem={({ index, item }) => (
+                  <FilterTag title="Title" active={index == 0} />
+                )}
+                ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
-            )}
-            ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
-          />
+
+              <FlatList
+                className="px-[4%]"
+                data={CarData}
+                renderItem={({ item }) => (
+                  <CarItem
+                    car={item}
+                    onPress={() => {
+                      router.navigate({
+                        pathname: "/(app)/brands/carDetail",
+                      });
+                    }}
+                  />
+                )}
+                ItemSeparatorComponent={() => (
+                  <View style={{ height: Platform.OS === "ios" ? 2 : 16 }} />
+                )}
+                scrollEnabled={false}
+                keyExtractor={(_, index) => index.toString()}
+                // initialNumToRender={5}
+                ListFooterComponent={() => <View style={{ height: 40 }} />}
+              />
+            </View>
+          </ScrollView>
+          {bottomSheetModalRef && (
+            <BottomSheetModal
+              ref={bottomSheetModalRef}
+              index={1}
+              snapPoints={snapPoints}
+            >
+              <BottomSheetView>
+                <View className="w-full flex-row justify-between items-center py-5 px-4">
+                  <ThemedText className="font-semibold text-[18px]">
+                    Top Brands
+                  </ThemedText>
+                  <TouchableOpacity
+                    onPress={() => bottomSheetModalRef.current?.close()}
+                  >
+                    <CloseCircle size={26} variant="Bold" color="grey" />
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={Array.from({ length: 8 })}
+                  numColumns={4}
+                  keyExtractor={(item, index) => "#" + index}
+                  renderItem={() => (
+                    <BrandItem
+                      size={70}
+                      onPress={() => {
+                        router.navigate("/brands");
+                      }}
+                    />
+                  )}
+                  ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
+                />
+              </BottomSheetView>
+            </BottomSheetModal>
+          )}
         </View>
-      </Modal>
-    </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 

@@ -17,7 +17,7 @@ import { router } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
 
 import ThemedText from "@/components/ThemedText";
-import RelatedCar from "@/components/brands/relatedCard";
+import RelatedCar from "@/components/cars/relatedCard";
 
 export default function CarDetail() {
   const { width } = useWindowDimensions();

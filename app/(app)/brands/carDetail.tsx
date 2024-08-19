@@ -1,29 +1,21 @@
 import {
   View,
   ScrollView,
-  FlatList,
   TouchableOpacity,
-  ImageBackground,
   Image,
   useWindowDimensions,
-  Pressable,
 } from "react-native";
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
-import { router, useFocusEffect } from "expo-router";
+import { router } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
-import BottomSheet, {
-  BottomSheetModal,
-  useBottomSheetModal,
-} from "@gorhom/bottom-sheet";
 
 import ThemedText from "@/components/ThemedText";
-import RelatedCar from "@/components/brands/relatedCard";
-import ContactSellerModalView from "@/components/brands/contactSellerModal";
+import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, {  useState } from "react";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 

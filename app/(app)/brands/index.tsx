@@ -1,12 +1,18 @@
-import { View, ScrollView, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { router } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
 
-import BrandCar from "@/components/brands/car";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 
 import { CarData } from "@/constants/CarData";
+import CarItem from "@/components/cars/CarItem";
 
 export default function Brand() {
   return (
@@ -16,12 +22,18 @@ export default function Brand() {
         <FlatList
           data={CarData}
           renderItem={({ item }) => (
-            <BrandCar
+            <CarItem
               car={item}
-              onPress={() => router.navigate("/(app)/brands/carDetail")}
+              onPress={() => {
+                router.navigate({
+                  pathname: "/(app)/brands/carDetail",
+                });
+              }}
             />
           )}
-          ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: Platform.OS === "ios" ? 2 : 16 }} />
+          )}
           scrollEnabled={false}
           keyExtractor={(_, index) => index.toString()}
           initialNumToRender={5}
@@ -35,14 +47,9 @@ export default function Brand() {
 function CustomHeader({ title }: { title?: string }) {
   return (
     <Header>
-      <View className="flex-row justify-start items-center gap-[13px] px-[4%] py-[18px]">
+      <View className="flex-row justify-start items-center gap-[13px] px-[4%] py-[16px]">
         <TouchableOpacity
-          style={{
-            maxWidth: 45,
-            height: "auto",
-            borderRadius: 100,
-          }}
-          className="flex flex-row items-center justify-center bg-[#6C6BDB] p-[11px]"
+          className="h-auto rounded-[100px] max-w-11 flex flex-row items-center justify-center bg-[#6C6BDB] p-[11px]"
           onPress={() => router.back()}
         >
           <ArrowLeft size={18} variant="Outline" color="#FFFFFF" />

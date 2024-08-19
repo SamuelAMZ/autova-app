@@ -18,7 +18,7 @@ import { router } from "expo-router";
 export default function SignUp() {
   return (
     <>
-      <ScrollView className="flex-1 bg-[#fff] px-[15px] pt-[100px]">
+      <ScrollView className="flex-1 bg-[#fff] px-[15px] pt-[100px] w-full">
         <View className="items-start gap-[32px]">
           <View className="flex gap-[12px] items-start">
             <ThemedText
@@ -34,7 +34,7 @@ export default function SignUp() {
               Create Your Account
             </ThemedText>
           </View>
-          <View className="flex gap-[20px]">
+          <View className="flex gap-[20px] w-[100%]">
             <View className="flex gap-[12px]">
               <TouchableOpacity className="border border-[#D8DADC] px-[32px] py-[20px] flex-row items-center justify-center gap-[12px] rounded-[28px]">
                 <Image
