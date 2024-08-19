@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  Alert,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Gallery, MinusCirlce } from "iconsax-react-native";
@@ -25,15 +26,24 @@ export default function Upload() {
 
   //
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
+    if (images.length < 6) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 4],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      setImages([...images, result.assets[0].uri]);
+      if (!result.canceled) {
+        setImages([...images, result.assets[0].uri]);
+      }
+    } else {
+      Alert.alert(
+        "Upload error",
+        "Cannot upload more than 6 files",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: true }
+      );
     }
   };
 
