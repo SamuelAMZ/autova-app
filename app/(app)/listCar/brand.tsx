@@ -1,22 +1,15 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   ScrollView,
   FlatList,
 } from "react-native";
-import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import {
-  Notification,
-  Gps,
-  ArrowLeft,
-  ArrowRight2,
   SearchNormal1,
 } from "iconsax-react-native";
-import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";

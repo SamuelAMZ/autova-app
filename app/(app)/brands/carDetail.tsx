@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Image,
   useWindowDimensions,
+  Platform,
 } from "react-native";
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -15,7 +16,7 @@ import ThemedText from "@/components/ThemedText";
 import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 
-import React, {  useState } from "react";
+import React, { useState, useMemo } from "react";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -25,6 +26,7 @@ export default function CarDetail() {
   const [selected, setSelected] = useState("Details");
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const snapPoints = useMemo(() => ["55%", "60%", "90%"], []);
 
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
@@ -43,7 +45,7 @@ export default function CarDetail() {
             <Image
               resizeMode="contain"
               source={image}
-              style={{ width: width, height: 263 }}
+              style={{ height: 263 }}
             />
           </View>
 
@@ -137,24 +139,15 @@ export default function CarDetail() {
             </ThemedText>
 
             <View className="flex items-start gap-[16px]">
-              <Image source={require("@/assets/cars/Widget.png")} />
-              {/* <View className="flex-row items-center justify-center gap-[8px]">
-                <ThemedText className="text-[#344054] font-[400] text-[16px]">
-                  30 days of return policy
-                </ThemedText>
-              </View>
-              <View className="flex-row items-center justify-center gap-[8px]">
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                  source={require("@/assets/cars/check.png")}
-                />
-                <ThemedText className="text-[#344054] font-[400] text-[16px]">
-                  Risk-free purchase
-                </ThemedText>
-              </View> */}
+              <Image
+                resizeMode="contain"
+                source={require("@/assets/cars/Widget.png")}
+                style={{
+                  width: width * 0.9,
+                  height: 90,
+                  // maxWidth: 361,
+                }}
+              />
             </View>
 
             <View className="flex-row items-center justify-between gap-[8px]">
@@ -260,55 +253,65 @@ export default function CarDetail() {
       <CustomBottomSheetModal
         isVisible={isModalVisible}
         onClose={handleCloseModal}
+        snapPoints={snapPoints}
+        index={Platform.OS === "ios" ? 0 : 1}
       >
         <View
           style={{
             flex: 1,
-            // justifyContent: "space-between",
             alignItems: "center",
           }}
-          className="w-full px-[5%]"
+          className="w-full px-[4%] "
         >
-          <View className="flex-row justify-between items-center w-full">
+          <View className="pt-[1rem] flex-row justify-between items-center w-full">
             <ThemedText className="text-[20px] font-[600] text-[#000000]">
               Contact Dealer
             </ThemedText>
             <TouchableOpacity onPress={handleCloseModal}>
-              <View className="bg-[#7F7F7F33] rounded-full p-[4px]">
-                <AntDesign name="close" size={24} color="#3D3D3DF0" />
+              <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+                <AntDesign name="close" size={16} color="#3D3D3D" />
               </View>
             </TouchableOpacity>
           </View>
 
-          <View className="flex gap-[26px] py-[32px]">
-            <ThemedText className="text-[#101828] text-[17px] font-[600]">
+          <View className="flex justify-center gap-[26px] pt-[36px]">
+            <ThemedText className="text-[#101828] text-[17px] font-[600] text-center">
               How would you like to contact the dealer?
             </ThemedText>
             <View className="flex items-start justify-center gap-[16px]">
               <TouchableOpacity className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
                 <Image
-                  // style={{ width: 20 }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
                   source={require("@/assets/logos_whatsapp-icon.png")}
                 />
-                <ThemedText className="text-[#344054] text-[19px]  font-[500]">
+                <ThemedText className="text-[#344054] text-[17px]  font-[500]">
                   Continue via WhatsApp
                 </ThemedText>
               </TouchableOpacity>
               <TouchableOpacity className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
                 <Image
-                  // style={{ width: 20 }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
                   source={require("@/assets/logos_telegram.png")}
                 />
-                <ThemedText className="text-[#344054] text-[19px]  font-[500]">
+                <ThemedText className="text-[#344054] text-[17px]  font-[500]">
                   Continue via Telegram
                 </ThemedText>
               </TouchableOpacity>
               <TouchableOpacity className="flex-row items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
                 <Image
-                  // style={{ width: 20 }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
                   source={require("@/assets/ion_call.png")}
                 />
-                <ThemedText className="text-[#344054] text-[19px]  font-[500]">
+                <ThemedText className="text-[#344054] text-[17px]  font-[500]">
                   Contact via phone call
                 </ThemedText>
               </TouchableOpacity>

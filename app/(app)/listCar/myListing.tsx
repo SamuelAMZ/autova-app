@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   ScrollView,
@@ -10,9 +9,8 @@ import {
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { Notification, Gps } from "iconsax-react-native";
-import { Image } from "react-native";
 import { router } from "expo-router";
-import CarItem from "@/components/cars/CarItem.android";
+import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
 
 export default function MyListing() {

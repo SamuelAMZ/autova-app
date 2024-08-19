@@ -1,29 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
-  ScrollView,
-  FlatList,
 } from "react-native";
-import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import {
-  Notification,
-  Gps,
-  ArrowLeft,
-  ArrowRight2,
-  SearchNormal1,
-} from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
-import CarItem from "@/components/cars/CarItem.android";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
-import BrandItem from "@/components/BrandItem";
-import { modelData } from "@/constants/data";
 
 export default function Engine() {
   return (
