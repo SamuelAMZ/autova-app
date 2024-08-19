@@ -9,7 +9,6 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
-import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import {
   Notification,
@@ -25,8 +24,6 @@ import CarItem from "@/components/CarItem";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
-import BrandItem from "@/components/BrandItem";
-import { modelData } from "@/constants/data";
 import { Ionicons } from "@expo/vector-icons";
 
 function MyCheckbox() {
@@ -35,12 +32,26 @@ function MyCheckbox() {
     <Pressable
       style={[styles.checkboxBase, checked && styles.checkboxChecked]}
       onPress={() => setChecked(!checked)}>
-      {checked && <Ionicons name="checkmark" size={20} color="white"  />}
+      {checked && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
   );
 }
 
 export default function Price() {
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+
+  const currencies = ["USD", "EUR", "GBP", "JPY"]; // Example currencies
+
+  const toggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+
+  const handleCurrencySelect = (currency: string) => {
+    setSelectedCurrency(currency);
+    setIsDropdownVisible(false); // Hide dropdown after selection
+  };
+
   return (
     <>
       <HeaderListing>
@@ -75,7 +86,7 @@ export default function Price() {
             <ThemedText
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "Poppins_600SemiBold" }}>
-             Price
+              Price
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
@@ -83,7 +94,6 @@ export default function Price() {
               What is the price of your car
             </ThemedText>
           </View>
-
           <Image
             source={require("@/assets/money.png")}
             style={{
@@ -95,14 +105,14 @@ export default function Price() {
           />
           <View className="flex gap-[12px]">
             <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-              <View className="p-[12px] flex flex-row gap-[12px] items-center">
+              <TouchableOpacity onPress={toggleDropdown} className="p-[12px] flex flex-row gap-[12px] items-center">
                 <ThemedText
                   className="text-[15px]  font-[700] text-[#101828]"
                   style={{ fontFamily: "Poppins_700Bold" }}>
-                  USD
+                  { selectedCurrency}
                 </ThemedText>
                 <ArrowDown2 size="20" color="#000" />
-              </View>
+              </TouchableOpacity>
               <View className="h-full w-[1px] bg-[#D0D5DD]" />
               <TextInput
                 className="flex-1 py-[12px] px-[20px]"
@@ -111,9 +121,32 @@ export default function Price() {
                 keyboardType="decimal-pad"
               />
             </View>
+            {isDropdownVisible && (
+              <View className="bg-white border border-[#D0D5DD] rounded-[12px]  ">
+                <FlatList
+                  data={currencies}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      className="p-[12px]"
+                      onPress={() => handleCurrencySelect(item)}>
+                      <ThemedText
+                        className="text-[15px] font-[500] text-[#101828]"
+                        style={{ fontFamily: "Poppins_500Medium" }}>
+                        {item}
+                      </ThemedText>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={(item) => item}
+                />
+              </View>
+            )}
             <View className="flex flex-row gap-[8px] items-center">
               <MyCheckbox />
-              <ThemedText className="text-[#344054] text-[16px]" style={{ fontFamily: "Poppins_500Medium" }}>Negotiable</ThemedText>
+              <ThemedText
+                className="text-[#344054] text-[16px]"
+                style={{ fontFamily: "Poppins_500Medium" }}>
+                Negotiable
+              </ThemedText>
             </View>
           </View>
         </View>
@@ -153,10 +186,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  
+
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
- 
 });
