@@ -1,4 +1,4 @@
-export const carData = [
+export const carsData = [
     { name: "Alpha Romeo" },
     { name: "BMW" },
     { name: "Cadillac" },

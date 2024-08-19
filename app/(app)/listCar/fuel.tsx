@@ -45,7 +45,7 @@ export default function Fuel() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               List Your Car
             </ThemedText>
           </View>
@@ -62,12 +62,12 @@ export default function Fuel() {
         <View className="flex items-start gap-[12px]">
           <ThemedText
             className="text-[#101828] text-[20px]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+            style={{ fontFamily: "Poppins_600SemiBold" }}>
             Fuel Type
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
-            style={{ fontFamily: "PlusJakartaSans_500Medium" }}>
+            style={{ fontFamily: "Poppins_500Medium" }}>
             Select the fuel type of your car
           </ThemedText>
         </View>
@@ -107,7 +107,7 @@ export default function Fuel() {
           className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
           <ThemedText
             className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+            style={{ fontFamily: "Poppins_600SemiBold" }}>
             Continue
           </ThemedText>
         </TouchableOpacity>

@@ -22,7 +22,7 @@ export default function MyListing() {
         <View className="flex flex-row justify-between w-full items-center">
           <ThemedText
             className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            style={{ fontFamily: "Poppins_600SemiBold" }}
           >
             Listing
           </ThemedText>
@@ -36,7 +36,7 @@ export default function MyListing() {
           <View className="bg-[#F9FAFB] p-[16px] rounded-[16px] drop-shadow-md  w-full gap-[16px]">
             <ThemedText
               className="text-[18px] text-[#101828]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+              style={{ fontFamily: "Poppins_600SemiBold" }}
             >
               List cars for free
             </ThemedText>
@@ -59,7 +59,7 @@ export default function MyListing() {
               >
                 <ThemedText
                   className="text-[17px] text-center font-[600] text-[#fff]"
-                  style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+                  style={{ fontFamily: "Poppins_600SemiBold" }}
                 >
                   Continue
                 </ThemedText>
@@ -69,7 +69,7 @@ export default function MyListing() {
           <View className="flex items-start justify-start gap-[20px] w-full pb-[80px]">
             <ThemedText
               className="text-[20px] text-[#101828] "
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+              style={{ fontFamily: "Poppins_600SemiBold" }}
             >
               My Listings
             </ThemedText>

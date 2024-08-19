@@ -23,13 +23,13 @@ export default function SignUp() {
           <View className="flex gap-[12px] items-start">
             <ThemedText
               className="text-[#070C0F] text-[15px] font-[600]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+              style={{ fontFamily: "Poppins_600SemiBold" }}
             >
               Step 1 of 2
             </ThemedText>
             <ThemedText
               className="text-[#070C0F] text-[28px] font-[600]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+              style={{ fontFamily: "Poppins_600SemiBold" }}
             >
               Create Your Account
             </ThemedText>
@@ -43,7 +43,7 @@ export default function SignUp() {
                 />
                 <ThemedText
                   className="text-[16px] font-[600] text-center"
-                  style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+                  style={{ fontFamily: "Poppins_600SemiBold" }}
                 >
                   Continue with Google
                 </ThemedText>
@@ -55,7 +55,7 @@ export default function SignUp() {
                 />
                 <ThemedText
                   className="text-[16px] font-[600]"
-                  style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+                  style={{ fontFamily: "Poppins_600SemiBold" }}
                 >
                   Continue with Apple
                 </ThemedText>
@@ -67,7 +67,7 @@ export default function SignUp() {
                 />
                 <ThemedText
                   className="text-[16px] font-[600]"
-                  style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+                  style={{ fontFamily: "Poppins_600SemiBold" }}
                 >
                   Continue with Facebook
                 </ThemedText>
@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
     color: "#1D2939", // Couleur du texte
     textAlign: "center",
     marginHorizontal: 10,
-    fontFamily: "PlusJakartaSans_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
 });
