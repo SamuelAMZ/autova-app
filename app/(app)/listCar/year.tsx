@@ -43,34 +43,40 @@ export default function YearProduction() {
                 router.back();
               }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}>
+              style={{ backgroundColor: "#c1c1c1" }}
+            >
               <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            >
               List Your Car
             </ThemedText>
           </View>
           <TouchableOpacity
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}>
+            style={{ backgroundColor: "#c1c1c1" }}
+          >
             <AntDesign name="close" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </HeaderListing>
       <View
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
+        style={{ paddingTop: 30, paddingBottom: 60 }}
+      >
         <View className="flex items-start gap-[12px]">
           <ThemedText
             className="text-[#101828] text-[20px]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+          >
             Production Year
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
-            style={{ fontFamily: "PlusJakartaSans_500Medium" }}>
+            style={{ fontFamily: "PlusJakartaSans_500Medium" }}
+          >
             Select the year of production for your car
           </ThemedText>
         </View>
@@ -93,7 +99,8 @@ export default function YearProduction() {
                 <TouchableOpacity
                   key={item}
                   onPress={() => handleSelect(item)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full gap-[12px] justify-center ">
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full gap-[12px] justify-center "
+                >
                   <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                     {item}
                   </ThemedText>
@@ -110,10 +117,12 @@ export default function YearProduction() {
           onPress={() => {
             router.navigate("./mileage");
           }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
+          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
+        >
           <ThemedText
             className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+          >
             Continue
           </ThemedText>
         </TouchableOpacity>

@@ -42,7 +42,7 @@ const ListingPage = () => {
             />
             <TouchableOpacity
               onPress={() => {
-                router.navigate("./myListing");
+                router.navigate("/(app)/listCar/myListing");
               }}
               className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
             >
