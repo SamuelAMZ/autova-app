@@ -1,42 +1,95 @@
-import { PropsWithChildren, useState } from "react";
-import { Text, View } from "react-native";
+import { PropsWithChildren, useMemo, useState } from "react";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import CustomButton from "./CustomButton";
-import { Picker } from "@react-native-picker/picker";
 import RangeSlider from "./RangeSlider";
 import ThemedText from "./ThemedText";
 import { router } from "expo-router";
+import { searchTypesData } from "@/constants/searchTypes";
+import { ArrowDown2, Chainlink } from "iconsax-react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+
+import CustomBottomSheetModal from "@/components/BottomSheetModal";
+
+export interface SearchTypeProps {
+  label: string;
+  value: string;
+}
 
 const SearchCard = ({ children }: PropsWithChildren) => {
-  const [searchType, setSearchType] = useState("model");
+  const snapPoints = useMemo(() => ["25%", "35%", "50%", "90%"], []);
 
-  const handleTypeChange = (item: string) => setSearchType(item);
+  const types = searchTypesData;
+  const [searchType, setSearchType] = useState<SearchTypeProps>(types[0]);
+
+  // callbacks
+  const handleTypeChange = (idx: number) => {
+    setSearchType(types.at(idx)!);
+    handleCloseModal();
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handlePresentModalPress = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <View className="bg-[#F2F4F7] w-full p-3 rounded-xl">
-      <View className="w-full mb-3 flex-row items-center">
+      <View className="w-full mb-3 flex-row items-center gap-3">
         <Text className="text-[#101828] text-[18px] font-semibold">
           Search cars by:
         </Text>
-        <View className="flex-1 ml-2">
-          <Picker
-            style={{ height: 30, color: "#475467" }}
-            selectedValue={searchType}
-            onValueChange={handleTypeChange}
-          >
-            <Picker.Item label="Make & Model" value="model" />
-            <Picker.Item label="Price Range" value="price" />
-            <Picker.Item label="Body Styles" value="body" />
-          </Picker>
-        </View>
+        <TouchableOpacity
+          onPress={handlePresentModalPress}
+          className="flex-1 flex-row gap-2 items-center z-10 py-2"
+        >
+          <Text className="text-[#475467] text-[15px]">{searchType.label}</Text>
+          <ArrowDown2 color="#475467" variant="Bold" size={18} />
+        </TouchableOpacity>
       </View>
-
-      <SearchContent type={searchType} />
-
-      {/* {children} */}
+      <SearchContent type={searchType.value} />
       <CustomButton
         title="Search"
         onPress={() => router.navigate("/(app)/search/carSearch")}
       />
+
+      <CustomBottomSheetModal
+        isVisible={isModalVisible}
+        onClose={handleCloseModal}
+        snapPoints={snapPoints}
+        index={1}
+      >
+        <View className="p-3 flex-row justify-between items-center">
+          <ThemedText className="text-[18px]">Choose item</ThemedText>
+          <TouchableOpacity onPress={handleCloseModal}>
+            <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+              <AntDesign name="close" size={16} color="#3D3D3D" />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={types}
+          renderItem={(item) => (
+            <TouchableOpacity
+              onPress={() => handleTypeChange(item.index)}
+              style={{
+                borderTopWidth: 1,
+                paddingVertical: 14,
+                borderColor: "#F2F4F7",
+              }}
+              className="p-3 flex-row gap-3 items-center"
+            >
+              <Chainlink color="#475467" variant="Bold" />
+              <ThemedText className="text-[#475467]">
+                {item.item.label}
+              </ThemedText>
+            </TouchableOpacity>
+          )}
+        />
+      </CustomBottomSheetModal>
     </View>
   );
 };
@@ -88,7 +141,7 @@ export const MakeModelsSearch = () => {
 
 export const PriceRangeSearch = () => {
   return (
-    <View className="w-full">
+    <View className="w-full z-0">
       <RangeSlider from={0} to={500000} />
       <View className="w-full flex-row justify-between my-4">
         <View className="w-[45%] border border-[#D0D5DD] rounded-[80px] h-[33px] items-center justify-center">

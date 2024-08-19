@@ -1,33 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
-  TextInput,
   ScrollView,
-  FlatList,
-  Pressable,
-  StyleSheet,
 } from "react-native";
-import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import {
-  Notification,
-  Gps,
-  ArrowLeft,
-  ArrowRight2,
-  SearchNormal1,
-  ArrowDown2,
-} from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
-import CarItem from "@/components/CarItem";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
-import BrandItem from "@/components/BrandItem";
-import { modelData } from "@/constants/data";
-import { Ionicons } from "@expo/vector-icons";
 
 export default function Contact() {
   return (
@@ -40,18 +22,21 @@ export default function Contact() {
                 router.back();
               }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}>
+              style={{ backgroundColor: "#c1c1c1" }}
+            >
               <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
               List Your Car
             </ThemedText>
           </View>
           <TouchableOpacity
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}>
+            style={{ backgroundColor: "#c1c1c1" }}
+          >
             <AntDesign name="close" size={20} color="black" />
           </TouchableOpacity>
         </View>
@@ -63,12 +48,14 @@ export default function Contact() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
               Contact Details
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[15px]"
-              style={{ fontFamily: "Poppins_500Medium" }}>
+              style={{ fontFamily: "Poppins_500Medium" }}
+            >
               How you would like to contact the customer?
             </ThemedText>
           </View>
@@ -77,24 +64,28 @@ export default function Contact() {
             <View className="flex gap-[12px]">
               <ThemedText
                 className="text-[15px] text-[#667085]"
-                style={{ fontFamily: "Poppins_500Medium" }}>
+                style={{ fontFamily: "Poppins_500Medium" }}
+              >
                 Name
               </ThemedText>
               <ThemedText
                 className="text-[#101828] text-[17px]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}>
+                style={{ fontFamily: "Poppins_600SemiBold" }}
+              >
                 Omer Hassan
               </ThemedText>
             </View>
             <View className="flex gap-[12px]">
               <ThemedText
                 className="text-[15px] text-[#667085]"
-                style={{ fontFamily: "Poppins_500Medium" }}>
+                style={{ fontFamily: "Poppins_500Medium" }}
+              >
                 Email
               </ThemedText>
               <ThemedText
                 className="text-[#101828] text-[17px]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}>
+                style={{ fontFamily: "Poppins_600SemiBold" }}
+              >
                 omar@carnextplus.com
               </ThemedText>
             </View>
@@ -108,7 +99,8 @@ export default function Contact() {
               />
               <ThemedText
                 className="text-[16px] font-[600] text-center"
-                style={{ fontFamily: "Poppins_500Medium" }}>
+                style={{ fontFamily: "Poppins_500Medium" }}
+              >
                 Enter WhatsApp number
               </ThemedText>
             </TouchableOpacity>
@@ -119,7 +111,8 @@ export default function Contact() {
               />
               <ThemedText
                 className="text-[16px] font-[600]"
-                style={{ fontFamily: "Poppins_500Medium" }}>
+                style={{ fontFamily: "Poppins_500Medium" }}
+              >
                 Enter Telegram number
               </ThemedText>
             </TouchableOpacity>
@@ -130,7 +123,8 @@ export default function Contact() {
               />
               <ThemedText
                 className="text-[16px] font-[600]"
-                style={{ fontFamily: "Poppins_500Medium" }}>
+                style={{ fontFamily: "Poppins_500Medium" }}
+              >
                 Enter phone number
               </ThemedText>
             </TouchableOpacity>
@@ -138,13 +132,13 @@ export default function Contact() {
 
           <View className="flex gap-[19px]">
             <TouchableOpacity
-              onPress={() => {
-                
-              }}
-              className="bg-[#7878801F] border border-[#5856D6] px-[20px] py-[12px] rounded-[12px] w-[100%] ">
+              onPress={() => {}}
+              className="bg-[#7878801F] border border-[#5856D6] px-[20px] py-[12px] rounded-[12px] w-[100%] "
+            >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#5856D6]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}>
+                style={{ fontFamily: "Poppins_600SemiBold" }}
+              >
                 Review
               </ThemedText>
             </TouchableOpacity>

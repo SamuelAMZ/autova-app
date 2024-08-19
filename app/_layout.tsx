@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MySafeAreaView from "@/components/SafeAreaView";
-
 import { useColorScheme } from "@/hooks/useColorScheme";
 import "../styles/global.css";
 
@@ -46,11 +45,11 @@ export default function RootLayout() {
 
   return (
     <>
-      <SafeAreaProvider>
+      {/* <SafeAreaProvider>
         <MySafeAreaView>
-          <Slot />
         </MySafeAreaView>
-      </SafeAreaProvider>
+      </SafeAreaProvider> */}
+      <Slot />
     </>
   );
 }

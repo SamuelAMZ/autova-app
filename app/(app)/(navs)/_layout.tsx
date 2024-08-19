@@ -1,12 +1,15 @@
 import TabItem, { TabItemProps } from "@/components/TabItem";
 import { Tabs } from "expo-router";
 import * as Icon from "iconsax-react-native";
+import { Platform } from "react-native";
 
 const screenOptions = {
   headerShown: false,
   tabBarShowLabel: false,
   tabBarActiveTintColor: "red",
-  tabBarStyle: { height: 60 },
+  tabBarStyle: {
+    height: Platform.OS === "android" ? 60 : 90,
+  },
 };
 
 const tabOptions = ({ title, icon }: TabItemProps) => {

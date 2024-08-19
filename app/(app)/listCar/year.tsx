@@ -1,29 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  FlatList,
-} from "react-native";
-import Header from "@/components/Header";
+import { View, TouchableOpacity, ScrollView } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import {
-  Notification,
-  Gps,
-  ArrowLeft,
-  ArrowRight2,
-  SearchNormal1,
-} from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
-import CarItem from "@/components/CarItem";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
-import BrandItem from "@/components/BrandItem";
-import { modelData } from "@/constants/data";
 
 export default function YearProduction() {
   const currentYear = new Date().getFullYear();
@@ -113,19 +95,25 @@ export default function YearProduction() {
           </View>
         </ScrollView>
 
-        <TouchableOpacity
-          onPress={() => {
-            router.navigate("./mileage");
+        <View
+          style={{
+            paddingBottom: 20,
           }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
         >
-          <ThemedText
-            className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+          <TouchableOpacity
+            onPress={() => {
+              router.navigate("./mileage");
+            }}
+            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
           >
-            Continue
-          </ThemedText>
-        </TouchableOpacity>
+            <ThemedText
+              className="text-[17px] text-center font-[600] text-[#fff]"
+              style={{ fontFamily: "Poppins_600SemiBold" }}
+            >
+              Continue
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );

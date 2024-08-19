@@ -156,19 +156,25 @@ export default function Upload() {
             />
           </View>
 
-          <TouchableOpacity
-            onPress={() => {
-              router.navigate("./contact");
+          <View
+            style={{
+              paddingBottom: 20,
             }}
-            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
           >
-            <ThemedText
-              className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+            <TouchableOpacity
+              onPress={() => {
+                router.navigate("./contact");
+              }}
+              className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
             >
-              Continue
-            </ThemedText>
-          </TouchableOpacity>
+              <ThemedText
+                className="text-[17px] text-center font-[600] text-[#fff]"
+                style={{ fontFamily: "Poppins_600SemiBold" }}
+              >
+                Continue
+              </ThemedText>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </>

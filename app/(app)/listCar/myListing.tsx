@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   ScrollView,
@@ -10,9 +9,8 @@ import {
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { Notification, Gps } from "iconsax-react-native";
-import { Image } from "react-native";
 import { router } from "expo-router";
-import CarItem from "@/components/CarItem";
+import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
 
 export default function MyListing() {
@@ -76,7 +74,16 @@ export default function MyListing() {
             <FlatList
               className="w-full"
               data={[{}, {}, {}]}
-              renderItem={({ index, item }) => <CarItem car={CarData[0]} />}
+              renderItem={({ index, item }) => (
+                <CarItem
+                  car={CarData[0]}
+                  onPress={() => {
+                    router.navigate({
+                      pathname: "/(app)/brands/carDetail",
+                    });
+                  }}
+                />
+              )}
               ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
               scrollEnabled={false}
             />
