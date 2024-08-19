@@ -2,7 +2,13 @@ import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { Notification } from "iconsax-react-native";
 import React from "react";
-import { View, FlatList, Image } from "react-native";
+import {
+  View,
+  FlatList,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 
 const SavedPage = () => {
   return (
@@ -21,19 +27,22 @@ const SavedPage = () => {
         </View>
       </Header>
       <View className="flex-1 w-full bg-white px-4">
-        <ThemedText className="font-bold text-[18px] mt-5">
-          Saved Cars
-        </ThemedText>
+        <ScrollView>
+          <ThemedText className="font-bold text-[18px] mt-5">
+            Saved Cars
+          </ThemedText>
 
-        <FlatList
-          className="mt-5"
-          data={Array.from({ length: 12 })}
-          renderItem={({ item }) => <SavedCarItem />}
-          ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-          keyExtractor={(_, index) => index.toString()}
-          initialNumToRender={5}
-          ListFooterComponent={() => <View style={{ height: 30 }} />}
-        />
+          <FlatList
+            className="mt-5"
+            data={Array.from({ length: 12 })}
+            renderItem={({ item }) => <SavedCarItem />}
+            ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+            scrollEnabled={false}
+            keyExtractor={(_, index) => index.toString()}
+            initialNumToRender={5}
+            ListFooterComponent={() => <View style={{ height: 30 }} />}
+          />
+        </ScrollView>
       </View>
     </>
   );
@@ -43,7 +52,7 @@ export default SavedPage;
 
 const SavedCarItem = () => {
   return (
-    <View className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl">
+    <TouchableOpacity className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl">
       <Image
         className="w-[80] h-[70] rounded-lg"
         source={require("@/assets/images/audi.png")}
@@ -62,6 +71,6 @@ const SavedCarItem = () => {
           <ThemedText className="text-[#667085]">16 Aug, 10:20 PM</ThemedText>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
