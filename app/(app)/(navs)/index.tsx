@@ -48,30 +48,37 @@ const HomePage = () => {
               </ThemedText>
             </TouchableOpacity>
           </View>
-          <FlatList
-            className="px-[4%]"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={Array.from({ length: 12 })}
-            renderItem={({ item }) => (
-              <BrandItem size={70} onPress={() => {}} />
-            )}
-            ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-          />
 
-          <FlatList
-            className="px-[4%]"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={[{}, {}, {}, {}, {}, {}, {}]}
-            renderItem={({ index, item }) => (
-              <FilterTag title="Title" active={index == 0} />
-            )}
-            ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-          />
+          {/* Brands Items */}
+          <View className="w-full px-4">
+            <FlatList
+              // className="px-[4%]"
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={Array.from({ length: 12 })}
+              renderItem={({ item }) => (
+                <BrandItem size={70} onPress={() => {}} />
+              )}
+              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
+            />
+          </View>
 
+          {/* Filter tags */}
+          <View className="w-full px-4">
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={[{}, {}, {}, {}, {}, {}]}
+              renderItem={({ index, item }) => (
+                <FilterTag title="Title" active={index == 0} />
+              )}
+              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
+            />
+          </View>
+
+          {/* Car Items */}
           <FlatList
             className="px-[4%]"
             data={CarData}

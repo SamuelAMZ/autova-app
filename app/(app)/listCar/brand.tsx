@@ -15,7 +15,8 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import BrandItem from "@/components/BrandItem";
-import { carData } from "@/constants/data";
+import { carsData } from "@/constants/data";
+import { HorizontalSeperator } from "@/components/Separator";
 
 export default function Brand() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
@@ -30,14 +31,16 @@ export default function Brand() {
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity
-            onPress={() => { router.back()}}
+              onPress={() => {
+                router.back();
+              }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
               style={{ backgroundColor: "#c1c1c1" }}>
               <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               List Your Car
             </ThemedText>
           </View>
@@ -55,29 +58,32 @@ export default function Brand() {
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               Brand
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "PlusJakartaSans_500Medium" }}>
+              style={{ fontFamily: "Poppins_500Medium" }}>
               Select a brand for your car
             </ThemedText>
           </View>
-          <SearchNormal1
-            size="20"
-            color="#000"
-            style={{ position: "absolute", right: 20, top: 111 }}
-          />
-          <TextInput
-            className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
-            placeholder="Search a brand"
-            placeholderTextColor="#1D2939"
-          />
+          <View className="relative">
+            <SearchNormal1
+              size="20"
+              color="#000"
+              style={{ position: "absolute", right: 20, top: 15 }}
+            />
+            <TextInput
+              className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
+              placeholder="Search a brand"
+              placeholderTextColor="#1D2939"
+            />
+          </View>
+
           <View className="flex gap-[20px] mb-[30px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               Popular Brand
             </ThemedText>
             <FlatList
@@ -85,21 +91,22 @@ export default function Brand() {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               horizontal
-              data={[{}, {}, {}, {}, {}, {}, {}]}
-              renderItem={({ item }) => <BrandItem />}
-              ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
-              // keyExtractor={(item) => item}
+              data={Array.from({ length: 12 })}
+              renderItem={({ item }) => (
+                <BrandItem size={70} onPress={() => {}} />
+              )}
+              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
             />
           </View>
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               Popular Brand
             </ThemedText>
 
             <View className="">
-              {carData.map((item) => (
+              {carsData.map((item) => (
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => handleSelect(item.name)}
@@ -123,7 +130,7 @@ export default function Brand() {
           className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]">
           <ThemedText
             className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}>
+            style={{ fontFamily: "Poppins_600SemiBold" }}>
             Continue
           </ThemedText>
         </TouchableOpacity>

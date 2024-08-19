@@ -35,7 +35,7 @@ export default function YearProduction() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+              style={{ fontFamily: "Poppins_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -55,13 +55,13 @@ export default function YearProduction() {
         <View className="flex items-start gap-[12px]">
           <ThemedText
             className="text-[#101828] text-[20px]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            style={{ fontFamily: "Poppins_600SemiBold" }}
           >
             Production Year
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
-            style={{ fontFamily: "PlusJakartaSans_500Medium" }}
+            style={{ fontFamily: "Poppins_500Medium" }}
           >
             Select the year of production for your car
           </ThemedText>
@@ -107,7 +107,7 @@ export default function YearProduction() {
         >
           <ThemedText
             className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            style={{ fontFamily: "Poppins_600SemiBold" }}
           >
             Continue
           </ThemedText>

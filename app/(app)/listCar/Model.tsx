@@ -38,8 +38,7 @@ export default function Model() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
-            >
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               List Your Car
             </ThemedText>
           </View>
@@ -59,33 +58,32 @@ export default function Model() {
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
-            >
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               Model
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "PlusJakartaSans_500Medium" }}
-            >
+              style={{ fontFamily: "Poppins_500Medium" }}>
               Select the model for your car
             </ThemedText>
           </View>
-          <SearchNormal1
-            size="20"
-            color="#000"
-            style={{ position: "absolute", right: 20, top: 111 }}
-          />
-          <TextInput
-            className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
-            placeholder="Search a model"
-            placeholderTextColor="#1D2939"
-          />
+          <View className="relative">
+            <SearchNormal1
+              size="20"
+              color="#000"
+              style={{ position: "absolute", right: 20, top: 15 }}
+            />
+            <TextInput
+              className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
+              placeholder="Search a model"
+              placeholderTextColor="#1D2939"
+            />
+          </View>
 
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
-            >
+              style={{ fontFamily: "Poppins_600SemiBold" }}>
               All Model
             </ThemedText>
 
@@ -116,8 +114,7 @@ export default function Model() {
         >
           <ThemedText
             className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
-          >
+            style={{ fontFamily: "Poppins_600SemiBold" }}>
             Continue
           </ThemedText>
         </TouchableOpacity>

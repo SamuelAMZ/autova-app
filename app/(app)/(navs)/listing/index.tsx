@@ -18,13 +18,13 @@ const ListingPage = () => {
         <View className="flex gap-[24px] ">
           <ThemedText
             className="text-[#101828] text-[20px] text-center"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            style={{ fontFamily: "Poppins_600SemiBold" }}
           >
             You don’t have any listing yet!
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-center text-[14px]"
-            style={{ fontFamily: "PlusJakartaSans_500Medium" }}
+            style={{ fontFamily: "Poppins_500Medium" }}
           >
             We make it easy to reach millions of potential buyers. Start your
             free listing by providing your location below:
@@ -42,13 +42,13 @@ const ListingPage = () => {
             />
             <TouchableOpacity
               onPress={() => {
-                router.navigate("/(app)/listCar/myListing");
+                router.navigate('/(app)/listCar/condition')
               }}
               className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
             >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
-                style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+                style={{ fontFamily: "Poppins_600SemiBold" }}
               >
                 Start your listing
               </ThemedText>
@@ -69,7 +69,7 @@ function CustomHeader() {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "PlusJakartaSans_600SemiBold" }}
+            style={{ fontFamily: "Poppins_600SemiBold" }}
           >
             Listing
           </ThemedText>
