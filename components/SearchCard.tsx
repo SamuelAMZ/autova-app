@@ -4,6 +4,7 @@ import CustomButton from "./CustomButton";
 import { Picker } from "@react-native-picker/picker";
 import RangeSlider from "./RangeSlider";
 import ThemedText from "./ThemedText";
+import { router } from "expo-router";
 
 const SearchCard = ({ children }: PropsWithChildren) => {
   const [searchType, setSearchType] = useState("model");
@@ -32,7 +33,10 @@ const SearchCard = ({ children }: PropsWithChildren) => {
       <SearchContent type={searchType} />
 
       {/* {children} */}
-      <CustomButton title="Search" onPress={() => {}} />
+      <CustomButton
+        title="Search"
+        onPress={() => router.navigate("/(app)/search/carSearch")}
+      />
     </View>
   );
 };
@@ -51,7 +55,7 @@ const SearchContent = ({ type }: { type: string }) => {
   );
 };
 
-const MakeModelsSearch = () => {
+export const MakeModelsSearch = () => {
   return (
     <View className="mb-3 flex-row justify-between">
       <View className="bg-white h-[80] w-[47%] shadow-sm rounded-lg">
@@ -82,7 +86,7 @@ const MakeModelsSearch = () => {
   );
 };
 
-const PriceRangeSearch = () => {
+export const PriceRangeSearch = () => {
   return (
     <View className="w-full">
       <RangeSlider from={0} to={500000} />
@@ -100,7 +104,7 @@ const PriceRangeSearch = () => {
   );
 };
 
-const BodyStylesSearch = () => {
+export const BodyStylesSearch = () => {
   return (
     <View className="mb-3 flex-col justify-between">
       <View className="bg-white h-[80] w-full shadow-sm rounded-lg">
