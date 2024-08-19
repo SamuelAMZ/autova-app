@@ -11,7 +11,7 @@ const ThemedText = ({
 }: ThemedTextProps) => {
   return (
     <Text
-      style={{ fontFamily: fontFamily ?? "PlusJakartaSans_400Regular" }}
+      style={{ fontFamily: fontFamily ?? "Poppins_400Regular" }}
       {...otherProps}
     >
       {children}
