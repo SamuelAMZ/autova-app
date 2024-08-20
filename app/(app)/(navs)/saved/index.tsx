@@ -15,7 +15,7 @@ const SavedPage = () => {
   return (
     <View className="flex-1 bg-white">
       <Header>
-        <View className="flex flex-row justify-between w-full items-center px-[4%] py-[16px]">
+        <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className="text-[#fff] text-[22px]"
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
