@@ -59,7 +59,7 @@ export default function CarDetail() {
         <View className="flex-1">
           <View className="flex-1 ">
             <CustomHeader />
-            <ScrollView className="flex-1 pb-[1rem]">
+            <ScrollView bounces={false} className="flex-1 pb-[1rem]">
               <View
                 style={{
                   width: width,

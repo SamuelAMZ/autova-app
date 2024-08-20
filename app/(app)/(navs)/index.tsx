@@ -48,7 +48,7 @@ const HomePage = () => {
           <Notification color="white" size={20} />
         </View>
       </View>
-      <ScrollView>
+      <ScrollView bounces={false}>
         <View className="w-full px-4 pb-4">
           <SearchCard></SearchCard>
         </View>
@@ -63,7 +63,7 @@ const HomePage = () => {
               Featured Dealers
             </ThemedText>
             <TouchableOpacity onPress={handlePresentModalPress}>
-              <ThemedText className="text-[#007AFF] font-medium text-[15px]">
+              <ThemedText className="text-[#007AFF] font-medium">
                 View All
               </ThemedText>
             </TouchableOpacity>
@@ -133,7 +133,7 @@ const HomePage = () => {
             paddingTop: 14,
             paddingBottom: 30,
           }}
-          className="w-full flex-row justify-between items-center px-[4%] "
+          className="w-full flex-row justify-between items-center px-4"
         >
           <ThemedText
             style={{

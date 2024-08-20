@@ -27,7 +27,7 @@ const SavedPage = () => {
           </View>
         </View>
       </Header>
-      <ScrollView className="px-4">
+      <ScrollView bounces={false} className="px-4">
         <ThemedText className="font-bold text-[18px] mt-5">
           Saved Cars
         </ThemedText>
