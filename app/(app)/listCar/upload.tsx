@@ -69,7 +69,7 @@ export default function Upload() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -90,13 +90,13 @@ export default function Upload() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Image/Video
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               Upload the Image/Videos of your car
             </ThemedText>
@@ -110,14 +110,14 @@ export default function Upload() {
               <UploadCloud color="#FF5722" width={24} />
             </View>
             <ThemedText
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               className="text-[#5856D6] mt-3"
             >
               Click to upload
             </ThemedText>
             <ThemedText
               className="mt-2 text-[#1E293B]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               MP4, PNG, JPG or GIF (max. 100 mb)
             </ThemedText>
@@ -169,7 +169,7 @@ export default function Upload() {
             >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               >
                 Continue
               </ThemedText>

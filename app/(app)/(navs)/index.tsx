@@ -56,7 +56,7 @@ const HomePage = () => {
           <View className="px-[4%] flex-1 flex-row justify-between items-end mt-4">
             <ThemedText
               style={{
-                fontFamily: "Poppins_600SemiBold",
+                fontFamily: "SpaceGrotesk_600SemiBold",
               }}
               className="font-semibold text-[18px]"
             >
@@ -137,7 +137,7 @@ const HomePage = () => {
         >
           <ThemedText
             style={{
-              fontFamily: "Poppins_600SemiBold",
+              fontFamily: "SpaceGrotesk_600SemiBold",
             }}
             className="font-semibold text-[18px]"
           >

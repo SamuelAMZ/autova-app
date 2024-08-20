@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import {
-  ArrowRight2,
-} from "iconsax-react-native";
+import { ArrowRight2 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
@@ -30,7 +25,7 @@ export default function Transmission() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -51,13 +46,13 @@ export default function Transmission() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Transmission
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               Enter the transmission type of your car
             </ThemedText>
@@ -84,7 +79,7 @@ export default function Transmission() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Manual
                 </ThemedText>
@@ -102,7 +97,7 @@ export default function Transmission() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Automatic
                 </ThemedText>
@@ -120,7 +115,7 @@ export default function Transmission() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Others
                 </ThemedText>
@@ -143,7 +138,7 @@ export default function Transmission() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>

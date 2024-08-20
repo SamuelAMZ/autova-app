@@ -162,8 +162,10 @@ export const PriceRangeSearch = () => {
 export const BodyStylesSearch = () => {
   return (
     <View className="mb-3 flex-col justify-between">
-      <View className="bg-white h-[80] w-full shadow-sm rounded-lg">
-        <View className="h-[50%] w-full justify-center ml-3">
+      <View style={{
+        height:90
+      }} className="bg-white w-full shadow-sm rounded-lg">
+        <View className="h-[45%] w-full justify-center ml-3">
           <ThemedText className="text-[#344054] font-semibold">
             Doors
           </ThemedText>

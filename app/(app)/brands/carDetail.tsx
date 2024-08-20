@@ -78,7 +78,7 @@ export default function CarDetail() {
               >
                 <ThemedText
                   style={{
-                    fontFamily: "Poppins_600SemiBold",
+                    fontFamily: "SpaceGrotesk_600SemiBold",
                   }}
                   className="text-[#1D2939] text-[20px]"
                 >
@@ -167,7 +167,7 @@ export default function CarDetail() {
 
                 <ThemedText
                   style={{
-                    fontFamily: "Poppins_600SemiBold",
+                    fontFamily: "SpaceGrotesk_600SemiBold",
                   }}
                   className="text-[#5856D6] text-[28px]"
                 >
@@ -306,7 +306,7 @@ export default function CarDetail() {
               <View className="pt-[1rem] flex-row justify-between items-center w-full">
                 <ThemedText
                   style={{
-                    fontFamily: "Poppins_600SemiBold",
+                    fontFamily: "SpaceGrotesk_600SemiBold",
                   }}
                   className="text-[20px] text-[#000000]"
                 >
@@ -322,7 +322,7 @@ export default function CarDetail() {
               <View className="flex justify-center gap-[26px] pt-[36px]">
                 <ThemedText
                   style={{
-                    fontFamily: "Poppins_600SemiBold",
+                    fontFamily: "SpaceGrotesk_600SemiBold",
                   }}
                   className="text-[#101828] text-[17px] text-center"
                 >

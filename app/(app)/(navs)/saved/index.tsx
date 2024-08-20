@@ -12,7 +12,7 @@ const SavedPage = () => {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[16px]">
           <ThemedText
             className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             Saved
           </ThemedText>

@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, TextInput, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+} from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { Notification, Gps } from "iconsax-react-native";
@@ -18,13 +24,13 @@ const ListingPage = () => {
         <View className="flex gap-[24px] ">
           <ThemedText
             className="text-[#101828] text-[20px] text-center"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             You don’t have any listing yet!
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-center text-[14px]"
-            style={{ fontFamily: "Poppins_500Medium" }}
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
           >
             We make it easy to reach millions of potential buyers. Start your
             free listing by providing your location below:
@@ -33,7 +39,11 @@ const ListingPage = () => {
             <Gps
               size="24"
               color="#1D2939"
-              style={{ position: "absolute", right: 20, top: Platform.OS === "android" ? 15 : 10 }}
+              style={{
+                position: "absolute",
+                right: 20,
+                top: Platform.OS === "android" ? 15 : 10,
+              }}
             />
             <TextInput
               className="bg-[#7878801F] relative border border-[#5856D6] py-[12px] px-[20px] rounded-[12px]"
@@ -42,13 +52,13 @@ const ListingPage = () => {
             />
             <TouchableOpacity
               onPress={() => {
-                router.navigate('/(app)/listCar/condition')
+                router.navigate("/(app)/listCar/condition");
               }}
               className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
             >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               >
                 Start your listing
               </ThemedText>
@@ -69,7 +79,7 @@ function CustomHeader() {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             Listing
           </ThemedText>

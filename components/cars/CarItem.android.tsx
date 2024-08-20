@@ -53,7 +53,7 @@ export default function CarItem({
             <View>
               <ThemedText
                 style={{
-                  fontFamily: "Poppins_600SemiBold",
+                  fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
                 className="text-[#101828] text-[19px]"
               >
@@ -78,7 +78,7 @@ export default function CarItem({
             <View>
               <ThemedText
                 style={{
-                  fontFamily: "Poppins_600SemiBold",
+                  fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
                 className="text-[#101828] text-[17px]"
               >

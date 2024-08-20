@@ -27,7 +27,7 @@ export default function Notif() {
           <View className="mt-[30px] flex gap-[12px]">
             <ThemedText
               className="text-[#070C0F] text-[28px] text-center font-[600]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Never Miss a Deal!
             </ThemedText>
@@ -40,7 +40,7 @@ export default function Notif() {
             <TouchableOpacity className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]">
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               >
                 Enable notifications
               </ThemedText>
@@ -54,7 +54,7 @@ export default function Notif() {
             >
               <ThemedText
                 className="text-[17px] text-center font-[500] text-[#101828]"
-                style={{ fontFamily: "Poppins_500Medium" }}
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
               >
                 Skip for now
               </ThemedText>
