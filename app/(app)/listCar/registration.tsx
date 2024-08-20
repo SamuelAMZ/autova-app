@@ -79,7 +79,7 @@ export default function Registration() {
           <View className="flex gap-[20px]">
             <View className="">
               {Array.from(
-                { length: 2026 - 1950 + 1 },
+                { length: currentYear - 1990 + 1 },
                 (_, index) => currentYear - index
               ).map((item) => (
                 <TouchableOpacity
