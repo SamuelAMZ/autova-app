@@ -11,6 +11,11 @@ import {
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 
+import { StatusBar } from "expo-status-bar";
+import { PropsWithChildren } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+
 import { router } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -35,7 +40,7 @@ const data = [
 export default function CarDetail() {
   const { width, height } = useWindowDimensions();
 
-  const [selected, setSelected] = useState("Details");
+  const [selected, setSelected] = useState("Specifications");
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const snapPoints = useMemo(() => ["55%", "60%", "90%"], []);
@@ -192,6 +197,7 @@ export default function CarDetail() {
                       setSelected("Specifications");
                     }}
                     style={{
+                      flex: 0.5,
                       borderRadius: 100,
                       borderWidth: 1,
                       borderColor:
@@ -218,6 +224,7 @@ export default function CarDetail() {
                       setSelected("Details");
                     }}
                     style={{
+                      flex: 0.5,
                       borderRadius: 100,
                       borderWidth: 1,
                       borderColor:
@@ -236,58 +243,33 @@ export default function CarDetail() {
                       Details
                     </ThemedText>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelected("Rating");
-                    }}
-                    style={{
-                      borderRadius: 100,
-                      borderWidth: 1,
-                      borderColor:
-                        selected === "Rating" ? "#5856D6" : "#EAECF0",
-                      backgroundColor:
-                        selected === "Rating" ? "#5856D6" : "transparent",
-                    }}
-                    className="flex items-center justify-center"
-                  >
-                    <ThemedText
-                      style={{
-                        color: selected === "Rating" ? "#FFFFFF" : "#101828",
-                      }}
-                      className="p-[10px_20px] text-[16px]"
-                    >
-                      Rating
-                    </ThemedText>
-                  </TouchableOpacity>
                 </View>
 
-                <View>
-                  <ThemedText className="text-[#344054] text-[15px] font-[400]">
-                    Nisi purus felis enim dolor aliquet at enim viverra aenean.
-                    Placerat auctor arcu eu mollis tempor eu. Felis aliquet
-                    pharetra laoreet amet. Elit tristique id viverra velit
-                    interdum nullam non.
-                  </ThemedText>
-                  <ThemedText className="text-[#344054] text-[15px] font-[400]">
-                    Elementum netus mi scelerisque sit morbi quis. Augue
-                    pharetra mauris elit consequat amet. Neque ridiculus vitae
-                    pharetra at. Pulvinar sit habitant sit fermentum. Convallis
-                    sapien leo elementum et lectus quam eget porttitor. Nulla
-                    nisi ultricies id euismod.
-                  </ThemedText>
-                </View>
+                {selected === "Details" ? (
+                  <CarDetails />
+                ) : selected === "Specifications" ? (
+                  <CarSpecifications />
+                ) : null}
 
-                <TouchableOpacity
-                  onPress={handlePresentModalPress}
-                  className="bg-[#5856D6] p-[12px_20px] rounded-[12px] border border-solid border-[#5856D6]"
-                >
-                  <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
-                    Contact Seller
-                  </ThemedText>
-                </TouchableOpacity>
                 <RelatedCar />
               </View>
             </ScrollView>
+            <View
+              style={{
+                paddingBottom: 20,
+                paddingTop: 8,
+              }}
+              className="px-[4%] bg-white"
+            >
+              <TouchableOpacity
+                onPress={handlePresentModalPress}
+                className="bg-[#5856D6] p-[12px_20px] rounded-[12px] border border-solid border-[#5856D6]"
+              >
+                <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
+                  Contact Seller
+                </ThemedText>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <CustomBottomSheetModal
@@ -380,6 +362,89 @@ export default function CarDetail() {
   );
 }
 
+function CarDetails() {
+  return (
+    <View className="py-[10px]">
+      <ThemedText className="text-[#344054] text-[15px] font-[400]">
+        Nisi purus felis enim dolor aliquet at enim viverra aenean. Placerat
+        auctor arcu eu mollis tempor eu. Felis aliquet pharetra laoreet amet.
+        Elit tristique id viverra velit interdum nullam non.
+      </ThemedText>
+      <ThemedText className="text-[#344054] text-[15px] font-[400]">
+        Elementum netus mi scelerisque sit morbi quis. Augue pharetra mauris
+        elit consequat amet. Neque ridiculus vitae pharetra at. Pulvinar sit
+        habitant sit fermentum. Convallis sapien leo elementum et lectus quam
+        eget porttitor. Nulla nisi ultricies id euismod.
+      </ThemedText>
+    </View>
+  );
+}
+
+function CarSpecifications() {
+  const data = [
+    {
+      Brand: "Tesla",
+    },
+    {
+      Model: "Model X Long Range",
+    },
+    {
+      "Trim/Edition": "Hybrid Edition",
+    },
+    {
+      "Year of Manufacture": "2022",
+    },
+    {
+      "Registration Year": "2024",
+    },
+    {
+      Condition: "New",
+    },
+    {
+      Transmission: "Automatic",
+    },
+    {
+      "Body Type": "SUV / 4x4",
+    },
+    {
+      "Fuel Type": "Octane",
+    },
+    {
+      "Engine Capacity": "1500cc",
+    },
+  ];
+  return (
+    <View className="flex gap-[16px] justify-center py-[12px]">
+      {data.map((item, idx) => {
+        return (
+          <View
+            key={idx}
+            className="flex-1 flex-row justify-start gap-[14px] items-center"
+          >
+            <ThemedText
+              style={{
+                flex: 0.5,
+              }}
+              fontFamily="SpaceGrotesk_600SemiBold"
+              className="text-[#1D2939] text-[18px]"
+            >
+              {Object.keys(item)[0]}:
+            </ThemedText>
+            <ThemedText
+              style={{
+                flex: 0.5,
+              }}
+              className="text-[#475467] text-[16px]"
+            >
+              {Object.values(item)[0]}
+            </ThemedText>
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
 function CustomHeader({ title }: { title?: string }) {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -429,11 +494,6 @@ function CustomHeader({ title }: { title?: string }) {
     </Header>
   );
 }
-
-import { StatusBar } from "expo-status-bar";
-import { PropsWithChildren } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 
 const Header = ({
   children,
