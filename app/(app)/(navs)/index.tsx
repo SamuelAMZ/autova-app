@@ -1,5 +1,5 @@
 import { Notification } from "iconsax-react-native";
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import {
   View,
   ScrollView,
@@ -10,19 +10,20 @@ import {
 import AppIcon from "@/assets/icons/app-logo.svg";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { BottomSheetView } from "@gorhom/bottom-sheet";
 
 import BrandItem from "@/components/BrandItem";
 import CarItem from "@/components/cars/CarItem";
 import FilterTag from "@/components/FilterTag";
-import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import SearchCard from "@/components/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import { CarData } from "@/constants/CarData";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 const HomePage = () => {
+  const insets = useSafeAreaInsets();
   const snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
@@ -35,11 +36,24 @@ const HomePage = () => {
   };
 
   return (
-    <View className="w-full flex-1 bg-[#FFFFFF]">
-      <CustomHeader />
-      <ScrollView className="pt-4">
-        <View className="flex gap-[20px]">
-          <View className="px-[4%] flex-1 flex-row justify-between items-end">
+    <View className="flex-1 bg-[#5856D6]">
+      <View
+        style={{ paddingTop: insets.top, paddingBottom: 10 }}
+        className="px-4 w-full flex-row items-center justify-between"
+      >
+        <View className="items-center flex-row">
+          <AppIcon height={36} />
+        </View>
+        <View className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
+          <Notification color="white" size={20} />
+        </View>
+      </View>
+      <ScrollView>
+        <View className="w-full px-4 pb-4">
+          <SearchCard></SearchCard>
+        </View>
+        <View className="flex gap-[20px] bg-white">
+          <View className="px-[4%] flex-1 flex-row justify-between items-end mt-4">
             <ThemedText
               style={{
                 fontFamily: "Poppins_600SemiBold",
@@ -108,7 +122,6 @@ const HomePage = () => {
           />
         </View>
       </ScrollView>
-
       <CustomBottomSheetModal
         isVisible={isModalVisible}
         onClose={handleCloseModal}
@@ -152,24 +165,9 @@ const HomePage = () => {
           ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
         />
       </CustomBottomSheetModal>
+      <StatusBar style="light" translucent />
     </View>
   );
 };
 
 export default HomePage;
-
-function CustomHeader() {
-  return (
-    <Header className="flex flex-col justify-between items-center px-[4%] py-[22px]">
-      <View className="w-full flex-row items-center justify-between mb-[15]">
-        <View className="items-center flex-row">
-          <AppIcon height={36} />
-        </View>
-        <View className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
-          <Notification color="white" size={20} />
-        </View>
-      </View>
-      <SearchCard></SearchCard>
-    </Header>
-  );
-}
