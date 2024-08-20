@@ -410,20 +410,14 @@ function CustomHeader({ title }: { title?: string }) {
         <View className="flex-row items-center justify-center gap-[12px]">
           <TouchableOpacity
             onPress={handleShare}
-            style={{
-              borderRadius: 100,
-            }}
-            className="  bg-[#FFFFFF85] px-[8px] py-[11px]"
+            className="  bg-[#FFFFFF85] h-[45] w-[45] rounded-[100px] items-center justify-center"
           >
             <EvilIcons name="share-google" size={28} color="black" />
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={handleLike}
-            style={{
-              borderRadius: 100,
-            }}
-            className="  bg-[#FFFFFF85] p-[10px]"
+            className="  bg-[#FFFFFF85] h-[45] w-[45] rounded-[100px] items-center justify-center"
           >
             <Heart
               color={isLiked ? "#5856D6" : "black"}

@@ -9,12 +9,17 @@ const FilterTag = ({
 }: ViewProps & { title: string; active: boolean }) => {
   return (
     <View
-      className={`px-5 py-[9px] rounded-[100] ${
+      className={`px-5 h-[40px] rounded-[100] ${
         active ? "bg-[#5856D6]" : "border border-[#5856D6]"
-      }`}
+      } items-center justify-center `}
       {...rest}
     >
-      <ThemedText className={`${active ? "text-white" : ""}`}>
+      <ThemedText
+        style={{
+          fontFamily: active ? "Poppins_600SemiBold" : "Poppins_400Regular",
+        }}
+        className={`${active ? "text-white" : ""}`}
+      >
         Discover
       </ThemedText>
     </View>

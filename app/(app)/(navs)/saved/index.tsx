@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
+import { router } from "expo-router";
 import { Notification } from "iconsax-react-native";
 import React from "react";
 import {
@@ -12,7 +13,7 @@ import {
 
 const SavedPage = () => {
   return (
-    <>
+    <View className="flex-1 bg-white">
       <Header>
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[16px]">
           <ThemedText
@@ -26,25 +27,23 @@ const SavedPage = () => {
           </View>
         </View>
       </Header>
-      <View className="flex-1 w-full bg-white px-4">
-        <ScrollView>
-          <ThemedText className="font-bold text-[18px] mt-5">
-            Saved Cars
-          </ThemedText>
+      <ScrollView className="px-4">
+        <ThemedText className="font-bold text-[18px] mt-5">
+          Saved Cars
+        </ThemedText>
 
-          <FlatList
-            className="mt-5"
-            data={Array.from({ length: 12 })}
-            renderItem={({ item }) => <SavedCarItem />}
-            ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-            scrollEnabled={false}
-            keyExtractor={(_, index) => index.toString()}
-            initialNumToRender={5}
-            ListFooterComponent={() => <View style={{ height: 30 }} />}
-          />
-        </ScrollView>
-      </View>
-    </>
+        <FlatList
+          className="mt-5"
+          data={Array.from({ length: 12 })}
+          renderItem={({ item }) => <SavedCarItem />}
+          ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+          scrollEnabled={false}
+          keyExtractor={(_, index) => index.toString()}
+          initialNumToRender={5}
+          ListFooterComponent={() => <View style={{ height: 30 }} />}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
@@ -52,7 +51,10 @@ export default SavedPage;
 
 const SavedCarItem = () => {
   return (
-    <TouchableOpacity className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl">
+    <TouchableOpacity
+      onPress={() => router.navigate("/(app)/brands/carDetail")}
+      className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl"
+    >
       <Image
         className="w-[80] h-[70] rounded-lg"
         source={require("@/assets/images/audi.png")}
