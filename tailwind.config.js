@@ -7,12 +7,12 @@ module.exports = {
     extend: {
       fontFamily: {
         jakarta_regular: "Poppins_400Regular",
-        jakarta_xtraLight: "PlusJakartaSans_200ExtraLight",
-        jakarta_light: "PlusJakartaSans_300Light",
+        jakarta_xtraLight: "Poppins_200ExtraLight",
+        jakarta_light: "Poppins_300Light",
         jakarta_medium: "Poppins_500Medium",
         jakarta_semiBold: "Poppins_600SemiBold",
         jakarta_bold: "Poppins_700Bold",
-        jakarta_xtraBold: "PlusJakartaSans_800ExtraBold",
+        jakarta_xtraBold: "Poppins_800ExtraBold",
       },
     },
   },
