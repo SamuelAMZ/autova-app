@@ -33,7 +33,7 @@ export default function Price() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
-  const currencies = ["USD", "EUR", "GBP", "JPY"]; // Example currencies
+  const currencies = ["USD", "EUR"]; 
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
