@@ -39,7 +39,7 @@ export default function Brand() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -60,13 +60,13 @@ export default function Brand() {
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Brand
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               Select a brand for your car
             </ThemedText>
@@ -87,7 +87,7 @@ export default function Brand() {
           <View className="flex gap-[20px] mb-[30px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Popular Brand
             </ThemedText>
@@ -106,7 +106,7 @@ export default function Brand() {
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Popular Brand
             </ThemedText>
@@ -144,7 +144,7 @@ export default function Brand() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>

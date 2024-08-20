@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, TextInput, ScrollView } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { SearchNormal1 } from "iconsax-react-native";
 import { router } from "expo-router";
@@ -36,7 +31,7 @@ export default function Model() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -57,13 +52,13 @@ export default function Model() {
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Model
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               Select the model for your car
             </ThemedText>
@@ -84,7 +79,7 @@ export default function Model() {
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               All Model
             </ThemedText>
@@ -121,7 +116,7 @@ export default function Model() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>

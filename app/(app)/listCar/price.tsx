@@ -8,9 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import {
-  ArrowDown2,
-} from "iconsax-react-native";
+import { ArrowDown2 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
@@ -23,7 +21,8 @@ function MyCheckbox() {
   return (
     <Pressable
       style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-      onPress={() => setChecked(!checked)}>
+      onPress={() => setChecked(!checked)}
+    >
       {checked && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
   );
@@ -33,7 +32,7 @@ export default function Price() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
-  const currencies = ["USD", "EUR"]; 
+  const currencies = ["USD", "EUR"];
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -60,7 +59,7 @@ export default function Price() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -81,12 +80,13 @@ export default function Price() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Price
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               What is the price of your car
             </ThemedText>
@@ -102,11 +102,15 @@ export default function Price() {
           />
           <View className="flex gap-[12px]">
             <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-              <TouchableOpacity onPress={toggleDropdown} className="p-[12px] flex flex-row gap-[12px] items-center">
+              <TouchableOpacity
+                onPress={toggleDropdown}
+                className="p-[12px] flex flex-row gap-[12px] items-center"
+              >
                 <ThemedText
                   className="text-[15px]  font-[700] text-[#101828]"
-                  style={{ fontFamily: "Poppins_700Bold" }}>
-                  { selectedCurrency}
+                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                >
+                  {selectedCurrency}
                 </ThemedText>
                 <ArrowDown2 size="20" color="#000" />
               </TouchableOpacity>
@@ -125,10 +129,12 @@ export default function Price() {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       className="p-[12px]"
-                      onPress={() => handleCurrencySelect(item)}>
+                      onPress={() => handleCurrencySelect(item)}
+                    >
                       <ThemedText
                         className="text-[15px] font-[500] text-[#101828]"
-                        style={{ fontFamily: "Poppins_500Medium" }}>
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
                         {item}
                       </ThemedText>
                     </TouchableOpacity>
@@ -141,7 +147,8 @@ export default function Price() {
               <MyCheckbox />
               <ThemedText
                 className="text-[#344054] text-[16px]"
-                style={{ fontFamily: "Poppins_500Medium" }}>
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
                 Negotiable
               </ThemedText>
             </View>
@@ -161,7 +168,7 @@ export default function Price() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>

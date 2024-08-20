@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, ScrollView } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import {
-  ArrowRight2,
-} from "iconsax-react-native";
+import { ArrowRight2 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
@@ -31,7 +25,7 @@ export default function BodyType() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -52,13 +46,13 @@ export default function BodyType() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Body Type
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               What is the body type of your car?
             </ThemedText>
@@ -85,7 +79,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Salon
                 </ThemedText>
@@ -103,7 +97,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Hatchback
                 </ThemedText>
@@ -121,7 +115,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Convertible
                 </ThemedText>
@@ -139,7 +133,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   SUV/8X8
                 </ThemedText>
@@ -157,7 +151,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Coupe/Sports
                 </ThemedText>
@@ -175,7 +169,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Attest
                 </ThemedText>
@@ -193,7 +187,7 @@ export default function BodyType() {
               <View className="flex flex-row w-full justify-between items-center">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   MPV
                 </ThemedText>
@@ -217,7 +211,7 @@ export default function BodyType() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>

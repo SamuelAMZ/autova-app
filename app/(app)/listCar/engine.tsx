@@ -24,7 +24,7 @@ export default function Engine() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -45,13 +45,13 @@ export default function Engine() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Engine
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               Enter the engine capacity of your car
             </ThemedText>
@@ -77,7 +77,7 @@ export default function Engine() {
             <View className="p-[12px]">
               <ThemedText
                 className="text-[17px]  font-[700] text-[#101828]"
-                style={{ fontFamily: "Poppins_700Bold" }}
+                style={{ fontFamily: "SpaceGrotesk_700Bold" }}
               >
                 CC
               </ThemedText>
@@ -98,7 +98,7 @@ export default function Engine() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>

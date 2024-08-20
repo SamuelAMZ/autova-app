@@ -12,13 +12,13 @@ export default function Account() {
           <View className="flex gap-[12px] items-start">
             <ThemedText
               className="text-[#070C0F] text-[15px] font-[600]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Step 2 of 2
             </ThemedText>
             <ThemedText
               className="text-[#070C0F] text-[28px] font-[600]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Create Your Account
             </ThemedText>
