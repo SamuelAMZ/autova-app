@@ -19,10 +19,14 @@ import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import HeaderSetting from "@/components/HeaderSetting";
-import { LogoutModal } from "@/components/logoutModal";
+import { LogoutModal } from "@/components/LogoutModal";
+import useStatusBar from "@/hooks/useStatusBar";
 
 export default function Settings() {
   const [isLogout, setIsLogout] = useState(false);
+
+  useStatusBar("dark", "#fff", false);
+
 
   const handleLogout = async () => {
     setIsLogout(!isLogout);
@@ -98,7 +102,7 @@ function CustomHeader() {
   return (
     <>
       <HeaderSetting>
-        <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
+        <View className="flex flex-row justify-between w-full items-center px-[16px] py-[22px]">
           <ArrowLeft
             size="24"
             color="#101828"

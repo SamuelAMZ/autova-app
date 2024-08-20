@@ -1,6 +1,6 @@
 import ThemedText from "@/components/ThemedText";
 import { ArrowRight2, Camera, Setting2 } from "iconsax-react-native";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,9 +11,44 @@ import {
 } from "react-native";
 import Header from "@/components/Header";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import { router } from "expo-router";
 
 const AccountPage = () => {
+  const [image, setImage] = useState("");
+
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+      console.log(result);
+
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+        
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const compressImage = async (uri: string) => {
+    try {
+      const manipResult = await ImageManipulator.manipulateAsync(uri, [], {
+        compress: 0.5,
+        format: ImageManipulator.SaveFormat.JPEG,
+      });
+      return manipResult;
+    } catch (error) {
+      console.error("Error compressing image:", error);
+      return { uri }; // Return original uri if compression fails
+    }
+  };
+
   return (
     <>
       <CustomHeader />
@@ -22,7 +57,7 @@ const AccountPage = () => {
           <View className="flex flex-row gap-[12px] items-center justify-start ">
             <View className="relative">
               <Image
-                source={require("@/assets/user.jpg")}
+                source={ image ? { uri: image }  : require("@/assets/user.jpg")}
                 style={{
                   width: 64,
                   height: 64,
@@ -30,7 +65,7 @@ const AccountPage = () => {
                 }}
               />
               <Pressable
-                onPress={() => {}}
+                onPress={pickImage}
                 className="bg-[#fff] p-[16px] rounded-full absolute"
                 style={{ left: 40, top: 35 }}>
                 <View
@@ -173,7 +208,11 @@ function CustomHeader() {
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Account
           </ThemedText>
-          <TouchableOpacity onPress={() => { router.navigate("/(app)/listCar/settings") }} className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
+          <TouchableOpacity
+            onPress={() => {
+              router.navigate("/(app)/listCar/settings");
+            }}
+            className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
             <Setting2 size="24" color="#fff" />
           </TouchableOpacity>
         </View>
