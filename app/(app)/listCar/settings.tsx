@@ -19,16 +19,23 @@ import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import HeaderSetting from "@/components/HeaderSetting";
+import { LogoutModal } from "@/components/logoutModal";
 
 export default function Settings() {
+  const [isLogout, setIsLogout] = useState(false);
+
+  const handleLogout = async () => {
+    setIsLogout(!isLogout);
+  };
+
   return (
     <>
       <CustomHeader />
-      <View className="flex bg-[#fff] h-[80%] justify-between px-[16px]">
+      <View className="flex bg-[#fff] h-[100%] justify-between px-[16px] pb-[160px]">
         <View className="flex flex-col gap-[1.25rem]">
           <ThemedText
             className="text-[1.25rem]  text-[#101828]"
-            style={{ fontFamily: "Poppins_500Medium" }}>
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
             Security
           </ThemedText>
           <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
@@ -74,14 +81,15 @@ export default function Settings() {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity className="border border-[#FF4747]  rounded-[50px] flex items-center">
+        <TouchableOpacity onPress={handleLogout} className="border border-[#FF4747]  rounded-[50px] flex items-center">
           <ThemedText
             className="text-[1rem] text-[#FF4747] py-[1rem]"
-            style={{ fontFamily: "Poppins_500Medium" }}>
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
             Log Out
           </ThemedText>
         </TouchableOpacity>
       </View>
+      <LogoutModal visible={isLogout} onClose={handleLogout} /> 
     </>
   );
 }
@@ -100,7 +108,7 @@ function CustomHeader() {
           />
           <ThemedText
             className="text-[#101828] text-[24px]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}>
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Settings
           </ThemedText>
           <InfoCircle size="24" color="#101828" />

@@ -49,7 +49,7 @@ const AccountPage = () => {
             <View className="flex ">
               <ThemedText
                 className="text-[#101828] text-[18px]"
-                style={{ fontFamily: "Poppins_700Bold" }}>
+                style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
                 Omar Hassan
               </ThemedText>
               <ThemedText className="text-[#667085] text-[14px]">
@@ -68,7 +68,7 @@ const AccountPage = () => {
                   />
                   <ThemedText
                     className="text-[#1D2939] text-[14px] capitalize"
-                    style={{ fontFamily: "Poppins_500Medium" }}>
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     About us
                   </ThemedText>
                 </View>
@@ -82,7 +82,7 @@ const AccountPage = () => {
                   />
                   <ThemedText
                     className="text-[#1D2939] text-[14px] capitalize"
-                    style={{ fontFamily: "Poppins_500Medium" }}>
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     contact us
                   </ThemedText>
                 </View>
@@ -96,7 +96,7 @@ const AccountPage = () => {
                   />
                   <ThemedText
                     className="text-[#1D2939] text-[14px] "
-                    style={{ fontFamily: "Poppins_500Medium" }}>
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     Invite a Friend
                   </ThemedText>
                 </View>
@@ -110,7 +110,7 @@ const AccountPage = () => {
                   />
                   <ThemedText
                     className="text-[#1D2939] text-[14px] "
-                    style={{ fontFamily: "Poppins_500Medium" }}>
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     Terms of service
                   </ThemedText>
                 </View>
@@ -125,7 +125,7 @@ const AccountPage = () => {
                   />
                   <ThemedText
                     className="text-[#1D2939] text-[14px] capitalize"
-                    style={{ fontFamily: "Poppins_500Medium" }}>
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     Privacy Policy
                   </ThemedText>
                 </View>
@@ -136,7 +136,7 @@ const AccountPage = () => {
           <View className="items-center flex gap-[20px]">
             <ThemedText
               className="text-[20px] text-[#101828]"
-              style={{ fontFamily: "Poppins_700Bold" }}>
+              style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
               Enjoying Carnext+ App?
             </ThemedText>
 
@@ -150,7 +150,7 @@ const AccountPage = () => {
               className="bg-[#5856D6] px-[20px] py-[12px] rounded-[12px] ">
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
-                style={{ fontFamily: "Poppins_600SemiBold" }}>
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
                 Refer a friend
               </ThemedText>
             </TouchableOpacity>
@@ -170,7 +170,7 @@ function CustomHeader() {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}>
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Account
           </ThemedText>
           <TouchableOpacity onPress={() => { router.navigate("/(app)/listCar/settings") }} className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
