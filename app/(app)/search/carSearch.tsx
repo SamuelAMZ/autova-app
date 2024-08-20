@@ -1,16 +1,6 @@
 import { router } from "expo-router";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import {
-  ArrowLeft,
-  CloseCircle,
-  SearchNormal,
-  Setting5,
-} from "iconsax-react-native";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { ArrowLeft, SearchNormal, Setting5 } from "iconsax-react-native";
+import { useMemo, useState } from "react";
 import {
   FlatList,
   ScrollView,
@@ -18,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import CarItem from "@/components/cars/CarItem";
 import Header from "@/components/Header";
@@ -35,7 +24,6 @@ import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 const CarSearchScreen = () => {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
 
@@ -69,6 +57,7 @@ const CarSearchScreen = () => {
             <View className="flex-1 flex-row items-center gap-2 px-4 h-[48] border border-[#D0D5DD] rounded-xl">
               <SearchNormal color="#1D2939" />
               <TextInput
+                className="flex-1"
                 placeholder="Search..."
                 underlineColorAndroid="transparent"
               />

@@ -62,33 +62,35 @@ const SearchCard = ({ children }: PropsWithChildren) => {
         snapPoints={snapPoints}
         index={1}
       >
-        <View className="p-3 flex-row justify-between items-center">
-          <ThemedText className="text-[18px]">Choose item</ThemedText>
-          <TouchableOpacity onPress={handleCloseModal}>
-            <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
-              <AntDesign name="close" size={16} color="#3D3D3D" />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={types}
-          renderItem={(item) => (
-            <TouchableOpacity
-              onPress={() => handleTypeChange(item.index)}
-              style={{
-                borderTopWidth: 1,
-                paddingVertical: 14,
-                borderColor: "#F2F4F7",
-              }}
-              className="p-3 flex-row gap-3 items-center"
-            >
-              <Chainlink color="#475467" variant="Bold" />
-              <ThemedText className="text-[#475467]">
-                {item.item.label}
-              </ThemedText>
+        <View className="w-full px-[4%]">
+          <View className="p-3 flex-row justify-between items-center">
+            <ThemedText className="text-[18px]">Choose item</ThemedText>
+            <TouchableOpacity onPress={handleCloseModal}>
+              <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+                <AntDesign name="close" size={16} color="#3D3D3D" />
+              </View>
             </TouchableOpacity>
-          )}
-        />
+          </View>
+          <FlatList
+            data={types}
+            renderItem={(item) => (
+              <TouchableOpacity
+                onPress={() => handleTypeChange(item.index)}
+                style={{
+                  borderTopWidth: 1,
+                  paddingVertical: 14,
+                  borderColor: "#F2F4F7",
+                }}
+                className="p-3 flex-row gap-3 items-center"
+              >
+                <Chainlink color="#475467" variant="Bold" />
+                <ThemedText className="text-[#475467]">
+                  {item.item.label}
+                </ThemedText>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
       </CustomBottomSheetModal>
     </View>
   );
