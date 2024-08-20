@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
@@ -18,7 +15,7 @@ export default function Submitted() {
         <View className="flex gap-[10px] ">
           <ThemedText
             className="text-[#101828] text-[20px] text-center"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             Listing Submitted for Review!
           </ThemedText>
@@ -43,7 +40,7 @@ export default function Submitted() {
         >
           <ThemedText
             className="text-[17px] text-center font-[600] text-[#fff]"
-            style={{ fontFamily: "Poppins_600SemiBold" }}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             Return Home
           </ThemedText>

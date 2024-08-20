@@ -16,7 +16,9 @@ const FilterTag = ({
     >
       <ThemedText
         style={{
-          fontFamily: active ? "Poppins_600SemiBold" : "Poppins_400Regular",
+          fontFamily: active
+            ? "SpaceGrotesk_600SemiBold"
+            : "SpaceGrotesk_400Regular",
         }}
         className={`${active ? "text-white" : ""}`}
       >

@@ -25,7 +25,7 @@ export default function Condition() {
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               List Your Car
             </ThemedText>
@@ -49,13 +49,13 @@ export default function Condition() {
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Condition
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "Poppins_500Medium" }}
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
               What is the condition of your car?
             </ThemedText>
@@ -82,9 +82,8 @@ export default function Condition() {
             >
               <View className="flex flex-row w-full justify-between">
                 <ThemedText
-                  
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   New
                 </ThemedText>
@@ -92,7 +91,7 @@ export default function Condition() {
               </View>
               <ThemedText
                 className="text-[14px] text-[#1D2939]"
-                style={{ fontFamily: "Poppins_500Medium" }}
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
               >
                 Select if your car is unregistered and brand new.
               </ThemedText>
@@ -108,7 +107,7 @@ export default function Condition() {
               <View className="flex flex-row w-full justify-between">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Used
                 </ThemedText>
@@ -116,7 +115,7 @@ export default function Condition() {
               </View>
               <ThemedText
                 className="text-[14px] text-[#1D2939]"
-                style={{ fontFamily: "Poppins_500Medium" }}
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
               >
                 Select if your car has been used before.
               </ThemedText>
@@ -132,7 +131,7 @@ export default function Condition() {
               <View className="flex flex-row w-full justify-between">
                 <ThemedText
                   className="text-[16px] text-[#1D2939]"
-                  style={{ fontFamily: "Poppins_600SemiBold" }}
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Reconditioned
                 </ThemedText>
@@ -140,7 +139,7 @@ export default function Condition() {
               </View>
               <ThemedText
                 className="text-[14px] text-[#1D2939]"
-                style={{ fontFamily: "Poppins_500Medium" }}
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
               >
                 Select if your car is used but currently unregistered.
               </ThemedText>
@@ -154,7 +153,7 @@ export default function Condition() {
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "Poppins_600SemiBold" }}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
               Continue
             </ThemedText>
