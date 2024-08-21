@@ -53,7 +53,9 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
 
   const handleOnViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: Array<{ index: number }> }) => {
-      setIndex(viewableItems[0]?.index || 0);
+      const newIndex = viewableItems[0]?.index || 0;
+      setIndex(newIndex);
+      setIsZoomed(false);
     }
   ).current;
 
@@ -76,10 +78,14 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         data={Slides}
         renderItem={({ item }) => (
           <ImageZoom
-            cropWidth={Dimensions.get("window").width}
+            key={`${item.img}-${index}`}
+            cropWidth={Dimensions.get("screen").width}
             cropHeight={263}
-            imageWidth={Dimensions.get("window").width}
+            imageWidth={Dimensions.get("screen").width}
             imageHeight={263}
+            onDoubleClick={() => {
+              handleZoom();
+            }}
             onMove={({ scale }) => {
               if (scale !== 1) {
                 setIsZoomed(true);

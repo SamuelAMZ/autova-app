@@ -59,12 +59,12 @@ export default function CarDetail() {
 
   // details and information view
   const handleSpecificationsView = () => {
-    // setSelected("Specifications");
+    setSelected("Specifications");
     handleScrollTo(specificationsRef);
   };
 
   const handleDetailsView = () => {
-    // setSelected("Details");
+    setSelected("Details");
     handleScrollTo(detailsRef);
   };
 
@@ -83,7 +83,7 @@ export default function CarDetail() {
 
   const handleSelectedViewWhenScrolling = () => {
     specificationsRef.current?.measure((x, y, width, height, pageX, pageY) => {
-      if (pageY + headerHeight + 90 > 0) {
+      if (pageY + headerHeight + 50 > 0) {
         setSelected("Specifications");
       } else {
         setSelected("Details");
@@ -93,8 +93,8 @@ export default function CarDetail() {
 
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
-    const scrollHeight = scrollPosition + 90;
-    if (height - headerHeight < scrollHeight) {
+    const scrollHeight = scrollPosition + 100;
+    if (height - headerHeight - 20 < scrollHeight) {
       setPositionAbsolute(true);
     } else {
       setPositionAbsolute(false);
@@ -420,14 +420,14 @@ function CarInformationButtons({
           borderRadius: 100,
           borderWidth: 1,
           borderColor: selected === "Specifications" ? "#5856D6" : "#EAECF0",
-          backgroundColor:
-            selected === "Specifications" ? "#5856D6" : "transparent",
+          // backgroundColor:
+          //   selected === "Specifications" ? "#5856D6" : "transparent",
         }}
         className="flex items-center justify-center"
       >
         <ThemedText
           style={{
-            color: selected === "Specifications" ? "#FFFFFF" : "#101828",
+            color: selected === "Specifications" ? "#5856D6" : "#101828",
           }}
           className="p-[10px_20px] text-[16px]"
         >
@@ -441,13 +441,13 @@ function CarInformationButtons({
           borderRadius: 100,
           borderWidth: 1,
           borderColor: selected === "Details" ? "#5856D6" : "#EAECF0",
-          backgroundColor: selected === "Details" ? "#5856D6" : "transparent",
+          // backgroundColor: selected === "Details" ? "#5856D6" : "transparent",
         }}
         className="flex items-center justify-center"
       >
         <ThemedText
           style={{
-            color: selected === "Details" ? "#FFFFFF" : "#101828",
+            color: selected === "Details" ? "#5856D6" : "#101828",
           }}
           className="p-[10px_20px] text-[16px]"
         >
@@ -462,7 +462,7 @@ function CarDetails() {
   return (
     <View className="py-[10px] flex gap-4">
       <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
-        Related Cars
+        Details
       </ThemedText>
       <View>
         <ThemedText className="text-[#344054] text-[15px] font-[400]">

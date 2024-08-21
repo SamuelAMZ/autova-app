@@ -32,6 +32,7 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const flatListRef = useRef<FlatList>(null);
   const { currentIndex } = useGlobalSearchParams();
   const { width, height } = useWindowDimensions();
+  // const [isZoomed, setIsZoomed] = useState(false);
 
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     RNAnimated.event(
@@ -53,6 +54,7 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const handleOnViewableItemsChanged = useRef(
     ({ viewableItems }: { viewableItems: Array<{ index: number }> }) => {
       setIndex(viewableItems[0]?.index || 0);
+      setIsZoomed(false);
     }
   ).current;
 
@@ -63,12 +65,14 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const handleNext = () => {
     if (index < Slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: index + 1 });
+      setIsZoomed(false);
     }
   };
 
   const handlePrevious = () => {
     if (index > 0) {
       flatListRef.current?.scrollToIndex({ index: index - 1 });
+      setIsZoomed(false);
     }
   };
 
@@ -86,13 +90,14 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         style={{
           height: Dimensions.get("screen").height * 0.7,
           flex: 1,
-          justifyContent:"center"
+          justifyContent: "center",
         }}
       >
         <FlatList
           data={Slides}
           renderItem={({ item }) => (
             <ImageZoom
+              key={`${item.img}-${index}`}
               cropWidth={Dimensions.get("screen").width}
               cropHeight={Dimensions.get("screen").height}
               imageWidth={Dimensions.get("screen").width}
@@ -123,7 +128,11 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
                 }
               }}
             >
-              <Image resizeMode="contain" style={{ width, minHeight: 263 }} source={item.img} />
+              <Image
+                resizeMode="contain"
+                style={{ width, minHeight: 263 }}
+                source={item.img}
+              />
             </ImageZoom>
           )}
           horizontal
