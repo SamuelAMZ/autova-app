@@ -9,7 +9,7 @@ import useStatusBar from "@/hooks/useStatusBar";
 
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-
+import Colors from "@/constants/Colors";
 import ZoomCarImagesSlider from "@/components/carImagesSlider/zoomSlider";
 
 const data = [
@@ -25,9 +25,9 @@ const data = [
 ];
 
 export default function CarImagesDetail() {
-    const { width } = useWindowDimensions();
-    
-    useStatusBar("light-content", "transparent", true);
+  const { width } = useWindowDimensions();
+
+  useStatusBar("light-content", "transparent", true);
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function CarImagesDetail() {
 
 function CustomHeader({ title }: { title?: string }) {
   return (
-    <Header className=" px-[5%] bg-black">
+    <Header className={`px-[5%] bg-[${Colors.buttonPrimary}]`}>
       <View className="flex-row justify-between items-center py-[18px]">
         <View className="flex-row justify-start items-center gap-[13px] ">
           <TouchableOpacity
@@ -60,10 +60,14 @@ function CustomHeader({ title }: { title?: string }) {
               height: "auto",
               borderRadius: 100,
             }}
-            className="flex flex-row items-center justify-center bg-[#fffffff5] p-[11px]"
+            className={`flex flex-row items-center justify-center bg-[${Colors.buttonSecondary}] p-[11px]`}
             onPress={() => router.back()}
           >
-            <AntDesign name="close" size={18} color="#000000" />
+            <AntDesign
+              name="close"
+              size={18}
+              color={Colors.semiTransparentWhite}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -81,7 +85,7 @@ const Header = ({
   return (
     <View
       className={` ${className}`}
-      style={{ paddingTop: insets.top }}
+      style={{ paddingTop: insets.top - 10 }}
       {...rest}
     >
       <StatusBar style="dark" translucent />

@@ -20,6 +20,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
 import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
 import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
+import Colors from "@/constants/Colors";
 
 const CarSearchScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,25 +36,35 @@ const CarSearchScreen = () => {
   };
   return (
     <>
-      <View className="flex-1 bg-white">
+      <View className={`flex-1 bg-[${Colors.backgroundSecondaryVariant}]`}>
         <Header>
           <View className="flex-row justify-start items-center gap-[13px] px-[4%] py-[16px]">
             <TouchableOpacity
-              className="h-auto rounded-[100px] max-w-11 flex flex-row items-center justify-center bg-[#6C6BDB] p-[11px]"
+              className={`h-auto rounded-[100px] max-w-11 flex flex-row items-center justify-center bg-[${Colors.buttonSecondary}] p-[11px]`}
               onPress={() => router.back()}
             >
-              <ArrowLeft size={18} variant="Outline" color="#FFFFFF" />
+              <ArrowLeft
+                size={18}
+                variant="Outline"
+                color={Colors.textPrimary}
+              />
             </TouchableOpacity>
-            <ThemedText className="text-[#FFFFFF] text-[20px] font-[600]">
+            <ThemedText
+              className={`text-[${Colors.textPrimary}] text-[20px] font-[600]`}
+            >
               Cars by body styles
             </ThemedText>
           </View>
         </Header>
 
-        <ScrollView className="flex-1">
+        <ScrollView
+          className={`flex-1 bg-[${Colors.backgroundSecondaryVariant}]`}
+        >
           <View className="px-4 my-5 flex-row gap-3">
-            <View className="flex-1 flex-row items-center gap-2 px-4 h-[48] border border-[#D0D5DD] rounded-xl">
-              <SearchNormal color="#1D2939" />
+            <View
+              className={`flex-1 flex-row items-center gap-2 px-4 h-[48px] border border-[${Colors.borderPrimary}] rounded-xl`}
+            >
+              <SearchNormal color={Colors.textQuinary} />
               <TextInput
                 className="flex-1"
                 placeholder="Search..."
@@ -62,9 +73,9 @@ const CarSearchScreen = () => {
             </View>
             <TouchableOpacity
               onPress={handlePresentModalPress}
-              className="justify-center items-center border h-[48] w-[48] border-[#D0D5DD] rounded-xl"
+              className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl`}
             >
-              <Setting5 color="#1D2939" />
+              <Setting5 color={Colors.textQuinary} />
             </TouchableOpacity>
           </View>
 
@@ -98,25 +109,37 @@ const CarSearchScreen = () => {
       >
         <View className="w-full px-[4%]">
           <View className="py-5 flex-row justify-between items-center ">
-            <ThemedText className="text-[20px] font-[600] text-[#000000]">
+            <ThemedText
+              className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}
+            >
               Filter Search
             </ThemedText>
             <TouchableOpacity onPress={handleCloseModal}>
-              <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
-                <AntDesign name="close" size={16} color="#3D3D3D" />
+              <View
+                className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}
+              >
+                <AntDesign name="close" size={16} color={Colors.iconPrimary} />
               </View>
             </TouchableOpacity>
           </View>
-          <View className="h-[100%] bg-[#F2F4F7] p-4 w-full">
-            <ThemedText className="text-[#475467] font-semibold text-[16px] mb-4">
+          <View
+            className={`h-[100%] bg-[${Colors.backgroundQuaternary}] p-4 w-full`}
+          >
+            <ThemedText
+              className={`text-[${Colors.textSecondary}] font-semibold text-[16px] mb-4`}
+            >
               Body Styles
             </ThemedText>
             <BodyStylesSearch />
-            <ThemedText className="text-[#475467] font-semibold text-[16px] mt-2">
+            <ThemedText
+              className={`text-[${Colors.textSecondary}] font-semibold text-[16px] mt-2`}
+            >
               Price Range
             </ThemedText>
             <PriceRangeSearch />
-            <ThemedText className="text-[#475467] font-semibold text-[16px] mb-4">
+            <ThemedText
+              className={`text-[${Colors.textSecondary}] font-semibold text-[16px] mb-4`}
+            >
               Make & Model
             </ThemedText>
             <MakeModelsSearch />
