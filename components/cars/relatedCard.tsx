@@ -16,6 +16,7 @@ export default function RelatedCar() {
           data={CarData}
           renderItem={({ item }) => (
             <BrandCar
+              imgHeight={140}
               car={item}
               onPress={() => router.navigate("/(app)/brands/carDetail")}
             />

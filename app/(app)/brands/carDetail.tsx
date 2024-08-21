@@ -24,6 +24,7 @@ import ThemedText from "@/components/ThemedText";
 import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import CarImagesSlider from "@/components/carImagesSlider/slider";
+import useStatusBar from "@/hooks/useStatusBar";
 
 const data = [
   {
@@ -53,6 +54,7 @@ export default function CarDetail() {
     setIsModalVisible(false);
   };
 
+  useStatusBar("dark-content", "transparent", true);
   return (
     <>
       <ImageBackground
@@ -179,14 +181,14 @@ export default function CarDetail() {
                   $68,490
                 </ThemedText>
 
-                <View className="flex items-start gap-[16px]">
+                <View className="flex items-start gap-[16px] w-full">
                   <Image
+                    className="w-full h-[90px]"
                     resizeMode="contain"
                     source={require("@/assets/cars/Widget.png")}
                     style={{
-                      width: width * 0.9,
-                      height: 90,
-                      // maxWidth: 361,
+                      // width: width * 0.95,
+                      height: 100,
                     }}
                   />
                 </View>
@@ -256,7 +258,7 @@ export default function CarDetail() {
             </ScrollView>
             <View
               style={{
-                paddingBottom: 20,
+                paddingBottom: 30,
                 paddingTop: 8,
               }}
               className="px-[4%] bg-white"
@@ -425,8 +427,8 @@ function CarSpecifications() {
               style={{
                 flex: 0.5,
               }}
-              fontFamily="SpaceGrotesk_600SemiBold"
-              className="text-[#1D2939] text-[18px]"
+              // fontFamily="SpaceGrotesk_600SemiBold"
+              className="text-[#1D2939] text-[16px] underline"
             >
               {Object.keys(item)[0]}:
             </ThemedText>

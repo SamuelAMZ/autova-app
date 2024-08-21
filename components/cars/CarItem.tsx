@@ -8,9 +8,11 @@ import Car from "@/models/car.model";
 export default function CarItem({
   car,
   onPress,
+  imgHeight,
 }: {
   car: Car;
   onPress: () => void;
+  imgHeight?: number;
 }) {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -23,13 +25,14 @@ export default function CarItem({
         style={styles.card}
         className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]"
       >
-        <View className="relative">
+        <View className="relative w-full">
           <Image
             source={car.img}
             style={{
               borderRadius: 10,
+              // width: "100%",
             }}
-            className="w-full max-w-[329px] h-[180px] object-contain aspect-auto"
+            className=" max-w-[3429px] h-[180px] aspect-auto w-full"
           />
           <TouchableOpacity
             onPress={handleLike}
