@@ -55,7 +55,7 @@ export default function Upload() {
 
   return (
     <>
-      <HeaderListing>
+      <HeaderListing progress={13/14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity
@@ -82,7 +82,7 @@ export default function Upload() {
           </TouchableOpacity>
         </View>
       </HeaderListing>
-      <ScrollView
+      <View
         className="flex px-[16px]  bg-[#fff]"
         style={{ paddingVertical: 30 }}
       >
@@ -176,7 +176,7 @@ export default function Upload() {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </>
   );
 }
