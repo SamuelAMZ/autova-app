@@ -40,7 +40,7 @@ const SavedPage = () => {
           <Add color="#007AFF" />
           <ThemedText
             className="text-[#007AFF]"
-            style={{ fontFamily: "Poppins_600ExtraBold" }}
+            style={{ fontFamily: "SpaceGrotesk_700Bold" }}
           >
             New Collection
           </ThemedText>

@@ -21,6 +21,7 @@ import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import { CarData } from "@/constants/CarData";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import Animated from "react-native-reanimated";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -49,9 +50,9 @@ const HomePage = () => {
         </View>
       </View>
       <ScrollView bounces={false}>
-        <View className="w-full px-4 pb-4">
+        <Animated.View className="w-full px-4 pb-4">
           <SearchCard></SearchCard>
-        </View>
+        </Animated.View>
         <View className="flex gap-[20px] bg-white">
           <View className="px-[4%] flex-1 flex-row justify-between items-end mt-4">
             <ThemedText

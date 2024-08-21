@@ -6,9 +6,11 @@ import {
   StyleSheet,
   FlatList,
   ViewProps,
+  Modal,
 } from "react-native";
 import ThemedText from "./ThemedText";
 import { PropsWithChildren } from "react";
+import { Edit2, Trash } from "iconsax-react-native";
 
 export const CollectionItem = () => {
   return (
@@ -49,14 +51,17 @@ export const SavedCarItem = () => {
   return (
     <TouchableOpacity
       onPress={() => router.navigate("/(app)/brands/carDetail")}
-      className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl"
+      className="flex-row border bg-white border-[#D0D5DD] p-3 gap-3 rounded-xl"
     >
       <Image
         className="w-[80] h-[70] rounded-lg"
         source={require("@/assets/images/audi.png")}
       />
       <View className="flex-1 justify-between">
-        <ThemedText className="text-[#101828] font-bold text-[16px]">
+        <ThemedText
+          style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+          className="text-[#101828] text-[16px]"
+        >
           Audi A4 2.0T Premium
         </ThemedText>
         <ThemedText className="text-[#667085]">
@@ -72,6 +77,92 @@ export const SavedCarItem = () => {
     </TouchableOpacity>
   );
 };
+
+export const CollectionOptionModal = ({
+  renamePress,
+  deletePress,
+}: {
+  renamePress: () => void;
+  deletePress: () => void;
+}) => {
+  return (
+    <View className="min-w-[120] bg-white absolute top-[40] right-[20] z-10 rounded-lg items-start">
+      <TouchableOpacity
+        onPress={renamePress}
+        className="p-4 flex-row items-center gap-3"
+      >
+        <Edit2 color="black" />
+        <ThemedText style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
+          Rename
+        </ThemedText>
+      </TouchableOpacity>
+      <View className="w-[100%] h-[0.7] bg-slate-400 "></View>
+      <TouchableOpacity
+        onPress={deletePress}
+        className="p-4 flex-row items-center gap-3"
+      >
+        <Trash color="red" />
+        <ThemedText
+          style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+        >
+          Delete
+        </ThemedText>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+interface ActionProps {
+  childrenTop: React.ReactNode;
+  childrenCenter: React.ReactNode;
+  rightText: string;
+  visible: boolean;
+  cancelPress: () => void;
+}
+
+export const CollectionActionModal = ({
+  childrenTop,
+  childrenCenter,
+  rightText,
+  visible,
+  cancelPress,
+}: PropsWithChildren & ActionProps) => {
+  return (
+    <Modal visible={visible} transparent statusBarTranslucent>
+      <View
+        className="flex-1 px-4 items-center justify-center"
+        style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
+      >
+        <View className="bg-white rounded-lg items-center justify-center px-5 py-5 w-full">
+          {childrenTop}
+          {childrenCenter}
+          <View className="w-full flex-row justify-between">
+            <TouchableOpacity
+              onPress={cancelPress}
+              className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3"
+            >
+              <ThemedText
+                style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+              >
+                Cancel
+              </ThemedText>
+            </TouchableOpacity>
+            <TouchableOpacity className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3">
+              <ThemedText
+                style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+              >
+                {rightText}
+              </ThemedText>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+const ActionContentRemove = () => {};
+const ActionContentRename = () => {};
 
 const GridItem = ({ children, ...rest }: PropsWithChildren & ViewProps) => (
   <View style={styles.item} {...rest}>
