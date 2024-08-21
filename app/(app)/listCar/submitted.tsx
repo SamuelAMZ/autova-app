@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
+import Colors from "@/constants/Colors";
 
 export default function Submitted() {
   return (
@@ -36,10 +37,10 @@ export default function Submitted() {
           onPress={() => {
             router.navigate("/(app)/listCar/condition");
           }}
-          className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
+          className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] `}
         >
           <ThemedText
-            className="text-[17px] text-center font-[600] text-[#fff]"
+            className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             Return Home

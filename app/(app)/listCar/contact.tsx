@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import Colors from "@/constants/Colors";
 
 export default function Contact() {
   return (
@@ -28,6 +29,9 @@ export default function Contact() {
             </ThemedText>
           </View>
           <TouchableOpacity
+            onPress={() => {
+              router.navigate("/(app)/(navs)/listing");
+            }}
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
             style={{ backgroundColor: "#c1c1c1" }}>
             <AntDesign name="close" size={20} color="black" />
@@ -117,9 +121,9 @@ export default function Contact() {
         <View className="flex gap-[19px] px-[16px]">
           <TouchableOpacity
             onPress={() => {}}
-            className="bg-[#7878801F] border border-[#5856D6] px-[20px] py-[12px] rounded-[12px] w-[100%] ">
+            className={`bg-[#7878801F] border border-[${Colors.background}] px-[20px] py-[12px] rounded-[12px] w-[100%] `}>
             <ThemedText
-              className="text-[17px] text-center font-[600] text-[#5856D6]"
+              className={`text-[17px] text-center font-[600] text-[${Colors.background}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Review
             </ThemedText>
@@ -128,9 +132,9 @@ export default function Contact() {
             onPress={() => {
               router.navigate("./submitted");
             }}
-            className="bg-[#5856D6] px-[20px] py-[12px] rounded-[12px] w-[100%] mb-[80px]">
+            className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px] w-[100%] mb-[80px]`}>
             <ThemedText
-              className="text-[17px] text-center font-[600] text-[#fff]"
+              className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Continue
             </ThemedText>

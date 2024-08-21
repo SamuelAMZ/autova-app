@@ -25,7 +25,7 @@ import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import CarImagesSlider from "@/components/carImagesSlider/slider";
 import useStatusBar from "@/hooks/useStatusBar";
-import Colors from "@/constants/Colors";
+import colors from "@/constants/Colors";
 
 const data = [
   {
@@ -157,7 +157,7 @@ export default function CarDetail() {
                   style={{
                     paddingTop: 28,
                     paddingBottom: 60,
-                    backgroundColor: Colors.backgroundSecondaryVariant,
+                    backgroundColor: colors.backgroundSecondaryVariant,
                   }}
                   className="px-[5%] flex gap-[20px]"
                 >
@@ -254,7 +254,7 @@ export default function CarDetail() {
                     style={{
                       fontFamily: "SpaceGrotesk_600SemiBold",
                     }}
-                    className="text-[#5856D6] text-[28px]"
+                    className={`text-[${colors.background}] text-[28px]`}
                   >
                     $68,490
                   </ThemedText>
@@ -286,9 +286,7 @@ export default function CarDetail() {
                     <CarSpecifications />
                   </View>
 
-                  <View
-                    ref={detailsRef}
-                  >
+                  <View ref={detailsRef}>
                     <CarDetails />
                   </View>
 
@@ -305,7 +303,7 @@ export default function CarDetail() {
             >
               <TouchableOpacity
                 onPress={handlePresentModalPress}
-                className="bg-[#5856D6] p-[12px_20px] rounded-[12px] border border-solid border-[#5856D6]"
+                className={`bg-[${colors.background}] p-[12px_20px] rounded-[12px] border border-solid border-[${colors.background}]`}
               >
                 <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
                   Contact Seller
@@ -408,16 +406,13 @@ function CarInformationButtons({
   handleSpecificationsView,
   handleDetailsView,
   selected,
-}:
-{
+}: {
   handleSpecificationsView: () => void;
   handleDetailsView: () => void;
   selected: string;
 }) {
   return (
-    <View
-      className="flex-row items-center justify-between gap-[8px]"
-    >
+    <View className="flex-row items-center justify-between gap-[8px]">
       <TouchableOpacity
         onPress={handleSpecificationsView}
         style={{
@@ -465,18 +460,23 @@ function CarInformationButtons({
 
 function CarDetails() {
   return (
-    <View className="py-[10px]">
-      <ThemedText className="text-[#344054] text-[15px] font-[400]">
-        Nisi purus felis enim dolor aliquet at enim viverra aenean. Placerat
-        auctor arcu eu mollis tempor eu. Felis aliquet pharetra laoreet amet.
-        Elit tristique id viverra velit interdum nullam non.
+    <View className="py-[10px] flex gap-4">
+      <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
+        Related Cars
       </ThemedText>
-      <ThemedText className="text-[#344054] text-[15px] font-[400]">
-        Elementum netus mi scelerisque sit morbi quis. Augue pharetra mauris
-        elit consequat amet. Neque ridiculus vitae pharetra at. Pulvinar sit
-        habitant sit fermentum. Convallis sapien leo elementum et lectus quam
-        eget porttitor. Nulla nisi ultricies id euismod.
-      </ThemedText>
+      <View>
+        <ThemedText className="text-[#344054] text-[15px] font-[400]">
+          Nisi purus felis enim dolor aliquet at enim viverra aenean. Placerat
+          auctor arcu eu mollis tempor eu. Felis aliquet pharetra laoreet amet.
+          Elit tristique id viverra velit interdum nullam non.
+        </ThemedText>
+        <ThemedText className="text-[#344054] text-[15px] font-[400]">
+          Elementum netus mi scelerisque sit morbi quis. Augue pharetra mauris
+          elit consequat amet. Neque ridiculus vitae pharetra at. Pulvinar sit
+          habitant sit fermentum. Convallis sapien leo elementum et lectus quam
+          eget porttitor. Nulla nisi ultricies id euismod.
+        </ThemedText>
+      </View>
     </View>
   );
 }
@@ -554,9 +554,7 @@ function CustomHeader({ title }: { title?: string }) {
 
   const handleShare = () => {};
   return (
-    <Header
-      className=" px-[5%]"
-    >
+    <Header className=" px-[5%]">
       <View className="flex-row justify-between items-center py-[18px]">
         <View className="flex-row justify-start items-center gap-[13px] ">
           <TouchableOpacity
@@ -587,7 +585,7 @@ function CustomHeader({ title }: { title?: string }) {
             className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"
           >
             <Heart
-              color={isLiked ? "#5856D6" : "black"}
+              color={isLiked ? colors.background : "black"}
               variant={isLiked ? "Bold" : "Linear"}
             />
           </TouchableOpacity>

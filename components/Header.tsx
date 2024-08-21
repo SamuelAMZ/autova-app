@@ -3,6 +3,7 @@ import { PropsWithChildren } from "react";
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+import colors from "@/constants/Colors";
 
 const Header = ({
   children,
@@ -13,7 +14,7 @@ const Header = ({
 
   return (
     <View
-      className={`bg-[#5856D6] ${className}`}
+      className={`bg-[${colors.background}] ${className}`}
       style={{ paddingTop: insets.top }}
       {...rest}
     >

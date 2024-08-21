@@ -2,6 +2,7 @@ import { Modal, TouchableWithoutFeedback } from "react-native";
 import useStatusBar from "@/hooks/useStatusBar";
 import { View, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
+import Colors from "@/constants/Colors";
 
 import { router } from "expo-router";
 
@@ -31,7 +32,7 @@ export const LogoutModal = ({
                 </View>
                 <View className="flex-row flex justify-center items-center gap-[12px]">
                   <TouchableOpacity
-                    className={`  bg-[#5856D6] border-solid border-2 border-[#5856D6]  rounded-[50px] `}
+                    className={`  bg-[${Colors.background}] border-solid border-2 border-[${Colors.background}]  rounded-[50px] `}
                     style={{ paddingHorizontal: 28, paddingVertical: 10 }}>
                     <ThemedText
                       className={`text-[#FFFFFF] text-[17px]  text-center  `}>
@@ -40,11 +41,11 @@ export const LogoutModal = ({
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    className={`  border-solid border border-[#5856D6] rounded-[50px] `}
+                    className={`  border-solid border border-[${Colors.background}] rounded-[50px] `}
                     onPress={onClose}
                     style={{ paddingHorizontal: 28, paddingVertical: 10 }}>
                     <ThemedText
-                      className={`text-[#5856D6] text-[17px]  text-center  `}>
+                      className={`text-[${Colors.background}] text-[17px]  text-center  `}>
                       No
                     </ThemedText>
                   </TouchableOpacity>

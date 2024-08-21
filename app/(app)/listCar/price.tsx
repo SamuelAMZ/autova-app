@@ -15,14 +15,14 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { Ionicons } from "@expo/vector-icons";
+import Colors from "@/constants/Colors";
 
 function MyCheckbox() {
   const [checked, setChecked] = useState(false);
   return (
     <Pressable
       style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-      onPress={() => setChecked(!checked)}
-    >
+      onPress={() => setChecked(!checked)}>
       {checked && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
   );
@@ -45,7 +45,7 @@ export default function Price() {
 
   return (
     <>
-      <HeaderListing progress={12/14}>
+      <HeaderListing progress={12 / 14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity
@@ -53,41 +53,38 @@ export default function Price() {
                 router.back();
               }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}
-            >
+              style={{ backgroundColor: "#c1c1c1" }}>
               <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               List Your Car
             </ThemedText>
           </View>
           <TouchableOpacity
+            onPress={() => {
+              router.navigate("/(app)/(navs)/listing");
+            }}
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}
-          >
+            style={{ backgroundColor: "#c1c1c1" }}>
             <AntDesign name="close" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </HeaderListing>
       <View
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}
-      >
+        style={{ paddingTop: 30, paddingBottom: 60 }}>
         <View>
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Price
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
               What is the price of your car
             </ThemedText>
           </View>
@@ -104,12 +101,10 @@ export default function Price() {
             <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
               <TouchableOpacity
                 onPress={toggleDropdown}
-                className="p-[12px] flex flex-row gap-[12px] items-center"
-              >
+                className="p-[12px] flex flex-row gap-[12px] items-center">
                 <ThemedText
                   className="text-[15px]  font-[700] text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-                >
+                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
                   {selectedCurrency}
                 </ThemedText>
                 <ArrowDown2 size="20" color="#000" />
@@ -129,12 +124,10 @@ export default function Price() {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       className="p-[12px]"
-                      onPress={() => handleCurrencySelect(item)}
-                    >
+                      onPress={() => handleCurrencySelect(item)}>
                       <ThemedText
                         className="text-[15px] font-[500] text-[#101828]"
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-                      >
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                         {item}
                       </ThemedText>
                     </TouchableOpacity>
@@ -147,8 +140,7 @@ export default function Price() {
               <MyCheckbox />
               <ThemedText
                 className="text-[#344054] text-[16px]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-              >
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                 Negotiable
               </ThemedText>
             </View>
@@ -158,18 +150,15 @@ export default function Price() {
         <View
           style={{
             paddingBottom: 20,
-          }}
-        >
+          }}>
           <TouchableOpacity
             onPress={() => {
               router.navigate("./upload");
             }}
-            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
-          >
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
             <ThemedText
-              className="text-[17px] text-center font-[600] text-[#fff]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Continue
             </ThemedText>
           </TouchableOpacity>
