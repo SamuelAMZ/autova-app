@@ -56,7 +56,7 @@ export default function Upload() {
 
   return (
     <>
-      <HeaderListing progress={13/14}>
+      <HeaderListing progress={13 / 14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity
@@ -64,62 +64,56 @@ export default function Upload() {
                 router.back();
               }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}
-            >
+              style={{ backgroundColor: "#c1c1c1" }}>
               <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               List Your Car
             </ThemedText>
           </View>
           <TouchableOpacity
+            onPress={() => {
+              router.navigate("/(app)/(navs)/listing");
+            }}
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}
-          >
+            style={{ backgroundColor: "#c1c1c1" }}>
             <AntDesign name="close" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </HeaderListing>
       <View
         className="flex px-[16px]  bg-[#fff]"
-        style={{ paddingVertical: 30 }}
-      >
+        style={{ paddingVertical: 30 }}>
         <View className="flex pb-[80px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Image/Video
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
               Upload the Image/Videos of your car
             </ThemedText>
           </View>
 
           <TouchableOpacity
             onPress={pickImage}
-            className="bg-[#F2F4F7] rounded-xl my-4 h-[180px] w-full items-center justify-center border border-[#E2E8F0]"
-          >
+            className="bg-[#F2F4F7] rounded-xl my-4 h-[180px] w-full items-center justify-center border border-[#E2E8F0]">
             <View className="p-3 border-[10px] rounded-full border-white">
               <UploadCloud color="#FF5722" width={24} />
             </View>
             <ThemedText
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-              className={`text-[${Colors.background}] mt-3`}
-            >
+              className={`text-[${Colors.background}] mt-3`}>
               Click to upload
             </ThemedText>
             <ThemedText
               className="mt-2 text-[#1E293B]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
               MP4, PNG, JPG or GIF (max. 100 mb)
             </ThemedText>
           </TouchableOpacity>
@@ -144,8 +138,7 @@ export default function Upload() {
                         />
                         <TouchableOpacity
                           onPress={() => handleRemoveImage(item.index)}
-                          className="absolute top-1 right-1 "
-                        >
+                          className="absolute top-1 right-1 ">
                           <MinusCirlce color="red" variant="Bold" size={20} />
                         </TouchableOpacity>
                       </>
@@ -160,18 +153,15 @@ export default function Upload() {
           <View
             style={{
               paddingBottom: 20,
-            }}
-          >
+            }}>
             <TouchableOpacity
               onPress={() => {
                 router.navigate("./contact");
               }}
-              className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
-            >
+              className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
               <ThemedText
                 className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-              >
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
                 Continue
               </ThemedText>
             </TouchableOpacity>

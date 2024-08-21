@@ -46,6 +46,9 @@ export default function Brand() {
             </ThemedText>
           </View>
           <TouchableOpacity
+           onPress={() => {
+            router.navigate("/(app)/(navs)/listing");
+          }}
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
             style={{ backgroundColor: "#c1c1c1" }}
           >
