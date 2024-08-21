@@ -11,7 +11,7 @@ const FilterTag = ({
   return (
     <View
       className={`px-5 h-[40px] rounded-[100] ${
-        active ? `bg-[${Colors.background}]` : `border border-[${Colors.background}]`
+        active ? `bg-[${Colors.background}]` : `border border-[#5856D6]`
       } items-center justify-center `}
       {...rest}
     >
@@ -21,7 +21,7 @@ const FilterTag = ({
             ? "SpaceGrotesk_600SemiBold"
             : "SpaceGrotesk_400Regular",
         }}
-        className={`${active ? Colors.textPrimary : ""}`}
+        className={`${active ? "text-[#fff]" : ""}`}
       >
         Discover
       </ThemedText>
