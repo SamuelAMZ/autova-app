@@ -60,7 +60,7 @@ function CustomHeader({ title }: { title?: string }) {
               height: "auto",
               borderRadius: 100,
             }}
-            className="flex flex-row items-center justify-center bg-[#fffffff5] p-[11px]"
+            className="flex flex-row items-center justify-center bg-[#cccccc80] p-[11px]"
             onPress={() => router.back()}
           >
             <AntDesign name="close" size={18} color="#000000" />

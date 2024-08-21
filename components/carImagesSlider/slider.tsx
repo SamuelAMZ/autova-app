@@ -99,7 +99,7 @@ function TargetItemZoom({ onPress }: { onPress: () => void }) {
       onPress={onPress}
       className="absolute bottom-4 right-4 bg-[#cccccc80] flex items-center justify-center p-[.45rem] rounded-full"
     >
-      <MaterialIcons name="zoom-out-map" size={20} color="#5856D6" />
+      <MaterialIcons name="zoom-out-map" size={20} color="#000000" />
     </TouchableOpacity>
   );
 }
@@ -113,7 +113,7 @@ function DisplayItemsRatio({
 }) {
   return (
     <View className="absolute bottom-4 left-4 bg-[#cccccc80] flex items-center justify-center p-[.45rem] rounded-full">
-      <ThemedText className="text-[1rem] text-[#5856D6]">
+      <ThemedText className="text-[1rem] text-[#000000]">
         {current}/{totalItemsCount}
       </ThemedText>
     </View>

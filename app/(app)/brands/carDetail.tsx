@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import {
   View,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   Platform,
   ImageBackground,
+  Animated,
 } from "react-native";
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -40,13 +41,35 @@ const data = [
 ];
 
 export default function CarDetail() {
+  useStatusBar("dark-content", "transparent", true);
   const { width, height } = useWindowDimensions();
 
-  const [selected, setSelected] = useState("Specifications");
-
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["55%", "60%", "90%"], []);
 
+  const [selected, setSelected] = useState("Specifications");
+  const scrollViewRef = useRef<ScrollView>(null);
+  const specificationsRef = useRef<View>(null);
+  const detailsRef = useRef<View>(null);
+
+  const handleScrollTo = (ref) => {
+    ref.current.measureLayout(scrollViewRef.current, (x, y) => {
+      scrollViewRef.current?.scrollTo({ y, animated: true });
+    });
+  };
+
+  // details and information view
+  const handleSpecificationsView = () => {
+    setSelected("Specifications");
+    handleScrollTo(specificationsRef);
+  };
+
+  const handleDetailsView = () => {
+    setSelected("Details");
+    handleScrollTo(detailsRef);
+  };
+
+  // handle modal
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
   };
@@ -55,7 +78,39 @@ export default function CarDetail() {
     setIsModalVisible(false);
   };
 
-  useStatusBar("dark-content", "transparent", true);
+  // sticky buttons on scroll
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const [viewY, setViewY] = useState({
+    height: 0,
+    width: 0,
+    pageY: 0,
+    pageX: 0,
+  });
+  const [positionAbsolute, setPositionAbsolute] = useState(false);
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const handleSelectedViewWhenScrolling = () => {
+    specificationsRef.current?.measure((x, y, width, height, pageX, pageY) => {
+      if (pageY + headerHeight + 90 > 0) {
+        setSelected("Specifications");
+      } else {
+        setSelected("Details");
+      }
+    });
+  };
+
+  const handleScroll = (event) => {
+    const scrollPosition = event.nativeEvent.contentOffset.y;
+    const scrollHeight = scrollPosition + 90;
+    if (height - headerHeight < scrollHeight) {
+      setPositionAbsolute(true);
+    } else {
+      setPositionAbsolute(false);
+    }
+
+    handleSelectedViewWhenScrolling();
+  };
+
   return (
     <>
       <ImageBackground
@@ -66,198 +121,189 @@ export default function CarDetail() {
       >
         <View className="flex-1">
           <View className="flex-1 ">
-            <CustomHeader />
-            <ScrollView bounces={false} className="flex-1 pb-[1rem]">
-              <View
-                style={{
-                  width: width,
-                  minHeight: 263,
-                }}
-              >
-                <CarImagesSlider Slides={data} />
-              </View>
-
-              <View
-                style={{
-                  paddingTop: 28,
-                  paddingBottom: 60,
-                  backgroundColor: Colors.backgroundSecondaryVariant,
-                }}
-                className="px-[5%] flex gap-[20px]"
-              >
-                <ThemedText
+            <View
+              onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
+            >
+              <CustomHeader />
+            </View>
+            <View
+              style={{
+                flex: 1,
+              }}
+            >
+              {positionAbsolute ? (
+                <View
                   style={{
-                    fontFamily: "SpaceGrotesk_600SemiBold",
+                    alignItems: "center",
                   }}
-                  className="text-[#1D2939] text-[20px]"
+                  className="w-full px-[4%] py-[.75rem] bg-white"
                 >
-                  Tesla Model X Long Range 316kW
-                </ThemedText>
-
-                <View className="flex-col gap-[22px] items-between">
-                  <View className="flex-row items-center justify-between">
-                    <View className="flex-row items-center justify-center gap-[8px]">
-                      <Image
-                        style={{
-                          width: 24,
-                          height: 24,
-                        }}
-                        source={require("@/assets/cars/engine.png")}
-                      />
-                      <ThemedText className="text-[#344054] font-[400] text-[16px]">
-                        Automatic
-                      </ThemedText>
-                    </View>
-                    <View className="flex-row items-center justify-center gap-[8px]">
-                      <Image
-                        style={{
-                          width: 24,
-                          height: 24,
-                        }}
-                        source={require("@/assets/cars/calendar.png")}
-                      />
-                      <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                        12 X 12
-                      </ThemedText>
-                    </View>
-                    <View className="flex-row items-center justify-center gap-[8px]">
-                      <Image
-                        style={{
-                          width: 24,
-                          height: 24,
-                        }}
-                        source={require("@/assets/cars/type.png")}
-                      />
-                      <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                        Electric
-                      </ThemedText>
-                    </View>
-                  </View>
-
-                  <View className="flex-row items-center justify-between">
-                    <View className="flex-row items-center justify-center gap-[8px]">
-                      <Image
-                        style={{
-                          width: 24,
-                          height: 24,
-                        }}
-                        source={require("@/assets/cars/km.png")}
-                      />
-                      <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                        316 kW
-                      </ThemedText>
-                    </View>
-                    <View className="flex-row items-center justify-center gap-[8px]">
-                      <Image
-                        style={{
-                          width: 24,
-                          height: 24,
-                        }}
-                        source={require("@/assets/cars/plus.png")}
-                      />
-                      <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                        10/2023
-                      </ThemedText>
-                    </View>
-                    <View className="flex-row items-center justify-center gap-[8px]">
-                      <Image
-                        style={{
-                          width: 24,
-                          height: 24,
-                        }}
-                        source={require("@/assets/cars/limit.png")}
-                      />
-                      <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                        60 705 km
-                      </ThemedText>
-                    </View>
-                  </View>
-                </View>
-
-                <ThemedText
-                  style={{
-                    fontFamily: "SpaceGrotesk_600SemiBold",
-                  }}
-                  className="text-[#5856D6] text-[28px]"
-                >
-                  $68,490
-                </ThemedText>
-
-                <View className="flex items-start gap-[16px] w-full">
-                  <Image
-                    className="w-full h-[90px]"
-                    resizeMode="contain"
-                    source={require("@/assets/cars/Widget.png")}
-                    style={{
-                      // width: width * 0.95,
-                      height: 100,
-                    }}
+                  <CarInformationButtons
+                    handleSpecificationsView={handleSpecificationsView}
+                    handleDetailsView={handleDetailsView}
+                    selected={selected}
                   />
                 </View>
-
-                <View className="flex-row items-center justify-between gap-[8px]">
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelected("Specifications");
-                    }}
-                    style={{
-                      flex: 0.5,
-                      borderRadius: 100,
-                      borderWidth: 1,
-                      borderColor:
-                        selected === "Specifications" ? "#5856D6" : "#EAECF0",
-                      backgroundColor:
-                        selected === "Specifications"
-                          ? "#5856D6"
-                          : "transparent",
-                    }}
-                    className="flex items-center justify-center"
-                  >
-                    <ThemedText
-                      style={{
-                        color:
-                          selected === "Specifications" ? "#FFFFFF" : "#101828",
-                      }}
-                      className="p-[10px_20px] text-[16px]"
-                    >
-                      Specifications
-                    </ThemedText>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelected("Details");
-                    }}
-                    style={{
-                      flex: 0.5,
-                      borderRadius: 100,
-                      borderWidth: 1,
-                      borderColor:
-                        selected === "Details" ? "#5856D6" : "#EAECF0",
-                      backgroundColor:
-                        selected === "Details" ? "#5856D6" : "transparent",
-                    }}
-                    className="flex items-center justify-center"
-                  >
-                    <ThemedText
-                      style={{
-                        color: selected === "Details" ? "#FFFFFF" : "#101828",
-                      }}
-                      className="p-[10px_20px] text-[16px]"
-                    >
-                      Details
-                    </ThemedText>
-                  </TouchableOpacity>
+              ) : null}
+              <ScrollView
+                ref={scrollViewRef}
+                bounces={false}
+                className="flex-1 pb-[1rem]"
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+              >
+                <View
+                  style={{
+                    width: width,
+                    minHeight: 263,
+                  }}
+                >
+                  <CarImagesSlider Slides={data} />
                 </View>
 
-                {selected === "Details" ? (
-                  <CarDetails />
-                ) : selected === "Specifications" ? (
-                  <CarSpecifications />
-                ) : null}
+                <View
+                  style={{
+                    paddingTop: 28,
+                    paddingBottom: 60,
+                    backgroundColor: Colors.backgroundSecondaryVariant,
+                  }}
+                  className="px-[5%] flex gap-[20px]"
+                >
+                  <ThemedText
+                    style={{
+                      fontFamily: "SpaceGrotesk_600SemiBold",
+                    }}
+                    className="text-[#1D2939] text-[20px]"
+                  >
+                    Tesla Model X Long Range 316kW
+                  </ThemedText>
 
-                <RelatedCar />
-              </View>
-            </ScrollView>
+                  <View className="flex-col gap-[22px] items-between">
+                    <View className="flex-row items-center justify-between">
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/engine.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[16px]">
+                          Automatic
+                        </ThemedText>
+                      </View>
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/calendar.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          12 X 12
+                        </ThemedText>
+                      </View>
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/type.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          Electric
+                        </ThemedText>
+                      </View>
+                    </View>
+
+                    <View className="flex-row items-center justify-between">
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/km.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          316 kW
+                        </ThemedText>
+                      </View>
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/plus.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          10/2023
+                        </ThemedText>
+                      </View>
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/limit.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          60 705 km
+                        </ThemedText>
+                      </View>
+                    </View>
+                  </View>
+
+                  <ThemedText
+                    style={{
+                      fontFamily: "SpaceGrotesk_600SemiBold",
+                    }}
+                    className="text-[#5856D6] text-[28px]"
+                  >
+                    $68,490
+                  </ThemedText>
+
+                  <View className="flex items-start gap-[16px] w-full">
+                    <Image
+                      className="w-full h-[90px]"
+                      resizeMode="contain"
+                      source={require("@/assets/cars/Widget.png")}
+                      style={{
+                        height: 100,
+                      }}
+                    />
+                  </View>
+
+                  {positionAbsolute ? null : (
+                    <CarInformationButtons
+                      handleSpecificationsView={handleSpecificationsView}
+                      handleDetailsView={handleDetailsView}
+                      selected={selected}
+                    />
+                  )}
+
+                  <View
+                    collapsable={false}
+                    ref={specificationsRef}
+                    onLayout={handleSelectedViewWhenScrolling}
+                  >
+                    <CarSpecifications />
+                  </View>
+
+                  <View
+                    ref={detailsRef}
+                  >
+                    <CarDetails />
+                  </View>
+
+                  <RelatedCar />
+                </View>
+              </ScrollView>
+            </View>
             <View
               style={{
                 paddingBottom: 30,
@@ -366,6 +412,65 @@ export default function CarDetail() {
   );
 }
 
+function CarInformationButtons({
+  handleSpecificationsView,
+  handleDetailsView,
+  selected,
+}:
+{
+  handleSpecificationsView: () => void;
+  handleDetailsView: () => void;
+  selected: string;
+}) {
+  return (
+    <View
+      className="flex-row items-center justify-between gap-[8px]"
+    >
+      <TouchableOpacity
+        onPress={handleSpecificationsView}
+        style={{
+          flex: 0.5,
+          borderRadius: 100,
+          borderWidth: 1,
+          borderColor: selected === "Specifications" ? "#5856D6" : "#EAECF0",
+          backgroundColor:
+            selected === "Specifications" ? "#5856D6" : "transparent",
+        }}
+        className="flex items-center justify-center"
+      >
+        <ThemedText
+          style={{
+            color: selected === "Specifications" ? "#FFFFFF" : "#101828",
+          }}
+          className="p-[10px_20px] text-[16px]"
+        >
+          Specifications
+        </ThemedText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={handleDetailsView}
+        style={{
+          flex: 0.5,
+          borderRadius: 100,
+          borderWidth: 1,
+          borderColor: selected === "Details" ? "#5856D6" : "#EAECF0",
+          backgroundColor: selected === "Details" ? "#5856D6" : "transparent",
+        }}
+        className="flex items-center justify-center"
+      >
+        <ThemedText
+          style={{
+            color: selected === "Details" ? "#FFFFFF" : "#101828",
+          }}
+          className="p-[10px_20px] text-[16px]"
+        >
+          Details
+        </ThemedText>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 function CarDetails() {
   return (
     <View className="py-[10px]">
@@ -429,7 +534,6 @@ function CarSpecifications() {
               style={{
                 flex: 0.5,
               }}
-              // fontFamily="SpaceGrotesk_600SemiBold"
               className="text-[#1D2939] text-[16px] underline"
             >
               {Object.keys(item)[0]}:
@@ -458,7 +562,9 @@ function CustomHeader({ title }: { title?: string }) {
 
   const handleShare = () => {};
   return (
-    <Header className=" px-[5%]">
+    <Header
+      className=" px-[5%]"
+    >
       <View className="flex-row justify-between items-center py-[18px]">
         <View className="flex-row justify-start items-center gap-[13px] ">
           <TouchableOpacity

@@ -267,12 +267,12 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         }}
         className="px-[4%] w-full justify-between items-center"
       >
-        <PreviousImage onPress={handlePrevious} />
+        <PreviousImage onPress={handlePrevious} disabled={index === 0} />
         <DisplayItemsRatio
           current={index + 1}
           totalItemsCount={Slides.length}
         />
-        <NextImage onPress={handleNext} />
+        <NextImage onPress={handleNext} disabled={index === Slides.length - 1} />
       </View>
     </View>
   );
@@ -280,24 +280,48 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
 
 export default ZoomCarImagesSlider;
 
-function NextImage({ onPress }: { onPress: () => void }) {
+function NextImage({
+  onPress,
+  disabled,
+}: {
+  onPress: () => void;
+  disabled: boolean;
+}) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className=" bg-[#5856D6] flex items-center justify-center rounded-full p-3"
+      className={`flex items-center justify-center rounded-full p-3  transition-all ${
+        disabled ? "bg-[#5856d6ba] opacity-[.75]" : "bg-[#5856D6]"
+      }`}
     >
-      <AntDesign name="arrowright" size={28} color="white" />
+      <AntDesign
+        name="arrowright"
+        size={28}
+        color={`${disabled ? "#ffffffc4" : "#FFFFFF"}`}
+      />
     </TouchableOpacity>
   );
 }
 
-function PreviousImage({ onPress }: { onPress: () => void }) {
+function PreviousImage({
+  onPress,
+  disabled,
+}: {
+  onPress: () => void;
+  disabled: boolean;
+}) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className=" bg-[#5856D6] flex items-center justify-center rounded-full p-3"
+      className={`flex items-center justify-center rounded-full p-3 transition-all  ${
+        disabled ? "bg-[#5856d6ba] opacity-[.75]" : "bg-[#5856D6]"
+      }`}
     >
-      <AntDesign name="arrowleft" size={24} color="white" />
+      <AntDesign
+        name="arrowleft"
+        size={24}
+        color={`${disabled ? "#ffffffc4" : "#FFFFFF"}`}
+      />
     </TouchableOpacity>
   );
 }
@@ -310,7 +334,7 @@ function DisplayItemsRatio({
   totalItemsCount: number;
 }) {
   return (
-    <View className="bg-[#fffffff5] flex items-center justify-center p-3 rounded-full">
+    <View className="bg-[#cccccc80] flex items-center justify-center p-3 rounded-full">
       <ThemedText className="text-[1.2rem]">
         {current}/{totalItemsCount}
       </ThemedText>
