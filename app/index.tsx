@@ -13,8 +13,9 @@ export default function Index() {
           backgroundColor: colors.backgroundPrimary,
         }}
         className={`h-full items-center`}>
-        <Image source={require("@/assets/images/car.png")} className="w-full" />
+        <Image source={require("@/assets/images/car.png")} className="w-full h-[60%]" />
         <Image
+          className="mt-[30px]"
           source={require("@/assets/images/Group.png")}
           style={{ width: 168, height: 31 }}
         />

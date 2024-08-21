@@ -18,20 +18,8 @@ import Colors from "@/constants/Colors";
 export default function MyListing() {
   return (
     <>
-      <Header>
-        <View className="flex flex-row justify-between w-full items-center">
-          <ThemedText
-            className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-          >
-            Listing
-          </ThemedText>
-          <View className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
-            <Notification color="white" size={20} />
-          </View>
-        </View>
-      </Header>
-      <ScrollView className="flex-1 px-[16px] py-[30px]  ">
+      <CustomHeader />
+      <ScrollView className="flex-1 px-[16px] py-[30px] bg-[#fff] ">
         <View className="flex  justify-center gap-[30px]">
           <View className="bg-[#F9FAFB] p-[16px] rounded-[16px] drop-shadow-md  w-full gap-[16px]">
             <ThemedText
@@ -96,6 +84,26 @@ export default function MyListing() {
           </View>
         </View>
       </ScrollView>
+    </>
+  );
+}
+
+function CustomHeader() {
+  return (
+    <>
+      <Header>
+        <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
+          <ThemedText
+            className={`text-[${Colors.textPrimary}] text-[22px]`}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+            Listing
+          </ThemedText>
+          <View
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            <Notification color={Colors.textPrimary} size={20} />
+          </View>
+        </View>
+      </Header>
     </>
   );
 }
