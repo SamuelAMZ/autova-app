@@ -467,7 +467,7 @@ function CustomHeader({ title }: { title?: string }) {
               height: "auto",
               borderRadius: 100,
             }}
-            className="flex flex-row items-center justify-center bg-[#FFFFFF85] p-[11px]"
+            className="flex flex-row items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a777] p-[11px]"
             onPress={() => router.back()}
           >
             <ArrowLeft size={18} variant="Outline" color="#000000" />
@@ -479,14 +479,14 @@ function CustomHeader({ title }: { title?: string }) {
         <View className="flex-row items-center justify-center gap-[12px]">
           <TouchableOpacity
             onPress={handleShare}
-            className="  bg-[#FFFFFF85] h-[45] w-[45] rounded-[100px] items-center justify-center"
+            className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"
           >
             <EvilIcons name="share-google" size={28} color="black" />
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={handleLike}
-            className="  bg-[#FFFFFF85] h-[45] w-[45] rounded-[100px] items-center justify-center"
+            className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"
           >
             <Heart
               color={isLiked ? "#5856D6" : "black"}

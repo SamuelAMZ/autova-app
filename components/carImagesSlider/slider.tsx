@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 import Pagination from "./Pagination";
 import ThemedText from "../ThemedText";
@@ -97,9 +97,9 @@ function TargetItemZoom({ onPress }: { onPress: () => void }) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="absolute bottom-4 right-4 bg-[#ffffffd5] flex items-center justify-center rounded-sm"
+      className="absolute bottom-4 right-4 bg-[#cccccc80] flex items-center justify-center p-[.45rem] rounded-full"
     >
-      <Feather name="zoom-in" size={28} color="#5856D6" />
+      <MaterialIcons name="zoom-out-map" size={20} color="#5856D6" />
     </TouchableOpacity>
   );
 }
@@ -112,8 +112,8 @@ function DisplayItemsRatio({
   totalItemsCount: number;
 }) {
   return (
-    <View className="absolute bottom-4 left-4 bg-[#ffffffd5] flex items-center justify-center p-[.2rem] rounded-sm">
-      <ThemedText className="text-[1rem]">
+    <View className="absolute bottom-4 left-4 bg-[#cccccc80] flex items-center justify-center p-[.45rem] rounded-full">
+      <ThemedText className="text-[1rem] text-[#5856D6]">
         {current}/{totalItemsCount}
       </ThemedText>
     </View>

@@ -310,7 +310,7 @@ function DisplayItemsRatio({
   totalItemsCount: number;
 }) {
   return (
-    <View className="bg-[#fffffff5] flex items-center justify-center p-3 rounded-sm">
+    <View className="bg-[#fffffff5] flex items-center justify-center p-3 rounded-full">
       <ThemedText className="text-[1.2rem]">
         {current}/{totalItemsCount}
       </ThemedText>
