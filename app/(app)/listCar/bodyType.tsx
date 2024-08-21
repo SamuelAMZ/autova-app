@@ -11,7 +11,7 @@ import Feather from "@expo/vector-icons/Feather";
 export default function BodyType() {
   return (
     <>
-      <HeaderListing>
+      <HeaderListing progress={9/14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity

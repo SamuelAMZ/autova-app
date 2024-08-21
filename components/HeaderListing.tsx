@@ -5,10 +5,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 import * as Progress from "react-native-progress";
 
+type HeaderListingProps = PropsWithChildren & ViewProps & {
+  progress: number;
+};
+
 const HeaderListing = ({
   children,
+  progress,
   ...rest
-}: PropsWithChildren & ViewProps) => {
+}: HeaderListingProps) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -21,7 +26,7 @@ const HeaderListing = ({
         {children}
       </View>
       <Progress.Bar
-        progress={0.25}
+        progress={progress}
         height={2}
         color="#5856D6"
         width={null}

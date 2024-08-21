@@ -10,7 +10,7 @@ import Feather from "@expo/vector-icons/Feather";
 export default function Mileage() {
   return (
     <>
-      <HeaderListing>
+      <HeaderListing progress={5/14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity

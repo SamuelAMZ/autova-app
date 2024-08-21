@@ -17,7 +17,7 @@ export default function Fuel() {
 
   return (
     <>
-      <HeaderListing>
+      <HeaderListing progress={7/14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity
