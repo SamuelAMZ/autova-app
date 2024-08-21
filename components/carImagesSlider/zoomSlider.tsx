@@ -1,17 +1,3 @@
-import {
-  PinchGestureHandler,
-  PinchGestureHandlerGestureEvent,
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-  TapGestureHandler,
-} from "react-native-gesture-handler";
-import {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  withSpring,
-} from "react-native-reanimated";
 import React, { useRef, useState } from "react";
 import {
   Animated as RNAnimated,
@@ -22,10 +8,14 @@ import {
   NativeScrollEvent,
   TouchableOpacity,
   Platform,
+  Image,
+  Dimensions,
 } from "react-native";
-import Animated from "react-native-reanimated";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useGlobalSearchParams } from "expo-router";
+
+import ImageZoom from "react-native-image-pan-zoom";
+
 import ThemedText from "../ThemedText";
 
 interface Slide {
@@ -35,151 +25,6 @@ interface Slide {
 interface CarImagesSliderProps {
   Slides: Slide[];
 }
-
-const ZoomableImage = ({ source }: { source: any }) => {
-  const { width, height } = useWindowDimensions();
-  const scale = useSharedValue(1);
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
-
-  // Pinch gesture handler
-  const pinchHandler =
-    useAnimatedGestureHandler<PinchGestureHandlerGestureEvent>({
-      onActive: (event) => {
-        scale.value = event.scale;
-      },
-      onEnd: () => {
-        if (scale.value < 1) {
-          scale.value = withTiming(1);
-          translateX.value = withTiming(0);
-          translateY.value = withTiming(0);
-        }
-      },
-    });
-
-  // Pan gesture handler
-  const panHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onActive: (event) => {
-      translateX.value = event.translationX;
-      translateY.value = event.translationY;
-    },
-    onEnd: () => {
-      if (scale.value === 1) {
-        translateX.value = withTiming(0);
-        translateY.value = withTiming(0);
-      }
-    },
-  });
-
-  // Double-tap gesture handler
-  const doubleTapHandler = () => {
-    if (scale.value > 1) {
-      scale.value = withTiming(1);
-      translateX.value = withTiming(0);
-      translateY.value = withTiming(0);
-    } else {
-      scale.value = withSpring(2);
-    }
-  };
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { scale: scale.value },
-        { translateX: translateX.value },
-        { translateY: translateY.value },
-      ],
-    };
-  });
-
-  return (
-    <TapGestureHandler onActivated={doubleTapHandler} numberOfTaps={2}>
-      <Animated.View
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        className="items-center justify-center"
-      >
-        <PanGestureHandler onGestureEvent={panHandler}>
-          <Animated.View style={{ flex: 1 }}>
-            <PinchGestureHandler onGestureEvent={pinchHandler}>
-              <Animated.View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Animated.Image
-                  source={source}
-                  style={[
-                    animatedStyle,
-                    {
-                      width,
-                      minHeight: 263,
-                    },
-                  ]}
-                  resizeMode="cover"
-                />
-              </Animated.View>
-            </PinchGestureHandler>
-          </Animated.View>
-        </PanGestureHandler>
-      </Animated.View>
-    </TapGestureHandler>
-  );
-};
-// const ZoomableImage = ({ source }: { source: any }) => {
-//   const { width } = useWindowDimensions();
-//   const scale = useSharedValue(1);
-
-//   // Pinch gesture handler
-//   const pinchHandler =
-//     useAnimatedGestureHandler<PinchGestureHandlerGestureEvent>({
-//       onActive: (event) => {
-//         scale.value = event.scale;
-//       },
-//       onEnd: () => {
-//         scale.value = withTiming(1);
-//       },
-//     });
-
-//   // Double-tap gesture handler
-//   const doubleTapHandler = () => {
-//     scale.value = scale.value > 1 ? withTiming(1) : withSpring(2);
-//   };
-
-//   const animatedStyle = useAnimatedStyle(() => {
-//     return {
-//       transform: [{ scale: scale.value }],
-//     };
-//   });
-
-//   return (
-//     <TapGestureHandler onActivated={doubleTapHandler} numberOfTaps={2}>
-//       <Animated.View
-//         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-//         className=" items-center justify-center"
-//       >
-//         <PinchGestureHandler onGestureEvent={pinchHandler}>
-//           <Animated.View
-//             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-//           >
-//             <Animated.Image
-//               source={source}
-//               style={[
-//                 animatedStyle,
-//                 {
-//                   width,
-//                   minHeight: 263,
-//                 },
-//               ]}
-//               resizeMode="cover"
-//             />
-//           </Animated.View>
-//         </PinchGestureHandler>
-//       </Animated.View>
-//     </TapGestureHandler>
-//   );
-// };
 
 const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const [index, setIndex] = useState(0);
@@ -227,6 +72,9 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
     }
   };
 
+  //
+  const [isZoomed, setIsZoomed] = useState(false);
+
   return (
     <View
       style={{
@@ -234,31 +82,66 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
       }}
       className="relative justify-center items-center bg-black"
     >
-      <FlatList
-        data={Slides}
-        ref={flatListRef}
-        renderItem={({ item }) => (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-            className=" justify-center items-center"
-          >
-            <ZoomableImage source={item.img} />
-          </View>
-        )}
-        horizontal
-        pagingEnabled
-        snapToAlignment="center"
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleOnScroll}
-        onViewableItemsChanged={handleOnViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        initialScrollIndex={currentIndex}
-        getItemLayout={(data, index) => ({
-          length: width,
-          offset: width * index,
-          index,
-        })}
-      />
+      <View
+        style={{
+          height: Dimensions.get("screen").height * 0.7,
+          flex: 1,
+          justifyContent:"center"
+        }}
+      >
+        <FlatList
+          data={Slides}
+          renderItem={({ item }) => (
+            <ImageZoom
+              cropWidth={Dimensions.get("screen").width}
+              cropHeight={Dimensions.get("screen").height}
+              imageWidth={Dimensions.get("screen").width}
+              imageHeight={Dimensions.get("screen").height * 0.6}
+              onMove={({ scale }) => {
+                if (scale !== 1) {
+                  setIsZoomed(true);
+                } else {
+                  setIsZoomed(false);
+                }
+              }}
+              horizontalOuterRangeOffset={(offsetX) => {
+                if (!isZoomed) {
+                  // Allow swipe to change image if not zoomed in
+                  if (offsetX < -width / 4) {
+                    // Swipe left (next image)
+                    flatListRef.current?.scrollToIndex({
+                      index: index < Slides.length - 1 ? index + 1 : index,
+                      animated: true,
+                    });
+                  } else if (offsetX > width / 4) {
+                    // Swipe right (previous image)
+                    flatListRef.current?.scrollToIndex({
+                      index: index > 0 ? index - 1 : 0,
+                      animated: true,
+                    });
+                  }
+                }
+              }}
+            >
+              <Image resizeMode="contain" style={{ width, minHeight: 263 }} source={item.img} />
+            </ImageZoom>
+          )}
+          horizontal
+          pagingEnabled
+          snapToAlignment="center"
+          showsHorizontalScrollIndicator={false}
+          onScroll={handleOnScroll}
+          onViewableItemsChanged={handleOnViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          ref={flatListRef}
+          initialScrollIndex={currentIndex}
+          getItemLayout={(data, index) => ({
+            length: width,
+            offset: width * index,
+            index,
+          })}
+        />
+      </View>
 
       <View
         style={{
@@ -272,7 +155,10 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
           current={index + 1}
           totalItemsCount={Slides.length}
         />
-        <NextImage onPress={handleNext} disabled={index === Slides.length - 1} />
+        <NextImage
+          onPress={handleNext}
+          disabled={index === Slides.length - 1}
+        />
       </View>
     </View>
   );

@@ -8,9 +8,12 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { router } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
+import ImageZoom from "react-native-image-pan-zoom";
 
 import Pagination from "./Pagination";
 import ThemedText from "../ThemedText";
@@ -27,7 +30,9 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const { width } = useWindowDimensions();
 
   const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
   const scrollX = useRef(new Animated.Value(0)).current;
+  const flatListRef = useRef<FlatList>(null);
 
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     Animated.event(
@@ -70,11 +75,39 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
       <FlatList
         data={Slides}
         renderItem={({ item }) => (
-          <Image
-            resizeMode="cover"
-            source={item.img}
-            style={{ width, minHeight: 263 }}
-          />
+          <ImageZoom
+            cropWidth={Dimensions.get("window").width}
+            cropHeight={263}
+            imageWidth={Dimensions.get("window").width}
+            imageHeight={263}
+            onMove={({ scale }) => {
+              if (scale !== 1) {
+                setIsZoomed(true);
+              } else {
+                setIsZoomed(false);
+              }
+            }}
+            horizontalOuterRangeOffset={(offsetX) => {
+              if (!isZoomed) {
+                // Allow swipe to change image if not zoomed in
+                if (offsetX < -width / 4) {
+                  // Swipe left (next image)
+                  flatListRef.current?.scrollToIndex({
+                    index: index < Slides.length - 1 ? index + 1 : index,
+                    animated: true,
+                  });
+                } else if (offsetX > width / 4) {
+                  // Swipe right (previous image)
+                  flatListRef.current?.scrollToIndex({
+                    index: index > 0 ? index - 1 : 0,
+                    animated: true,
+                  });
+                }
+              }
+            }}
+          >
+            <Image style={{ width, minHeight: 263 }} source={item.img} />
+          </ImageZoom>
         )}
         horizontal
         pagingEnabled
@@ -83,6 +116,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         onScroll={handleOnScroll}
         onViewableItemsChanged={handleOnViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
+        ref={flatListRef}
       />
       <Pagination data={Slides} scrollX={scrollX} index={index} />
       <TargetItemZoom onPress={handleZoom} />
