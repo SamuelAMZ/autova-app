@@ -7,7 +7,6 @@ import {
   useWindowDimensions,
   Platform,
   ImageBackground,
-  Animated,
 } from "react-native";
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -60,12 +59,12 @@ export default function CarDetail() {
 
   // details and information view
   const handleSpecificationsView = () => {
-    setSelected("Specifications");
+    // setSelected("Specifications");
     handleScrollTo(specificationsRef);
   };
 
   const handleDetailsView = () => {
-    setSelected("Details");
+    // setSelected("Details");
     handleScrollTo(detailsRef);
   };
 
@@ -80,14 +79,7 @@ export default function CarDetail() {
 
   // sticky buttons on scroll
   const [headerHeight, setHeaderHeight] = useState(0);
-  const [viewY, setViewY] = useState({
-    height: 0,
-    width: 0,
-    pageY: 0,
-    pageX: 0,
-  });
   const [positionAbsolute, setPositionAbsolute] = useState(false);
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   const handleSelectedViewWhenScrolling = () => {
     specificationsRef.current?.measure((x, y, width, height, pageX, pageY) => {
