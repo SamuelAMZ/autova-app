@@ -5,10 +5,10 @@ import {
 } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Edit2, More, Trash } from "iconsax-react-native";
+import { More, Trash } from "iconsax-react-native";
 import { useState } from "react";
-import { Animated, FlatList, TouchableOpacity, View } from "react-native";
-import { RectButton, Swipeable, TextInput } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity, View } from "react-native";
+import { Swipeable, TextInput } from "react-native-gesture-handler";
 
 interface modalInitialState {
   type: string;
@@ -67,7 +67,7 @@ const CollectionDetails = () => {
       <CollectionActionModal
         cancelPress={() => setmodalVisible(undefined)}
         childrenTop={
-          <View className="p-5 rounded-full border items-center justify-center">
+          <View className="p-5 rounded-full items-center justify-center bg-[#F5F5F5]">
             <Trash color="red" />
           </View>
         }
@@ -109,7 +109,7 @@ const CollectionDetails = () => {
             />
           </View>
         }
-        rightText="Delete"
+        rightText="Change"
         visible={modalVisible?.type == "rename" && modalVisible.visible}
       />
     </>

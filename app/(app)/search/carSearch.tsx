@@ -11,21 +11,19 @@ import {
 
 import CarItem from "@/components/cars/CarItem";
 import Header from "@/components/Header";
-import {
-  BodyStylesSearch,
-  MakeModelsSearch,
-  PriceRangeSearch,
-} from "@/components/SearchCard";
 import ThemedText from "@/components/ThemedText";
 import { CarData } from "@/constants/CarData";
 
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
+import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
+import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
+import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 
 const CarSearchScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
+  const snapPoints = useMemo(() => ["70%", "80%", "90%"], []);
 
   // callbacks
   const handlePresentModalPress = () => {

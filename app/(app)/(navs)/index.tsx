@@ -15,7 +15,7 @@ import BrandItem from "@/components/BrandItem";
 import CarItem from "@/components/cars/CarItem";
 import FilterTag from "@/components/FilterTag";
 import ThemedText from "@/components/ThemedText";
-import SearchCard from "@/components/SearchCard";
+import SearchCard from "@/components/searchCard/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import { CarData } from "@/constants/CarData";
@@ -25,7 +25,7 @@ import Animated from "react-native-reanimated";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
-  const snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
+  const snapPoints = useMemo(() => ["70%", "80%", "90%"], []);
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handlePresentModalPress = () => {
@@ -73,7 +73,6 @@ const HomePage = () => {
           {/* Brands Items */}
           <View className="w-full px-4">
             <FlatList
-              // className="px-[4%]"
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               horizontal
@@ -118,7 +117,6 @@ const HomePage = () => {
             )}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
-            // initialNumToRender={5}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
           />
         </View>

@@ -139,17 +139,23 @@ export const CollectionActionModal = ({
           <View className="w-full flex-row justify-between">
             <TouchableOpacity
               onPress={cancelPress}
-              className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3"
+              className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3 border-[#5856D6] bg-[#EEEEEF]"
             >
               <ThemedText
-                style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+                style={{ fontFamily: "SpaceGrotesk_700Bold", color: "#101828" }}
               >
                 Cancel
               </ThemedText>
             </TouchableOpacity>
-            <TouchableOpacity className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3">
+            <TouchableOpacity
+              style={{
+                backgroundColor:
+                  rightText.toLocaleLowerCase() == "delete" ? "red" : "#5856D6",
+              }}
+              className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3"
+            >
               <ThemedText
-                style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+                style={{ fontFamily: "SpaceGrotesk_700Bold", color: "white" }}
               >
                 {rightText}
               </ThemedText>
