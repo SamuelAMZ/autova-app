@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 import * as Progress from "react-native-progress";
+import colors from "@/constants/Colors";
 
 type HeaderListingProps = PropsWithChildren & ViewProps & {
   progress: number;
@@ -28,7 +29,7 @@ const HeaderListing = ({
       <Progress.Bar
         progress={progress}
         height={2}
-        color="#5856D6"
+        color={colors.background}
         width={null}
         borderRadius={0}
         borderWidth={0}

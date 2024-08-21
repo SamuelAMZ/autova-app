@@ -12,10 +12,10 @@ export default function Index() {
         style={{
           backgroundColor: colors.backgroundPrimary,
         }}
-        className={`h-full items-center`}
-      >
-        <Image source={require("@/assets/images/car.png")} />
+        className={`h-full items-center`}>
+        <Image source={require("@/assets/images/car.png")} className="w-full h-[60%]" />
         <Image
+          className="mt-[30px]"
           source={require("@/assets/images/Group.png")}
           style={{ width: 168, height: 31 }}
         />
@@ -30,17 +30,13 @@ export default function Index() {
           end={{ x: 0.5, y: 1 }}
           locations={[0.3, 0.9, 1]}
           style={{ flex: 1 }}
-          className="w-full"
-        >
+          className="w-full">
           <View
             style={{
               backgroundColor: colors.backgroundPrimary,
             }}
-            className="flex-1 items-center justify-between px-[15px] pb-[50px] "
-          >
-            <ThemedText
-              className={`text-[${colors.textPrimary}] text-center text-[15px]`}
-            >
+            className="flex-1 items-center justify-between px-[15px] pb-[50px] mt-[15px]">
+            <ThemedText className={`text-[#fff] text-center text-[1.2rem]`}>
               Verified cars, trusted history, and authentic users—all from your
               local area.
             </ThemedText>
@@ -55,6 +51,7 @@ export default function Index() {
                 title="I already have an account"
                 backgroundColor={colors.buttonBackground}
                 onPress={() => {}}
+                textColor="#fff"
               />
             </View>
           </View>

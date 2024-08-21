@@ -6,6 +6,7 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 import ThemedText from "./ThemedText";
+import Colors from "@/constants/Colors";
 
 type CustomButtonProps = TouchableOpacityProps & {
   title: string;
@@ -17,17 +18,15 @@ type CustomButtonProps = TouchableOpacityProps & {
 const CustomButton = ({
   title,
   onPress,
-  backgroundColor = "#5856D6",
-  textColor = "#fff",
+  backgroundColor = Colors.background,
+  textColor = Colors.textPrimary,
 }: CustomButtonProps) => {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor }]}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <ThemedText
-        style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}
-      >
+        style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}>
         {title}
       </ThemedText>
     </TouchableOpacity>

@@ -13,24 +13,13 @@ import { Notification, Gps } from "iconsax-react-native";
 import { router } from "expo-router";
 import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
+import Colors from "@/constants/Colors";
 
 export default function MyListing() {
   return (
     <>
-      <Header>
-        <View className="flex flex-row justify-between w-full items-center">
-          <ThemedText
-            className="text-[#fff] text-[22px]"
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-          >
-            Listing
-          </ThemedText>
-          <View className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
-            <Notification color="white" size={20} />
-          </View>
-        </View>
-      </Header>
-      <ScrollView className="flex-1 px-[16px] py-[30px]  ">
+      <CustomHeader />
+      <ScrollView className="flex-1 px-[16px] py-[30px] bg-[#fff] ">
         <View className="flex  justify-center gap-[30px]">
           <View className="bg-[#F9FAFB] p-[16px] rounded-[16px] drop-shadow-md  w-full gap-[16px]">
             <ThemedText
@@ -50,7 +39,7 @@ export default function MyListing() {
                 }}
               />
               <TextInput
-                className="bg-[#7878801F] relative border border-[#5856D6] py-[12px] px-[20px] rounded-[12px]"
+                className={`bg-[#7878801F] relative border border-[${Colors.background}] py-[12px] px-[20px] rounded-[12px]`}
                 placeholder="Enter ZIP code"
                 placeholderTextColor="#1D2939"
               />
@@ -58,10 +47,10 @@ export default function MyListing() {
                 onPress={() => {
                   router.navigate("../../condition");
                 }}
-                className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
+                className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
               >
                 <ThemedText
-                  className="text-[17px] text-center font-[600] text-[#fff]"
+                  className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
                   style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Continue
@@ -95,6 +84,26 @@ export default function MyListing() {
           </View>
         </View>
       </ScrollView>
+    </>
+  );
+}
+
+function CustomHeader() {
+  return (
+    <>
+      <Header>
+        <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
+          <ThemedText
+            className={`text-[${Colors.textPrimary}] text-[22px]`}
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+            Listing
+          </ThemedText>
+          <View
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            <Notification color={Colors.textPrimary} size={20} />
+          </View>
+        </View>
+      </Header>
     </>
   );
 }

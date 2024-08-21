@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
+import colors from "@/constants/Colors";
 
 const Thumb = ({ name }: { name: string }) => {
   return <View style={styles.root} />;
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 16,
-    backgroundColor: "#5856D6",
+    backgroundColor: colors.background,
     borderWidth: 3,
     borderColor: "white",
   },
