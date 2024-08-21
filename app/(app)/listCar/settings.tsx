@@ -27,7 +27,6 @@ export default function Settings() {
 
   useStatusBar("dark", "#fff", false);
 
-
   const handleLogout = async () => {
     setIsLogout(!isLogout);
   };
@@ -85,7 +84,9 @@ export default function Settings() {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity onPress={handleLogout} className="border border-[#FF4747]  rounded-[50px] flex items-center">
+        <TouchableOpacity
+          onPress={handleLogout}
+          className="border border-[#FF4747]  rounded-[50px] flex items-center">
           <ThemedText
             className="text-[1rem] text-[#FF4747] py-[1rem]"
             style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
@@ -93,7 +94,7 @@ export default function Settings() {
           </ThemedText>
         </TouchableOpacity>
       </View>
-      <LogoutModal visible={isLogout} onClose={handleLogout} /> 
+      <LogoutModal visible={isLogout} onClose={handleLogout} />
     </>
   );
 }
@@ -103,13 +104,13 @@ function CustomHeader() {
     <>
       <HeaderSetting>
         <View className="flex flex-row justify-between w-full items-center px-[16px] py-[22px]">
-          <ArrowLeft
-            size="24"
-            color="#101828"
+          <Pressable
             onPress={() => {
               router.back();
-            }}
-          />
+            }}>
+            <ArrowLeft size="24" color="#101828" />
+          </Pressable>
+
           <ThemedText
             className="text-[#101828] text-[24px]"
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
