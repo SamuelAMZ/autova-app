@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 import ThemedText from "./ThemedText";
+import colors from "@/constants/Colors";
 
 const FilterTag = ({
   title,
@@ -10,7 +11,7 @@ const FilterTag = ({
   return (
     <View
       className={`px-5 h-[40px] rounded-[100] ${
-        active ? "bg-[#5856D6]" : "border border-[#5856D6]"
+        active ? `bg-[${colors.background}]` : `border border-[${colors.background}]`
       } items-center justify-center `}
       {...rest}
     >

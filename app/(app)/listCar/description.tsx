@@ -12,6 +12,7 @@ import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import Colors from "@/constants/Colors";
 
 export default function Description() {
   const [text, setText] = useState("");
@@ -86,7 +87,7 @@ export default function Description() {
             onPress={() => {
               router.navigate("./price");
             }}
-            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"

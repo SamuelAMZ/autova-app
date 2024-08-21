@@ -25,7 +25,7 @@ import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import CarImagesSlider from "@/components/carImagesSlider/slider";
 import useStatusBar from "@/hooks/useStatusBar";
-import Colors from "@/constants/Colors";
+import colors from "@/constants/Colors";
 
 const data = [
   {
@@ -81,7 +81,7 @@ export default function CarDetail() {
                 style={{
                   paddingTop: 28,
                   paddingBottom: 60,
-                  backgroundColor: Colors.backgroundSecondaryVariant,
+                  backgroundColor: colors.backgroundSecondaryVariant,
                 }}
                 className="px-[5%] flex gap-[20px]"
               >
@@ -178,7 +178,7 @@ export default function CarDetail() {
                   style={{
                     fontFamily: "SpaceGrotesk_600SemiBold",
                   }}
-                  className="text-[#5856D6] text-[28px]"
+                  className={`text-[${colors.background}] text-[28px]`}
                 >
                   $68,490
                 </ThemedText>
@@ -205,10 +205,10 @@ export default function CarDetail() {
                       borderRadius: 100,
                       borderWidth: 1,
                       borderColor:
-                        selected === "Specifications" ? "#5856D6" : "#EAECF0",
+                        selected === "Specifications" ? colors.background : "#EAECF0",
                       backgroundColor:
                         selected === "Specifications"
-                          ? "#5856D6"
+                          ? colors.background
                           : "transparent",
                     }}
                     className="flex items-center justify-center"
@@ -232,9 +232,9 @@ export default function CarDetail() {
                       borderRadius: 100,
                       borderWidth: 1,
                       borderColor:
-                        selected === "Details" ? "#5856D6" : "#EAECF0",
+                        selected === "Details" ? colors.background : "#EAECF0",
                       backgroundColor:
-                        selected === "Details" ? "#5856D6" : "transparent",
+                        selected === "Details" ? colors.background : "transparent",
                     }}
                     className="flex items-center justify-center"
                   >
@@ -267,7 +267,7 @@ export default function CarDetail() {
             >
               <TouchableOpacity
                 onPress={handlePresentModalPress}
-                className="bg-[#5856D6] p-[12px_20px] rounded-[12px] border border-solid border-[#5856D6]"
+                className={`bg-[${colors.background}] p-[12px_20px] rounded-[12px] border border-solid border-[${colors.background}]`}
               >
                 <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
                   Contact Seller
@@ -489,7 +489,7 @@ function CustomHeader({ title }: { title?: string }) {
             className="  bg-[#FFFFFF85] h-[45] w-[45] rounded-[100px] items-center justify-center"
           >
             <Heart
-              color={isLiked ? "#5856D6" : "black"}
+              color={isLiked ? colors.background : "black"}
               variant={isLiked ? "Bold" : "Linear"}
             />
           </TouchableOpacity>

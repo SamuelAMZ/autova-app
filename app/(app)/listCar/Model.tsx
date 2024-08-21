@@ -7,6 +7,7 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { modelData } from "@/constants/data";
+import Colors from "@/constants/Colors";
 
 export default function Model() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
@@ -95,7 +96,7 @@ export default function Model() {
                     {item.name}
                   </ThemedText>
                   {selectedDegree === item.name && (
-                    <AntDesign name="check" size={20} color="#5856D6" />
+                    <AntDesign name="check" size={20} color={Colors.background} />
                   )}
                 </TouchableOpacity>
               ))}
@@ -112,7 +113,7 @@ export default function Model() {
             onPress={() => {
               router.navigate("./year");
             }}
-            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"

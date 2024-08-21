@@ -13,6 +13,7 @@ import Header from "@/components/Header";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import { router } from "expo-router";
+import Colors from "@/constants/Colors";
 
 const AccountPage = () => {
   const [image, setImage] = useState("");
@@ -69,7 +70,7 @@ const AccountPage = () => {
                 className="bg-[#fff] p-[16px] rounded-full absolute"
                 style={{ left: 40, top: 35 }}>
                 <View
-                  className="bg-[#6C6BDB] p-[5px] rounded-full absolute"
+                  className={`bg-[${Colors.background}] p-[5px] rounded-full absolute`}
                   style={{ left: 2, top: 2 }}>
                   <Camera
                     className=" absolute"
@@ -182,7 +183,7 @@ const AccountPage = () => {
 
             <TouchableOpacity
               onPress={() => {}}
-              className="bg-[#5856D6] px-[20px] py-[12px] rounded-[12px] ">
+              className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`} >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
                 style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
@@ -212,7 +213,7 @@ function CustomHeader() {
             onPress={() => {
               router.navigate("/(app)/listCar/settings");
             }}
-            className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
             <Setting2 size="24" color="#fff" />
           </TouchableOpacity>
         </View>

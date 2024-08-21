@@ -15,6 +15,7 @@ import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { Ionicons } from "@expo/vector-icons";
+import Colors from "@/constants/Colors";
 
 function MyCheckbox() {
   const [checked, setChecked] = useState(false);
@@ -164,7 +165,7 @@ export default function Price() {
             onPress={() => {
               router.navigate("./upload");
             }}
-            className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]"
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
           >
             <ThemedText
               className="text-[17px] text-center font-[600] text-[#fff]"

@@ -4,6 +4,7 @@
  */
 
 const Colors = {
+  background: "#5856D6",
   backgroundPrimary: "#070c0f",
   textPrimary: "#fff",
   buttonBackground: "#7878801F",

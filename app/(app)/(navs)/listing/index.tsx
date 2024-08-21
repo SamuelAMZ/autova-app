@@ -11,6 +11,7 @@ import ThemedText from "@/components/ThemedText";
 import { Notification, Gps } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
+import Colors from "@/constants/Colors";
 
 const ListingPage = () => {
   return (
@@ -46,7 +47,7 @@ const ListingPage = () => {
               }}
             />
             <TextInput
-              className="bg-[#7878801F] relative border border-[#5856D6] py-[12px] px-[20px] rounded-[12px]"
+              className={`bg-[#7878801F] relative border border-[${Colors.background}] py-[12px] px-[20px] rounded-[12px]`}
               placeholder="Enter ZIP code"
               placeholderTextColor="#1D2939"
             />
@@ -54,7 +55,7 @@ const ListingPage = () => {
               onPress={() => {
                 router.navigate("/(app)/listCar/condition");
               }}
-              className="bg-[#5856D6] px-[20px] py-[14px] rounded-[12px] w-[100%]"
+              className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
             >
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
@@ -83,7 +84,7 @@ function CustomHeader() {
           >
             Listing
           </ThemedText>
-          <View className="justify-center items-center w-[40] h-[40] bg-[#6C6BDB] rounded-3xl">
+          <View className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
             <Notification color="white" size={20} />
           </View>
         </View>

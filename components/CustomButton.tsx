@@ -6,6 +6,7 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 import ThemedText from "./ThemedText";
+import colors from "@/constants/Colors";
 
 type CustomButtonProps = TouchableOpacityProps & {
   title: string;
@@ -17,7 +18,7 @@ type CustomButtonProps = TouchableOpacityProps & {
 const CustomButton = ({
   title,
   onPress,
-  backgroundColor = "#5856D6",
+  backgroundColor = colors.background,
   textColor = "#fff",
 }: CustomButtonProps) => {
   return (
