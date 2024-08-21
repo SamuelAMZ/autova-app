@@ -8,9 +8,11 @@ import Car from "@/models/car.model";
 export default function CarItem({
   car,
   onPress,
+  imgHeight,
 }: {
   car: Car;
   onPress: () => void;
+  imgHeight?: number;
 }) {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -28,8 +30,9 @@ export default function CarItem({
             source={car.img}
             style={{
               borderRadius: 10,
+              height: imgHeight || 220,
             }}
-            className="w-full max-w-[329px] h-[180px] object-contain aspect-auto"
+            className="w-full h-[220px] object-cover aspect-auto"
           />
           <TouchableOpacity
             onPress={handleLike}
@@ -70,7 +73,7 @@ export default function CarItem({
               {car.label}
             </ThemedText>
           </View>
-          <View>
+          {/* <View>
             <ThemedText
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
@@ -79,7 +82,7 @@ export default function CarItem({
             >
               ${car.price}
             </ThemedText>
-          </View>
+          </View> */}
         </View>
       </View>
     </TouchableOpacity>

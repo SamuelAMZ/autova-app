@@ -31,7 +31,7 @@ export default function Notif() {
             >
               Never Miss a Deal!
             </ThemedText>
-            <ThemedText className="text-[13px] text-[#344054] text-center">
+            <ThemedText className="text-[1.2rem] text-[#344054] text-center">
               Enable notifications to stay informed about new car listings,
               special offers, and important updates!
             </ThemedText>
