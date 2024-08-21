@@ -25,6 +25,7 @@ import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import CarImagesSlider from "@/components/carImagesSlider/slider";
 import useStatusBar from "@/hooks/useStatusBar";
+import Colors from "@/constants/Colors";
 
 const data = [
   {
@@ -80,8 +81,9 @@ export default function CarDetail() {
                 style={{
                   paddingTop: 28,
                   paddingBottom: 60,
+                  backgroundColor: Colors.backgroundSecondaryVariant,
                 }}
-                className="px-[5%] flex gap-[20px] bg-white"
+                className="px-[5%] flex gap-[20px]"
               >
                 <ThemedText
                   style={{
