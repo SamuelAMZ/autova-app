@@ -205,7 +205,7 @@ function CustomHeader() {
       <Header>
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
-            className="text-[#fff] text-[22px]"
+            className={`text-[${Colors.textPrimary}] text-[22px]`}
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Account
           </ThemedText>
@@ -214,7 +214,7 @@ function CustomHeader() {
               router.navigate("/(app)/listCar/settings");
             }}
             className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
-            <Setting2 size="24" color="#fff" />
+            <Setting2 size="24" color={Colors.textPrimary} />
           </TouchableOpacity>
         </View>
       </Header>

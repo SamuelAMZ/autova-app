@@ -58,7 +58,7 @@ const ListingPage = () => {
               className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
             >
               <ThemedText
-                className="text-[17px] text-center font-[600] text-[#fff]"
+                className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
                 style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               >
                 Start your listing
@@ -79,13 +79,13 @@ function CustomHeader() {
       <Header>
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
-            className="text-[#fff] text-[22px]"
+            className={`text-[${Colors.textPrimary}] text-[22px]`}
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
             Listing
           </ThemedText>
           <View className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
-            <Notification color="white" size={20} />
+            <Notification color={Colors.textPrimary} size={20} />
           </View>
         </View>
       </Header>

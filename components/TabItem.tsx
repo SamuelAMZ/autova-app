@@ -1,7 +1,7 @@
 import * as Icon from "iconsax-react-native";
 import { View } from "react-native";
 import ThemedText from "./ThemedText";
-import colors from "@/constants/Colors";
+import Colors from "@/constants/Colors";
 
 const TabIcon = ({
   IconItem,
@@ -11,7 +11,7 @@ const TabIcon = ({
   return (
     <IconItem
       size={24}
-      color={focused ? colors.background : colors.textSecondary}
+      color={focused ? Colors.background : Colors.textSecondary}
       {...rest}
       variant={focused ? "Bold" : "Linear"}
     />
@@ -30,7 +30,7 @@ const TabItem = ({ focused, title, icon }: TabItemProps) => {
       <TabIcon IconItem={icon} focused={focused!} />
       <ThemedText
         className={`text-[13px] ${
-          focused ? `text-[${colors.background}]` : `text-[${colors.textSecondary}]`
+          focused ? `text-[${Colors.background}]` : `text-[${Colors.textSecondary}]`
         }`}
       >
         {title}

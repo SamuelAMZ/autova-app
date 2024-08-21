@@ -21,7 +21,7 @@ import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import { CarData } from "@/constants/CarData";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import colors from "@/constants/Colors";
+import Colors from "@/constants/Colors";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -37,7 +37,7 @@ const HomePage = () => {
   };
 
   return (
-    <View className={`flex-1 bg-[${colors.background}]`}>
+    <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
         style={{ paddingTop: insets.top, paddingBottom: 10 }}
         className="px-4 w-full flex-row items-center justify-between"
@@ -45,8 +45,8 @@ const HomePage = () => {
         <View className="items-center flex-row">
           <AppIcon height={36} />
         </View>
-        <View className={`justify-center items-center w-[40] h-[40] bg-[${colors.buttonSecondary}] rounded-3xl`}>
-          <Notification color="white" size={20} />
+        <View className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+          <Notification color={Colors.textPrimary} size={20} />
         </View>
       </View>
       <ScrollView bounces={false}>

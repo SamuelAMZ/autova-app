@@ -39,7 +39,7 @@ export default function Index() {
             className="flex-1 items-center justify-between px-[15px] pb-[50px] "
           >
             <ThemedText
-              className={`text-[${colors.textPrimary}] text-center text-[15px]`}
+              className={`text-[#fff] text-center text-[15px]`}
             >
               Verified cars, trusted history, and authentic users—all from your
               local area.
@@ -55,6 +55,7 @@ export default function Index() {
                 title="I already have an account"
                 backgroundColor={colors.buttonBackground}
                 onPress={() => {}}
+                textColor="#fff"
               />
             </View>
           </View>

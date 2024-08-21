@@ -10,7 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import colors from "@/constants/Colors";
+import Colors from "@/constants/Colors";
 
 const SavedPage = () => {
   return (
@@ -18,13 +18,13 @@ const SavedPage = () => {
       <Header>
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
-            className="text-[#fff] text-[22px]"
+            className={`text-[${Colors.textPrimary}] text-[22px]`}
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Saved
           </ThemedText>
           <View
-            className={`justify-center items-center w-[40] h-[40] bg-[${colors.buttonSecondary}] rounded-3xl`}>
-            <Notification color="white" size={20} />
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            <Notification color={Colors.textPrimary} size={20} />
           </View>
         </View>
       </Header>
@@ -68,7 +68,7 @@ const SavedCarItem = () => {
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
           <ThemedText
-            className={`text-[${colors.background}] font-extrabold text-[16px]`}>
+            className={`text-[${Colors.background}] font-extrabold text-[16px]`}>
             $25,000
           </ThemedText>
           <ThemedText className="text-[#667085]">16 Aug, 10:20 PM</ThemedText>

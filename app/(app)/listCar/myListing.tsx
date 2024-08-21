@@ -13,7 +13,7 @@ import { Notification, Gps } from "iconsax-react-native";
 import { router } from "expo-router";
 import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
-import colors from "@/constants/Colors";
+import Colors from "@/constants/Colors";
 
 export default function MyListing() {
   return (
@@ -26,7 +26,7 @@ export default function MyListing() {
           >
             Listing
           </ThemedText>
-          <View className={`justify-center items-center w-[40] h-[40] bg-[${colors.buttonSecondary}] rounded-3xl`}>
+          <View className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
             <Notification color="white" size={20} />
           </View>
         </View>
@@ -51,7 +51,7 @@ export default function MyListing() {
                 }}
               />
               <TextInput
-                className={`bg-[#7878801F] relative border border-[${colors.background}] py-[12px] px-[20px] rounded-[12px]`}
+                className={`bg-[#7878801F] relative border border-[${Colors.background}] py-[12px] px-[20px] rounded-[12px]`}
                 placeholder="Enter ZIP code"
                 placeholderTextColor="#1D2939"
               />
@@ -59,10 +59,10 @@ export default function MyListing() {
                 onPress={() => {
                   router.navigate("../../condition");
                 }}
-                className={`bg-[${colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
+                className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
               >
                 <ThemedText
-                  className="text-[17px] text-center font-[600] text-[#fff]"
+                  className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
                   style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
                   Continue
