@@ -16,12 +16,19 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { Ionicons } from "@expo/vector-icons";
 
-function MyCheckbox() {
+export function MyCheckbox({
+  onPress,
+}: {
+  onPress?: (value: boolean) => void;
+}) {
   const [checked, setChecked] = useState(false);
   return (
     <Pressable
       style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-      onPress={() => setChecked(!checked)}
+      onPress={() => {
+        setChecked(!checked);
+        onPress && onPress(!checked);
+      }}
     >
       {checked && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
@@ -45,7 +52,7 @@ export default function Price() {
 
   return (
     <>
-      <HeaderListing progress={12/14}>
+      <HeaderListing progress={12 / 14}>
         <View className="flex flex-row w-full justify-between items-center mt-[15px]">
           <View className="flex flex-row gap-[12px] items-center">
             <TouchableOpacity

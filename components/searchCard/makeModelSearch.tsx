@@ -60,44 +60,44 @@ const MakeModelsSearch = () => {
   return (
     <>
       <View className="mb-3 flex-row justify-between">
-        <View className="bg-white h-[80] w-[47%] shadow-sm rounded-lg">
+        <TouchableOpacity
+          onPress={() => handleTypeChange("makes")}
+          className="bg-white h-[80] w-[47%] shadow-sm rounded-lg"
+        >
           <View className="h-[50%] w-full justify-center ml-3">
             <ThemedText className="text-[#344054] font-semibold">
               Make
             </ThemedText>
           </View>
           <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
-          <TouchableOpacity
-            onPress={() => handleTypeChange("makes")}
-            className="h-[50%] w-full justify-center ml-3"
-          >
+          <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
                 {selectedMakeItem?.label ?? "Select Make"}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
-          </TouchableOpacity>
-        </View>
-        <View className="bg-white h-[80] w-[47%] shadow-sm rounded-lg">
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleTypeChange("models")}
+          className="bg-white h-[80] w-[47%] shadow-sm rounded-lg"
+        >
           <View className="h-[50%] w-full justify-center ml-3">
             <ThemedText className="text-[#344054] font-semibold">
               Model
             </ThemedText>
           </View>
           <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
-          <TouchableOpacity
-            onPress={() => handleTypeChange("models")}
-            className="h-[50%] w-full justify-center ml-3"
-          >
+          <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
                 {selectedModelItem?.label ?? "Select Model"}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
       </View>
       <CustomBottomSheetModal
         isVisible={isModalVisible}

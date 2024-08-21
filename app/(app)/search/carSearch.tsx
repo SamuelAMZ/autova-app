@@ -92,7 +92,7 @@ const CarSearchScreen = () => {
                 }}
               />
             )}
-            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
             // initialNumToRender={5}

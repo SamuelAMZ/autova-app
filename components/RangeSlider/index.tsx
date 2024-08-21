@@ -6,11 +6,15 @@ import RailSelected from "./RailSelected";
 import Label from "./Label";
 import Notch from "./Notch";
 
-const RangeSlider = ({ from, to }: { from: number; to: number }) => {
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(500000);
-  const [floatingLabel, setFloatingLabel] = useState(false);
-
+const RangeSlider = ({
+  from,
+  to,
+  onValueChange,
+}: {
+  from: number;
+  to: number;
+  onValueChange: (low: number, high: number) => void;
+}) => {
   const renderThumb = useCallback(
     (name: "high" | "low") => <Thumb name={name} />,
     []
@@ -23,11 +27,16 @@ const RangeSlider = ({ from, to }: { from: number; to: number }) => {
   );
   const renderNotch = useCallback(() => <Notch />, []);
 
+  const handleValueChange = useCallback(
+    (low: number, high: number) => onValueChange(low, high),
+    []
+  );
+
   return (
     <RangeSliderRN
-      style={{ marginTop: 20 }}
-      min={min}
-      max={max}
+      style={{ marginTop: 20, zIndex: 0 }}
+      min={from}
+      max={to}
       step={1}
       floatingLabel={true}
       renderThumb={renderThumb}
@@ -35,7 +44,7 @@ const RangeSlider = ({ from, to }: { from: number; to: number }) => {
       renderRailSelected={renderRailSelected}
       renderLabel={renderLabel}
       renderNotch={renderNotch}
-      //   onValueChanged={handleValueChange}
+      onValueChanged={handleValueChange}
     />
   );
 };

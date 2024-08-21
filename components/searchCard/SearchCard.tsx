@@ -31,7 +31,7 @@ const SearchCard = () => {
   };
 
   return (
-    <View className="bg-[#F2F4F7] w-full p-3 rounded-xl">
+    <View className="bg-[#F2F4F7] w-full p-4 rounded-xl">
       <View className="w-full mb-3 flex-row items-center gap-3">
         <Text className="text-[#101828] text-[18px] font-semibold">
           Search cars by:
@@ -45,6 +45,7 @@ const SearchCard = () => {
         </TouchableOpacity>
       </View>
       <SearchContent type={searchType.value} />
+      <View className="mt-1"></View>
       <CustomButton
         title="Search"
         onPress={() => router.navigate("/(app)/search/carSearch")}

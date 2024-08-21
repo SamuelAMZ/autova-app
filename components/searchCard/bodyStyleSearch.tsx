@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import CustomBottomSheetModal from "../BottomSheetModal";
 import { AntDesign } from "@expo/vector-icons";
 import { ArrowDown2, Chainlink, TickCircle } from "iconsax-react-native";
+import { carDoorsElements } from "@/constants/searchTypes";
 
 interface ItemDataProps {
   label: string;
@@ -20,6 +21,7 @@ const BodyStylesSearch = () => {
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ItemDataProps>();
+  const [carDoors, setCarDoors] = useState<number>();
 
   const handleSelectItem = (item: ItemDataProps) => {
     setSelectedItem(item);
@@ -41,35 +43,44 @@ const BodyStylesSearch = () => {
         </View>
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="flex-row h-[50%] w-full justify-between items-center px-3">
-          {Array.from({ length: 5 }, (v, i) => (
-            <View
-              key={i}
+          {carDoorsElements.map((item: number) => (
+            <TouchableOpacity
+              onPress={() => setCarDoors(item)}
+              key={item}
+              style={{
+                backgroundColor: carDoors == item ? "#5856D6" : undefined,
+              }}
               className="h-[30] w-[30] border border-[#D0D5DD] rounded-3xl justify-center items-center"
             >
-              <ThemedText className="text-[#344054] font-semibold">
-                {i + 2}
+              <ThemedText
+                style={{
+                  color: carDoors == item ? "white" : "#344054",
+                  fontFamily: "SpaceGrotesk_600SemiBold",
+                }}
+              >
+                {item}
               </ThemedText>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </View>
-      <View className="bg-white h-[80] w-full shadow-sm rounded-lg mt-3">
+      <TouchableOpacity
+        onPress={() => setIsModalVisible(true)}
+        className="bg-white h-[80] w-full shadow-sm rounded-lg mt-4"
+      >
         <View className="h-[50%] w-full justify-center ml-3">
           <ThemedText className="text-[#344054] font-semibold">
             Body Type
           </ThemedText>
         </View>
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
-        <TouchableOpacity
-          onPress={() => setIsModalVisible(true)}
-          className="h-[50%] w-full gap-4 ml-3 flex-row items-center"
-        >
+        <View className="h-[50%] w-full gap-4 ml-3 flex-row items-center">
           <ThemedText className="text-[#344054] font-semibold">
             {selectedItem?.label ?? "Select body type"}
           </ThemedText>
           <ArrowDown2 color="#344054" size={16} />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
 
       <CustomBottomSheetModal
         isVisible={isModalVisible}

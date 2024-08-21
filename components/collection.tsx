@@ -47,10 +47,19 @@ export const CollectionItem = () => {
   );
 };
 
-export const SavedCarItem = () => {
+export const SavedCarItem = ({
+  onLongPress,
+  onPress,
+}: {
+  onLongPress: () => void;
+  onPress?: () => void;
+}) => {
   return (
     <TouchableOpacity
-      onPress={() => router.navigate("/(app)/brands/carDetail")}
+      onLongPress={onLongPress}
+      onPress={() =>
+        onPress ? onPress() : router.navigate("/(app)/brands/carDetail")
+      }
       className="flex-row border bg-white border-[#D0D5DD] p-3 gap-3 rounded-xl"
     >
       <Image
@@ -118,6 +127,7 @@ interface ActionProps {
   rightText: string;
   visible: boolean;
   cancelPress: () => void;
+  okPress?: () => void;
 }
 
 export const CollectionActionModal = ({
@@ -126,6 +136,7 @@ export const CollectionActionModal = ({
   rightText,
   visible,
   cancelPress,
+  okPress,
 }: PropsWithChildren & ActionProps) => {
   return (
     <Modal visible={visible} transparent statusBarTranslucent>
@@ -148,11 +159,12 @@ export const CollectionActionModal = ({
               </ThemedText>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={okPress ? okPress : () => {}}
               style={{
                 backgroundColor:
                   rightText.toLocaleLowerCase() == "delete" ? "red" : "#5856D6",
               }}
-              className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3"
+              className="w-[45%] rounded-lg justify-center p-4 flex-row items-center gap-3"
             >
               <ThemedText
                 style={{ fontFamily: "SpaceGrotesk_700Bold", color: "white" }}

@@ -39,7 +39,7 @@ const HomePage = () => {
   return (
     <View className="flex-1 bg-[#5856D6]">
       <View
-        style={{ paddingTop: insets.top, paddingBottom: 10 }}
+        style={{ paddingTop: insets.top + 10, paddingBottom: 20 }}
         className="px-4 w-full flex-row items-center justify-between"
       >
         <View className="items-center flex-row">
