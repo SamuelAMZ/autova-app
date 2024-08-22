@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Notification, Gps } from "iconsax-react-native";
+import { Notification, Gps, SearchNormal1 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import Colors from "@/constants/Colors";
@@ -82,10 +82,11 @@ function CustomHeader() {
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Listing
           </ThemedText>
-          <View
+          <TouchableOpacity
+            onPress={() => router.navigate("/(app)/search/carSearch")}
             className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
-            <Notification color={Colors.textPrimary} size={20} />
-          </View>
+            <SearchNormal1 size="20" color={Colors.textPrimary} />
+          </TouchableOpacity>
         </View>
       </Header>
     </>
