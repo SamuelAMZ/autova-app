@@ -26,7 +26,13 @@ export default function CarItem({
 
   return (
     <TouchableWithoutFeedback onPress={() => onPress()}>
-      <View className="bg-white p-1">
+      <View
+        style={{
+          shadowColor: "#000",
+          // shadowOffset: 1,
+        }}
+        className="bg-white p-1"
+      >
         <View className="px-[16px] py-[18px] flex flex-col gap-[17px] bg-[#FFFFFF] rounded-[10px] shadow shadow-black">
           <View className="relative">
             <Image
