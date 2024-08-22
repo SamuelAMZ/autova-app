@@ -69,6 +69,7 @@ const CarSearchScreen = () => {
                 className="flex-1"
                 placeholder="Search..."
                 underlineColorAndroid="transparent"
+                autoFocus={true}
               />
             </View>
             <TouchableOpacity
