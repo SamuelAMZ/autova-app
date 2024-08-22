@@ -73,7 +73,7 @@ export default function CarItem({
               {car.label}
             </ThemedText>
           </View>
-          <View>
+          {/* <View>
             <ThemedText
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
@@ -82,7 +82,7 @@ export default function CarItem({
             >
               ${car.price}
             </ThemedText>
-          </View>
+          </View> */}
         </View>
       </View>
     </TouchableOpacity>

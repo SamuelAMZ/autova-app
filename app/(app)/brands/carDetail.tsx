@@ -50,10 +50,11 @@ export default function CarDetail() {
   const scrollViewRef = useRef<ScrollView>(null);
   const specificationsRef = useRef<View>(null);
   const detailsRef = useRef<View>(null);
+  const [selectedElmHeight, setSelectedElementHeightValue] = useState(0);
 
-  const handleScrollTo = (ref:any) => {
+  const handleScrollTo = (ref: any, scale: number = 0) => {
     ref.current.measureLayout(scrollViewRef.current, (x: any, y: any) => {
-      scrollViewRef.current?.scrollTo({ y, animated: true });
+      scrollViewRef.current?.scrollTo({ y: y + scale, animated: true });
     });
   };
 
@@ -65,7 +66,11 @@ export default function CarDetail() {
 
   const handleDetailsView = () => {
     setSelected("Details");
-    handleScrollTo(detailsRef);
+    if (!positionAbsolute) {
+      handleScrollTo(detailsRef, -70);
+    } else {
+      handleScrollTo(detailsRef);
+    }
   };
 
   // handle modal
@@ -91,14 +96,31 @@ export default function CarDetail() {
     });
   };
 
-  const handleScroll = (event:any) => {
+  const handleScroll = (event: any) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
-    const scrollHeight = scrollPosition + 100;
-    if (height - headerHeight - 20 < scrollHeight) {
-      setPositionAbsolute(true);
-    } else {
-      setPositionAbsolute(false);
-    }
+    const screenHeight = height;
+
+    specificationsRef.current?.measure((x, y, width, height, pageX, pageY) => {
+      const platformValue = Platform.OS === "ios" ? 90 : 0;
+      const scrollHeight = scrollPosition;
+      if (screenHeight - height - platformValue < scrollHeight - pageY) {
+        setPositionAbsolute(true);
+
+        // increase the height of the display so that the item can be viewed with full scrolling
+        const ref =
+          selected === "Specifications" ? specificationsRef : detailsRef;
+        ref.current?.measure((x, y, width, height, pageX, pageY) => {
+          const elemHeight = Math.floor(
+            +(height / Math.floor(Math.abs(extractLastDigits(+height))))
+          );
+          // console.log(height, "height");
+          setSelectedElementHeightValue(elemHeight > 40 ? elemHeight : 100);
+        });
+      } else {
+        setPositionAbsolute(false);
+        setSelectedElementHeightValue(0);
+      }
+    });
 
     handleSelectedViewWhenScrolling();
   };
@@ -140,7 +162,7 @@ export default function CarDetail() {
               <ScrollView
                 ref={scrollViewRef}
                 bounces={false}
-                className="flex-1 pb-[1rem]"
+                className={`flex-1 pb-[1rem]`}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
               >
@@ -291,6 +313,11 @@ export default function CarDetail() {
                   </View>
 
                   <RelatedCar />
+                  <View
+                    style={{
+                      height: +selectedElmHeight,
+                    }}
+                  ></View>
                 </View>
               </ScrollView>
             </View>
@@ -613,3 +640,18 @@ const Header = ({
     </View>
   );
 };
+
+function extractLastDigits(number: number) {
+  // Convert the number to a string to easily access its digits
+  const numberStr = number.toString();
+  const length = numberStr.length;
+
+  // Determine the number of digits to extract based on the length
+  if (length > 2) {
+    return parseInt(numberStr.slice(-2));
+  } else if (length > 1) {
+    return parseInt(numberStr.slice(-1));
+  } else {
+    return number;
+  }
+}

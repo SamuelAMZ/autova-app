@@ -75,16 +75,16 @@ export default function CarItem({
                 {car.label}
               </ThemedText>
             </View>
-            <View>
+            {/* <View>
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
                 className="text-[#101828] text-[17px]"
               >
-                ${car.price}android
+                ${car.price}
               </ThemedText>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
