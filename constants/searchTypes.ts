@@ -4,4 +4,5 @@ export const searchTypesData = [
   { label: "Body Styles", value: "body" },
 ];
 
+
 export const carDoorsElements = [2, 4, 6, 8];

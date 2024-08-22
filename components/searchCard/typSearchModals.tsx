@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Chainlink, TickCircle } from "iconsax-react-native";
 import { searchTypesData } from "@/constants/searchTypes";
 
-export interface SearchTypeProps {
+export interface  SearchTypeProps {
   label: string;
   value: string;
 }
