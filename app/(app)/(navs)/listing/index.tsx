@@ -19,7 +19,7 @@ const ListingPage = () => {
     <>
       <CustomHeader />
       <ScrollView className="bg-[#fff]">
-        <View className="flex items-center px-[16px] py-[30px] gap-[30px] h-full justify-between ">
+        <View className="flex items-center px-[16px] py-[50px] gap-[30px] h-full justify-center ">
           <Image
             source={require("@/assets/empty.png")}
             style={{ width: 200, height: 200 }}

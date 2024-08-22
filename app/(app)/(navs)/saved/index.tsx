@@ -1,4 +1,4 @@
-import { CollectionItem, SavedCarItem } from "@/components/collection";
+import { CollectionItem } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { Add, Notification } from "iconsax-react-native";
@@ -10,6 +10,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import Colors from "@/constants/Colors";
+import { router } from "expo-router";
 
 const SavedPage = () => {
   return (

@@ -51,8 +51,8 @@ export default function CarDetail() {
   const specificationsRef = useRef<View>(null);
   const detailsRef = useRef<View>(null);
 
-  const handleScrollTo = (ref) => {
-    ref.current.measureLayout(scrollViewRef.current, (x, y) => {
+  const handleScrollTo = (ref:any) => {
+    ref.current.measureLayout(scrollViewRef.current, (x: any, y: any) => {
       scrollViewRef.current?.scrollTo({ y, animated: true });
     });
   };
@@ -91,7 +91,7 @@ export default function CarDetail() {
     });
   };
 
-  const handleScroll = (event) => {
+  const handleScroll = (event:any) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
     const scrollHeight = scrollPosition + 100;
     if (height - headerHeight - 20 < scrollHeight) {

@@ -16,7 +16,6 @@ const PriceRangeSearch = () => {
 
   const handleValueChange = (low: number, high: number) => {
     setRangeValue({ low, high });
-    console.log(low);
   };
 
   return (
