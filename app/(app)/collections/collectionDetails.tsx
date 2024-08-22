@@ -139,7 +139,7 @@ const CollectionDetails = () => {
         {!itemsEmpty && (
           <TouchableOpacity
             onPress={() => handleSelectAll(!isSelectAllCheked)}
-            className="flex-row p-4 items-center gap-2 border"
+            className="flex-row p-4 items-center gap-2"
           >
             <CustomCheckBox isChecked={isSelectAllCheked} />
             <ThemedText style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
