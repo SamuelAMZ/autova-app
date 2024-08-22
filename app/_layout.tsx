@@ -2,9 +2,6 @@ import { Slot, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import MySafeAreaView from "@/components/SafeAreaView";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import "../styles/global.css";
 
 import {
@@ -15,12 +12,12 @@ import {
   SpaceGrotesk_600SemiBold,
   SpaceGrotesk_700Bold,
 } from "@expo-google-fonts/space-grotesk";
+import Toast from "react-native-toast-message";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceGrotesk_300Light,
     SpaceGrotesk_400Regular,
@@ -41,11 +38,8 @@ export default function RootLayout() {
 
   return (
     <>
-      {/* <SafeAreaProvider>
-        <MySafeAreaView>
-        </MySafeAreaView>
-      </SafeAreaProvider> */}
       <Slot />
+      <Toast />
     </>
   );
 }

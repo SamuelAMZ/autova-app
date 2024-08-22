@@ -24,7 +24,7 @@ interface modalInitialState {
   visible: boolean;
 }
 
-const mockData = Array.from({ length: 12 }).map((e, idx) => idx);
+const mockData = Array.from({ length: 6 }).map((e, idx) => idx);
 
 const CollectionDetails = () => {
   const [allItems, setAllItems] = useState<number[]>(mockData);
@@ -62,7 +62,6 @@ const CollectionDetails = () => {
     } else {
       setSelectedItems([]);
     }
-    console.log(checked);
   };
 
   const handleRemoveItem = (idx?: number) => {
@@ -91,7 +90,7 @@ const CollectionDetails = () => {
                 height: "auto",
                 borderRadius: 100,
               }}
-              className="flex flex-row items-center justify-center bg-[#FFFFFF85] p-[11px]"
+              className="flex flex-row items-center justify-center bg-[#6C6BDB] p-[11px]"
               onPress={() => router.back()}
             >
               <ArrowLeft size={18} variant="Outline" color="white" />

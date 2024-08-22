@@ -2,12 +2,10 @@ import React, { PropsWithChildren, useState } from "react";
 import {
   View,
   TouchableOpacity,
-  ScrollView,
   FlatList,
   Image,
   StyleSheet,
   Dimensions,
-  Alert,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Gallery, MinusCirlce } from "iconsax-react-native";
@@ -20,6 +18,7 @@ import Colors from "@/constants/Colors";
 
 import * as ImagePicker from "expo-image-picker";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+import Toast from "react-native-toast-message";
 
 export default function Upload() {
   //
@@ -30,22 +29,37 @@ export default function Upload() {
     if (images.length < 6) {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
         aspect: [4, 4],
         quality: 1,
+        allowsMultipleSelection: true,
       });
-
-      if (!result.canceled) {
-        setImages([...images, result.assets[0].uri]);
-      }
+      const data = result.assets;
+      handleUpdateImages(data);
     } else {
-      Alert.alert(
-        "Upload error",
-        "Cannot upload more than 6 files",
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { cancelable: true }
-      );
+      toastMaximuFileUpload();
     }
+  };
+
+  const toastMaximuFileUpload = () => {
+    Toast.show({
+      type: "error",
+      text1: "Upload error",
+      text2: "Cannot upload more than 6 files",
+      position: "bottom",
+    });
+  };
+
+  const handleUpdateImages = (data: ImagePicker.ImagePickerAsset[] | null) => {
+    let items = images;
+    if (!data || data.length > 6) return toastMaximuFileUpload();
+    const uploadedImages = data.map((e) => e.uri);
+    const totalLength = data.length + images.length;
+    if (totalLength > 6) {
+      const rangeToRemove = totalLength - 6;
+      items.splice(0, rangeToRemove);
+    }
+    items = items.concat(uploadedImages);
+    setImages([...items]);
   };
 
   const handleRemoveImage = (index: number) => {
@@ -64,12 +78,14 @@ export default function Upload() {
                 router.back();
               }}
               className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}>
+              style={{ backgroundColor: "#c1c1c1" }}
+            >
               <Feather name="arrow-left" size={20} color="black" />
             </TouchableOpacity>
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               List Your Car
             </ThemedText>
           </View>
@@ -78,42 +94,49 @@ export default function Upload() {
               router.navigate("/(app)/(navs)/listing");
             }}
             className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}>
+            style={{ backgroundColor: "#c1c1c1" }}
+          >
             <AntDesign name="close" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </HeaderListing>
       <View
         className="flex px-[16px]  bg-[#fff]"
-        style={{ paddingVertical: 30 }}>
+        style={{ paddingVertical: 30 }}
+      >
         <View className="flex pb-[80px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Image/Video
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
               Upload the Image/Videos of your car
             </ThemedText>
           </View>
 
           <TouchableOpacity
             onPress={pickImage}
-            className="bg-[#F2F4F7] rounded-xl my-4 h-[180px] w-full items-center justify-center border border-[#E2E8F0]">
+            className="bg-[#F2F4F7] rounded-xl my-4 h-[180px] w-full items-center justify-center border border-[#E2E8F0]"
+          >
             <View className="p-3 border-[10px] rounded-full border-white">
               <UploadCloud color="#FF5722" width={24} />
             </View>
             <ThemedText
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-              className={`text-[${Colors.background}] mt-3`}>
+              className={`text-[${Colors.background}] mt-3`}
+            >
               Click to upload
             </ThemedText>
             <ThemedText
               className="mt-2 text-[#1E293B]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
               MP4, PNG, JPG or GIF (max. 100 mb)
             </ThemedText>
           </TouchableOpacity>
@@ -138,7 +161,8 @@ export default function Upload() {
                         />
                         <TouchableOpacity
                           onPress={() => handleRemoveImage(item.index)}
-                          className="absolute top-1 right-1 ">
+                          className="absolute top-1 right-1 "
+                        >
                           <MinusCirlce color="red" variant="Bold" size={20} />
                         </TouchableOpacity>
                       </>
@@ -153,15 +177,18 @@ export default function Upload() {
           <View
             style={{
               paddingBottom: 20,
-            }}>
+            }}
+          >
             <TouchableOpacity
               onPress={() => {
                 router.navigate("./contact");
               }}
-              className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
+              className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
+            >
               <ThemedText
                 className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+              >
                 Continue
               </ThemedText>
             </TouchableOpacity>
