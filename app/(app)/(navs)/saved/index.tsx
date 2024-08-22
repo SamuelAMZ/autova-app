@@ -1,7 +1,7 @@
 import { CollectionItem } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Add, Notification } from "iconsax-react-native";
+import { Add, Notification, SearchNormal1 } from "iconsax-react-native";
 import React from "react";
 import {
   View,
@@ -20,15 +20,14 @@ const SavedPage = () => {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className={`text-[${Colors.textPrimary}] text-[22px]`}
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-          >
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Saved
           </ThemedText>
-          <View
-            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
-          >
-            <Notification color={Colors.textPrimary} size={20} />
-          </View>
+          <TouchableOpacity
+            onPress={() => router.navigate("/(app)/search/carSearch")}
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            <SearchNormal1 size="20" color={Colors.textPrimary} />
+          </TouchableOpacity>
         </View>
       </Header>
       <ScrollView bounces={false} className="px-4">
@@ -50,8 +49,7 @@ const SavedPage = () => {
           <Add color="#007AFF" />
           <ThemedText
             className="text-[#007AFF]"
-            style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-          >
+            style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
             New Collection
           </ThemedText>
         </TouchableOpacity>
@@ -81,8 +79,7 @@ const SavedCarItem = () => {
   return (
     <TouchableOpacity
       onPress={() => router.navigate("/(app)/brands/carDetail")}
-      className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl"
-    >
+      className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl">
       <Image
         className="w-[80] h-[70] rounded-lg"
         source={require("@/assets/images/audi.png")}

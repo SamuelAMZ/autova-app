@@ -17,7 +17,8 @@ export const CollectionItem = () => {
   return (
     <TouchableOpacity
       onPress={() => router.navigate("/(app)/collections/collectionDetails")}
-      className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl">
+      className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl"
+    >
       <View className="w-[80]">
         <FlatList
           data={[{}, {}, {}, {}]}
@@ -60,7 +61,8 @@ export const SavedCarItem = ({
       onPress={() =>
         onPress ? onPress() : router.navigate("/(app)/brands/carDetail")
       }
-      className="flex-row border bg-white border-[#D0D5DD] p-3 gap-3 rounded-xl">
+      className="flex-row border bg-white border-[#D0D5DD] p-3 gap-3 rounded-xl"
+    >
       <Image
         className="w-[80] h-[70] rounded-lg"
         source={require("@/assets/images/audi.png")}
@@ -68,7 +70,8 @@ export const SavedCarItem = ({
       <View className="flex-1 justify-between">
         <ThemedText
           style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-          className="text-[#101828] text-[16px]">
+          className="text-[#101828] text-[16px]"
+        >
           Audi A4 2.0T Premium
         </ThemedText>
         <ThemedText className="text-[#667085]">
@@ -93,10 +96,11 @@ export const CollectionOptionModal = ({
   deletePress: () => void;
 }) => {
   return (
-    <View className="min-w-[120] bg-white absolute top-[40] right-[20] z-10 rounded-lg items-start">
+    <View className="min-w-[120] bg-white absolute top-[40] right-[20] z-10 rounded-lg items-start border border-gray-300">
       <TouchableOpacity
         onPress={renamePress}
-        className="p-4 flex-row items-center gap-3">
+        className="p-4 flex-row items-center gap-3"
+      >
         <Edit2 color="black" />
         <ThemedText style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
           Rename
@@ -105,10 +109,12 @@ export const CollectionOptionModal = ({
       <View className="w-[100%] h-[0.7] bg-slate-400 "></View>
       <TouchableOpacity
         onPress={deletePress}
-        className="p-4 flex-row items-center gap-3">
+        className="p-4 flex-row items-center gap-3"
+      >
         <Trash color="red" />
         <ThemedText
-          style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}>
+          style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+        >
           Delete
         </ThemedText>
       </TouchableOpacity>
@@ -138,7 +144,8 @@ export const CollectionActionModal = ({
       <TouchableWithoutFeedback onPress={cancelPress}>
         <View
           className="flex-1 px-4 items-center justify-center"
-          style={{ backgroundColor: "rgba(0,0,0,0.25)" }}>
+          style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
+        >
           <TouchableWithoutFeedback>
             <View className="bg-white rounded-lg items-center justify-center px-5 py-5 w-full">
               {childrenTop}
@@ -146,12 +153,14 @@ export const CollectionActionModal = ({
               <View className="w-full flex-row justify-between">
                 <TouchableOpacity
                   onPress={cancelPress}
-                  className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3 border-[#5856D6] bg-[#EEEEEF]">
+                  className="w-[45%] rounded-lg justify-center border p-4 flex-row items-center gap-3 border-[#5856D6] bg-[#EEEEEF]"
+                >
                   <ThemedText
                     style={{
                       fontFamily: "SpaceGrotesk_700Bold",
                       color: "#101828",
-                    }}>
+                    }}
+                  >
                     Cancel
                   </ThemedText>
                 </TouchableOpacity>
@@ -163,12 +172,14 @@ export const CollectionActionModal = ({
                         ? "red"
                         : "#5856D6",
                   }}
-                  className="w-[45%] rounded-lg justify-center p-4 flex-row items-center gap-3">
+                  className="w-[45%] rounded-lg justify-center p-4 flex-row items-center gap-3"
+                >
                   <ThemedText
                     style={{
                       fontFamily: "SpaceGrotesk_700Bold",
                       color: "white",
-                    }}>
+                    }}
+                  >
                     {rightText}
                   </ThemedText>
                 </TouchableOpacity>

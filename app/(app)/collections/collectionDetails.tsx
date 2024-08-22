@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import { MyCheckbox } from "../listCar/price";
+import CustomCheckBox from "@/components/CustomCheckbox";
 
 interface modalInitialState {
   type: string;
@@ -31,6 +32,7 @@ const CollectionDetails = () => {
   const [moreVisible, setMoreVisible] = useState(false);
   const [modalVisible, setmodalVisible] = useState<modalInitialState>();
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [isSelectAllCheked, setIsSelectAllCheked] = useState(false);
 
   const handelModalVisible = (type: string) => {
     setMoreVisible(false);
@@ -62,6 +64,7 @@ const CollectionDetails = () => {
     } else {
       setSelectedItems([]);
     }
+    setIsSelectAllCheked(checked);
   };
 
   const handleRemoveItem = (idx?: number) => {
@@ -134,12 +137,15 @@ const CollectionDetails = () => {
 
       <View className="flex-1 bg-white">
         {!itemsEmpty && (
-          <View className="flex-row mt-4 pb-4 px-4 items-center gap-2">
-            <MyCheckbox onPress={handleSelectAll} />
+          <TouchableOpacity
+            onPress={() => handleSelectAll(!isSelectAllCheked)}
+            className="flex-row p-4 items-center gap-2 border"
+          >
+            <CustomCheckBox isChecked={isSelectAllCheked} />
             <ThemedText style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Select all items
             </ThemedText>
-          </View>
+          </TouchableOpacity>
         )}
         <FlatList
           className="z-0 p-4"
