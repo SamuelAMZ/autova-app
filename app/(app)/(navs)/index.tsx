@@ -40,7 +40,7 @@ const HomePage = () => {
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
-        style={{ paddingTop: insets.top + 10, paddingBottom: 20 }}
+        style={{ paddingTop: insets.top + 10, paddingBottom: 30 }}
         className="px-4 w-full flex-row items-center justify-between"
       >
         <View className="items-center flex-row">
@@ -53,11 +53,11 @@ const HomePage = () => {
         </View>
       </View>
       <ScrollView bounces={false}>
-        <Animated.View className="w-full px-4 pb-4">
+        <Animated.View className="w-full px-[16px] pb-[30px]">
           <SearchCard></SearchCard>
         </Animated.View>
-        <View className="flex gap-[20px] bg-white">
-          <View className="px-[4%] flex-1 flex-row justify-between items-end mt-4">
+        <View className="flex gap-[30px] bg-white">
+          <View className="px-[4%] flex-1 flex-row justify-between items-end mt-[30px]">
             <ThemedText
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
