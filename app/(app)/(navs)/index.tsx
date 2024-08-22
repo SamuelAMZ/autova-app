@@ -1,4 +1,4 @@
-import { Notification } from "iconsax-react-native";
+import { Notification, SearchNormal1 } from "iconsax-react-native";
 import React, { useMemo, useRef } from "react";
 import {
   View,
@@ -40,17 +40,16 @@ const HomePage = () => {
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
-        style={{ paddingTop: insets.top + 10, paddingBottom: 30 }}
-        className="px-4 w-full flex-row items-center justify-between"
-      >
+        style={{ paddingTop: insets.top + 10, paddingBottom: 20 }}
+        className="px-4 w-full flex-row items-center justify-between">
         <View className="items-center flex-row">
           <AppIcon height={36} />
         </View>
-        <View
-          className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
-        >
-          <Notification color={Colors.textPrimary} size={20} />
-        </View>
+        <TouchableOpacity
+          onPress={() => router.navigate("/(app)/search/carSearch")}
+          className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+          <SearchNormal1 size="20" color={Colors.textPrimary} />
+        </TouchableOpacity>
       </View>
       <ScrollView bounces={false}>
         <Animated.View className="w-full px-[16px] pb-[30px]">
@@ -62,8 +61,7 @@ const HomePage = () => {
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
               }}
-              className="font-semibold text-[18px]"
-            >
+              className="font-semibold text-[18px]">
               Featured Dealers
             </ThemedText>
             <TouchableOpacity onPress={handlePresentModalPress}>
@@ -128,21 +126,18 @@ const HomePage = () => {
         isVisible={isModalVisible}
         onClose={handleCloseModal}
         snapPoints={snapPoints}
-        index={1}
-      >
+        index={1}>
         <View
           style={{
             paddingTop: 14,
             paddingBottom: 30,
           }}
-          className="w-full flex-row justify-between items-center px-4"
-        >
+          className="w-full flex-row justify-between items-center px-4">
           <ThemedText
             style={{
               fontFamily: "SpaceGrotesk_600SemiBold",
             }}
-            className="font-semibold text-[18px]"
-          >
+            className="font-semibold text-[18px]">
             Top Brands
           </ThemedText>
           <TouchableOpacity onPress={handleCloseModal}>
