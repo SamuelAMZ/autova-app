@@ -19,7 +19,7 @@ const CustomBottomSheetModal = ({
   index,
 }: CustomBottomSheetModalProps) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const _snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
+  const _snapPoints = useMemo(() => ["70%", "80%", "90%"], []);
 
   // Present the modal when `isVisible` changes to true
   React.useEffect(() => {

@@ -15,17 +15,18 @@ import BrandItem from "@/components/BrandItem";
 import CarItem from "@/components/cars/CarItem";
 import FilterTag from "@/components/FilterTag";
 import ThemedText from "@/components/ThemedText";
-import SearchCard from "@/components/SearchCard";
+import SearchCard from "@/components/searchCard/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import { CarData } from "@/constants/CarData";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
-  const snapPoints = useMemo(() => ["70%", "80%", "100%"], []);
+  const snapPoints = useMemo(() => ["70%", "80%", "90%"], []);
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handlePresentModalPress = () => {
@@ -39,20 +40,22 @@ const HomePage = () => {
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
-        style={{ paddingTop: insets.top, paddingBottom: 10 }}
+        style={{ paddingTop: insets.top + 10, paddingBottom: 20 }}
         className="px-4 w-full flex-row items-center justify-between"
       >
         <View className="items-center flex-row">
           <AppIcon height={36} />
         </View>
-        <View className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+        <View
+          className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+        >
           <Notification color={Colors.textPrimary} size={20} />
         </View>
       </View>
       <ScrollView bounces={false}>
-        <View className="w-full px-4 pb-4">
+        <Animated.View className="w-full px-4 pb-4">
           <SearchCard></SearchCard>
-        </View>
+        </Animated.View>
         <View className="flex gap-[20px] bg-white">
           <View className="px-[4%] flex-1 flex-row justify-between items-end mt-4">
             <ThemedText
@@ -73,7 +76,6 @@ const HomePage = () => {
           {/* Brands Items */}
           <View className="w-full px-4">
             <FlatList
-              // className="px-[4%]"
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               horizontal
@@ -118,7 +120,6 @@ const HomePage = () => {
             )}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
-            // initialNumToRender={5}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
           />
         </View>
