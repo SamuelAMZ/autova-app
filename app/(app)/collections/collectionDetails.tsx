@@ -91,7 +91,7 @@ const CollectionDetails = () => {
                 height: "auto",
                 borderRadius: 100,
               }}
-              className="flex flex-row items-center justify-center bg-[#FFFFFF85] p-[11px]"
+              className="flex flex-row items-center justify-center bg-[#6C6BDB] p-[11px]"
               onPress={() => router.back()}
             >
               <ArrowLeft size={18} variant="Outline" color="white" />
