@@ -180,10 +180,9 @@ export default function Upload() {
             }}
           >
             <TouchableOpacity
-              // onPress={() => {
-              //   router.navigate("./contact");
-              // }}
-              onPress={() => toastMaximuFileUpload()}
+              onPress={() => {
+                router.navigate("./contact");
+              }}
               className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
             >
               <ThemedText
