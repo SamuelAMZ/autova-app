@@ -95,7 +95,7 @@ const SavedCarItem = () => {
           15,000 miles | New York, NY
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
-          <ThemedText className="text-[#FF9500] font-extrabold text-[16px]">
+          <ThemedText className="text-[#5856D6] font-extrabold text-[16px]">
             $25,000
           </ThemedText>
           <ThemedText className="text-[#667085]">16 Aug, 10:20 PM</ThemedText>
