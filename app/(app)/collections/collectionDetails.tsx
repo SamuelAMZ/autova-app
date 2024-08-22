@@ -24,7 +24,7 @@ interface modalInitialState {
   visible: boolean;
 }
 
-const mockData = Array.from({ length: 12 }).map((e, idx) => idx);
+const mockData = Array.from({ length: 6 }).map((e, idx) => idx);
 
 const CollectionDetails = () => {
   const [allItems, setAllItems] = useState<number[]>(mockData);
@@ -62,7 +62,6 @@ const CollectionDetails = () => {
     } else {
       setSelectedItems([]);
     }
-    console.log(checked);
   };
 
   const handleRemoveItem = (idx?: number) => {
