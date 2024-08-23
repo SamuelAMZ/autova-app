@@ -103,6 +103,7 @@ export default function Settings() {
               </View>
             </TouchableOpacity>
           </View>
+          <ThemedText className="text-center"> Version : 1.0.1 </ThemedText>
         </View>
 
         <CustomBottomSheetModal
