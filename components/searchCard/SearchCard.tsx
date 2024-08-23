@@ -68,7 +68,7 @@ const initialFilterData = {
   selectedMakeItem: undefined,
   selectedModelItem: undefined,
   selectedBodyItem: undefined,
-  rangeValue: { low: 0, high: 500000 },
+  rangeValue: { low: 0, high: 5000000 },
   carDoors: 0,
 };
 
