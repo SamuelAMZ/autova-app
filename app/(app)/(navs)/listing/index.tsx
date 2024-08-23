@@ -72,7 +72,7 @@ const ListingPage = () => {
 
 export default ListingPage; */
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -80,27 +80,119 @@ import {
   ScrollView,
   FlatList,
   Platform,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Notification, Gps, Add, Car } from "iconsax-react-native";
+import { Notification, Gps, Add, Car, ArrowDown2, SearchNormal, Setting5 } from "iconsax-react-native";
+import Icon from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
 import Colors from "@/constants/Colors";
+import CustomBottomSheetModal from "@/components/BottomSheetModal";
+import CustomButton from "@/components/CustomButton";
+import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
+import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
+import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function MyListing() {
+  const initialFilterData = {
+    selectedMakeItem: undefined,
+    selectedModelItem: undefined,
+    selectedBodyItem: undefined,
+    rangeValue: { low: 0, high: 5000000 },
+    carDoors: 0,
+  };
+
+  const initialItemIsOpen = {
+    makeModel: true,
+    priceRange: true,
+    bodyStyle: true,
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const snapPoints = useMemo(() => ["90%", "92%"], []);
+  const [filterData, setFilterData] =
+    useState<FilterDataProps>(initialFilterData);
+  const [usedFilter, setUsedFilter] = useState<number>(0);
+  const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpen);
+
+  const handleOpenItem = (type: string) => {
+    setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
+  };
+
+  // Make & Model Props change
+  const handleMakeModalChange = (type: string, item: ItemDataProps) => {
+    if (type == "models") {
+      setFilterData({ ...filterData, ["selectedModelItem"]: item });
+    } else {
+      setFilterData({ ...filterData, ["selectedMakeItem"]: item });
+    }
+  };
+
+  // Price Range Props change
+  const handlePriceRangeChange = (low: number, high: number) => {
+    setFilterData((prevData) => ({
+      ...prevData,
+      rangeValue: { low, high },
+    }));
+  };
+
+  // Body Styles props change
+  const handleBodyStyleChange = (item: ItemDataProps | number) => {
+    if (typeof item == "number") {
+      setFilterData({ ...filterData, ["carDoors"]: item });
+    } else {
+      setFilterData({ ...filterData, ["selectedBodyItem"]: item });
+    }
+  };
+
+  // Reset filter
+  const onReset = () => {
+    setFilterData(initialFilterData);
+  };
+
+  // callbacks
+  const handlePresentModalPress = () => {
+    setIsModalVisible(true);
+  };
+
+  // Close modal
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
+  //
+  useEffect(() => {
+    const makeModel =
+      filterData.selectedMakeItem != undefined ||
+      filterData.selectedModelItem != undefined
+        ? 1
+        : 0;
+    const priceRange =
+      filterData.rangeValue.high != 5000000 || filterData.rangeValue.low != 0
+        ? 1
+        : 0;
+    const bodyStyle =
+      filterData.carDoors != 0 || filterData.selectedBodyItem != undefined
+        ? 1
+        : 0;
+    setUsedFilter(makeModel + priceRange + bodyStyle);
+  }, [filterData]);
+
   return (
     <>
       <CustomHeader />
       <ScrollView className="flex-1 px-[16px] py-[30px] bg-[#fff] ">
         <View className="flex  justify-center gap-[30px]">
-          <View className="bg-[#F9FAFB] p-[16px] rounded-[16px]  w-full gap-[16px]" style={styles.card}>
+          {/* <View
+            className="bg-[#F9FAFB] p-[16px] rounded-[16px]  w-full gap-[16px]"
+            style={styles.card}>
             <ThemedText
               className="text-[18px] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               List cars for free
             </ThemedText>
             <View className="flex gap-[16px] relative">
@@ -122,22 +214,42 @@ export default function MyListing() {
                 onPress={() => {
                   router.navigate("/(app)/listCar/condition");
                 }}
-                className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
-              >
+                className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}>
                 <ThemedText
                   className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-                >
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
                   Continue
                 </ThemedText>
               </TouchableOpacity>
             </View>
+          </View> */}
+          <View className=" flex-row gap-3">
+            <View
+              className={`flex-1 flex-row items-center gap-2 px-4 h-[48px] border border-[${Colors.borderPrimary}] rounded-xl`}>
+              <SearchNormal color={Colors.textQuinary} />
+              <TextInput
+                className="flex-1"
+                placeholder="Search..."
+                underlineColorAndroid="transparent"
+               
+              />
+            </View>
+            <TouchableOpacity
+              onPress={handlePresentModalPress}
+              className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl relative`}>
+              <Setting5 color={Colors.textQuinary} />
+              {usedFilter != 0 && (
+                <View
+                  className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded-full top-[-8] right-[-8] items-center justify-center`}>
+                  <ThemedText className="text-white"> {usedFilter} </ThemedText>
+                </View>
+              )}
+            </TouchableOpacity>
           </View>
           <View className="flex items-start justify-start gap-[20px] w-full pb-[80px]">
             <ThemedText
               className="text-[20px] text-[#101828] "
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               My Listings
             </ThemedText>
             <FlatList
@@ -158,6 +270,84 @@ export default function MyListing() {
             />
           </View>
         </View>
+        <CustomBottomSheetModal
+          isVisible={isModalVisible}
+          onClose={handleCloseModal}
+          snapPoints={snapPoints}
+          index={1}>
+          <View className="flex-1 w-full z-0">
+            <View className="py-5 px-[4%] flex-row justify-between items-center ">
+              <ThemedText
+                className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}>
+                Filter Search
+              </ThemedText>
+              <TouchableOpacity onPress={handleCloseModal}>
+                <View
+                  className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}>
+                  <AntDesign
+                    name="close"
+                    size={16}
+                    color={Colors.iconPrimary}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View
+              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}>
+              <OpenCloseItem
+                title="Make & Model"
+                onPress={() => handleOpenItem("makeModel")}
+              />
+              {itemIsOpen.makeModel && (
+                <MakeModelsSearch
+                  selectedModelItem={filterData.selectedModelItem}
+                  selectedMakeItem={filterData.selectedMakeItem}
+                  onChange={handleMakeModalChange}
+                />
+              )}
+
+              {/* Price Range */}
+              <OpenCloseItem
+                title="Price Range"
+                onPress={() => handleOpenItem("priceRange")}
+              />
+              <View className="z-20">
+                {itemIsOpen.priceRange && (
+                  <PriceRangeSearch
+                    style={{ zIndex: 30 }}
+                    rangeValue={filterData.rangeValue}
+                    onValueChange={handlePriceRangeChange}
+                  />
+                )}
+              </View>
+
+              {/* Body Styles */}
+              <OpenCloseItem
+                title="Body Styles"
+                onPress={() => handleOpenItem("bodyStyle")}
+              />
+              {itemIsOpen.bodyStyle && (
+                <BodyStylesSearch
+                  selectedItem={filterData.selectedBodyItem}
+                  carDoors={filterData.carDoors}
+                  onBodyValueChange={handleBodyStyleChange}
+                />
+              )}
+            </View>
+            <View
+              style={{ bottom: Platform.OS == "ios" ? 40 : 30 }}
+              className="px-4 flex-row mt-4 gap-3 absolute self-center">
+              <View className="flex-1">
+                <CustomButton onPress={() => {}} title={"Search"} />
+              </View>
+              <TouchableOpacity
+                onPress={() => onReset()}
+                className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center">
+                <Icon name="close" size={26} color="white" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </CustomBottomSheetModal>
       </ScrollView>
     </>
   );
@@ -186,11 +376,28 @@ function CustomHeader() {
   );
 }
 
+const OpenCloseItem = ({
+  title,
+  onPress,
+}: {
+  title: string;
+  onPress: () => void;
+}) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      className="w-full flex-row items-center justify-between my-4">
+      <ThemedText
+        className={`text-[${Colors.textSecondary}] font-semibold text-[16px] `}>
+        {title}
+      </ThemedText>
+      <ArrowDown2 variant="Bold" color="#101828" size={18} />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
-  
-
     // Different borders for each side
     borderTopWidth: 1,
     borderTopColor: "#0000001D",

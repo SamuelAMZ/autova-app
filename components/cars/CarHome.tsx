@@ -131,9 +131,7 @@ export default function CarHome({
         data={CarData}
         modeConfig={{
           snapDirection,
-          stackInterval: 25,
-          opacityInterval: 10, // Reduced opacity for stacked items
-          scaleInterval: 0.05,
+          stackInterval: 15,          
         }}
         customConfig={() => ({ type: "positive", viewCount })}
         renderItem={renderItem}
