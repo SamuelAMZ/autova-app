@@ -6,25 +6,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { ArrowDown2, Chainlink, TickCircle } from "iconsax-react-native";
 import { carDoorsElements } from "@/constants/searchTypes";
 
-interface ItemDataProps {
-  label: string;
-  id: string;
-}
-
 const mockData = [
   { id: "1", label: "Item 1" },
   { id: "2", label: "Item 2" },
   { id: "3", label: "Item 3" },
 ];
 
-const BodyStylesSearch = () => {
+const BodyStylesSearch = ({
+  onBodyValueChange,
+  carDoors,
+  selectedItem,
+}: {
+  onBodyValueChange: (item: ItemDataProps | number) => void;
+  carDoors: number;
+  selectedItem?: ItemDataProps;
+}) => {
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ItemDataProps>();
-  const [carDoors, setCarDoors] = useState<number>();
 
-  const handleSelectItem = (item: ItemDataProps) => {
-    setSelectedItem(item);
+  const handleSelectItem = (item: ItemDataProps | number) => {
+    onBodyValueChange(item);
     setIsModalVisible(false);
   };
 
@@ -45,7 +46,7 @@ const BodyStylesSearch = () => {
         <View className="flex-row h-[50%] w-full justify-between items-center px-3">
           {carDoorsElements.map((item: number) => (
             <TouchableOpacity
-              onPress={() => setCarDoors(item)}
+              onPress={() => handleSelectItem(item)}
               key={item}
               style={{
                 backgroundColor: carDoors == item ? "#5856D6" : undefined,

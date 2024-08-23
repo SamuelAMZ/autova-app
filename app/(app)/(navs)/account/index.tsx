@@ -1,5 +1,5 @@
 import ThemedText from "@/components/ThemedText";
-import { ArrowRight2, Camera, Setting2 } from "iconsax-react-native";
+import { Add, ArrowRight2, Camera, Car, Setting2 } from "iconsax-react-native";
 import React, { useState } from "react";
 import {
   View,
@@ -30,7 +30,6 @@ const AccountPage = () => {
 
       if (!result.canceled) {
         setImage(result.assets[0].uri);
-        
       }
     } catch (err) {
       console.log(err);
@@ -58,7 +57,7 @@ const AccountPage = () => {
           <View className="flex flex-row gap-[12px] items-center justify-start ">
             <View className="relative">
               <Image
-                source={ image ? { uri: image }  : require("@/assets/user.jpg")}
+                source={image ? { uri: image } : require("@/assets/user.jpg")}
                 style={{
                   width: 64,
                   height: 64,
@@ -93,52 +92,51 @@ const AccountPage = () => {
               </ThemedText>
             </View>
           </View>
-
+          <View className="flex gap-[20px]"></View>
           <View className="flex flex-col gap-[1.25rem]">
             <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
-              <View className=" border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+              <TouchableOpacity
+                onPress={() => {
+                  router.navigate("/(app)/listCar/condition");
+                }}
+                className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <TouchableOpacity
+                    
+                    className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+                    <Car size="18" color={Colors.textPrimary} />
+                  </TouchableOpacity>
+                  <ThemedText
+                    className="text-[#1D2939] text-[14px] capitalize"
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+                    Listing car
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </TouchableOpacity>
+            </View>
+            <ThemedText
+              className="text-[1.25rem]  text-[#101828]"
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              About app
+            </ThemedText>
+
+            <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
+              <TouchableOpacity className="border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <Image
                     source={require("@/assets/about.png")}
                     style={{ width: 30, height: 30 }}
                   />
                   <ThemedText
-                    className="text-[#1D2939] text-[14px] capitalize"
+                    className="text-[#1D2939] text-[14px] "
                     style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     About us
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
-              </View>
-              <View className=" border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
-                <View className="flex items-center flex-row gap-[0.5rem]">
-                  <Image
-                    source={require("@/assets/contact.png")}
-                    style={{ width: 30, height: 30 }}
-                  />
-                  <ThemedText
-                    className="text-[#1D2939] text-[14px] capitalize"
-                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                    contact us
-                  </ThemedText>
-                </View>
-                <ArrowRight2 size="24" color="#667085" />
-              </View>
-              <View className=" border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
-                <View className="flex items-center flex-row gap-[0.5rem]">
-                  <Image
-                    source={require("@/assets/invite.png")}
-                    style={{ width: 30, height: 30 }}
-                  />
-                  <ThemedText
-                    className="text-[#1D2939] text-[14px] "
-                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                    Invite a Friend
-                  </ThemedText>
-                </View>
-                <ArrowRight2 size="24" color="#667085" />
-              </View>
-              <View className="border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+              </TouchableOpacity>
+              <TouchableOpacity className="border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <Image
                     source={require("@/assets/term.png")}
@@ -151,9 +149,9 @@ const AccountPage = () => {
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
-              </View>
+              </TouchableOpacity>
 
-              <View className=" px-[1rem] py-[0.8125rem] flex flex-row justify-between items-cente ">
+              <TouchableOpacity className=" px-[1rem] py-[0.8125rem] flex flex-row justify-between items-cente ">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <Image
                     source={require("@/assets/policy.png")}
@@ -166,7 +164,44 @@ const AccountPage = () => {
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
-              </View>
+              </TouchableOpacity>
+            </View>
+
+            <ThemedText
+              className="text-[1.25rem]  text-[#101828]"
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              Section
+            </ThemedText>
+
+            <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
+              <TouchableOpacity className=" border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <Image
+                    source={require("@/assets/contact.png")}
+                    style={{ width: 30, height: 30 }}
+                  />
+                  <ThemedText
+                    className="text-[#1D2939] text-[14px] capitalize"
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+                    contact us
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </TouchableOpacity>
+              <TouchableOpacity className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <Image
+                    source={require("@/assets/invite.png")}
+                    style={{ width: 30, height: 30 }}
+                  />
+                  <ThemedText
+                    className="text-[#1D2939] text-[14px] "
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+                    Invite a Friend
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </TouchableOpacity>
             </View>
           </View>
           <View className="items-center flex gap-[20px]">
@@ -183,7 +218,7 @@ const AccountPage = () => {
 
             <TouchableOpacity
               onPress={() => {}}
-              className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`} >
+              className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`}>
               <ThemedText
                 className="text-[17px] text-center font-[600] text-[#fff]"
                 style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>

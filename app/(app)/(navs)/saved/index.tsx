@@ -1,7 +1,7 @@
 import { CollectionItem } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Add, Notification, SearchNormal1 } from "iconsax-react-native";
+import { Add, InfoCircle, Notification, SearchNormal1 } from "iconsax-react-native";
 import React from "react";
 import {
   View,
@@ -24,14 +24,14 @@ const SavedPage = () => {
             Saved
           </ThemedText>
           <TouchableOpacity
-            onPress={() => router.navigate("/(app)/search/carSearch")}
+            
             className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
-            <SearchNormal1 size="20" color={Colors.textPrimary} />
+           <InfoCircle size="20" color="#fff" />
           </TouchableOpacity>
         </View>
       </Header>
       <ScrollView bounces={false} className="px-4">
-        <ThemedText className="font-bold text-[18px] mt-5">
+        <ThemedText className=" text-[18px] mt-5" style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
           My Collection's
         </ThemedText>
 
@@ -54,7 +54,7 @@ const SavedPage = () => {
           </ThemedText>
         </TouchableOpacity>
 
-        <ThemedText className="font-bold text-[18px] mt-5">
+        <ThemedText className=" text-[18px] mt-5" style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
           Saved Cars
         </ThemedText>
 
@@ -85,14 +85,14 @@ const SavedCarItem = () => {
         source={require("@/assets/images/audi.png")}
       />
       <View className="flex-1 justify-between">
-        <ThemedText className="text-[#101828] font-bold text-[16px]">
+        <ThemedText className="text-[#101828]  text-[16px]" style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
           Audi A4 2.0T Premium
         </ThemedText>
         <ThemedText className="text-[#667085]">
           15,000 miles | New York, NY
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
-          <ThemedText className="text-[#5856D6] font-extrabold text-[16px]">
+          <ThemedText className="text-[#5856D6]  text-[16px]" style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
             $25,000
           </ThemedText>
           <ThemedText className="text-[#667085]">16 Aug, 10:20 PM</ThemedText>
