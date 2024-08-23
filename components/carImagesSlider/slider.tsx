@@ -11,7 +11,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
 } from "react-native";
-import { router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect, usePathname } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -33,8 +33,9 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const { width } = useWindowDimensions();
   const { currentIndex = 0 } = useGlobalSearchParams();
 
-  console.log(currentIndex, "currentIndex");
+  // console.log(currentIndex, "currentIndex");
 
+  const imageRef = useRef();
   const [index, setIndex] = useState<number>(+currentIndex);
   const [isZoomed, setIsZoomed] = useState<boolean>(false);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -124,15 +125,14 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
 
   // Handle Next
   const handleNext = () => {
-    const newIndex = (index + 1) % Slides.length;
+    const newIndex = index < Slides.length - 1 ? index + 1 : index;
     setIndex(newIndex);
   };
 
   // Handle Previous
   const handlePrevious = () => {
-    const newIndex = index === 0 ? Slides.length - 1 : index - 1;
+    const newIndex = index > 0 ? index - 1 : 0;
     setIndex(newIndex);
-    // scrollToIndex(newIndex);
   };
 
   return (
@@ -141,11 +141,13 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         data={Slides}
         renderItem={({ item }) => (
           <ImageZoom
+            ref={imageRef}
             key={`${item.img}-${index}`}
             cropWidth={width}
             cropHeight={263}
             imageWidth={width}
             imageHeight={263}
+            enableDoubleClickZoom={false}
             onDoubleClick={() => {
               handleZoom();
             }}
@@ -161,13 +163,10 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
                 // Allow swipe to change image if not zoomed in
                 if (offsetX < -width / 4) {
                   // Swipe left (next image)
-                  const nextIndex =
-                    index < Slides.length - 1 ? index + 1 : index;
-                  scrollToIndex(nextIndex);
+                  handleNext();
                 } else if (offsetX > width / 4) {
                   // Swipe right (previous image)
-                  const prevIndex = index > 0 ? index - 1 : 0;
-                  scrollToIndex(prevIndex);
+                  handlePrevious();
                 }
               }
             }}
@@ -234,33 +233,21 @@ function NextImage({
   onPress: () => void;
   disabled: boolean;
 }) {
-  const Touch = disabled ? TouchableWithoutFeedback : TouchableOpacity;
   return (
     <>
-      {disabled ? (
-        <>
-          <TouchableWithoutFeedback
-            onPress={onPress}
-            className={`flex items-center justify-center rounded-full p-[7px]  transition-all bg-[#ccccccd3] opacity-[.92]`}
-          >
-            <AntDesign name="arrowright" size={21} color="#000000c4" />
-          </TouchableWithoutFeedback>
-        </>
-      ) : (
-        <>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={onPress}
-            className={`flex items-center justify-center rounded-full p-[7px]  transition-all bg-[#ccccccb2]`}
-          >
-            <AntDesign
-              name="arrowright"
-              size={21}
-              color={`${disabled ? "#000000c4" : "#000"}`}
-            />
-          </TouchableOpacity>
-        </>
-      )}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={onPress}
+        className={`flex items-center justify-center rounded-full p-[7px]  transition-all ${
+          disabled ? " bg-[#cccccc80] opacity-[0.7]" : " bg-[#cccccc80]"
+        }`}
+      >
+        <AntDesign
+          name="arrowright"
+          size={21}
+          color={`${disabled ? "#000000aa" : "#000"}`}
+        />
+      </TouchableOpacity>
     </>
   );
 }
@@ -274,30 +261,19 @@ function PreviousImage({
 }) {
   return (
     <>
-      {disabled ? (
-        <>
-          <TouchableWithoutFeedback
-            onPress={onPress}
-            className={`flex items-center justify-center rounded-full p-[7px]  transition-all bg-[#ccccccd3] opacity-[1]`}
-          >
-            <AntDesign name="arrowleft" size={21} color="#000000c4" />
-          </TouchableWithoutFeedback>
-        </>
-      ) : (
-        <>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={onPress}
-            className={`flex items-center justify-center rounded-full p-[7px]  transition-all bg-[#ccccccb2]`}
-          >
-            <AntDesign
-              name="arrowleft"
-              size={21}
-              color={`${disabled ? "#000000c4" : "#000"}`}
-            />
-          </TouchableOpacity>
-        </>
-      )}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={onPress}
+        className={`flex items-center justify-center rounded-full p-[7px]  transition-all ${
+          disabled ? " bg-[#cccccc80] opacity-[0.7]" : " bg-[#cccccc80]"
+        }`}
+      >
+        <AntDesign
+          name="arrowleft"
+          size={21}
+          color={`${disabled ? "#000000aa" : "#000"}`}
+        />
+      </TouchableOpacity>
     </>
   );
 }

@@ -67,7 +67,9 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
 
   const handleNext = () => {
     if (index < Slides.length - 1) {
-      flatListRef.current?.scrollToIndex({ index: index + 1 });
+      flatListRef.current?.scrollToIndex({
+        index: index < Slides.length - 1 ? index + 1 : index,
+      });
       setIsZoomed(false);
       router.setParams({ currentIndex: index + 1 });
     }
@@ -75,9 +77,9 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
 
   const handlePrevious = () => {
     if (index > 0) {
-      flatListRef.current?.scrollToIndex({ index: index - 1 });
+      flatListRef.current?.scrollToIndex({ index: index > 0 ? index - 1 : 0 });
       setIsZoomed(false);
-      router.setParams({ currentIndex: index - 1 });
+      router.setParams({ currentIndex: index > 0 ? index - 1 : 0 });
     }
   };
 
@@ -118,17 +120,10 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
                 if (!isZoomed) {
                   // Allow swipe to change image if not zoomed in
                   if (offsetX < -width / 4) {
-                    // Swipe left (next image)
-                    flatListRef.current?.scrollToIndex({
-                      index: index < Slides.length - 1 ? index + 1 : index,
-                      animated: true,
-                    });
+                    handleNext();
                   } else if (offsetX > width / 4) {
                     // Swipe right (previous image)
-                    flatListRef.current?.scrollToIndex({
-                      index: index > 0 ? index - 1 : 0,
-                      animated: true,
-                    });
+                    handlePrevious();
                   }
                 }
               }}
@@ -189,15 +184,16 @@ function NextImage({
 }) {
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={onPress}
-      className={`flex items-center justify-center rounded-full p-3  transition-all ${
-        disabled ? "bg-[#5856d6ba] opacity-[.75]" : "bg-[#5856D6]"
+      className={`flex items-center justify-center rounded-full p-3 transition-all  ${
+        disabled ? " bg-[#5856d6aa] opacity-[.75]" : " bg-[#5856D6]"
       }`}
     >
       <AntDesign
         name="arrowright"
-        size={28}
-        color={`${disabled ? "#ffffffc4" : "#FFFFFF"}`}
+        size={24}
+        color={`${disabled ? " #ffffffaa" : " #FFFFFF"}`}
       />
     </TouchableOpacity>
   );
@@ -210,17 +206,19 @@ function PreviousImage({
   onPress: () => void;
   disabled: boolean;
 }) {
+  console.log(disabled, "disable prev");
   return (
     <TouchableOpacity
+      activeOpacity={0.7}
       onPress={onPress}
       className={`flex items-center justify-center rounded-full p-3 transition-all  ${
-        disabled ? "bg-[#5856d6ba] opacity-[.75]" : "bg-[#5856D6]"
+        disabled ? " bg-[#5856d6aa] opacity-[.75]" : " bg-[#5856D6]"
       }`}
     >
       <AntDesign
         name="arrowleft"
         size={24}
-        color={`${disabled ? "#ffffffc4" : "#FFFFFF"}`}
+        color={`${disabled ? " #ffffffaa" : " #FFFFFF"}`}
       />
     </TouchableOpacity>
   );
