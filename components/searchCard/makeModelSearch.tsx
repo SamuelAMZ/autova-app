@@ -16,21 +16,17 @@ const mockData: any = {
   ],
 };
 
-interface ItemDataProps {
-  label: string;
-  id: string;
-}
-
-interface selectedTypeProps {
-  type: string;
-  data: ItemDataProps[];
-}
-
-const MakeModelsSearch = () => {
+const MakeModelsSearch = ({
+  onChange,
+  selectedModelItem,
+  selectedMakeItem,
+}: {
+  onChange: (type: string, item: ItemDataProps) => void;
+  selectedModelItem?: ItemDataProps;
+  selectedMakeItem?: ItemDataProps;
+}) => {
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [selectedType, setSelectedType] = useState<selectedTypeProps>();
-  const [selectedMakeItem, setSelectedMakeItem] = useState<ItemDataProps>();
-  const [selectedModelItem, setSelectedModelItem] = useState<ItemDataProps>();
 
   // callbacks
   const handleTypeChange = (type: string) => {
@@ -41,11 +37,7 @@ const MakeModelsSearch = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleSelectItem = (item: ItemDataProps) => {
-    if (selectedType?.type == "models") {
-      setSelectedModelItem(item);
-    } else {
-      setSelectedMakeItem(item);
-    }
+    onChange(selectedType!.type, item);
     setIsModalVisible(false);
   };
 

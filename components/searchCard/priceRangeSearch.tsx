@@ -3,19 +3,15 @@ import RangeSlider from "../RangeSlider";
 import ThemedText from "../ThemedText";
 import { useCallback, useMemo, useState } from "react";
 
-interface RangeProps {
-  low: number;
-  high: number;
-}
-
-const PriceRangeSearch = () => {
-  const [rangeValue, setRangeValue] = useState<RangeProps>({
-    low: 0,
-    high: 500000,
-  });
-
+const PriceRangeSearch = ({
+  onValueChange,
+  rangeValue,
+}: {
+  onValueChange: (low: number, high: number) => void;
+  rangeValue: RangeProps;
+}) => {
   const handleValueChange = (low: number, high: number) => {
-    setRangeValue({ low, high });
+    onValueChange(low, high);
   };
 
   return (

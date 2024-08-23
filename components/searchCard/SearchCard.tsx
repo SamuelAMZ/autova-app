@@ -64,13 +64,58 @@ const SearchCard = () => {
 
 export default SearchCard;
 
+const initialFilterData = {
+  selectedMakeItem: undefined,
+  selectedModelItem: undefined,
+  selectedBodyItem: undefined,
+  rangeValue: { low: 0, high: 500000 },
+  carDoors: 0,
+};
+
 const SearchContent = ({ type }: { type: string }) => {
+  const [filterData, setFilterData] =
+    useState<FilterDataProps>(initialFilterData);
+
+  // Make & Model Props change
+  const handleMakeModalChange = (type: string, item: ItemDataProps) => {
+    if (type == "models") {
+      setFilterData({ ...filterData, selectedModelItem: item });
+    } else {
+      setFilterData({ ...filterData, selectedMakeItem: item });
+    }
+  };
+
+  // Price Range Props change
+  const handlePriceRangeChange = (low: number, high: number) => {
+    setFilterData({ ...filterData, rangeValue: { low, high } });
+  };
+
+  // Body Styles props change
+  const handleBodyStyleChange = (item: ItemDataProps | number) => {
+    if (typeof item == "number") {
+      setFilterData({ ...filterData, carDoors: item });
+    } else {
+      setFilterData({ ...filterData, selectedBodyItem: item });
+    }
+  };
+
   return type === "model" ? (
-    <MakeModelsSearch />
+    <MakeModelsSearch
+      selectedModelItem={filterData.selectedModelItem}
+      selectedMakeItem={filterData.selectedMakeItem}
+      onChange={handleMakeModalChange}
+    />
   ) : type === "price" ? (
-    <PriceRangeSearch />
+    <PriceRangeSearch
+      rangeValue={filterData.rangeValue}
+      onValueChange={handlePriceRangeChange}
+    />
   ) : type == "body" ? (
-    <BodyStylesSearch />
+    <BodyStylesSearch
+      selectedItem={filterData.selectedBodyItem}
+      carDoors={filterData.carDoors}
+      onBodyValueChange={handleBodyStyleChange}
+    />
   ) : (
     <View className=""></View>
   );
