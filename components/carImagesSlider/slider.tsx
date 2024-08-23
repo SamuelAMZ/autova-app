@@ -32,6 +32,14 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const carouselRef = useRef<any>(null);
   const zoomImageRef = useRef<any>(null);
 
+  const [mode, setMode] = useState<any>("horizontal-stack");
+  const [snapDirection, setSnapDirection] = useState<"left" | "right">("left");
+  const [pagingEnabled, setPagingEnabled] = useState<boolean>(false);
+  const [snapEnabled, setSnapEnabled] = useState<boolean>(true);
+  const [loop, setLoop] = useState<boolean>(true);
+  const [autoPlay, setAutoPlay] = useState<boolean>(true);
+  const [autoPlayReverse, setAutoPlayReverse] = useState<boolean>(false);
+
   // Initial scroll to index based on the currentIndex
   useEffect(() => {
     setIndex(+currentIndex || 0);
@@ -67,15 +75,23 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   return (
     <View className="relative">
       <Carousel
-        loop
         ref={carouselRef}
         width={width}
         height={263}
-        autoPlay={true}
         data={Slides}
         scrollAnimationDuration={1000}
         defaultIndex={index}
         onSnapToItem={(index) => setIndex(index)}
+        // pagingEnabled={pagingEnabled}
+        // snapEnabled={snapEnabled}
+        // mode={mode}
+        loop={loop}
+        autoPlay={autoPlay}
+        // autoPlayReverse={autoPlayReverse}
+        // modeConfig={{
+        //   snapDirection,
+        //   stackInterval: 15,
+        // }}
         renderItem={({ item, index }) => (
           <ImageZoom
             key={`${item.img}-${index}`}
