@@ -148,7 +148,7 @@ function NextImage({
       <AntDesign
         name="arrowright"
         size={24}
-        color={`${disabled ? " #ffffffaa" : " #FFFFFF"}`}
+        color={`${disabled ? "#ffffffaa" : "#FFFFFF"}`}
       />
     </TouchableOpacity>
   );
@@ -172,7 +172,7 @@ function PreviousImage({
       <AntDesign
         name="arrowleft"
         size={24}
-        color={`${disabled ? " #ffffffaa" : " #FFFFFF"}`}
+        color={`${disabled ? "#ffffffaa" : "#FFFFFF"}`}
       />
     </TouchableOpacity>
   );
