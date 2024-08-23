@@ -1,19 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Animated as RNAnimated,
-  FlatList,
   View,
   useWindowDimensions,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
   TouchableOpacity,
   Platform,
   Image,
-  Dimensions,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { router } from "expo-router";
 import ImageZoom from "react-native-image-pan-zoom";
+import Carousel from "react-native-reanimated-carousel";
 
 import ThemedText from "../ThemedText";
 
@@ -28,87 +23,60 @@ interface CarImagesSliderProps {
 
 const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
   Slides,
-  currentIndex,
+  currentIndex = 0,
 }) => {
   const [index, setIndex] = useState(0);
-  const scrollX = useRef(new RNAnimated.Value(0)).current;
-  const flatListRef = useRef<FlatList>(null);
-
   const { width, height } = useWindowDimensions();
-  // const [isZoomed, setIsZoomed] = useState(false);
+  const carouselRef = useRef<any>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
 
-  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    RNAnimated.event(
-      [
-        {
-          nativeEvent: {
-            contentOffset: {
-              x: scrollX,
-            },
-          },
-        },
-      ],
-      {
-        useNativeDriver: false,
-      }
-    )(event);
-  };
-
-  const handleOnViewableItemsChanged = useRef(
-    ({ viewableItems }: { viewableItems: Array<{ index: number }> }) => {
-      setIndex(viewableItems[0]?.index || 0);
-      setIsZoomed(false);
-    }
-  ).current;
-
-  const viewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 50,
-  }).current;
+  useEffect(() => {
+    setIndex(+currentIndex || 0);
+  }, [currentIndex]);
 
   const handleNext = () => {
     if (index < Slides.length - 1) {
-      flatListRef.current?.scrollToIndex({
-        index: index < Slides.length - 1 ? index + 1 : index,
-      });
       setIsZoomed(false);
-      router.setParams({ currentIndex: index + 1 });
+      carouselRef.current?.scrollTo({ index: index + 1, animated: true });
     }
   };
 
   const handlePrevious = () => {
     if (index > 0) {
-      flatListRef.current?.scrollToIndex({ index: index > 0 ? index - 1 : 0 });
       setIsZoomed(false);
-      router.setParams({ currentIndex: index > 0 ? index - 1 : 0 });
+      carouselRef.current?.scrollTo({ index: index - 1, animated: true });
     }
   };
 
-  //
-  const [isZoomed, setIsZoomed] = useState(false);
-
   return (
     <View
-      style={{
-        flex: 1,
-      }}
+      style={{ flex: 1 }}
       className="relative justify-center items-center bg-black"
     >
       <View
         style={{
-          height: Dimensions.get("screen").height * 0.7,
           flex: 1,
+          alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <FlatList
+        <Carousel
+          loop
+          ref={carouselRef}
+          width={width}
+          height={height * 0.8}
+          autoPlay={!isZoomed}
           data={Slides}
+          scrollAnimationDuration={1000}
+          defaultIndex={index}
+          onSnapToItem={(index) => setIndex(index)}
           renderItem={({ item }) => (
             <ImageZoom
               key={`${item.img}-${index}`}
-              cropWidth={Dimensions.get("screen").width}
-              cropHeight={Dimensions.get("screen").height}
-              imageWidth={Dimensions.get("screen").width}
-              imageHeight={Dimensions.get("screen").height * 0.6}
+              cropWidth={width}
+              cropHeight={height}
+              imageWidth={width}
+              imageHeight={height * 0.5}
               onMove={({ scale }) => {
                 if (scale !== 1) {
                   setIsZoomed(true);
@@ -135,25 +103,12 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
               />
             </ImageZoom>
           )}
-          horizontal
-          pagingEnabled
-          snapToAlignment="center"
-          showsHorizontalScrollIndicator={false}
-          onScroll={handleOnScroll}
-          onViewableItemsChanged={handleOnViewableItemsChanged}
-          viewabilityConfig={viewabilityConfig}
-          ref={flatListRef}
-          initialScrollIndex={currentIndex}
-          getItemLayout={(data, index) => ({
-            length: width,
-            offset: width * index,
-            index,
-          })}
         />
       </View>
 
       <View
         style={{
+          flex: 0.18,
           flexDirection: "row",
           paddingBottom: Platform.OS === "android" ? 35 : 60,
         }}
@@ -206,7 +161,6 @@ function PreviousImage({
   onPress: () => void;
   disabled: boolean;
 }) {
-  console.log(disabled, "disable prev");
   return (
     <TouchableOpacity
       activeOpacity={0.7}

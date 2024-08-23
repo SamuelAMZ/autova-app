@@ -1,22 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Animated,
-  FlatList,
   View,
   Image,
   useWindowDimensions,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
   TouchableOpacity,
-  Dimensions,
-  TouchableWithoutFeedback,
 } from "react-native";
-import { router, useFocusEffect, usePathname } from "expo-router";
+import { router } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 import ImageZoom from "react-native-image-pan-zoom";
-// import Carousel from "react-native-snap-carousel";
 import Carousel from "react-native-reanimated-carousel";
 
 import { useGlobalSearchParams } from "expo-router";
@@ -36,12 +28,13 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const { width } = useWindowDimensions();
   const { currentIndex = 0 } = useGlobalSearchParams();
 
-  const [index, setIndex] = useState<number>(+currentIndex);
-  const imageRef = useRef();
+  const [index, setIndex] = useState<number>(0);
+  const carouselRef = useRef<any>(null);
+  const zoomImageRef = useRef<any>(null);
 
   // Initial scroll to index based on the currentIndex
   useEffect(() => {
-    setIndex(currentIndex);
+    setIndex(+currentIndex || 0);
   }, [currentIndex]);
 
   const handleZoom = () => {
@@ -53,11 +46,29 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
     });
   };
 
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  const handleNext = () => {
+    if (index < Slides.length - 1) {
+      setIsZoomed(false);
+      zoomImageRef.current?.resetScale();
+      carouselRef.current?.scrollTo({ index: index + 1, animated: true });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (index > 0) {
+      setIsZoomed(false);
+      zoomImageRef.current?.resetScale();
+      carouselRef.current?.scrollTo({ index: index - 1, animated: true });
+    }
+  };
+
   return (
     <View className="relative">
       <Carousel
         loop
-        ref={imageRef}
+        ref={carouselRef}
         width={width}
         height={263}
         autoPlay={true}
@@ -66,14 +77,38 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         defaultIndex={index}
         onSnapToItem={(index) => setIndex(index)}
         renderItem={({ item, index }) => (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
+          <ImageZoom
+            key={`${item.img}-${index}`}
+            ref={zoomImageRef}
+            cropWidth={width}
+            cropHeight={263}
+            imageWidth={width}
+            imageHeight={263}
+            enableDoubleClickZoom={false}
+            onDoubleClick={() => {
+              handleZoom();
+            }}
+            onMove={({ scale }) => {
+              if (scale !== 1) {
+                setIsZoomed(true);
+              } else {
+                setIsZoomed(false);
+              }
+            }}
+            horizontalOuterRangeOffset={(offsetX) => {
+              if (!isZoomed) {
+                // Allow swipe to change image if not zoomed in
+                if (offsetX < -width / 4) {
+                  handleNext();
+                } else if (offsetX > width / 4) {
+                  // Swipe right (previous image)
+                  handlePrevious();
+                }
+              }
             }}
           >
             <Image style={{ width, minHeight: 263 }} source={item.img} />
-          </View>
+          </ImageZoom>
         )}
       />
       <Pagination data={Slides} index={index} />
@@ -109,57 +144,5 @@ function DisplayItemsRatio({
         {current}/{totalItemsCount}
       </ThemedText>
     </View>
-  );
-}
-
-function NextImage({
-  onPress,
-  disabled,
-}: {
-  onPress: () => void;
-  disabled: boolean;
-}) {
-  return (
-    <>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={onPress}
-        className={`flex items-center justify-center rounded-full p-[7px]  transition-all ${
-          disabled ? " bg-[#cccccc80] opacity-[0.7]" : " bg-[#cccccc80]"
-        }`}
-      >
-        <AntDesign
-          name="arrowright"
-          size={21}
-          color={`${disabled ? "#000000aa" : "#000"}`}
-        />
-      </TouchableOpacity>
-    </>
-  );
-}
-
-function PreviousImage({
-  onPress,
-  disabled,
-}: {
-  onPress: () => void;
-  disabled: boolean;
-}) {
-  return (
-    <>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={onPress}
-        className={`flex items-center justify-center rounded-full p-[7px]  transition-all ${
-          disabled ? " bg-[#cccccc80] opacity-[0.7]" : " bg-[#cccccc80]"
-        }`}
-      >
-        <AntDesign
-          name="arrowleft"
-          size={21}
-          color={`${disabled ? "#000000aa" : "#000"}`}
-        />
-      </TouchableOpacity>
-    </>
   );
 }
