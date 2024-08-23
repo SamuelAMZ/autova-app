@@ -8,6 +8,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
+  Platform,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -252,7 +253,10 @@ const CarSearchScreen = () => {
               />
             )}
           </View>
-          <View className="px-4 flex-row mt-4 gap-3 absolute bottom-[20px] self-center">
+          <View
+            style={{ bottom: Platform.OS == "ios" ? 40 : 30 }}
+            className="px-4 flex-row mt-4 gap-3 absolute self-center"
+          >
             <View className="flex-1">
               <CustomButton onPress={() => {}} title={"Search"} />
             </View>
