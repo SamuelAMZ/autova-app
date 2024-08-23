@@ -16,6 +16,9 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 import ImageZoom from "react-native-image-pan-zoom";
+// import Carousel from "react-native-snap-carousel";
+import Carousel from "react-native-reanimated-carousel";
+
 import { useGlobalSearchParams } from "expo-router";
 
 import Pagination from "./Pagination";
@@ -33,44 +36,13 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const { width } = useWindowDimensions();
   const { currentIndex = 0 } = useGlobalSearchParams();
 
-  // console.log(currentIndex, "currentIndex");
-
-  const imageRef = useRef();
   const [index, setIndex] = useState<number>(+currentIndex);
-  const [isZoomed, setIsZoomed] = useState<boolean>(false);
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const flatListRef = useRef<FlatList>(null);
+  const imageRef = useRef();
 
-  // Handle onScroll
-  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    Animated.event(
-      [
-        {
-          nativeEvent: {
-            contentOffset: {
-              x: scrollX,
-            },
-          },
-        },
-      ],
-      {
-        useNativeDriver: false,
-      }
-    )(event);
-  };
-
-  // Viewable items changed callback
-  const handleOnViewableItemsChanged = useRef(
-    ({ viewableItems }: { viewableItems: Array<{ index: number }> }) => {
-      const newIndex = viewableItems[0]?.index || 0;
-      setIndex(newIndex);
-      setIsZoomed(false);
-    }
-  ).current;
-
-  const viewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 50,
-  }).current;
+  // Initial scroll to index based on the currentIndex
+  useEffect(() => {
+    setIndex(currentIndex);
+  }, [currentIndex]);
 
   const handleZoom = () => {
     router.navigate({
@@ -81,116 +53,30 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
     });
   };
 
-  //   // Auto slider reference
-  //   // Auto slider reference
-  //   let interval: NodeJS.Timeout | null = null;
-
-  //   // const startAutoSlider = () => {
-  //   //   if (interval) {
-  //   //     clearInterval(interval); // Clear any existing interval before starting a new one
-  //   //   }
-  //   //   interval = setInterval(() => {
-  //   //     setIndex((prevIndex) => (prevIndex + 1) % Slides.length);
-  //   //   }, 3000);
-  //   // };
-
-  //   // const clearAutoSlider = () => {
-  //   //   if (interval) {
-  //   //     clearInterval(interval);
-  //   //     interval = null;
-  //   //   }
-  //   // };
-
-  //   // useEffect(() => {
-  //   //   startAutoSlider();
-
-  //   //   // Cleanup on unmount
-  //   //   return () => clearAutoSlider();
-  //   // }, [Slides.length]);
-
-  // Scroll to index when updated manually (e.g., via next/previous)
-  const scrollToIndex = (newIndex: number) => {
-    flatListRef.current?.scrollToIndex({ index: newIndex });
-    setIsZoomed(false);
-  };
-
-  // Initial scroll to index based on the currentIndex
-  useEffect(() => {
-    setIndex(currentIndex);
-  }, [currentIndex]);
-
-  useEffect(() => {
-    scrollToIndex(index);
-  }, [index]);
-
-  // Handle Next
-  const handleNext = () => {
-    const newIndex = index < Slides.length - 1 ? index + 1 : index;
-    setIndex(newIndex);
-  };
-
-  // Handle Previous
-  const handlePrevious = () => {
-    const newIndex = index > 0 ? index - 1 : 0;
-    setIndex(newIndex);
-  };
-
   return (
     <View className="relative">
-      <FlatList
+      <Carousel
+        loop
+        ref={imageRef}
+        width={width}
+        height={263}
+        autoPlay={true}
         data={Slides}
-        renderItem={({ item }) => (
-          <ImageZoom
-            ref={imageRef}
-            key={`${item.img}-${index}`}
-            cropWidth={width}
-            cropHeight={263}
-            imageWidth={width}
-            imageHeight={263}
-            enableDoubleClickZoom={false}
-            onDoubleClick={() => {
-              handleZoom();
-            }}
-            onMove={({ scale }) => {
-              if (scale !== 1) {
-                setIsZoomed(true);
-              } else {
-                setIsZoomed(false);
-              }
-            }}
-            horizontalOuterRangeOffset={(offsetX) => {
-              if (!isZoomed) {
-                // Allow swipe to change image if not zoomed in
-                if (offsetX < -width / 4) {
-                  // Swipe left (next image)
-                  handleNext();
-                } else if (offsetX > width / 4) {
-                  // Swipe right (previous image)
-                  handlePrevious();
-                }
-              }
+        scrollAnimationDuration={1000}
+        defaultIndex={index}
+        onSnapToItem={(index) => setIndex(index)}
+        renderItem={({ item, index }) => (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
             }}
           >
             <Image style={{ width, minHeight: 263 }} source={item.img} />
-          </ImageZoom>
+          </View>
         )}
-        horizontal
-        pagingEnabled
-        snapToAlignment="center"
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleOnScroll}
-        onViewableItemsChanged={handleOnViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        ref={flatListRef}
       />
-      <View className="absolute top-[35%] w-full px-[3%] flex-1 flex-row items-center justify-between">
-        <PreviousImage onPress={handlePrevious} disabled={index === 0} />
-        <NextImage
-          onPress={handleNext}
-          disabled={index === Slides.length - 1}
-        />
-      </View>
-      <Pagination data={Slides} scrollX={scrollX} index={index} />
+      <Pagination data={Slides} index={index} />
       <TargetItemZoom onPress={handleZoom} />
       <DisplayItemsRatio current={index + 1} totalItemsCount={Slides.length} />
     </View>
