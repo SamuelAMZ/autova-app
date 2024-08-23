@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RangeSliderRN from "rn-range-slider";
 import Thumb from "./Thumb";
 import Rail from "./Rail";
@@ -9,12 +9,18 @@ import Notch from "./Notch";
 const RangeSlider = ({
   from,
   to,
+  low,
+  high,
   onValueChange,
 }: {
   from: number;
   to: number;
+  low: number;
+  high: number;
   onValueChange: (low: number, high: number) => void;
 }) => {
+  const [renderLow, setRenderLow] = useState(low);
+  const [renderHigh, setRenderHigh] = useState(high);
   const renderThumb = useCallback(
     (name: "high" | "low") => <Thumb name={name} />,
     []
@@ -27,16 +33,31 @@ const RangeSlider = ({
   );
   const renderNotch = useCallback(() => <Notch />, []);
 
-  const handleValueChange = useCallback(
-    (low: number, high: number) => onValueChange(low, high),
-    []
-  );
+  const handleValueChange = useCallback((low: number, high: number) => {
+    onValueChange(low, high);
+    setRenderLow(low);
+    setRenderHigh(high);
+  }, []);
+
+  useEffect(() => {
+    setRenderLow(low);
+  }, [low]);
+
+  // When High value change
+  useEffect(() => {
+    setRenderHigh(high);
+  }, [high]);
+
+  // const renderLow = useMemo(() => low, [low]);
+  // const renderHigh = useMemo(() => high, [high]);
 
   return (
     <RangeSliderRN
       style={{ marginTop: 20, zIndex: 0 }}
       min={from}
       max={to}
+      low={renderLow}
+      high={renderHigh}
       step={1}
       floatingLabel={true}
       renderThumb={renderThumb}

@@ -92,9 +92,9 @@ const AccountPage = () => {
               </ThemedText>
             </View>
           </View>
-          <View className="flex gap-[20px]"></View>
+          
           <View className="flex flex-col gap-[1.25rem]">
-            <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
+            <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px] mt-[10px]">
               <TouchableOpacity
                 onPress={() => {
                   router.navigate("/(app)/listCar/condition");
