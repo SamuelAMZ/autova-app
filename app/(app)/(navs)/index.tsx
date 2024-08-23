@@ -13,6 +13,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 
 import BrandItem from "@/components/BrandItem";
 import CarItem from "@/components/cars/CarItem";
+import CarHome from "@/components/cars/CarHome";
 import FilterTag from "@/components/FilterTag";
 import ThemedText from "@/components/ThemedText";
 import SearchCard from "@/components/searchCard/SearchCard";
@@ -86,7 +87,7 @@ const HomePage = () => {
           </View>
 
           {/* Filter tags */}
-          <View className="w-full px-4">
+         {/*  <View className="w-full px-4">
             <FlatList
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
@@ -97,14 +98,14 @@ const HomePage = () => {
               )}
               ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
             />
-          </View>
+          </View> */}
 
           {/* Car Items */}
           <FlatList
             className="px-[4%]"
             data={CarData}
             renderItem={({ item }) => (
-              <CarItem
+              <CarHome
                 car={item}
                 onPress={() => {
                   router.navigate({
