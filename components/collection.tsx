@@ -39,7 +39,7 @@ export const CollectionItem = () => {
         />
       </View>
       <View className="flex-1 justify-around">
-        <ThemedText className="text-[#101828] font-bold text-[16px]">
+        <ThemedText className="text-[#101828]  text-[16px]" style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
           Used Cars
         </ThemedText>
         <ThemedText className="text-[#667085]">3 items</ThemedText>
