@@ -132,7 +132,6 @@ export default function CarHome({
         {...baseOptions}
         style={{
           width: width,
-          
         }}
         height={330}
         width={width * 0.93}
