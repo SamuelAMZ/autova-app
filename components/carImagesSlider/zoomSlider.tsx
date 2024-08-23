@@ -12,8 +12,7 @@ import {
   Dimensions,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useGlobalSearchParams } from "expo-router";
-
+import { router } from "expo-router";
 import ImageZoom from "react-native-image-pan-zoom";
 
 import ThemedText from "../ThemedText";
@@ -24,13 +23,17 @@ interface Slide {
 
 interface CarImagesSliderProps {
   Slides: Slide[];
+  currentIndex: string | string[];
 }
 
-const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
+const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
+  Slides,
+  currentIndex,
+}) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new RNAnimated.Value(0)).current;
   const flatListRef = useRef<FlatList>(null);
-  const { currentIndex } = useGlobalSearchParams();
+
   const { width, height } = useWindowDimensions();
   // const [isZoomed, setIsZoomed] = useState(false);
 
@@ -66,6 +69,7 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
     if (index < Slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: index + 1 });
       setIsZoomed(false);
+      router.setParams({ currentIndex: index + 1 });
     }
   };
 
@@ -73,6 +77,7 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
     if (index > 0) {
       flatListRef.current?.scrollToIndex({ index: index - 1 });
       setIsZoomed(false);
+      router.setParams({ currentIndex: index - 1 });
     }
   };
 

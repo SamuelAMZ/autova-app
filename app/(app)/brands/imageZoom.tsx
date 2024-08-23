@@ -9,6 +9,7 @@ import useStatusBar from "@/hooks/useStatusBar";
 
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useGlobalSearchParams } from "expo-router";
 
 import ZoomCarImagesSlider from "@/components/carImagesSlider/zoomSlider";
 
@@ -26,6 +27,7 @@ const data = [
 
 export default function CarImagesDetail() {
   const { width } = useWindowDimensions();
+  const { currentIndex } = useGlobalSearchParams();
 
   useStatusBar("light-content", "transparent", true);
 
@@ -33,7 +35,7 @@ export default function CarImagesDetail() {
     <>
       <View className="flex-1">
         <View className="flex-1 ">
-          <CustomHeader />
+          <CustomHeader currentIndex={currentIndex} />
           <View
             style={{
               flex: 1,
@@ -41,7 +43,7 @@ export default function CarImagesDetail() {
               minHeight: 263,
             }}
           >
-            <ZoomCarImagesSlider Slides={data} />
+            <ZoomCarImagesSlider Slides={data} currentIndex={currentIndex} />
           </View>
         </View>
       </View>
@@ -49,7 +51,13 @@ export default function CarImagesDetail() {
   );
 }
 
-function CustomHeader({ title }: { title?: string }) {
+function CustomHeader({
+  title,
+  currentIndex,
+}: {
+  title?: string;
+  currentIndex: string | string[];
+}) {
   return (
     <Header className=" px-[5%] bg-black">
       <View className="flex-row justify-between items-center py-[18px]">
@@ -61,7 +69,14 @@ function CustomHeader({ title }: { title?: string }) {
               borderRadius: 100,
             }}
             className="flex flex-row items-center justify-center bg-[#cccccc80] p-[11px]"
-            onPress={() => router.back()}
+            onPress={() => {
+              router.navigate({
+                pathname: "./carDetail",
+                params: {
+                  currentIndex: currentIndex,
+                },
+              });
+            }}
           >
             <AntDesign name="close" size={18} color="#000000" />
           </TouchableOpacity>
