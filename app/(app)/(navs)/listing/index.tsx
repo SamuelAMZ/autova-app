@@ -240,7 +240,7 @@ export default function MyListing() {
               <Setting5 color={Colors.textQuinary} />
               {usedFilter != 0 && (
                 <View
-                  className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded-full top-[-8] right-[-8] items-center justify-center`}>
+                  className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded top-[-8] right-[-8] items-center justify-center`}>
                   <ThemedText className="text-white"> {usedFilter} </ThemedText>
                 </View>
               )}

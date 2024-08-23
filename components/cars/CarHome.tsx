@@ -7,14 +7,15 @@ import {
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Heart } from "iconsax-react-native";
-import { useState } from "react";
-import Carousel from "react-native-reanimated-carousel";
+import { useRef, useState } from "react";
+import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import Car from "@/models/car.model";
 import { CarData } from "@/constants/CarData";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import type { AnimateProps } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
-
+import { BlurView as _BlurView } from "expo-blur";
+import { parallaxLayout } from "./parallax";
 
 export default function CarHome({
   car,
@@ -26,25 +27,36 @@ export default function CarHome({
   imgHeight?: number;
 }) {
   const [isLiked, setIsLiked] = useState(false);
-  const width = Dimensions.get("window").width;
-  const [mode, setMode] = useState<any>("horizontal-stack");
-  const [snapDirection, setSnapDirection] = useState<"left" | "right">("left");
-  const [pagingEnabled, setPagingEnabled] = useState<boolean>(true);
-  const [snapEnabled, setSnapEnabled] = useState<boolean>(true);
-  const [loop, setLoop] = useState<boolean>(true);
+  const width = Dimensions.get("window").width; 
+  const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
-  const [autoPlayReverse, setAutoPlayReverse] = useState<boolean>(false);
+  const [isVertical, setIsVertical] = useState<boolean>(false);
+  const ref = useRef<ICarouselInstance>(null);
+
+  const baseOptions = isVertical
+    ? ({
+        vertical: true,
+        width: width * 0.86,
+        height: width * 0.6,
+      } as const)
+    : ({
+        vertical: false,
+        width: width,
+       
+      } as const);
+
+ 
 
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
-  const viewCount = 5;
+ 
 
   const renderItem = ({ item, index }: { item: Car; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <TouchableOpacity onPress={() => onPress()} key={index}>
+          <TouchableOpacity className="mx-[5px]" onPress={() => onPress()} key={index}>
             <View
               style={styles.card}
               className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
@@ -100,7 +112,7 @@ export default function CarHome({
   };
 
   return (
-    <View className="flex gap-[10px]">
+    <View className="flex ">
       <View className="flex-1 flex-row justify-between items-end ">
         <ThemedText
           style={{
@@ -116,24 +128,25 @@ export default function CarHome({
         </TouchableOpacity>
       </View>
       <Carousel
+        ref={ref}
+        {...baseOptions}
         style={{
-          width: "100%",
-          height: 330,
+          width: width,
+          
         }}
-        width={width * 0.85}
         height={330}
-        pagingEnabled={pagingEnabled}
-        snapEnabled={snapEnabled}
-        mode={mode}
+        width={width * 0.93}
+        panGestureHandlerProps={{
+          activeOffsetX: [-10, 10],
+        }}
         loop={loop}
         autoPlay={autoPlay}
-        autoPlayReverse={autoPlayReverse}
         data={CarData}
+        mode="parallax"
         modeConfig={{
-          snapDirection,
-          stackInterval: 15,          
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: 50,
         }}
-        customConfig={() => ({ type: "positive", viewCount })}
         renderItem={renderItem}
       />
     </View>
