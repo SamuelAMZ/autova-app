@@ -16,6 +16,7 @@ import type { AnimateProps } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
 import { parallaxLayout } from "./parallax";
+import BrandCar from "./CarItem";
 
 export default function CarHome({
   car,
@@ -26,8 +27,7 @@ export default function CarHome({
   onPress: () => void;
   imgHeight?: number;
 }) {
-  const [isLiked, setIsLiked] = useState(false);
-  const width = Dimensions.get("window").width; 
+  const width = Dimensions.get("window").width;
   const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [isVertical, setIsVertical] = useState<boolean>(false);
@@ -42,70 +42,14 @@ export default function CarHome({
     : ({
         vertical: false,
         width: width,
-       
       } as const);
 
- 
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
- 
 
   const renderItem = ({ item, index }: { item: Car; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <TouchableOpacity className="mx-[5px]" onPress={() => onPress()} key={index}>
-            <View
-              style={styles.card}
-              className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
-              <View className="relative w-full">
-                <Image
-                  source={item.img}
-                  style={{
-                    borderRadius: 10,
-                    width: "100%",
-                  }}
-                  className="aspect-auto"
-                />
-                <TouchableOpacity
-                  onPress={handleLike}
-                  style={{
-                    borderRadius: 100,
-                  }}
-                  className="absolute right-2 top-2 bg-[#FFFFFF85] p-[10px]">
-                  <Heart
-                    color={isLiked ? "#5856D6" : "black"}
-                    variant={isLiked ? "Bold" : "Linear"}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View className="flex-col gap-[15px] justify-center items-start">
-                <ThemedText
-                  style={{
-                    fontFamily: "SpaceGrotesk_600SemiBold",
-                  }}
-                  className="text-[#101828] text-[19px]">
-                  {item.name}
-                </ThemedText>
-                <View className="flex flex-row items-center justify-start gap-4">
-                  <View
-                    style={{
-                      borderRadius: 100,
-                      backgroundColor: "#F2F4F7",
-                    }}>
-                    <ThemedText className="p-[5px_12px] text-[15px] font-[600] text-[#101828]">
-                      {item.year}
-                    </ThemedText>
-                  </View>
-                  <ThemedText className="text-[#344054] font-[500] text-[14px]">
-                    {item.label}
-                  </ThemedText>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
+          <BrandCar onPress={onPress} car={item} className="mx-[5px]" />
         </Animated.View>
       </LongPressGestureHandler>
     );
@@ -118,7 +62,8 @@ export default function CarHome({
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
           }}
-          className="font-semibold text-[18px]">
+          className="font-semibold text-[18px]"
+        >
           Featured Dealers
         </ThemedText>
         <TouchableOpacity>

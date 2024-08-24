@@ -73,7 +73,7 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
           defaultIndex={index}
           onSnapToItem={(index) => setIndex(index)}
           onProgressChange={() => {
-            setScrollIndex(+carouselRef.current.getCurrentIndex());
+            setScrollIndex(+carouselRef.current?.getCurrentIndex() || 0);
           }}
           renderItem={({ item }) => (
             <ImageZoom

@@ -5,8 +5,8 @@ import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
 import Colors from "@/constants/Colors";
+import ListingCarHeader from "@/components/ListingCarHeader";
 
 export default function YearProduction() {
   const currentYear = new Date().getFullYear();
@@ -19,44 +19,23 @@ export default function YearProduction() {
   return (
     <>
       <HeaderListing progress={4 / 14}>
-        <View className="flex flex-row w-full justify-between items-center mt-[15px]">
-          <View className="flex flex-row gap-[12px] items-center">
-            <TouchableOpacity
-              onPress={() => {
-                router.back();
-              }}
-              className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}>
-              <Feather name="arrow-left" size={20} color="black" />
-            </TouchableOpacity>
-            <ThemedText
-              className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              List Your Car
-            </ThemedText>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              router.navigate("/(app)/(navs)/listing");
-            }}
-            className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}>
-            <AntDesign name="close" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
+        <ListingCarHeader />
       </HeaderListing>
       <View
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
+        style={{ paddingTop: 30, paddingBottom: 60 }}
+      >
         <View className="flex items-start gap-[12px]">
           <ThemedText
             className="text-[#101828] text-[20px]"
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+          >
             Production Year
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
-            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+          >
             Select the year of production for your car
           </ThemedText>
         </View>
@@ -79,7 +58,8 @@ export default function YearProduction() {
                 <TouchableOpacity
                   key={item}
                   onPress={() => handleSelect(item)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full gap-[12px] justify-center ">
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full gap-[12px] justify-center "
+                >
                   <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                     {item}
                   </ThemedText>
@@ -99,15 +79,18 @@ export default function YearProduction() {
         <View
           style={{
             paddingBottom: 20,
-          }}>
+          }}
+        >
           <TouchableOpacity
             onPress={() => {
               router.navigate("./mileage");
             }}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Continue
             </ThemedText>
           </TouchableOpacity>

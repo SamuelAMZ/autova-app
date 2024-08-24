@@ -4,22 +4,17 @@ import {
   TouchableOpacity,
   TextInput,
   Pressable,
-  StyleSheet,
-  FlatList,
   Platform,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import {
   ArrangeHorizontal,
-  ArrowDown2,
   ArrowLeft,
   ArrowRight2,
   InfoCircle,
-  Setting2,
 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
-import HeaderListing from "@/components/HeaderListing";
 import HeaderSetting from "@/components/HeaderSetting";
 import { LogoutModal } from "@/components/LogoutModal";
 import useStatusBar from "@/hooks/useStatusBar";

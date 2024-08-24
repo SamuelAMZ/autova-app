@@ -9,10 +9,12 @@ export default function CarItem({
   car,
   onPress,
   imgHeight,
+  className = "",
 }: {
   car: Car;
   onPress: () => void;
   imgHeight?: number;
+  className?: any;
 }) {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -20,7 +22,7 @@ export default function CarItem({
     setIsLiked(!isLiked);
   };
   return (
-    <TouchableOpacity onPress={() => onPress()}>
+    <TouchableOpacity className={`${className}`} onPress={() => onPress()}>
       <View
         style={styles.card}
         className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]"

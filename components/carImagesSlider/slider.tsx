@@ -95,7 +95,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         defaultIndex={index}
         onSnapToItem={(index) => setIndex(index)}
         onProgressChange={() => {
-          setScrollIndex(+carouselRef.current.getCurrentIndex());
+          setScrollIndex(+carouselRef.current?.getCurrentIndex() || 0);
         }}
         loop={loop}
         autoPlay={autoPlay}

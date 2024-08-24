@@ -12,10 +12,9 @@ import { ArrowDown2 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
+import ListingCarHeader from "@/components/ListingCarHeader";
 
 export function MyCheckbox({
   onPress,
@@ -54,34 +53,7 @@ export default function Price() {
   return (
     <>
       <HeaderListing progress={12 / 14}>
-        <View className="flex flex-row w-full justify-between items-center mt-[15px]">
-          <View className="flex flex-row gap-[12px] items-center">
-            <TouchableOpacity
-              onPress={() => {
-                router.back();
-              }}
-              className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}
-            >
-              <Feather name="arrow-left" size={20} color="black" />
-            </TouchableOpacity>
-            <ThemedText
-              className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
-              List Your Car
-            </ThemedText>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              router.navigate("/(app)/(navs)/listing");
-            }}
-            className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}
-          >
-            <AntDesign name="close" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
+        <ListingCarHeader />
       </HeaderListing>
       <View
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
