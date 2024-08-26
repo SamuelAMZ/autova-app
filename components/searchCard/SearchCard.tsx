@@ -5,12 +5,13 @@ import { router } from "expo-router";
 import { searchTypesData } from "@/constants/searchTypes";
 import { ArrowDown2 } from "iconsax-react-native";
 import SelectSearchTypeModal, { SearchTypeProps } from "./typSearchModals";
-import MakeModelsSearch from "./makeModelSearch";
-import PriceRangeSearch from "./priceRangeSearch";
-import BodyStylesSearch from "./bodyStyleSearch";
+import { initialFilterData } from "@/constants";
+import SearchContent from "./searchContent";
 
 const SearchCard = () => {
   const snapPoints = useMemo(() => ["25%", "35%", "50%", "90%"], []);
+  const [filterData, setFilterData] =
+    useState<FilterDataProps>(initialFilterData);
   const [searchType, setSearchType] = useState<SearchTypeProps>(
     searchTypesData[0]
   );
@@ -30,6 +31,32 @@ const SearchCard = () => {
     setIsModalVisible(false);
   };
 
+  // Make & Model Props change
+  const handleMakeModalChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    if (type != undefined && type == "models") {
+      setFilterData({ ...filterData, selectedModelItem: item });
+    } else {
+      setFilterData({ ...filterData, selectedMakeItem: item });
+    }
+  };
+
+  // Price Range Props change
+  const handlePriceRangeChange = (low: number, high: number) => {
+    setFilterData({ ...filterData, rangeValue: { low, high } });
+  };
+
+  // Body Styles props change
+  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
+    if (typeof item == "number") {
+      setFilterData({ ...filterData, carDoors: item });
+    } else {
+      setFilterData({ ...filterData, selectedBodyItem: item });
+    }
+  };
+
   return (
     <View className="bg-[#F2F4F7] w-full p-4 rounded-xl">
       <View className="w-full mb-3 flex-row items-center gap-3">
@@ -44,13 +71,26 @@ const SearchCard = () => {
           <ArrowDown2 color="#475467" variant="Bold" size={18} />
         </TouchableOpacity>
       </View>
-      <SearchContent type={searchType.value} />
+      <SearchContent
+        type={searchType.value}
+        filterData={filterData}
+        onMakeModalChange={handleMakeModalChange}
+        onPriceRangeChange={handlePriceRangeChange}
+        onBodyStyleChange={handleBodyStyleChange}
+      />
       <View className="mt-1"></View>
+      {/* Search */}
       <CustomButton
         title="Search"
-        onPress={() => router.navigate("/(app)/search/carSearch")}
+        onPress={() =>
+          router.navigate({
+            pathname: "/(app)/search/carSearch",
+            params: { data: JSON.stringify(filterData) },
+          })
+        }
       />
 
+      {/* Option Modal */}
       <SelectSearchTypeModal
         isModalVisible={isModalVisible}
         selected={searchType}
@@ -63,60 +103,3 @@ const SearchCard = () => {
 };
 
 export default SearchCard;
-
-const initialFilterData = {
-  selectedMakeItem: undefined,
-  selectedModelItem: undefined,
-  selectedBodyItem: undefined,
-  rangeValue: { low: 0, high: 5000000 },
-  carDoors: 0,
-};
-
-const SearchContent = ({ type }: { type: string }) => {
-  const [filterData, setFilterData] =
-    useState<FilterDataProps>(initialFilterData);
-
-  // Make & Model Props change
-  const handleMakeModalChange = (type: string, item: ItemDataProps) => {
-    if (type == "models") {
-      setFilterData({ ...filterData, selectedModelItem: item });
-    } else {
-      setFilterData({ ...filterData, selectedMakeItem: item });
-    }
-  };
-
-  // Price Range Props change
-  const handlePriceRangeChange = (low: number, high: number) => {
-    setFilterData({ ...filterData, rangeValue: { low, high } });
-  };
-
-  // Body Styles props change
-  const handleBodyStyleChange = (item: ItemDataProps | number) => {
-    if (typeof item == "number") {
-      setFilterData({ ...filterData, carDoors: item });
-    } else {
-      setFilterData({ ...filterData, selectedBodyItem: item });
-    }
-  };
-
-  return type === "model" ? (
-    <MakeModelsSearch
-      selectedModelItem={filterData.selectedModelItem}
-      selectedMakeItem={filterData.selectedMakeItem}
-      onChange={handleMakeModalChange}
-    />
-  ) : type === "price" ? (
-    <PriceRangeSearch
-      rangeValue={filterData.rangeValue}
-      onValueChange={handlePriceRangeChange}
-    />
-  ) : type == "body" ? (
-    <BodyStylesSearch
-      selectedItem={filterData.selectedBodyItem}
-      carDoors={filterData.carDoors}
-      onBodyValueChange={handleBodyStyleChange}
-    />
-  ) : (
-    <View className=""></View>
-  );
-};

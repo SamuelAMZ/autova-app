@@ -5,6 +5,8 @@ import CustomBottomSheetModal from "../BottomSheetModal";
 import { AntDesign } from "@expo/vector-icons";
 import { ArrowDown2, Chainlink, TickCircle } from "iconsax-react-native";
 import { carDoorsElements } from "@/constants/searchTypes";
+import Colors from "@/constants/Colors";
+import ClearFilter from "./clearFilter";
 
 const mockData = [
   { id: "1", label: "Item 1" },
@@ -17,14 +19,14 @@ const BodyStylesSearch = ({
   carDoors,
   selectedItem,
 }: {
-  onBodyValueChange: (item: ItemDataProps | number) => void;
+  onBodyValueChange: (item: ItemDataProps | number | undefined) => void;
   carDoors: number;
   selectedItem?: ItemDataProps;
 }) => {
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleSelectItem = (item: ItemDataProps | number) => {
+  const handleSelectItem = (item: ItemDataProps | number | undefined) => {
     onBodyValueChange(item);
     setIsModalVisible(false);
   };
@@ -34,8 +36,10 @@ const BodyStylesSearch = ({
       <View
         style={{
           height: 90,
+          borderWidth: carDoors != 0 ? 1 : 0,
+          borderColor: `${Colors.background}`,
         }}
-        className="bg-white w-full shadow-sm rounded-lg"
+        className="bg-white w-full shadow-sm rounded-lg relative"
       >
         <View className="h-[45%] w-full justify-center ml-3">
           <ThemedText className="text-[#344054] font-semibold">
@@ -64,10 +68,15 @@ const BodyStylesSearch = ({
             </TouchableOpacity>
           ))}
         </View>
+        {carDoors != 0 && <ClearFilter onPress={() => handleSelectItem(0)} />}
       </View>
       <TouchableOpacity
         onPress={() => setIsModalVisible(true)}
-        className="bg-white h-[80] w-full shadow-sm rounded-lg mt-4"
+        className="bg-white h-[80] w-full shadow-sm rounded-lg mt-4 relative"
+        style={{
+          borderWidth: selectedItem ? 1 : 0,
+          borderColor: `${Colors.background}`,
+        }}
       >
         <View className="h-[50%] w-full justify-center ml-3">
           <ThemedText className="text-[#344054] font-semibold">
@@ -81,6 +90,9 @@ const BodyStylesSearch = ({
           </ThemedText>
           <ArrowDown2 color="#344054" size={16} />
         </View>
+        {selectedItem && (
+          <ClearFilter onPress={() => handleSelectItem(undefined)} />
+        )}
       </TouchableOpacity>
 
       <CustomBottomSheetModal
