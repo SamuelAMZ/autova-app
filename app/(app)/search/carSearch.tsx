@@ -1,11 +1,11 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   ArrowDown2,
   ArrowLeft,
   SearchNormal,
   Setting5,
 } from "iconsax-react-native";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -27,6 +27,9 @@ import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import Colors from "@/constants/Colors";
 import CustomButton from "@/components/CustomButton";
 import { initialFilterData } from "@/constants";
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CommonActions } from "@react-navigation/native";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -35,6 +38,7 @@ const initialItemIsOpenData = {
 };
 
 const CarSearchScreen = () => {
+  const navigation = useNavigation();
   const { data } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
@@ -48,7 +52,7 @@ const CarSearchScreen = () => {
   };
 
   useEffect(() => {
-    const initialData = JSON.parse(data as string);
+    const initialData = data ? JSON.parse(data as string) : initialFilterData;
     setFilterData(initialData);
   }, []);
 
@@ -147,7 +151,7 @@ const CarSearchScreen = () => {
               <TextInput
                 className="flex-1"
                 placeholder="Search..."
-                underlineColorAndroid="transparent"
+                // underlineColorAndroid="transparent"
                 autoFocus={true}
               />
             </View>
@@ -208,53 +212,54 @@ const CarSearchScreen = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View
-            className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+          <BottomSheetScrollView
+            className={`pb-4 bg-[${Colors.backgroundQuaternary}]`}
           >
-            <OpenCloseItem
-              title="Make & Model"
-              onPress={() => handleOpenItem("makeModel")}
-            />
-            {itemIsOpen.makeModel && (
-              <MakeModelsSearch
-                selectedModelItem={filterData.selectedModelItem}
-                selectedMakeItem={filterData.selectedMakeItem}
-                onChange={handleMakeModalChange}
+            <View
+              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+            >
+              <OpenCloseItem
+                title="Make & Model"
+                onPress={() => handleOpenItem("makeModel")}
               />
-            )}
+              {itemIsOpen.makeModel && (
+                <MakeModelsSearch
+                  selectedModelItem={filterData.selectedModelItem}
+                  selectedMakeItem={filterData.selectedMakeItem}
+                  onChange={handleMakeModalChange}
+                />
+              )}
 
-            {/* Price Range */}
-            <OpenCloseItem
-              title="Price Range"
-              onPress={() => handleOpenItem("priceRange")}
-            />
-            <View className="z-20">
-              {itemIsOpen.priceRange && (
-                <PriceRangeSearch
-                  style={{ zIndex: 30 }}
-                  rangeValue={filterData.rangeValue}
-                  onValueChange={handlePriceRangeChange}
+              {/* Price Range */}
+              <OpenCloseItem
+                title="Price Range"
+                onPress={() => handleOpenItem("priceRange")}
+              />
+              <View className="z-20">
+                {itemIsOpen.priceRange && (
+                  <PriceRangeSearch
+                    style={{ zIndex: 30 }}
+                    rangeValue={filterData.rangeValue}
+                    onValueChange={handlePriceRangeChange}
+                  />
+                )}
+              </View>
+
+              {/* Body Styles */}
+              <OpenCloseItem
+                title="Body Styles"
+                onPress={() => handleOpenItem("bodyStyle")}
+              />
+              {itemIsOpen.bodyStyle && (
+                <BodyStylesSearch
+                  selectedItem={filterData.selectedBodyItem}
+                  carDoors={filterData.carDoors}
+                  onBodyValueChange={handleBodyStyleChange}
                 />
               )}
             </View>
-
-            {/* Body Styles */}
-            <OpenCloseItem
-              title="Body Styles"
-              onPress={() => handleOpenItem("bodyStyle")}
-            />
-            {itemIsOpen.bodyStyle && (
-              <BodyStylesSearch
-                selectedItem={filterData.selectedBodyItem}
-                carDoors={filterData.carDoors}
-                onBodyValueChange={handleBodyStyleChange}
-              />
-            )}
-          </View>
-          <View
-            style={{ bottom: Platform.OS == "ios" ? 40 : 30 }}
-            className="px-4 flex-row mt-4 gap-3 absolute self-center"
-          >
+          </BottomSheetScrollView>
+          <View className="px-4 py-5 flex-row gap-3 self-center">
             <View className="flex-1">
               <CustomButton onPress={() => {}} title={"Search"} />
             </View>

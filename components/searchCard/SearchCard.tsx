@@ -1,19 +1,25 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import CustomButton from "../CustomButton";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { searchTypesData } from "@/constants/searchTypes";
 import { ArrowDown2 } from "iconsax-react-native";
 import SelectSearchTypeModal, { SearchTypeProps } from "./typSearchModals";
 import { initialFilterData } from "@/constants";
 import SearchContent from "./searchContent";
 
-const SearchCard = () => {
+function SearchCard() {
   const snapPoints = useMemo(() => ["25%", "35%", "50%", "90%"], []);
   const [filterData, setFilterData] =
     useState<FilterDataProps>(initialFilterData);
   const [searchType, setSearchType] = useState<SearchTypeProps>(
     searchTypesData[0]
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setFilterData(initialFilterData);
+    }, [])
   );
 
   // callbacks
@@ -100,6 +106,6 @@ const SearchCard = () => {
       />
     </View>
   );
-};
+}
 
 export default SearchCard;

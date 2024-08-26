@@ -44,10 +44,12 @@ const SearchContent = ({
       onChange={handleMakeModalChange}
     />
   ) : type === "price" ? (
-    <PriceRangeSearch
-      rangeValue={filterData.rangeValue}
-      onValueChange={handlePriceRangeChange}
-    />
+    <View className="mb-3">
+      <PriceRangeSearch
+        rangeValue={filterData.rangeValue}
+        onValueChange={handlePriceRangeChange}
+      />
+    </View>
   ) : type == "body" ? (
     <BodyStylesSearch
       selectedItem={filterData.selectedBodyItem}
