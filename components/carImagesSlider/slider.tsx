@@ -33,7 +33,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const carouselRef = useRef<any>(null);
   const zoomImageRef = useRef<any>(null);
 
-  const [loop, setLoop] = useState<boolean>(true);
+  const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(true);
   const [isZoomed, setIsZoomed] = useState(false);
 
