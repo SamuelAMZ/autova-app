@@ -27,6 +27,13 @@ import CarImagesSlider from "@/components/carImagesSlider/slider";
 import useStatusBar from "@/hooks/useStatusBar";
 import colors from "@/constants/Colors";
 
+import {
+  openTelegram,
+  openWhatsApp,
+  makePhoneCall,
+} from "@/utils/handleDeepLinks";
+import { extractLastDigits } from "@/utils/extractLastDigits";
+
 const data = [
   {
     img: require("@/assets/cars/teslaX.png"),
@@ -345,7 +352,7 @@ export default function CarDetail() {
             snapPoints={snapPoints}
             index={Platform.OS === "ios" ? 0 : 1}
           >
-            <View
+            {/* <View
               style={{
                 flex: 1,
                 alignItems: "center",
@@ -421,7 +428,8 @@ export default function CarDetail() {
                   information with the seller.
                 </ThemedText>
               </View>
-            </View>
+            </View> */}
+            <ContactDealer handleCloseModal={handleCloseModal} />
           </CustomBottomSheetModal>
         </View>
       </ImageBackground>
@@ -572,6 +580,97 @@ function CarSpecifications() {
   );
 }
 
+function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+      }}
+      className="w-full px-[4%] "
+    >
+      <View className="pt-[1rem] flex-row justify-between items-center w-full">
+        <ThemedText
+          style={{
+            fontFamily: "SpaceGrotesk_600SemiBold",
+          }}
+          className="text-[20px] text-[#000000]"
+        >
+          Contact Dealer
+        </ThemedText>
+        <TouchableOpacity onPress={handleCloseModal}>
+          <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+            <AntDesign name="close" size={16} color="#3D3D3D" />
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <View className="flex justify-center gap-[26px] pt-[36px]">
+        <ThemedText
+          style={{
+            fontFamily: "SpaceGrotesk_600SemiBold",
+          }}
+          className="text-[#101828] text-[17px] text-center"
+        >
+          How would you like to contact the dealer?
+        </ThemedText>
+        <View className="flex items-start justify-center gap-[16px]">
+          <TouchableOpacity
+            onPress={() => openWhatsApp()}
+            className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full"
+          >
+            <Image
+              style={{
+                width: 20,
+                height: 20,
+              }}
+              source={require("@/assets/logos_whatsapp-icon.png")}
+            />
+            <ThemedText className="text-[#344054] text-[17px]  font-[500]">
+              Continue via WhatsApp
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => openTelegram()}
+            className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full"
+          >
+            <Image
+              style={{
+                width: 20,
+                height: 20,
+              }}
+              source={require("@/assets/logos_telegram.png")}
+            />
+            <ThemedText className="text-[#344054] text-[17px]  font-[500]">
+              Continue via Telegram
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => makePhoneCall()}
+            className="flex-row items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full"
+          >
+            <Image
+              style={{
+                width: 20,
+                height: 20,
+              }}
+              source={require("@/assets/ion_call.png")}
+            />
+            <ThemedText className="text-[#344054] text-[17px]  font-[500]">
+              Contact via phone call
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
+
+        <ThemedText className="text-[#101828] text-[14px] font-[400] text-center text-clip">
+          * Keep your communication private. Avoid sharing sensitive information
+          with the seller.
+        </ThemedText>
+      </View>
+    </View>
+  );
+}
+
 function CustomHeader({ title }: { title?: string }) {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -640,18 +739,3 @@ const Header = ({
     </View>
   );
 };
-
-function extractLastDigits(number: number) {
-  // Convert the number to a string to easily access its digits
-  const numberStr = number.toString();
-  const length = numberStr.length;
-
-  // Determine the number of digits to extract based on the length
-  if (length > 2) {
-    return parseInt(numberStr.slice(-2));
-  } else if (length > 1) {
-    return parseInt(numberStr.slice(-1));
-  } else {
-    return number;
-  }
-}
