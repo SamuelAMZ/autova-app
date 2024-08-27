@@ -81,6 +81,7 @@ import {
   FlatList,
   Platform,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
@@ -95,7 +96,6 @@ import {
 } from "iconsax-react-native";
 import Icon from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
-import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
 import Colors from "@/constants/Colors";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
@@ -109,6 +109,7 @@ import {
   defaultRangeLowValue,
   initialFilterData,
 } from "@/constants";
+import CarItem from "@/components/cars/CarItem";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -191,95 +192,62 @@ export default function MyListing() {
   return (
     <>
       <CustomHeader />
-      <ScrollView className="flex-1 px-[16px] py-[30px] bg-[#fff] ">
-        <View className="flex  justify-center gap-[30px]">
-          {/* <View
-            className="bg-[#F9FAFB] p-[16px] rounded-[16px]  w-full gap-[16px]"
-            style={styles.card}>
-            <ThemedText
-              className="text-[18px] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              List cars for free
-            </ThemedText>
-            <View className="flex gap-[16px] relative">
-              <Gps
-                size="24"
-                color="#1D2939"
-                style={{
-                  position: "absolute",
-                  right: 20,
-                  top: Platform.OS === "android" ? 15 : 10,
-                }}
-              />
-              <TextInput
-                className={`bg-[#7878801F] relative border border-[${Colors.background}] py-[12px] px-[20px] rounded-[12px]`}
-                placeholder="Enter ZIP code"
-                placeholderTextColor="#1D2939"
-              />
-              <TouchableOpacity
-                onPress={() => {
-                  router.navigate("/(app)/listCar/condition");
-                }}
-                className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}>
-                <ThemedText
-                  className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Continue
-                </ThemedText>
-              </TouchableOpacity>
-            </View>
-          </View> */}
-          <View className=" flex-row gap-3">
-            <View
-              className={`flex-1 flex-row items-center gap-2 px-4 h-[48px] border border-[${Colors.borderPrimary}] rounded-xl`}
-            >
-              <SearchNormal color={Colors.textQuinary} />
-              <TextInput
-                className="flex-1"
-                placeholder="Search..."
-                placeholderTextColor="#000"
-                // underlineColorAndroid="transparent"
-              />
-            </View>
-            <TouchableOpacity
-              onPress={handlePresentModalPress}
-              className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl relative`}
-            >
-              <Setting5 color={Colors.textQuinary} />
-              {usedFilter != 0 && (
-                <View
-                  className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded top-[-8] right-[-8] items-center justify-center`}
-                >
-                  <ThemedText className="text-white"> {usedFilter} </ThemedText>
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
-          <View className="flex items-start justify-start gap-[20px] w-full pb-[80px]">
-            <FlatList
-              className="w-full "
-              data={[{}, {}, {}]}
-              renderItem={({ index, item }) => (
-                <CarItem
-                  car={CarData[0]}
-                  onPress={() => {
-                    router.navigate({
-                      pathname: "/(app)/brands/carDetail",
-                    });
-                  }}
-                />
-              )}
-              ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-              scrollEnabled={false}
+      <ScrollView
+        className={`flex-1 pt-2 bg-[${Colors.backgroundSecondaryVariant}]`}
+      >
+        <View className="px-4 my-5 flex-row gap-3">
+          <View
+            className={`flex-1 flex-row items-center gap-2 px-4 h-[48px] border border-[${Colors.borderPrimary}] rounded-xl`}
+          >
+            <SearchNormal color={Colors.textQuinary} />
+            <TextInput
+              className="flex-1"
+              placeholder="Search..."
+              placeholderTextColor="#000"
+              // ref={textIinputRef}
             />
           </View>
+          <TouchableOpacity
+            onPress={handlePresentModalPress}
+            className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl relative`}
+          >
+            <Setting5 color={Colors.textQuinary} />
+            {usedFilter != 0 && usedFilter != undefined && (
+              <View
+                className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded-2xl top-[-8] right-[-8] items-center justify-center`}
+              >
+                <ThemedText className="text-white"> {usedFilter} </ThemedText>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
-        <CustomBottomSheetModal
-          isVisible={isModalVisible}
-          onClose={handleCloseModal}
-          snapPoints={snapPoints}
-          index={1}
-        >
+
+        <FlatList
+          className="px-[4%]"
+          data={CarData}
+          renderItem={({ item }) => (
+            <CarItem
+              car={item}
+              onPress={() => {
+                router.navigate({
+                  pathname: "/(app)/brands/carDetail",
+                });
+              }}
+            />
+          )}
+          ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+          scrollEnabled={false}
+          keyExtractor={(_, index) => index.toString()}
+          ListFooterComponent={() => <View style={{ height: 40 }} />}
+        />
+      </ScrollView>
+      <CustomBottomSheetModal
+        isVisible={isModalVisible}
+        onClose={handleCloseModal}
+        snapPoints={snapPoints}
+        index={1}
+      >
+        <KeyboardAvoidingView className="flex-1">
           <View className="flex-1 w-full z-0">
             <View className="py-5 px-[4%] flex-row justify-between items-center ">
               <ThemedText
@@ -357,8 +325,8 @@ export default function MyListing() {
               </TouchableOpacity>
             </View>
           </View>
-        </CustomBottomSheetModal>
-      </ScrollView>
+        </KeyboardAvoidingView>
+      </CustomBottomSheetModal>
     </>
   );
 }

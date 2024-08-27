@@ -144,7 +144,7 @@ const CarSearchScreen = () => {
         </Header>
 
         <ScrollView
-          className={`flex-1 bg-[${Colors.backgroundSecondaryVariant}]`}
+          className={`flex-1 pt-2 bg-[${Colors.backgroundSecondaryVariant}]`}
         >
           <View className="px-4 my-5 flex-row gap-3">
             <View
@@ -152,9 +152,9 @@ const CarSearchScreen = () => {
             >
               <SearchNormal color={Colors.textQuinary} />
               <TextInput
-                editable
                 className="flex-1"
                 placeholder="Search..."
+                placeholderTextColor="#000"
                 ref={textIinputRef}
               />
             </View>
@@ -186,7 +186,7 @@ const CarSearchScreen = () => {
                 }}
               />
             )}
-            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
