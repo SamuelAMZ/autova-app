@@ -34,8 +34,8 @@ export default function Settings() {
   const [ModalVisible, setModalVisible] = useState(false);
 
   const [snapPoints, setSnapPoints] = useState(["55%", "60%", "90%"]);
-  const snapPointLangage = useMemo(() => ["30%", "40%", "55%"], []);
-  const snapPointNumber = useMemo(() => ["40%", "50%", "55%"], []);
+  const snapPointLangage = useMemo(() => ["25%", "35%", "55%"], []);
+  const [snapPointNumber, setNumber] =  useState(["25%", "35%", "55%"]);
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
     
@@ -45,19 +45,33 @@ export default function Settings() {
     setSnapPoints(["55%", "60%", "90%"]);
   };
 
+  const resetSnapPointsNumber = () => {
+    setSnapPoints(["25%", "35%", "55%"]);
+  };
+
   const handleChange = () => {
     setChangeNumber(true);
   };
+
   const handleFocusInput = () => {
     setSnapPoints(["60%", "85%", "90%"]);
+  };
+
+  const handleFocusNumber = () => {
+    setNumber(["25%", "50%", "55%"]);
   };
 
   const handleBlurInput = () => {
     resetSnapPoints(); 
   };
 
+  const handleBlurNumber = () => {
+    resetSnapPointsNumber(); 
+  };
+
   const closeChange = () => {
     setChangeNumber(false);
+    resetSnapPointsNumber(); 
   };
 
   const handleCloseModal = () => {
@@ -243,6 +257,8 @@ export default function Settings() {
                   keyboardType="numeric"
                   placeholderTextColor={Colors.textSecondary}
                   className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                  onFocus={handleFocusNumber}
+                  onBlur={handleBlurNumber}
                 />
                 <CustomButton
                   title="Update"
