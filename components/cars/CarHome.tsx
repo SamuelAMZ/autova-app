@@ -33,6 +33,7 @@ export default function CarHome({
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
   const [isLiked, setIsLiked] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const baseOptions = isVertical
     ? ({
@@ -150,6 +151,7 @@ export default function CarHome({
           parallaxScrollingOffset: 5,
         }}
         renderItem={renderItem}
+        onSnapToItem={(index) => setCurrentIndex(index)}
       />
     </View>
   );
