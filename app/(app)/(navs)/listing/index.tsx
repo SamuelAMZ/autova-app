@@ -242,6 +242,7 @@ export default function MyListing() {
               <TextInput
                 className="flex-1"
                 placeholder="Search..."
+                placeholderTextColor="#000"
                 // underlineColorAndroid="transparent"
               />
             </View>

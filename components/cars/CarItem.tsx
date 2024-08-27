@@ -21,6 +21,8 @@ export default function CarItem({
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
+
+  
   return (
     <TouchableOpacity className={`${className}`} onPress={() => onPress()}>
       <View

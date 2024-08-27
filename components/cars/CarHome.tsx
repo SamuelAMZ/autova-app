@@ -46,18 +46,12 @@ export default function CarHome({
         width: width,
       } as const);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
-
   const renderItem = ({ item, index }: { item: Car; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <TouchableOpacity
-            className="mx-[5px]"
-            onPress={() => onPress()}
-            key={index}>
+          <BrandCar onPress={onPress} car={item} className="mx-[5px]" />
+          {/* <TouchableOpacity className="mx-[5px]" onPress={() => onPress()} key={index}>
             <View
               style={[styles.card, index === 0 && { marginLeft: 0 }]}
               className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
@@ -106,7 +100,7 @@ export default function CarHome({
                 </View>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Animated.View>
       </LongPressGestureHandler>
     );
@@ -134,7 +128,10 @@ export default function CarHome({
         style={{
           width: width,
           justifyContent: "flex-start",
+          width: width,
+          justifyContent: "flex-start",
           paddingLeft: 0,
+          marginLeft: 0,
           marginLeft: 0,
         }}
         height={330}
