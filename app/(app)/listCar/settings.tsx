@@ -33,15 +33,27 @@ export default function Settings() {
 
   const [ModalVisible, setModalVisible] = useState(false);
 
-  const snapPoints = useMemo(() => ["50%", "70%", "100%"], []);
+  const [snapPoints, setSnapPoints] = useState(["55%", "60%", "90%"]);
   const snapPointLangage = useMemo(() => ["30%", "40%", "55%"], []);
   const snapPointNumber = useMemo(() => ["40%", "50%", "55%"], []);
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
+    
+  };
+
+  const resetSnapPoints = () => {
+    setSnapPoints(["55%", "60%", "90%"]);
   };
 
   const handleChange = () => {
     setChangeNumber(true);
+  };
+  const handleFocusInput = () => {
+    setSnapPoints(["60%", "85%", "90%"]);
+  };
+
+  const handleBlurInput = () => {
+    resetSnapPoints(); 
   };
 
   const closeChange = () => {
@@ -50,6 +62,7 @@ export default function Settings() {
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
+    resetSnapPoints();
   };
 
   const handlePresentModal = () => {
@@ -273,16 +286,22 @@ export default function Settings() {
                   placeholder="Old Password"
                   placeholderTextColor={Colors.textSecondary}
                   className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                  onFocus={handleFocusInput}
+                  onBlur={handleBlurInput}
                 />
                 <TextInput
                   placeholder="New Password"
                   placeholderTextColor={Colors.textSecondary}
                   className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                  onFocus={handleFocusInput}
+                  onBlur={handleBlurInput}
                 />
                 <TextInput
                   placeholder="Confirm Password"
                   placeholderTextColor={Colors.textSecondary}
                   className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                  onFocus={handleFocusInput}
+                  onBlur={handleBlurInput}
                 />
                 <ThemedText
                   className={`text-[${Colors.textSecondary}] text-[14px]`}>

@@ -27,6 +27,7 @@ export default function RelatedCar() {
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
+  const [isLiked, setIsLiked] = useState(false);
 
   const baseOptions = isVertical
     ? ({
@@ -39,34 +40,82 @@ export default function RelatedCar() {
         width: width,
       } as const);
 
+      
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
+
   const renderItem = ({ item, index }: { item: Car; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <BrandCar
-            onPress={() => {
-              router.navigate({
-                pathname: "/(app)/brands/carDetail",
-              });
-            }}
-            car={item}
+          <TouchableOpacity
             className="mx-[5px]"
-          />
+            onPress={() => {}}
+            key={index}>
+            <View
+              style={[styles.card, index === 0 && { marginLeft: 0 }]}
+              className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
+              <View className="relative w-full">
+                <Image
+                  source={item.img}
+                  style={{
+                    borderRadius: 10,
+                    width: "100%",
+                  }}
+                  className="aspect-auto"
+                />
+                <TouchableOpacity
+                  onPress={handleLike}
+                  style={{
+                    borderRadius: 100,
+                  }}
+                  className="absolute right-2 top-2 bg-[#FFFFFF85] p-[10px]">
+                  <Heart
+                    color={isLiked ? "#5856D6" : "black"}
+                    variant={isLiked ? "Bold" : "Linear"}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View className="flex-col gap-[15px] justify-center items-start">
+                <ThemedText
+                  style={{
+                    fontFamily: "SpaceGrotesk_600SemiBold",
+                  }}
+                  className="text-[#101828] text-[19px]">
+                  {item.name}
+                </ThemedText>
+                <View className="flex flex-row items-center justify-start gap-4">
+                  <View
+                    style={{
+                      borderRadius: 100,
+                      backgroundColor: "#F2F4F7",
+                    }}>
+                    <ThemedText className="p-[5px_12px] text-[15px] font-[600] text-[#101828]">
+                      {item.year}
+                    </ThemedText>
+                  </View>
+                  <ThemedText className="text-[#344054] font-[500] text-[13px]">
+                    {item.label}
+                  </ThemedText>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
         </Animated.View>
       </LongPressGestureHandler>
     );
   };
 
   return (
-    <View className="flex ">
-      <View className="flex-1 flex-row justify-between items-end ">
+    <View className="flex gap-[10px] ">
+      <View className="flex-1 flex-row justify-between items-end  ">
         <ThemedText
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
           }}
-          className="font-semibold text-[18px]"
-        >
-          Related Cars
+          className="font-semibold text-[18px]">
+          Featured Dealers
         </ThemedText>
         <TouchableOpacity>
           <ThemedText className="text-[#007AFF] font-medium">
@@ -79,9 +128,12 @@ export default function RelatedCar() {
         {...baseOptions}
         style={{
           width: width,
+          justifyContent: "flex-start",
+          paddingLeft: 0,
+          marginLeft: 0,
         }}
         height={330}
-        width={width * 0.93}
+        width={width * 0.86}
         panGestureHandlerProps={{
           activeOffsetX: [-10, 10],
         }}
@@ -90,8 +142,8 @@ export default function RelatedCar() {
         data={CarData}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.9,
-          parallaxScrollingOffset: 50,
+          parallaxScrollingScale: 1,
+          parallaxScrollingOffset: 5,
         }}
         renderItem={renderItem}
       />
