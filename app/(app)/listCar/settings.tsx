@@ -33,8 +33,9 @@ export default function Settings() {
 
   const [ModalVisible, setModalVisible] = useState(false);
 
-  const snapPoints = useMemo(() => [ "60%", "90%"], []);
-  const snapPointLangage = useMemo(() => [ "40%", "55%"], []);
+  const snapPoints = useMemo(() => ["50%", "70%", "100%"], []);
+  const snapPointLangage = useMemo(() => ["30%", "40%", "55%"], []);
+  const snapPointNumber = useMemo(() => ["40%", "50%", "55%"], []);
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
   };
@@ -199,7 +200,7 @@ export default function Settings() {
         <CustomBottomSheetModal
           isVisible={changeNumber}
           onClose={closeChange}
-          snapPoints={snapPointLangage}
+          snapPoints={snapPointNumber}
           index={Platform.OS === "ios" ? 0 : 1}>
           <View
             style={{

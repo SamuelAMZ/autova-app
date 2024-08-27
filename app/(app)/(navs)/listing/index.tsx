@@ -261,7 +261,7 @@ export default function MyListing() {
           </View>
           <View className="flex items-start justify-start gap-[20px] w-full pb-[80px]">
             <FlatList
-              className="w-full"
+              className="w-full "
               data={[{}, {}, {}]}
               renderItem={({ index, item }) => (
                 <CarItem

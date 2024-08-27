@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     backgroundColor: "#fff",
-    marginVertical: 10,
+    marginVertical: 5,
 
     // Different borders for each side
     borderTopWidth: 1,
