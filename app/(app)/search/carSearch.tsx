@@ -77,7 +77,7 @@ const CarSearchScreen = () => {
     }));
   };
 
-  // Body Styles props change
+  // Body Styles props changes
   const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
     if (typeof item == "number") {
       setFilterData({ ...filterData, ["carDoors"]: item });
