@@ -84,7 +84,15 @@ import {
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Notification, Gps, Add, Car, ArrowDown2, SearchNormal, Setting5 } from "iconsax-react-native";
+import {
+  Notification,
+  Gps,
+  Add,
+  Car,
+  ArrowDown2,
+  SearchNormal,
+  Setting5,
+} from "iconsax-react-native";
 import Icon from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import CarItem from "@/components/cars/CarItem";
@@ -124,7 +132,10 @@ export default function MyListing() {
   };
 
   // Make & Model Props change
-  const handleMakeModalChange = (type: string, item: ItemDataProps) => {
+  const handleMakeModalChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
     if (type == "models") {
       setFilterData({ ...filterData, ["selectedModelItem"]: item });
     } else {
@@ -141,7 +152,7 @@ export default function MyListing() {
   };
 
   // Body Styles props change
-  const handleBodyStyleChange = (item: ItemDataProps | number) => {
+  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
     if (typeof item == "number") {
       setFilterData({ ...filterData, ["carDoors"]: item });
     } else {
@@ -225,22 +236,24 @@ export default function MyListing() {
           </View> */}
           <View className=" flex-row gap-3">
             <View
-              className={`flex-1 flex-row items-center gap-2 px-4 h-[48px] border border-[${Colors.borderPrimary}] rounded-xl`}>
+              className={`flex-1 flex-row items-center gap-2 px-4 h-[48px] border border-[${Colors.borderPrimary}] rounded-xl`}
+            >
               <SearchNormal color={Colors.textQuinary} />
               <TextInput
                 className="flex-1"
                 placeholder="Search..."
-                underlineColorAndroid="transparent"
-               
+                // underlineColorAndroid="transparent"
               />
             </View>
             <TouchableOpacity
               onPress={handlePresentModalPress}
-              className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl relative`}>
+              className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl relative`}
+            >
               <Setting5 color={Colors.textQuinary} />
               {usedFilter != 0 && (
                 <View
-                  className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded top-[-8] right-[-8] items-center justify-center`}>
+                  className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded top-[-8] right-[-8] items-center justify-center`}
+                >
                   <ThemedText className="text-white"> {usedFilter} </ThemedText>
                 </View>
               )}
@@ -269,16 +282,19 @@ export default function MyListing() {
           isVisible={isModalVisible}
           onClose={handleCloseModal}
           snapPoints={snapPoints}
-          index={1}>
+          index={1}
+        >
           <View className="flex-1 w-full z-0">
             <View className="py-5 px-[4%] flex-row justify-between items-center ">
               <ThemedText
-                className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}>
+                className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}
+              >
                 Filter Search
               </ThemedText>
               <TouchableOpacity onPress={handleCloseModal}>
                 <View
-                  className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}>
+                  className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}
+                >
                   <AntDesign
                     name="close"
                     size={16}
@@ -288,7 +304,8 @@ export default function MyListing() {
               </TouchableOpacity>
             </View>
             <View
-              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}>
+              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+            >
               <OpenCloseItem
                 title="Make & Model"
                 onPress={() => handleOpenItem("makeModel")}
@@ -331,13 +348,15 @@ export default function MyListing() {
             </View>
             <View
               style={{ bottom: Platform.OS == "ios" ? 40 : 30 }}
-              className="px-4 flex-row mt-4 gap-3 absolute self-center">
+              className="px-4 flex-row mt-4 gap-3 absolute self-center"
+            >
               <View className="flex-1">
                 <CustomButton onPress={() => {}} title={"Search"} />
               </View>
               <TouchableOpacity
                 onPress={() => onReset()}
-                className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center">
+                className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center"
+              >
                 <Icon name="close" size={26} color="white" />
               </TouchableOpacity>
             </View>
@@ -355,14 +374,16 @@ function CustomHeader() {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className={`text-[${Colors.textPrimary}] text-[22px]`}
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+          >
             Listing
           </ThemedText>
           <TouchableOpacity
             onPress={() => {
               router.navigate("/(app)/listCar/condition");
             }}
-            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+          >
             <Add size="28" color={Colors.textPrimary} />
           </TouchableOpacity>
         </View>
@@ -381,9 +402,11 @@ const OpenCloseItem = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="w-full flex-row items-center justify-between my-4">
+      className="w-full flex-row items-center justify-between my-4"
+    >
       <ThemedText
-        className={`text-[${Colors.textSecondary}] font-semibold text-[16px] `}>
+        className={`text-[${Colors.textSecondary}] font-semibold text-[16px] `}
+      >
         {title}
       </ThemedText>
       <ArrowDown2 variant="Bold" color="#101828" size={18} />

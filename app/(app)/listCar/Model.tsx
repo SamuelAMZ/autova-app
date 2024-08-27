@@ -5,9 +5,9 @@ import { SearchNormal1 } from "iconsax-react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
 import { modelData } from "@/constants/data";
 import Colors from "@/constants/Colors";
+import ListingCarHeader from "@/components/ListingCarHeader";
 
 export default function Model() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
@@ -19,45 +19,24 @@ export default function Model() {
   return (
     <>
       <HeaderListing progress={3 / 14}>
-        <View className="flex flex-row w-full justify-between items-center mt-[15px]">
-          <View className="flex flex-row gap-[12px] items-center">
-            <TouchableOpacity
-              onPress={() => {
-                router.back();
-              }}
-              className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-              style={{ backgroundColor: "#c1c1c1" }}>
-              <Feather name="arrow-left" size={20} color="black" />
-            </TouchableOpacity>
-            <ThemedText
-              className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              List Your Car
-            </ThemedText>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              router.navigate("/(app)/(navs)/listing");
-            }}
-            className="justify-center items-center p-3 bg-[#c1c1c1] rounded-full"
-            style={{ backgroundColor: "#c1c1c1" }}>
-            <AntDesign name="close" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
+        <ListingCarHeader />
       </HeaderListing>
       <View
         className="flex   bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
+        style={{ paddingTop: 30, paddingBottom: 60 }}
+      >
         <ScrollView className="flex pb-[80px] relative px-[16px]">
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Model
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
               Select the model for your car
             </ThemedText>
           </View>
@@ -77,7 +56,8 @@ export default function Model() {
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               All Model
             </ThemedText>
 
@@ -86,7 +66,8 @@ export default function Model() {
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => handleSelect(item.name)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
+                >
                   <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                     {item.name}
                   </ThemedText>
@@ -106,15 +87,18 @@ export default function Model() {
           style={{
             paddingBottom: 20,
           }}
-          className="px-[16px]">
+          className="px-[16px]"
+        >
           <TouchableOpacity
             onPress={() => {
               router.navigate("./year");
             }}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Continue
             </ThemedText>
           </TouchableOpacity>

@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import CustomBottomSheetModal from "../BottomSheetModal";
 import { ArrowDown2, Chainlink, TickCircle } from "iconsax-react-native";
 import { AntDesign } from "@expo/vector-icons";
+import Colors from "@/constants/Colors";
+import ClearFilter from "./clearFilter";
 
 const mockData: any = {
   models: [
@@ -21,7 +23,7 @@ const MakeModelsSearch = ({
   selectedModelItem,
   selectedMakeItem,
 }: {
-  onChange: (type: string, item: ItemDataProps) => void;
+  onChange: (type: string | undefined, item: ItemDataProps | undefined) => void;
   selectedModelItem?: ItemDataProps;
   selectedMakeItem?: ItemDataProps;
 }) => {
@@ -36,8 +38,11 @@ const MakeModelsSearch = ({
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleSelectItem = (item: ItemDataProps) => {
-    onChange(selectedType!.type, item);
+  const handleSelectItem = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    onChange(type, item);
     setIsModalVisible(false);
   };
 
@@ -54,7 +59,11 @@ const MakeModelsSearch = ({
       <View className="mb-3 flex-row justify-between">
         <TouchableOpacity
           onPress={() => handleTypeChange("makes")}
-          className="bg-white h-[80] w-[47%] shadow-sm rounded-lg"
+          className="bg-white h-[80] w-[47%] shadow-sm rounded-lg relative"
+          style={{
+            borderWidth: selectedMakeItem ? 1 : 0,
+            borderColor: `${Colors.background}`,
+          }}
         >
           <View className="h-[50%] w-full justify-center ml-3">
             <ThemedText className="text-[#344054] font-semibold">
@@ -70,10 +79,17 @@ const MakeModelsSearch = ({
               <ArrowDown2 color="#344054" size={16} />
             </View>
           </View>
+          {selectedMakeItem && (
+            <ClearFilter onPress={() => handleSelectItem("make", undefined)} />
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleTypeChange("models")}
-          className="bg-white h-[80] w-[47%] shadow-sm rounded-lg"
+          className="bg-white h-[80] w-[47%] shadow-sm rounded-lg relative"
+          style={{
+            borderWidth: selectedModelItem ? 1 : 0,
+            borderColor: `${Colors.background}`,
+          }}
         >
           <View className="h-[50%] w-full justify-center ml-3">
             <ThemedText className="text-[#344054] font-semibold">
@@ -89,6 +105,11 @@ const MakeModelsSearch = ({
               <ArrowDown2 color="#344054" size={16} />
             </View>
           </View>
+          {selectedModelItem && (
+            <ClearFilter
+              onPress={() => handleSelectItem("models", undefined)}
+            />
+          )}
         </TouchableOpacity>
       </View>
       <CustomBottomSheetModal
@@ -112,7 +133,9 @@ const MakeModelsSearch = ({
               const isSelected = handleIsSelected(item.item);
               return (
                 <TouchableOpacity
-                  onPress={() => handleSelectItem(item.item)}
+                  onPress={() =>
+                    handleSelectItem(selectedType?.type, item.item)
+                  }
                   className="p-4 border-t border-[#F2F4F7] flex-row justify-between items-center"
                 >
                   <View className="flex-row gap-3 items-center">

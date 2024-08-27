@@ -1,7 +1,9 @@
 import { TextInput, View, ViewProps } from "react-native";
 import RangeSlider from "../RangeSlider";
 import { useEffect, useState } from "react";
-import ThemedText from "../ThemedText";
+import Colors from "@/constants/Colors";
+import ClearFilter from "./clearFilter";
+import { defaultRangeHighValue, defaultRangeLowValue } from "@/constants";
 
 const PriceRangeSearch = ({
   onValueChange,
@@ -38,8 +40,17 @@ const PriceRangeSearch = ({
     setHighValue(rangeValue.high);
   }, [rangeValue.high]);
 
+  const isSelected = rangeValue.high != 5000000 || rangeValue.low != 0;
+
   return (
-    <View className="w-full z-0" {...rest}>
+    <View
+      className="w-full z-0 rounded-lg relative"
+      {...rest}
+      style={{
+        borderWidth: isSelected ? 1 : 0,
+        borderColor: `${Colors.background}`,
+      }}
+    >
       <RangeSlider
         low={rangeValue.low}
         high={rangeValue.high}
@@ -65,6 +76,13 @@ const PriceRangeSearch = ({
           />
         </View>
       </View>
+      {isSelected && (
+        <ClearFilter
+          onPress={() =>
+            onValueChange(defaultRangeLowValue, defaultRangeHighValue)
+          }
+        />
+      )}
     </View>
   );
 };

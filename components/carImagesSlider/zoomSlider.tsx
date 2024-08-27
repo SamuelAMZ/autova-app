@@ -26,12 +26,14 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
   currentIndex = 0,
 }) => {
   const [index, setIndex] = useState(0);
+  const [scrollIndex, setScrollIndex] = useState(0);
   const { width, height } = useWindowDimensions();
   const carouselRef = useRef<any>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
     setIndex(+currentIndex || 0);
+    setScrollIndex(+currentIndex || 0);
   }, [currentIndex]);
 
   const handleNext = () => {
@@ -65,11 +67,14 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
           ref={carouselRef}
           width={width}
           height={height * 0.8}
-          autoPlay={!isZoomed}
+          autoPlay={false}
           data={Slides}
           scrollAnimationDuration={1000}
           defaultIndex={index}
           onSnapToItem={(index) => setIndex(index)}
+          onProgressChange={() => {
+            setScrollIndex(+carouselRef.current?.getCurrentIndex() || 0);
+          }}
           renderItem={({ item }) => (
             <ImageZoom
               key={`${item.img}-${index}`}
@@ -114,14 +119,14 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
         }}
         className="px-[4%] w-full justify-between items-center"
       >
-        <PreviousImage onPress={handlePrevious} disabled={index === 0} />
+        <PreviousImage onPress={handlePrevious} disabled={scrollIndex === 0} />
         <DisplayItemsRatio
-          current={index + 1}
+          current={scrollIndex + 1}
           totalItemsCount={Slides.length}
         />
         <NextImage
           onPress={handleNext}
-          disabled={index === Slides.length - 1}
+          disabled={scrollIndex === Slides.length - 1}
         />
       </View>
     </View>

@@ -95,11 +95,13 @@ function CustomHeader() {
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className={`text-[${Colors.textPrimary}] text-[22px]`}
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+          >
             Listing
           </ThemedText>
           <View
-            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+          >
             <Notification color={Colors.textPrimary} size={20} />
           </View>
         </View>

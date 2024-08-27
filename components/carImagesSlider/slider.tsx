@@ -29,20 +29,18 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const { currentIndex = 0 } = useGlobalSearchParams();
 
   const [index, setIndex] = useState<number>(0);
+  const [scrollIndex, setScrollIndex] = useState(0);
   const carouselRef = useRef<any>(null);
   const zoomImageRef = useRef<any>(null);
 
-  const [mode, setMode] = useState<any>("horizontal-stack");
-  const [snapDirection, setSnapDirection] = useState<"left" | "right">("left");
-  const [pagingEnabled, setPagingEnabled] = useState<boolean>(false);
-  const [snapEnabled, setSnapEnabled] = useState<boolean>(true);
-  const [loop, setLoop] = useState<boolean>(true);
+  const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(true);
-  const [autoPlayReverse, setAutoPlayReverse] = useState<boolean>(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   // Initial scroll to index based on the currentIndex
   useEffect(() => {
     setIndex(+currentIndex || 0);
+    setScrollIndex(+currentIndex || 0);
   }, [currentIndex]);
 
   const handleZoom = () => {
@@ -54,22 +52,36 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
     });
   };
 
-  const [isZoomed, setIsZoomed] = useState(false);
-
   const handleNext = () => {
+    setIsZoomed(false);
+    zoomImageRef.current?.resetScale();
+
     if (index < Slides.length - 1) {
-      setIsZoomed(false);
-      zoomImageRef.current?.resetScale();
       carouselRef.current?.scrollTo({ index: index + 1, animated: true });
     }
+
+    setAutoPlay(false);
+    const timer = setTimeout(() => {
+      setAutoPlay(true);
+      // console.log(autoPlay, "restart autoplay next");
+      clearTimeout(timer);
+    }, 1500);
   };
 
   const handlePrevious = () => {
+    setIsZoomed(false);
+    zoomImageRef.current?.resetScale();
+
     if (index > 0) {
-      setIsZoomed(false);
-      zoomImageRef.current?.resetScale();
       carouselRef.current?.scrollTo({ index: index - 1, animated: true });
     }
+
+    setAutoPlay(false);
+    const timer = setTimeout(() => {
+      setAutoPlay(true);
+      // console.log(autoPlay, "restart autoplay prev");
+      clearTimeout(timer);
+    }, 1500);
   };
 
   return (
@@ -82,16 +94,11 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         scrollAnimationDuration={1000}
         defaultIndex={index}
         onSnapToItem={(index) => setIndex(index)}
-        // pagingEnabled={pagingEnabled}
-        // snapEnabled={snapEnabled}
-        // mode={mode}
+        onProgressChange={() => {
+          setScrollIndex(+carouselRef.current?.getCurrentIndex() || 0);
+        }}
         loop={loop}
         autoPlay={autoPlay}
-        // autoPlayReverse={autoPlayReverse}
-        // modeConfig={{
-        //   snapDirection,
-        //   stackInterval: 15,
-        // }}
         renderItem={({ item, index }) => (
           <ImageZoom
             key={`${item.img}-${index}`}
@@ -127,9 +134,12 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
           </ImageZoom>
         )}
       />
-      <Pagination data={Slides} index={index} />
+      <Pagination data={Slides} index={scrollIndex} />
       <TargetItemZoom onPress={handleZoom} />
-      <DisplayItemsRatio current={index + 1} totalItemsCount={Slides.length} />
+      <DisplayItemsRatio
+        current={scrollIndex + 1}
+        totalItemsCount={Slides.length}
+      />
     </View>
   );
 };

@@ -1,11 +1,11 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   ArrowDown2,
   ArrowLeft,
   SearchNormal,
   Setting5,
 } from "iconsax-react-native";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -26,36 +26,42 @@ import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
 import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import Colors from "@/constants/Colors";
 import CustomButton from "@/components/CustomButton";
+import { initialFilterData } from "@/constants";
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CommonActions } from "@react-navigation/native";
 
-const initialFilterData = {
-  selectedMakeItem: undefined,
-  selectedModelItem: undefined,
-  selectedBodyItem: undefined,
-  rangeValue: { low: 0, high: 5000000 },
-  carDoors: 0,
-};
-
-const initialItemIsOpen = {
+const initialItemIsOpenData = {
   makeModel: true,
   priceRange: true,
   bodyStyle: true,
 };
 
 const CarSearchScreen = () => {
+  const navigation = useNavigation();
+  const { data } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
   const [filterData, setFilterData] =
     useState<FilterDataProps>(initialFilterData);
   const [usedFilter, setUsedFilter] = useState<number>(0);
-  const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpen);
+  const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpenData);
 
   const handleOpenItem = (type: string) => {
     setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
   };
 
+  useEffect(() => {
+    const initialData = data ? JSON.parse(data as string) : initialFilterData;
+    setFilterData(initialData);
+  }, []);
+
   // Make & Model Props change
-  const handleMakeModalChange = (type: string, item: ItemDataProps) => {
-    if (type == "models") {
+  const handleMakeModalChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    if (type != undefined && type == "models") {
       setFilterData({ ...filterData, ["selectedModelItem"]: item });
     } else {
       setFilterData({ ...filterData, ["selectedMakeItem"]: item });
@@ -71,7 +77,7 @@ const CarSearchScreen = () => {
   };
 
   // Body Styles props change
-  const handleBodyStyleChange = (item: ItemDataProps | number) => {
+  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
     if (typeof item == "number") {
       setFilterData({ ...filterData, ["carDoors"]: item });
     } else {
@@ -96,20 +102,16 @@ const CarSearchScreen = () => {
 
   //
   useEffect(() => {
-    const makeModel =
-      filterData.selectedMakeItem != undefined ||
-      filterData.selectedModelItem != undefined
-        ? 1
-        : 0;
-    const priceRange =
-      filterData.rangeValue.high != 5000000 || filterData.rangeValue.low != 0
-        ? 1
-        : 0;
-    const bodyStyle =
-      filterData.carDoors != 0 || filterData.selectedBodyItem != undefined
-        ? 1
-        : 0;
-    setUsedFilter(makeModel + priceRange + bodyStyle);
+    const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
+    const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
+    const rangeHigh = filterData.rangeValue.high != 5000000 ? 0.5 : 0;
+    const rangeLow = filterData.rangeValue.low != 0 ? 0.5 : 0;
+    const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
+    const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
+    const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
+    setUsedFilter(
+      makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount
+    );
   }, [filterData]);
 
   //
@@ -149,7 +151,7 @@ const CarSearchScreen = () => {
               <TextInput
                 className="flex-1"
                 placeholder="Search..."
-                underlineColorAndroid="transparent"
+                // underlineColorAndroid="transparent"
                 autoFocus={true}
               />
             </View>
@@ -210,53 +212,54 @@ const CarSearchScreen = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View
-            className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+          <BottomSheetScrollView
+            className={`pb-4 bg-[${Colors.backgroundQuaternary}]`}
           >
-            <OpenCloseItem
-              title="Make & Model"
-              onPress={() => handleOpenItem("makeModel")}
-            />
-            {itemIsOpen.makeModel && (
-              <MakeModelsSearch
-                selectedModelItem={filterData.selectedModelItem}
-                selectedMakeItem={filterData.selectedMakeItem}
-                onChange={handleMakeModalChange}
+            <View
+              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+            >
+              <OpenCloseItem
+                title="Make & Model"
+                onPress={() => handleOpenItem("makeModel")}
               />
-            )}
+              {itemIsOpen.makeModel && (
+                <MakeModelsSearch
+                  selectedModelItem={filterData.selectedModelItem}
+                  selectedMakeItem={filterData.selectedMakeItem}
+                  onChange={handleMakeModalChange}
+                />
+              )}
 
-            {/* Price Range */}
-            <OpenCloseItem
-              title="Price Range"
-              onPress={() => handleOpenItem("priceRange")}
-            />
-            <View className="z-20">
-              {itemIsOpen.priceRange && (
-                <PriceRangeSearch
-                  style={{ zIndex: 30 }}
-                  rangeValue={filterData.rangeValue}
-                  onValueChange={handlePriceRangeChange}
+              {/* Price Range */}
+              <OpenCloseItem
+                title="Price Range"
+                onPress={() => handleOpenItem("priceRange")}
+              />
+              <View className="z-20">
+                {itemIsOpen.priceRange && (
+                  <PriceRangeSearch
+                    style={{ zIndex: 30 }}
+                    rangeValue={filterData.rangeValue}
+                    onValueChange={handlePriceRangeChange}
+                  />
+                )}
+              </View>
+
+              {/* Body Styles */}
+              <OpenCloseItem
+                title="Body Styles"
+                onPress={() => handleOpenItem("bodyStyle")}
+              />
+              {itemIsOpen.bodyStyle && (
+                <BodyStylesSearch
+                  selectedItem={filterData.selectedBodyItem}
+                  carDoors={filterData.carDoors}
+                  onBodyValueChange={handleBodyStyleChange}
                 />
               )}
             </View>
-
-            {/* Body Styles */}
-            <OpenCloseItem
-              title="Body Styles"
-              onPress={() => handleOpenItem("bodyStyle")}
-            />
-            {itemIsOpen.bodyStyle && (
-              <BodyStylesSearch
-                selectedItem={filterData.selectedBodyItem}
-                carDoors={filterData.carDoors}
-                onBodyValueChange={handleBodyStyleChange}
-              />
-            )}
-          </View>
-          <View
-            style={{ bottom: Platform.OS == "ios" ? 40 : 30 }}
-            className="px-4 flex-row mt-4 gap-3 absolute self-center"
-          >
+          </BottomSheetScrollView>
+          <View className="px-4 py-5 flex-row gap-3 self-center">
             <View className="flex-1">
               <CustomButton onPress={() => {}} title={"Search"} />
             </View>

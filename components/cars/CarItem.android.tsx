@@ -14,9 +14,12 @@ import Car from "@/models/car.model";
 export default function CarItem({
   car,
   onPress,
+  className = "",
 }: {
   car: Car;
   onPress: () => void;
+  imgHeight?: number;
+  className?: any;
 }) {
   const [isLiked, setIsLiked] = useState(false);
 
@@ -25,7 +28,10 @@ export default function CarItem({
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => onPress()}>
+    <TouchableWithoutFeedback
+      className={`${className}`}
+      onPress={() => onPress()}
+    >
       <View
         style={{
           shadowColor: "#000",
