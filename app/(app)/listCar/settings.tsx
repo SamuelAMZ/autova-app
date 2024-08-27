@@ -12,6 +12,8 @@ import {
   ArrowLeft,
   ArrowRight2,
   InfoCircle,
+  Setting2,
+  Trash,
 } from "iconsax-react-native";
 import { Image } from "react-native";
 import { router } from "expo-router";
@@ -27,14 +29,24 @@ import { LangageData } from "@/constants/data";
 export default function Settings() {
   const [isLogout, setIsLogout] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [changeNumber, setChangeNumber] = useState(false);
 
   const [ModalVisible, setModalVisible] = useState(false);
 
   const snapPoints = useMemo(() => ["55%", "60%", "90%"], []);
-  const snapPointLangage = useMemo(() => ["25%", "35%","55%"], []);
+  const snapPointLangage = useMemo(() => ["25%", "35%", "55%"], []);
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
   };
+
+  const handleChange = () => {
+    setChangeNumber(true);
+  };
+
+  const closeChange = () => {
+    setChangeNumber(false);
+  };
+
   const handleCloseModal = () => {
     setIsModalVisible(false);
   };
@@ -69,9 +81,23 @@ export default function Settings() {
             Security
           </ThemedText>
           <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
+            <TouchableOpacity onPress={handleChange}>
+              <View className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <TouchableOpacity
+                    className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}>
+                    <ArrangeHorizontal size="18" color={Colors.textPrimary} />
+                  </TouchableOpacity>
+                  <ThemedText className="text-[#1D2939] text-[14px] capitalize">
+                    Change phone number
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={handlePresentModalPress}
-              className="px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+              className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
               <View className="flex items-center flex-row gap-[0.5rem]">
                 <Image
                   source={require("@/assets/code.png")}
@@ -92,6 +118,20 @@ export default function Settings() {
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
                     Change langage
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <TouchableOpacity
+                    className={`justify-center items-center w-[30] h-[30] bg-[red] rounded-3xl`}>
+                    <Trash size="18" color={Colors.textPrimary} />
+                  </TouchableOpacity>
+                  <ThemedText className="text-[#1D2939] text-[14px] capitalize">
+                    Delete account
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
@@ -134,7 +174,10 @@ export default function Settings() {
                   onPress={() => handleSelect(item.name)}
                   className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
                   <View className="flex flex-row gap-[12px] items-center">
-                    <Image  source={item.image} style={{ width: 30, height: 30 }} />
+                    <Image
+                      source={item.image}
+                      style={{ width: 30, height: 30 }}
+                    />
                     <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                       {item.name}
                     </ThemedText>
@@ -149,6 +192,50 @@ export default function Settings() {
                   )}
                 </TouchableOpacity>
               ))}
+            </View>
+          </View>
+        </CustomBottomSheetModal>
+
+        <CustomBottomSheetModal
+          isVisible={changeNumber}
+          onClose={closeChange}
+          snapPoints={snapPointLangage}
+          index={Platform.OS === "ios" ? 0 : 1}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+            }}
+            className="w-full px-[4%] ">
+            <View className="pt-[1rem] flex-row justify-between items-center w-full">
+              <ThemedText
+                style={{
+                  fontFamily: "SpaceGrotesk_600SemiBold",
+                }}
+                className="text-[20px] text-[#000000]">
+                Change phone number
+              </ThemedText>
+              <TouchableOpacity onPress={closeChange}>
+                <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+                  <AntDesign name="close" size={16} color="#3D3D3D" />
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <View className="flex justify-center gap-[26px] pt-[36px] w-full">
+              <View className="flex gap-4 w-full">
+                <TextInput
+                  placeholder="Enter new phone number"
+                  keyboardType="numeric"
+                  placeholderTextColor={Colors.textSecondary}
+                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                />
+                <CustomButton
+                  title="Update"
+                  textColor={Colors.textPrimary}
+                  onPress={() => {}}
+                />
+              </View>
             </View>
           </View>
         </CustomBottomSheetModal>

@@ -14,7 +14,7 @@ import Car from "@/models/car.model";
 export default function CarItem({
   car,
   onPress,
-  className = "",
+  className,
 }: {
   car: Car;
   onPress: () => void;
@@ -27,6 +27,7 @@ export default function CarItem({
     setIsLiked(!isLiked);
   };
 
+  console.log(className, "className");
   return (
     <TouchableWithoutFeedback
       className={`${className}`}
