@@ -52,9 +52,9 @@ export default function Model() {
             style={{ flex: 1 }}
             keyboardVerticalOffset={110}
           >
-            <View className="relative flex-1 flex-row  items-center justify-between bg-[#7878801F] border border-[#D0D5DD] py-[12px] pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
+            <View className="relative flex-1 flex-row  items-center justify-between bg-[#7878801F] border border-[#D0D5DD]  pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
               <TextInput
-                className=" w-full"
+                className=" w-full py-[13px]"
                 placeholder="Search a model"
                 placeholderTextColor="#1D2939"
               />
