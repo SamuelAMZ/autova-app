@@ -8,8 +8,8 @@ const Thumb = ({ name }: { name: string }) => {
 
 const styles = StyleSheet.create({
   root: {
-    width: 24,
-    height: 24,
+    width: 28,
+    height: 28,
     borderRadius: 16,
     backgroundColor: colors.background,
     borderWidth: 3,

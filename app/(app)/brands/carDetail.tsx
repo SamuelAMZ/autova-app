@@ -113,7 +113,6 @@ export default function CarDetail() {
           const elemHeight = Math.floor(
             +(height / Math.floor(Math.abs(extractLastDigits(+height))))
           );
-          // console.log(height, "height");
           setSelectedElementHeightValue(elemHeight > 40 ? elemHeight : 100);
         });
       } else {

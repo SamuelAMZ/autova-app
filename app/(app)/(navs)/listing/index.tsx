@@ -104,22 +104,19 @@ import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
 import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
 import { AntDesign } from "@expo/vector-icons";
+import {
+  defaultRangeHighValue,
+  defaultRangeLowValue,
+  initialFilterData,
+} from "@/constants";
+
+const initialItemIsOpen = {
+  makeModel: true,
+  priceRange: true,
+  bodyStyle: true,
+};
 
 export default function MyListing() {
-  const initialFilterData = {
-    selectedMakeItem: undefined,
-    selectedModelItem: undefined,
-    selectedBodyItem: undefined,
-    rangeValue: { low: 0, high: 5000000 },
-    carDoors: 0,
-  };
-
-  const initialItemIsOpen = {
-    makeModel: true,
-    priceRange: true,
-    bodyStyle: true,
-  };
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
   const [filterData, setFilterData] =
@@ -177,20 +174,18 @@ export default function MyListing() {
 
   //
   useEffect(() => {
-    const makeModel =
-      filterData.selectedMakeItem != undefined ||
-      filterData.selectedModelItem != undefined
-        ? 1
-        : 0;
-    const priceRange =
-      filterData.rangeValue.high != 5000000 || filterData.rangeValue.low != 0
-        ? 1
-        : 0;
-    const bodyStyle =
-      filterData.carDoors != 0 || filterData.selectedBodyItem != undefined
-        ? 1
-        : 0;
-    setUsedFilter(makeModel + priceRange + bodyStyle);
+    const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
+    const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
+    const rangeHigh =
+      filterData.rangeValue.high != defaultRangeHighValue ? 0.5 : 0;
+    const rangeLow =
+      filterData.rangeValue.low != defaultRangeLowValue ? 0.5 : 0;
+    const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
+    const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
+    const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
+    setUsedFilter(
+      makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount
+    );
   }, [filterData]);
 
   return (

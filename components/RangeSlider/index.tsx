@@ -5,6 +5,7 @@ import Rail from "./Rail";
 import RailSelected from "./RailSelected";
 import Label from "./Label";
 import Notch from "./Notch";
+import { defaultRangeStepValue } from "@/constants";
 
 const RangeSlider = ({
   from,
@@ -58,7 +59,7 @@ const RangeSlider = ({
       max={to}
       low={renderLow}
       high={renderHigh}
-      step={1}
+      step={defaultRangeStepValue}
       floatingLabel={true}
       renderThumb={renderThumb}
       renderRail={renderRail}

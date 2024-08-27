@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Colors from "@/constants/Colors";
 import ClearFilter from "./clearFilter";
 import { defaultRangeHighValue, defaultRangeLowValue } from "@/constants";
+import { thousandSeparator } from "@/constants/utils";
 
 const PriceRangeSearch = ({
   onValueChange,
@@ -15,6 +16,7 @@ const PriceRangeSearch = ({
 }) => {
   const [lowValue, setLowValue] = useState(rangeValue.low);
   const [highValue, setHighValue] = useState(rangeValue.high);
+  const [isHighInputFocused, setIsHighInputFocused] = useState<boolean>(false);
 
   const handleValueChange = (low: number, high: number) => {
     onValueChange(low, high);
@@ -40,7 +42,9 @@ const PriceRangeSearch = ({
     setHighValue(rangeValue.high);
   }, [rangeValue.high]);
 
-  const isSelected = rangeValue.high != 5000000 || rangeValue.low != 0;
+  const isSelected =
+    rangeValue.high != defaultRangeHighValue ||
+    rangeValue.low != defaultRangeLowValue;
 
   return (
     <View
@@ -55,8 +59,8 @@ const PriceRangeSearch = ({
         low={rangeValue.low}
         high={rangeValue.high}
         onValueChange={handleValueChange}
-        from={0}
-        to={5000000}
+        from={defaultRangeLowValue}
+        to={defaultRangeHighValue}
       />
       <View className="w-full flex-row justify-between my-4">
         <View className="w-[45%] border border-[#D0D5DD] rounded-[80px] h-[33px] items-center justify-center">
@@ -70,8 +74,16 @@ const PriceRangeSearch = ({
         <View className="w-[45%] border border-[#D0D5DD] rounded-[80px] h-[33px] items-center justify-center">
           <TextInput
             keyboardType="numeric"
-            value={highValue.toString()}
+            value={
+              highValue >= defaultRangeHighValue && !isHighInputFocused
+                ? thousandSeparator(highValue) + "+"
+                : !isHighInputFocused
+                ? thousandSeparator(highValue)
+                : highValue.toString()
+            }
             className="w-full text-center h-full"
+            onFocus={() => setIsHighInputFocused(true)}
+            onBlur={() => setIsHighInputFocused(!isHighInputFocused)}
             onChangeText={(value) => setHighValue(Number(value))}
           />
         </View>

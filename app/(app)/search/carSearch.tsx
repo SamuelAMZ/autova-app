@@ -1,14 +1,13 @@
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   ArrowDown2,
   ArrowLeft,
   SearchNormal,
   Setting5,
 } from "iconsax-react-native";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
-  Platform,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -26,10 +25,12 @@ import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
 import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import Colors from "@/constants/Colors";
 import CustomButton from "@/components/CustomButton";
-import { initialFilterData } from "@/constants";
+import {
+  defaultRangeHighValue,
+  defaultRangeLowValue,
+  initialFilterData,
+} from "@/constants";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { CommonActions } from "@react-navigation/native";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -38,13 +39,13 @@ const initialItemIsOpenData = {
 };
 
 const CarSearchScreen = () => {
-  const navigation = useNavigation();
+  const textIinputRef = useRef(null);
   const { data } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
   const [filterData, setFilterData] =
     useState<FilterDataProps>(initialFilterData);
-  const [usedFilter, setUsedFilter] = useState<number>(0);
+  const [usedFilter, setUsedFilter] = useState<number>();
   const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpenData);
 
   const handleOpenItem = (type: string) => {
@@ -104,14 +105,16 @@ const CarSearchScreen = () => {
   useEffect(() => {
     const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
     const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
-    const rangeHigh = filterData.rangeValue.high != 5000000 ? 0.5 : 0;
-    const rangeLow = filterData.rangeValue.low != 0 ? 0.5 : 0;
+    const rangeHigh =
+      filterData.rangeValue.high != defaultRangeHighValue ? 0.5 : 0;
+    const rangeLow =
+      filterData.rangeValue.low != defaultRangeLowValue ? 0.5 : 0;
     const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
     const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
     const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
-    setUsedFilter(
-      makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount
-    );
+    const count =
+      makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount;
+    setUsedFilter(count);
   }, [filterData]);
 
   //
@@ -149,10 +152,10 @@ const CarSearchScreen = () => {
             >
               <SearchNormal color={Colors.textQuinary} />
               <TextInput
+                editable
                 className="flex-1"
                 placeholder="Search..."
-                // underlineColorAndroid="transparent"
-                autoFocus={true}
+                ref={textIinputRef}
               />
             </View>
             <TouchableOpacity
@@ -160,7 +163,7 @@ const CarSearchScreen = () => {
               className={`justify-center items-center border h-[48px] w-[48px] border-[${Colors.borderPrimary}] rounded-xl relative`}
             >
               <Setting5 color={Colors.textQuinary} />
-              {usedFilter != 0 && (
+              {usedFilter != 0 && usedFilter != undefined && (
                 <View
                   className={`absolute bg-[${Colors.background}] h-[24] w-[25] rounded-2xl top-[-8] right-[-8] items-center justify-center`}
                 >

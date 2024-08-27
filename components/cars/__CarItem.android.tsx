@@ -27,7 +27,6 @@ export default function CarItem({
     setIsLiked(!isLiked);
   };
 
-  console.log(className, "className");
   return (
     <TouchableWithoutFeedback
       className={`${className}`}
