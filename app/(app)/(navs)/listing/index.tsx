@@ -247,11 +247,6 @@ export default function MyListing() {
             </TouchableOpacity>
           </View>
           <View className="flex items-start justify-start gap-[20px] w-full pb-[80px]">
-            <ThemedText
-              className="text-[20px] text-[#101828] "
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              My Listings
-            </ThemedText>
             <FlatList
               className="w-full"
               data={[{}, {}, {}]}

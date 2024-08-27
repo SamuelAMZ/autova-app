@@ -58,7 +58,10 @@ export default function CarHome({
         <Animated.View>
           <TouchableOpacity className="mx-[5px]" onPress={() => onPress()} key={index}>
             <View
-              style={styles.card}
+              style={[
+                styles.card,
+                index === 0 && { marginLeft: 0 },
+              ]}
               className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
               <View className="relative w-full">
                 <Image
@@ -66,6 +69,7 @@ export default function CarHome({
                   style={{
                     borderRadius: 10,
                     width: "100%",
+                    
                   }}
                   className="aspect-auto"
                 />
@@ -99,7 +103,7 @@ export default function CarHome({
                       {item.year}
                     </ThemedText>
                   </View>
-                  <ThemedText className="text-[#344054] font-[500] text-[14px]">
+                  <ThemedText className="text-[#344054] font-[500] text-[13px]">
                     {item.label}
                   </ThemedText>
                 </View>
@@ -112,8 +116,8 @@ export default function CarHome({
   };
 
   return (
-    <View className="flex ">
-      <View className="flex-1 flex-row justify-between items-end ">
+    <View className="flex gap-[10px] ">
+      <View className="flex-1 flex-row justify-between items-end  ">
         <ThemedText
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
@@ -131,10 +135,13 @@ export default function CarHome({
         ref={ref}
         {...baseOptions}
         style={{
-          width: width,
+          width: width ,
+          justifyContent:'flex-start',
+          paddingLeft: 0,
+          marginLeft: 0
         }}
         height={330}
-        width={width * 0.93}
+        width={width * 0.86}
         panGestureHandlerProps={{
           activeOffsetX: [-10, 10],
         }}
@@ -143,8 +150,8 @@ export default function CarHome({
         data={CarData}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.9,
-          parallaxScrollingOffset: 50,
+          parallaxScrollingScale: 1,
+          parallaxScrollingOffset: 5,
         }}
         renderItem={renderItem}
       />

@@ -1,5 +1,13 @@
 import ThemedText from "@/components/ThemedText";
-import { Add, ArrowRight2, Camera, Car, Setting2 } from "iconsax-react-native";
+import {
+  Add,
+  ArrowRight2,
+  Call,
+  Camera,
+  Car,
+  Setting2,
+  Whatsapp,
+} from "iconsax-react-native";
 import React, { useState } from "react";
 import {
   View,
@@ -92,7 +100,7 @@ const AccountPage = () => {
               </ThemedText>
             </View>
           </View>
-          
+
           <View className="flex flex-col gap-[1.25rem]">
             <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px] mt-[10px]">
               <TouchableOpacity
@@ -102,7 +110,6 @@ const AccountPage = () => {
                 className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    
                     className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
                     <Car size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
@@ -110,6 +117,42 @@ const AccountPage = () => {
                     className="text-[#1D2939] text-[14px] capitalize"
                     style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
                     Listing car
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </TouchableOpacity>
+            </View>
+            <ThemedText
+              className="text-[1.25rem]  text-[#101828]"
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              Contact info
+            </ThemedText>
+
+            <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
+              <TouchableOpacity className=" border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <TouchableOpacity
+                    className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}>
+                    <Call size="18" color={Colors.textPrimary} />
+                  </TouchableOpacity>
+                  <ThemedText
+                    className="text-[#1D2939] text-[14px] capitalize"
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+                    Phone number
+                  </ThemedText>
+                </View>
+                <ArrowRight2 size="24" color="#667085" />
+              </TouchableOpacity>
+              <TouchableOpacity className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                <View className="flex items-center flex-row gap-[0.5rem]">
+                  <TouchableOpacity
+                    className={`justify-center items-center w-[30] h-[30] bg-[#799418] rounded-3xl`}>
+                    <Whatsapp size="18" color={Colors.textPrimary} />
+                  </TouchableOpacity>
+                  <ThemedText
+                    className="text-[#1D2939] text-[14px] "
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+                    Whatsapp number
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
