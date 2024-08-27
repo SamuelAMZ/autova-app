@@ -1,5 +1,11 @@
 import React from "react";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
@@ -43,22 +49,28 @@ export default function Engine() {
             }}
           />
 
-          <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-            <TextInput
-              className="flex-1 py-[12px] px-[20px]"
-              placeholder="Enter engine capacity"
-              placeholderTextColor="#1D2939"
-            />
-            <View className="h-full w-[1px] bg-[#D0D5DD]" />
-            <View className="p-[12px]">
-              <ThemedText
-                className="text-[17px]  font-[700] text-[#101828]"
-                style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-              >
-                CC
-              </ThemedText>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : null}
+            // style={{ flex: 1 }}
+            keyboardVerticalOffset={110}
+          >
+            <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
+              <TextInput
+                className="flex-1 py-[12px] px-[20px]"
+                placeholder="Enter engine capacity"
+                placeholderTextColor="#1D2939"
+              />
+              <View className="h-full w-[1px] bg-[#D0D5DD]" />
+              <View className="p-[12px]">
+                <ThemedText
+                  className="text-[17px]  font-[700] text-[#101828]"
+                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                >
+                  CC
+                </ThemedText>
+              </View>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </View>
 
         <View

@@ -32,6 +32,8 @@ export default function CarHome({
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const baseOptions = isVertical
     ? ({
@@ -51,10 +53,7 @@ export default function CarHome({
           <BrandCar onPress={onPress} car={item} className="mx-[5px]" />
           {/* <TouchableOpacity className="mx-[5px]" onPress={() => onPress()} key={index}>
             <View
-              style={[
-                styles.card,
-                index === 0 && { marginLeft: 0 },
-              ]}
+              style={[styles.card, index === 0 && { marginLeft: 0 }]}
               className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
               <View className="relative w-full">
                 <Image
@@ -62,7 +61,6 @@ export default function CarHome({
                   style={{
                     borderRadius: 10,
                     width: "100%",
-                    
                   }}
                   className="aspect-auto"
                 />
@@ -115,8 +113,7 @@ export default function CarHome({
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
           }}
-          className="font-semibold text-[18px]"
-        >
+          className="font-semibold text-[18px]">
           Featured Dealers
         </ThemedText>
         <TouchableOpacity>
@@ -131,7 +128,10 @@ export default function CarHome({
         style={{
           width: width,
           justifyContent: "flex-start",
+          width: width,
+          justifyContent: "flex-start",
           paddingLeft: 0,
+          marginLeft: 0,
           marginLeft: 0,
         }}
         height={330}
@@ -148,6 +148,7 @@ export default function CarHome({
           parallaxScrollingOffset: 5,
         }}
         renderItem={renderItem}
+        onSnapToItem={(index) => setCurrentIndex(index)}
       />
     </View>
   );

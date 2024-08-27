@@ -33,8 +33,8 @@ export default function Settings() {
 
   const [ModalVisible, setModalVisible] = useState(false);
 
-  const snapPoints = useMemo(() => ["55%", "60%", "90%"], []);
-  const snapPointLangage = useMemo(() => ["25%", "35%", "55%"], []);
+  const snapPoints = useMemo(() => [ "60%", "90%"], []);
+  const snapPointLangage = useMemo(() => [ "40%", "55%"], []);
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
   };

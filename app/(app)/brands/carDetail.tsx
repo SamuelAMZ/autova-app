@@ -320,11 +320,11 @@ export default function CarDetail() {
                   </View>
 
                   <RelatedCar />
-                  <View
+                  {/* <View
                     style={{
                       height: +selectedElmHeight,
                     }}
-                  ></View>
+                  ></View> */}
                 </View>
               </ScrollView>
             </View>

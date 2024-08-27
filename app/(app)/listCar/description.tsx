@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,29 @@ import ListingCarHeader from "@/components/ListingCarHeader";
 
 export default function Description() {
   const [text, setText] = useState("");
+
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <>
       <HeaderListing progress={11 / 14}>
@@ -24,7 +47,7 @@ export default function Description() {
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
-        <View>
+        <View className="flex-1 gap-[30px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
@@ -40,15 +63,18 @@ export default function Description() {
             </ThemedText>
           </View>
 
-          <Image
-            source={require("@/assets/comment.png")}
-            style={{
-              width: 150,
-              height: 150,
-              alignSelf: "center",
-              marginVertical: 30,
-            }}
-          />
+          {isKeyboardVisible ? (
+            ""
+          ) : (
+            <Image
+              source={require("@/assets/comment.png")}
+              style={{
+                width: 150,
+                height: 150,
+                alignSelf: "center",
+              }}
+            />
+          )}
 
           <TextArea text={text} setText={setText} />
         </View>
