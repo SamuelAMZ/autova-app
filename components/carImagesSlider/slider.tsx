@@ -33,7 +33,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const carouselRef = useRef<any>(null);
   const zoomImageRef = useRef<any>(null);
 
-  const [loop, setLoop] = useState<boolean>(false);
+  const [loop, setLoop] = useState<boolean>(true);
   const [autoPlay, setAutoPlay] = useState<boolean>(true);
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -92,6 +92,10 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         height={263}
         data={Slides}
         scrollAnimationDuration={1000}
+        // withAnimation={{
+        //   type: "timing",
+        //   config: {},
+        // }}
         defaultIndex={index}
         onSnapToItem={(index) => setIndex(index)}
         onProgressChange={() => {

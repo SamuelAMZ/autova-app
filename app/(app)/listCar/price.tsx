@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   FlatList,
+  Keyboard,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { ArrowDown2 } from "iconsax-react-native";
@@ -15,6 +16,8 @@ import HeaderListing from "@/components/HeaderListing";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { useKeyboardState } from "@/hooks/useKeyboardState";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 export function MyCheckbox({
   onPress,
@@ -39,6 +42,8 @@ export default function Price() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
+  const { isKeyboardVisible } = useKeyboardState();
+
   const currencies = ["USD", "EUR"];
 
   const toggleDropdown = () => {
@@ -55,92 +60,105 @@ export default function Price() {
       <HeaderListing progress={12 / 14}>
         <ListingCarHeader />
       </HeaderListing>
-      <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}
-      >
-        <View>
-          <View className="flex items-start gap-[12px]">
-            <ThemedText
-              className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
-              Price
-            </ThemedText>
-            <ThemedText
-              className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-            >
-              What is the price of your car
-            </ThemedText>
-          </View>
-          <Image
-            source={require("@/assets/money.png")}
-            style={{
-              width: 150,
-              height: 150,
-              alignSelf: "center",
-              marginVertical: 30,
-            }}
-          />
-          <View className="flex gap-[12px]">
-            <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-              <TouchableOpacity
-                onPress={toggleDropdown}
-                className="p-[12px] flex flex-row gap-[12px] items-center"
-              >
+      <View className="flex-1 px-[16px] justify-between  bg-[#fff] h-[100%] ">
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
+          className="flex-1"
+        >
+          <View
+            className="flex bg-[#fff] justify-between h-[80%] "
+            style={{ paddingTop: 30, paddingBottom: 60 }}
+          >
+            <View className="flex-1 gap-[30px]">
+              <View className="flex items-start gap-[12px]">
                 <ThemedText
-                  className="text-[15px]  font-[700] text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                  className="text-[#101828] text-[20px]"
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                 >
-                  {selectedCurrency}
+                  Price
                 </ThemedText>
-                <ArrowDown2 size="20" color="#000" />
-              </TouchableOpacity>
-              <View className="h-full w-[1px] bg-[#D0D5DD]" />
-              <TextInput
-                className="flex-1 py-[12px] px-[20px]"
-                placeholder="1000"
-                placeholderTextColor="#98A2B3"
-                keyboardType="decimal-pad"
-              />
-            </View>
-            {isDropdownVisible && (
-              <View className="bg-white border border-[#D0D5DD] rounded-[12px]  ">
-                <FlatList
-                  data={currencies}
-                  renderItem={({ item }) => (
+                <ThemedText
+                  className="text-[#344054] text-[16px]"
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  What is the price of your car
+                </ThemedText>
+              </View>
+              {isKeyboardVisible ? (
+                ""
+              ) : (
+                <Image
+                  source={require("@/assets/money.png")}
+                  style={{
+                    width: 150,
+                    height: 150,
+                    alignSelf: "center",
+                  }}
+                />
+              )}
+              <View className="flex gap-[12px]">
+                <TouchableWithoutFeedback onPress={() => {}}>
+                  <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
                     <TouchableOpacity
-                      className="p-[12px]"
-                      onPress={() => handleCurrencySelect(item)}
+                      onPress={toggleDropdown}
+                      className="p-[12px] flex flex-row gap-[12px] items-center"
                     >
                       <ThemedText
-                        className="text-[15px] font-[500] text-[#101828]"
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                        className="text-[15px]  font-[700] text-[#101828]"
+                        style={{ fontFamily: "SpaceGrotesk_700Bold" }}
                       >
-                        {item}
+                        {selectedCurrency}
                       </ThemedText>
+                      <ArrowDown2 size="20" color="#000" />
                     </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item}
-                />
+                    <View className="h-full w-[1px] bg-[#D0D5DD]" />
+                    <TextInput
+                      className="flex-1 py-[12px] px-[20px]"
+                      placeholder="1000"
+                      placeholderTextColor="#98A2B3"
+                      keyboardType="decimal-pad"
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
+                {isDropdownVisible && (
+                  <View className="bg-white border border-[#D0D5DD] rounded-[12px]  ">
+                    <FlatList
+                      data={currencies}
+                      renderItem={({ item }) => (
+                        <TouchableOpacity
+                          className="p-[12px]"
+                          onPress={() => handleCurrencySelect(item)}
+                        >
+                          <ThemedText
+                            className="text-[15px] font-[500] text-[#101828]"
+                            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                          >
+                            {item}
+                          </ThemedText>
+                        </TouchableOpacity>
+                      )}
+                      keyExtractor={(item) => item}
+                    />
+                  </View>
+                )}
+                <View className="flex flex-row gap-[8px] items-center">
+                  <MyCheckbox />
+                  <ThemedText
+                    className="text-[#344054] text-[16px]"
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                  >
+                    Negotiable
+                  </ThemedText>
+                </View>
               </View>
-            )}
-            <View className="flex flex-row gap-[8px] items-center">
-              <MyCheckbox />
-              <ThemedText
-                className="text-[#344054] text-[16px]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-              >
-                Negotiable
-              </ThemedText>
             </View>
           </View>
-        </View>
-
+        </TouchableWithoutFeedback>
         <View
           style={{
-            paddingBottom: 20,
+            paddingBottom: 40,
           }}
         >
           <TouchableOpacity

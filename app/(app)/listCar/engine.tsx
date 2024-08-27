@@ -1,13 +1,22 @@
 import React from "react";
-import { View, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { useKeyboardState } from "@/hooks/useKeyboardState";
 
 export default function Engine() {
+  const { isKeyboardVisible } = useKeyboardState();
+
   return (
     <>
       <HeaderListing progress={6 / 14}>
@@ -17,7 +26,7 @@ export default function Engine() {
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
-        <View>
+        <View className="flex-1 gap-[30px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
@@ -33,15 +42,18 @@ export default function Engine() {
             </ThemedText>
           </View>
 
-          <Image
-            source={require("@/assets/engine.png")}
-            style={{
-              width: 150,
-              height: 150,
-              alignSelf: "center",
-              marginVertical: 30,
-            }}
-          />
+          {isKeyboardVisible ? (
+            ""
+          ) : (
+            <Image
+              source={require("@/assets/engine.png")}
+              style={{
+                width: 150,
+                height: 150,
+                alignSelf: "center",
+              }}
+            />
+          )}
 
           <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
             <TextInput

@@ -237,6 +237,7 @@ export default function MyListing() {
               <TextInput
                 className="flex-1"
                 placeholder="Search..."
+                placeholderTextColor="#000"
                 // underlineColorAndroid="transparent"
               />
             </View>
@@ -256,7 +257,7 @@ export default function MyListing() {
           </View>
           <View className="flex items-start justify-start gap-[20px] w-full pb-[80px]">
             <FlatList
-              className="w-full"
+              className="w-full "
               data={[{}, {}, {}]}
               renderItem={({ index, item }) => (
                 <CarItem

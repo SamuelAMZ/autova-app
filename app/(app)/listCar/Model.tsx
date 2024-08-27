@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, TextInput, ScrollView } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { SearchNormal1 } from "iconsax-react-native";
 import { router } from "expo-router";
@@ -40,18 +47,22 @@ export default function Model() {
               Select the model for your car
             </ThemedText>
           </View>
-          <View className="relative">
-            <SearchNormal1
-              size="20"
-              color="#000"
-              style={{ position: "absolute", right: 20, top: 15 }}
-            />
-            <TextInput
-              className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
-              placeholder="Search a model"
-              placeholderTextColor="#1D2939"
-            />
-          </View>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : null}
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={110}
+          >
+            <View className="relative flex-1 flex-row  items-center justify-between bg-[#7878801F] border border-[#D0D5DD]  pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
+              <TextInput
+                className=" w-full py-[13px]"
+                placeholder="Search a model"
+                placeholderTextColor="#1D2939"
+              />
+              <View style={{ position: "absolute", top: "0", right: 13 }}>
+                <SearchNormal1 size="20" color="#000" />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
 
           <View className="flex gap-[20px]">
             <ThemedText
