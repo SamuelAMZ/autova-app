@@ -15,6 +15,7 @@ import HeaderListing from "@/components/HeaderListing";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { useKeyboardState } from "@/hooks/useKeyboardState";
 
 export function MyCheckbox({
   onPress,
@@ -39,6 +40,8 @@ export default function Price() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
+  const { isKeyboardVisible } = useKeyboardState();
+
   const currencies = ["USD", "EUR"];
 
   const toggleDropdown = () => {
@@ -59,7 +62,7 @@ export default function Price() {
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
-        <View>
+        <View className="flex-1 gap-[30px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
@@ -74,15 +77,18 @@ export default function Price() {
               What is the price of your car
             </ThemedText>
           </View>
-          <Image
-            source={require("@/assets/money.png")}
-            style={{
-              width: 150,
-              height: 150,
-              alignSelf: "center",
-              marginVertical: 30,
-            }}
-          />
+          {isKeyboardVisible ? (
+            ""
+          ) : (
+            <Image
+              source={require("@/assets/money.png")}
+              style={{
+                width: 150,
+                height: 150,
+                alignSelf: "center",
+              }}
+            />
+          )}
           <View className="flex gap-[12px]">
             <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
               <TouchableOpacity

@@ -1,19 +1,15 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { View, TouchableOpacity, TextInput } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Image } from "react-native";
 import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { useKeyboardState } from "@/hooks/useKeyboardState";
 
 export default function Mileage() {
+  const { isKeyboardVisible } = useKeyboardState();
   return (
     <>
       <HeaderListing progress={5 / 14}>
@@ -23,7 +19,7 @@ export default function Mileage() {
         className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
-        <View>
+        <View className="flex-1 gap-[30px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
@@ -39,38 +35,35 @@ export default function Mileage() {
             </ThemedText>
           </View>
 
-          <Image
-            source={require("@/assets/gauge.png")}
-            style={{
-              width: 150,
-              height: 150,
-              alignSelf: "center",
-              marginVertical: 30,
-            }}
-          />
+          {isKeyboardVisible ? (
+            ""
+          ) : (
+            <Image
+              source={require("@/assets/gauge.png")}
+              style={{
+                width: 150,
+                height: 150,
+                alignSelf: "center",
+              }}
+            />
+          )}
 
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : null}
-            // style={{ flex: 1 }}
-            keyboardVerticalOffset={110}
-          >
-            <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-              <TextInput
-                className="flex-1 py-[12px] px-[20px]"
-                placeholder="Enter mileage"
-                placeholderTextColor="#1D2939"
-              />
-              <View className="h-full w-[1px] bg-[#D0D5DD]" />
-              <View className="p-[12px]">
-                <ThemedText
-                  className="text-[17px]  font-[700] text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-                >
-                  KM
-                </ThemedText>
-              </View>
+          <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
+            <TextInput
+              className="flex-1 py-[12px] px-[20px]"
+              placeholder="Enter mileage"
+              placeholderTextColor="#1D2939"
+            />
+            <View className="h-full w-[1px] bg-[#D0D5DD]" />
+            <View className="p-[12px]">
+              <ThemedText
+                className="text-[17px]  font-[700] text-[#101828]"
+                style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+              >
+                KM
+              </ThemedText>
             </View>
-          </KeyboardAvoidingView>
+          </View>
         </View>
 
         <View
