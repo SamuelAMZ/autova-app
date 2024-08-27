@@ -1,10 +1,12 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   View,
   TouchableOpacity,
   TextInput,
   Pressable,
   Platform,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import {
@@ -35,10 +37,26 @@ export default function Settings() {
 
   const [snapPoints, setSnapPoints] = useState(["55%", "60%", "90%"]);
   const snapPointLangage = useMemo(() => ["25%", "35%", "55%"], []);
-  const [snapPointNumber, setNumber] =  useState(["25%", "35%", "55%"]);
+  const [snapPointNumber, setNumber] = useState(["25%", "35%", "55%"]);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => { setSnapPoints(["70%", "90%", "95%"]) ,setNumber(["35%", "50%", "75%"]) }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => resetSnapPoints()
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const handlePresentModalPress = () => {
     setIsModalVisible(true);
-    
   };
 
   const resetSnapPoints = () => {
@@ -46,7 +64,7 @@ export default function Settings() {
   };
 
   const resetSnapPointsNumber = () => {
-    setSnapPoints(["25%", "35%", "55%"]);
+    setNumber(["25%", "35%", "55%"]);
   };
 
   const handleChange = () => {
@@ -54,24 +72,24 @@ export default function Settings() {
   };
 
   const handleFocusInput = () => {
-    setSnapPoints(["60%", "85%", "90%"]);
+    setSnapPoints(["70%", "90%", "95%"]);
   };
 
   const handleFocusNumber = () => {
-    setNumber(["25%", "50%", "55%"]);
+    setNumber(["35%", "50%", "75%"]);
   };
 
   const handleBlurInput = () => {
-    resetSnapPoints(); 
+    resetSnapPoints();
   };
 
   const handleBlurNumber = () => {
-    resetSnapPointsNumber(); 
+    resetSnapPointsNumber();
   };
 
   const closeChange = () => {
     setChangeNumber(false);
-    resetSnapPointsNumber(); 
+    resetSnapPointsNumber();
   };
 
   const handleCloseModal = () => {
@@ -229,45 +247,49 @@ export default function Settings() {
           onClose={closeChange}
           snapPoints={snapPointNumber}
           index={Platform.OS === "ios" ? 0 : 1}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-            }}
-            className="w-full px-[4%] ">
-            <View className="pt-[1rem] flex-row justify-between items-center w-full">
-              <ThemedText
-                style={{
-                  fontFamily: "SpaceGrotesk_600SemiBold",
-                }}
-                className="text-[20px] text-[#000000]">
-                Change phone number
-              </ThemedText>
-              <TouchableOpacity onPress={closeChange}>
-                <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
-                  <AntDesign name="close" size={16} color="#3D3D3D" />
-                </View>
-              </TouchableOpacity>
-            </View>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+              }}
+              className="w-full px-[4%] ">
+              <View className="pt-[1rem] flex-row justify-between items-center w-full">
+                <ThemedText
+                  style={{
+                    fontFamily: "SpaceGrotesk_600SemiBold",
+                  }}
+                  className="text-[20px] text-[#000000]">
+                  Change phone number
+                </ThemedText>
+                <TouchableOpacity onPress={closeChange}>
+                  <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+                    <AntDesign name="close" size={16} color="#3D3D3D" />
+                  </View>
+                </TouchableOpacity>
+              </View>
 
-            <View className="flex justify-center gap-[26px] pt-[36px] w-full">
-              <View className="flex gap-4 w-full">
-                <TextInput
-                  placeholder="Enter new phone number"
-                  keyboardType="numeric"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onFocus={handleFocusNumber}
-                  onBlur={handleBlurNumber}
-                />
-                <CustomButton
-                  title="Update"
-                  textColor={Colors.textPrimary}
-                  onPress={() => {}}
-                />
+              <View className="flex justify-center gap-[26px] pt-[36px] w-full">
+                <View className="flex gap-4 w-full">
+                  <TextInput
+                    placeholder="Enter new phone number"
+                    keyboardType="numeric"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onFocus={handleFocusNumber}
+                    onBlur={handleBlurNumber}
+                  />
+                  <CustomButton
+                    title="Update"
+                    textColor={Colors.textPrimary}
+                    onPress={() => {}}
+                  />
+                </View>
               </View>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </CustomBottomSheetModal>
 
         <CustomBottomSheetModal
@@ -275,62 +297,66 @@ export default function Settings() {
           onClose={handleCloseModal}
           snapPoints={snapPoints}
           index={Platform.OS === "ios" ? 0 : 1}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-            }}
-            className="w-full px-[4%] ">
-            <View className="pt-[1rem] flex-row justify-between items-center w-full">
-              <ThemedText
-                style={{
-                  fontFamily: "SpaceGrotesk_600SemiBold",
-                }}
-                className="text-[20px] text-[#000000]">
-                Change Passcode
-              </ThemedText>
-              <TouchableOpacity onPress={handleCloseModal}>
-                <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
-                  <AntDesign name="close" size={16} color="#3D3D3D" />
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <View className="flex justify-center gap-[26px] pt-[36px] w-full">
-              <View className="flex gap-4 w-full">
-                <TextInput
-                  placeholder="Old Password"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onFocus={handleFocusInput}
-                  onBlur={handleBlurInput}
-                />
-                <TextInput
-                  placeholder="New Password"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onFocus={handleFocusInput}
-                  onBlur={handleBlurInput}
-                />
-                <TextInput
-                  placeholder="Confirm Password"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onFocus={handleFocusInput}
-                  onBlur={handleBlurInput}
-                />
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+              }}
+              className="w-full px-[4%] ">
+              <View className="pt-[1rem] flex-row justify-between items-center w-full">
                 <ThemedText
-                  className={`text-[${Colors.textSecondary}] text-[14px]`}>
-                  * Your password should be minimum 8 characters.
+                  style={{
+                    fontFamily: "SpaceGrotesk_600SemiBold",
+                  }}
+                  className="text-[20px] text-[#000000]">
+                  Change Passcode
                 </ThemedText>
-                <CustomButton
-                  title="Change"
-                  textColor={Colors.textPrimary}
-                  onPress={() => {}}
-                />
+                <TouchableOpacity onPress={handleCloseModal}>
+                  <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+                    <AntDesign name="close" size={16} color="#3D3D3D" />
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              <View className="flex justify-center gap-[26px] pt-[36px] w-full">
+                <View className="flex gap-4 w-full">
+                  <TextInput
+                    placeholder="Old Password"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onFocus={handleFocusInput}
+                    onBlur={handleBlurInput}
+                  />
+                  <TextInput
+                    placeholder="New Password"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onFocus={handleFocusInput}
+                    onBlur={handleBlurInput}
+                  />
+                  <TextInput
+                    placeholder="Confirm Password"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onFocus={handleFocusInput}
+                    onBlur={handleBlurInput}
+                  />
+                  <ThemedText
+                    className={`text-[${Colors.textSecondary}] text-[14px]`}>
+                    * Your password should be minimum 8 characters.
+                  </ThemedText>
+                  <CustomButton
+                    title="Change"
+                    textColor={Colors.textPrimary}
+                    onPress={() => {}}
+                  />
+                </View>
               </View>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </CustomBottomSheetModal>
         <TouchableOpacity
           onPress={handleLogout}

@@ -33,7 +33,7 @@ export default function CarHome({
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
   const [isLiked, setIsLiked] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const baseOptions = isVertical
     ? ({
@@ -128,10 +128,7 @@ export default function CarHome({
         style={{
           width: width,
           justifyContent: "flex-start",
-          width: width,
-          justifyContent: "flex-start",
           paddingLeft: 0,
-          marginLeft: 0,
           marginLeft: 0,
         }}
         height={330}
