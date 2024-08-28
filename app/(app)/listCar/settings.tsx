@@ -42,10 +42,13 @@ export default function Settings() {
   const [currentSelected, setCurrentSelected] = useState("");
 
   const changePhoneNumberSnapPoint = useMemo(
-    () => ["35%", "65%", "70%", "90%"],
+    () => ["34%", "35%", "65%", "70%", "90%"],
     []
   );
-  const changePasscodeSnapPoint = useMemo(() => ["55%", "60%", "90%"], []);
+  const changePasscodeSnapPoint = useMemo(
+    () => ["52%", "58%", "60%", "65%", "87%", "90%", "94%"],
+    []
+  );
   const snapPointLangage = useMemo(() => ["25%", "35%", "55%"], []);
 
   const handlePhoneNumberChange = () => {
@@ -257,8 +260,10 @@ export default function Settings() {
           index={
             activeSnapPoint === "changePhoneNumberSnapPoint"
               ? Platform.OS === "android"
-                ? 2
-                : 1
+                ? 3
+                : 2
+              : Platform.OS === "android"
+              ? 1
               : 0
           }
         >
@@ -316,8 +321,10 @@ export default function Settings() {
           index={
             activeSnapPoint === "changePasscodeSnapPoint"
               ? Platform.OS === "android"
-                ? 2
-                : 1
+                ? 6
+                : 4
+              : Platform.OS === "android"
+              ? 1
               : 0
           }
         >
