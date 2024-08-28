@@ -198,7 +198,7 @@ export default function Settings() {
           isVisible={changeLangageModalVisible}
           onClose={closeModal}
           snapPoints={snapPointLangage}
-          index={Platform.OS === "ios" ? 0 : 1}
+          index={Platform.OS === "ios" ? 1 : 1}
         >
           <View
             style={{
