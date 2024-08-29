@@ -27,10 +27,7 @@ import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
 
 import { loadBrands } from "@/utils/loadBrands";
-import {
-  BrandItemSkeletonFlatList,
-  AllBrandSkeletonFlatList,
-} from "@/components/skeleton/BrandItemSkeleton";
+import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -91,7 +88,14 @@ const HomePage = () => {
           {/* Brands Items */}
           {brandQuery.isLoading ? (
             <View className="w-full px-4">
-              <BrandItemSkeletonFlatList />
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={Array.from({ length: 10 })}
+                renderItem={() => <BrandItemSkeleton />}
+                ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
+              />
             </View>
           ) : (
             <View className="w-full px-4">
@@ -174,7 +178,13 @@ const HomePage = () => {
         </View>
 
         {brandQuery.isLoading ? (
-          <AllBrandSkeletonFlatList />
+          <FlatList
+            data={Array.from({ length: 8 })}
+            numColumns={4}
+            keyExtractor={(item, index) => "#" + index}
+            renderItem={() => <BrandItemSkeleton />}
+            ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
+          />
         ) : (
           <FlatList
             data={brandQuery?.data}

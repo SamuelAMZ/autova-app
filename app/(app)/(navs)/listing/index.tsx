@@ -110,6 +110,7 @@ import {
   initialFilterData,
 } from "@/constants";
 import CarItem from "@/components/cars/CarItem";
+import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -222,24 +223,36 @@ export default function MyListing() {
           </TouchableOpacity>
         </View>
 
-        <FlatList
-          className="px-[4%]"
-          data={CarData}
-          renderItem={({ item }) => (
-            <CarItem
-              car={item}
-              onPress={() => {
-                router.navigate({
-                  pathname: "/(app)/brands/carDetail",
-                });
-              }}
-            />
-          )}
-          ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-          scrollEnabled={false}
-          keyExtractor={(_, index) => index.toString()}
-          ListFooterComponent={() => <View style={{ height: 40 }} />}
-        />
+        {true ? (
+          <FlatList
+            className="px-[4%]"
+            data={Array.from({ length: 10 })}
+            renderItem={() => <CarItemSkeleton />}
+            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+            scrollEnabled={false}
+            keyExtractor={(_, index) => index.toString()}
+            ListFooterComponent={() => <View style={{ height: 40 }} />}
+          />
+        ) : (
+          <FlatList
+            className="px-[4%]"
+            data={CarData}
+            renderItem={({ item }) => (
+              <CarItem
+                car={item}
+                onPress={() => {
+                  router.navigate({
+                    pathname: "/(app)/brands/carDetail",
+                  });
+                }}
+              />
+            )}
+            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+            scrollEnabled={false}
+            keyExtractor={(_, index) => index.toString()}
+            ListFooterComponent={() => <View style={{ height: 40 }} />}
+          />
+        )}
       </ScrollView>
       <CustomBottomSheetModal
         isVisible={isModalVisible}

@@ -35,7 +35,7 @@ export default function CarItem({
               borderRadius: 10,
               // width: "100%",
             }}
-            className=" max-w-[3429px] h-[180px] aspect-auto w-full"
+            className=" max-w-[349px] h-[180px] aspect-auto w-full"
           />
           <TouchableOpacity
             onPress={handleLike}
