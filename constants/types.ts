@@ -20,3 +20,14 @@ interface FilterDataProps {
   rangeValue: RangeProps;
   carDoors: number;
 }
+export interface requestExtrasProps {
+  key: string;
+  value: string;
+}
+
+export interface requestProps {
+  data: any;
+  url: string;
+  isFileUpload?: boolean;
+  extras?: requestExtrasProps[];
+}

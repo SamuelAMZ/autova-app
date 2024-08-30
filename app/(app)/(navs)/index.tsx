@@ -1,5 +1,5 @@
-import { Notification, SearchNormal1 } from "iconsax-react-native";
-import React, { useMemo, useRef } from "react";
+import { SearchNormal1 } from "iconsax-react-native";
+import React, { useMemo } from "react";
 import {
   View,
   ScrollView,
@@ -12,9 +12,7 @@ import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 import BrandItem from "@/components/BrandItem";
-import CarItem from "@/components/cars/CarItem";
 import CarHome from "@/components/cars/CarHome";
-import FilterTag from "@/components/FilterTag";
 import ThemedText from "@/components/ThemedText";
 import SearchCard from "@/components/searchCard/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
@@ -24,6 +22,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
+import { useQuery } from "react-query";
+import postReq from "@/constants/postReq";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -38,17 +38,36 @@ const HomePage = () => {
     setIsModalVisible(false);
   };
 
+  // get table data
+  const loadBrands = async () => {
+    const result = await postReq({
+      data: JSON.stringify({ name: "" }),
+      url: "brand",
+    });
+    console.log(result);
+    if (result.status == 200) {
+      console.log(result.data);
+      return result.data;
+    } else {
+      console.log(result.data);
+    }
+  };
+
+  const query = useQuery({ queryKey: ["brand"], queryFn: loadBrands });
+
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
         style={{ paddingTop: insets.top + 10, paddingBottom: 20 }}
-        className="px-4 w-full flex-row items-center justify-between">
+        className="px-4 w-full flex-row items-center justify-between"
+      >
         <View className="items-center flex-row">
           <AppIcon height={36} />
         </View>
         <TouchableOpacity
           onPress={() => router.navigate("/(app)/search/carSearch")}
-          className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+          className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+        >
           <SearchNormal1 size="20" color={Colors.textPrimary} />
         </TouchableOpacity>
       </View>
@@ -62,7 +81,8 @@ const HomePage = () => {
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
               }}
-              className="font-semibold text-[18px]">
+              className="font-semibold text-[18px]"
+            >
               Featured Dealers
             </ThemedText>
             <TouchableOpacity onPress={handlePresentModalPress}>
@@ -85,20 +105,6 @@ const HomePage = () => {
               ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
             />
           </View>
-
-          {/* Filter tags */}
-         {/*  <View className="w-full px-4">
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={[{}, {}, {}, {}, {}, {}]}
-              renderItem={({ index, item }) => (
-                <FilterTag title="Title" active={index == 0} />
-              )}
-              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-            />
-          </View> */}
 
           {/* Car Items */}
           <FlatList
@@ -127,18 +133,21 @@ const HomePage = () => {
         isVisible={isModalVisible}
         onClose={handleCloseModal}
         snapPoints={snapPoints}
-        index={1}>
+        index={1}
+      >
         <View
           style={{
             paddingTop: 14,
             paddingBottom: 30,
           }}
-          className="w-full flex-row justify-between items-center px-4">
+          className="w-full flex-row justify-between items-center px-4"
+        >
           <ThemedText
             style={{
               fontFamily: "SpaceGrotesk_600SemiBold",
             }}
-            className="font-semibold text-[18px]">
+            className="font-semibold text-[18px]"
+          >
             Top Brands
           </ThemedText>
           <TouchableOpacity onPress={handleCloseModal}>
