@@ -22,6 +22,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import { router } from "expo-router";
 import Colors from "@/constants/Colors";
+import { AccountSkeleton } from "@/components/skeleton/AccountSkeleton";
 
 const AccountPage = () => {
   const [image, setImage] = useState("");
@@ -59,47 +60,51 @@ const AccountPage = () => {
       <CustomHeader />
       <ScrollView className="">
         <View className=" flex-1 px-[16px] py-[30px] gap-[30px]">
-          <View className="flex flex-row gap-[12px] items-center justify-start ">
-            <View className="relative">
-              <Image
-                source={image ? { uri: image } : require("@/assets/user.jpg")}
-                style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 100,
-                }}
-              />
-              <Pressable
-                onPress={pickImage}
-                className="bg-[#fff] p-[16px] rounded-full absolute"
-                style={{ left: 40, top: 35 }}
-              >
-                <View
-                  className={`bg-[${Colors.background}] p-[5px] rounded-full absolute`}
-                  style={{ left: 2, top: 2 }}
+          {false ? (
+            <AccountSkeleton />
+          ) : (
+            <View className="flex flex-row gap-[12px] items-center justify-start ">
+              <View className="relative">
+                <Image
+                  source={image ? { uri: image } : require("@/assets/user.jpg")}
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 100,
+                  }}
+                />
+                <Pressable
+                  onPress={pickImage}
+                  className="bg-[#fff] p-[16px] rounded-full absolute"
+                  style={{ left: 40, top: 35 }}
                 >
-                  <Camera
-                    className=" absolute"
-                    size={18}
-                    color="#fff"
-                    style={{ right: 0, bottom: 0 }}
-                  />
-                </View>
-              </Pressable>
-            </View>
+                  <View
+                    className={`bg-[${Colors.background}] p-[5px] rounded-full absolute`}
+                    style={{ left: 2, top: 2 }}
+                  >
+                    <Camera
+                      className=" absolute"
+                      size={18}
+                      color="#fff"
+                      style={{ right: 0, bottom: 0 }}
+                    />
+                  </View>
+                </Pressable>
+              </View>
 
-            <View className="flex ">
-              <ThemedText
-                className="text-[#101828] text-[18px]"
-                style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-              >
-                Omar Hassan
-              </ThemedText>
-              <ThemedText className="text-[#667085] text-[14px]">
-                omarhassan@carnext.com
-              </ThemedText>
+              <View className="flex ">
+                <ThemedText
+                  className="text-[#101828] text-[18px]"
+                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                >
+                  Omar Hassan
+                </ThemedText>
+                <ThemedText className="text-[#667085] text-[14px]">
+                  omarhassan@carnext.com
+                </ThemedText>
+              </View>
             </View>
-          </View>
+          )}
 
           <View className="flex flex-col gap-[1.25rem]">
             <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px] mt-[10px]">

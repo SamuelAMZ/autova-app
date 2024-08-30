@@ -1,21 +1,16 @@
 import {
   View,
-  Image,
-  StyleSheet,
   TouchableOpacity,
   Dimensions,
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
-import { Heart } from "iconsax-react-native";
 import { useRef, useState } from "react";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import Car from "@/models/car.model";
 import { CarData } from "@/constants/CarData";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
-import type { AnimateProps } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
-import { parallaxLayout } from "./parallax";
 import BrandCar from "./CarItem";
 import { CarItemSkeleton } from "../skeleton/CarItemSkeleton";
 
@@ -74,7 +69,7 @@ export default function CarHome({
           </ThemedText>
         </TouchableOpacity>
       </View>
-      {true ? (
+      {false ? (
         <Carousel
           ref={ref}
           {...baseOptions}
