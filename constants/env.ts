@@ -1,0 +1,5 @@
+const ENV = {
+  EXPO_PUBLIC_BACKEND_ENDPOIN: process.env.EXPO_PUBLIC_BACKEND_ENDPOIN,
+};
+
+export { ENV };

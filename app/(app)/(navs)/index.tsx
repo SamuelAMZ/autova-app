@@ -10,6 +10,7 @@ import {
 import AppIcon from "@/assets/icons/app-logo.svg";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useQuery } from "@tanstack/react-query";
 
 import BrandItem from "@/components/BrandItem";
 import CarHome from "@/components/cars/CarHome";
@@ -22,8 +23,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
-import { useQuery } from "react-query";
 import postReq from "@/constants/postReq";
+
+import { loadBrands } from "@/utils/loadBrands";
+import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -38,22 +41,11 @@ const HomePage = () => {
     setIsModalVisible(false);
   };
 
-  // get table data
-  const loadBrands = async () => {
-    const result = await postReq({
-      data: JSON.stringify({ name: "" }),
-      url: "brand",
-    });
-    console.log(result);
-    if (result.status == 200) {
-      console.log(result.data);
-      return result.data;
-    } else {
-      console.log(result.data);
-    }
-  };
-
-  const query = useQuery({ queryKey: ["brand"], queryFn: loadBrands });
+  // load brands
+  const brandQuery = useQuery({
+    queryKey: ["brands"],
+    queryFn: loadBrands,
+  });
 
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
@@ -93,18 +85,31 @@ const HomePage = () => {
           </View>
 
           {/* Brands Items */}
-          <View className="w-full px-4">
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={Array.from({ length: 12 })}
-              renderItem={({ item }) => (
-                <BrandItem size={70} onPress={() => {}} />
-              )}
-              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-            />
-          </View>
+          {brandQuery.isLoading ? (
+            <View className="w-full px-4">
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={Array.from({ length: 10 })}
+                renderItem={() => <BrandItemSkeleton />}
+                ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
+              />
+            </View>
+          ) : (
+            <View className="w-full px-4">
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={brandQuery?.data}
+                renderItem={({ item }) => (
+                  <BrandItem size={70} onPress={() => {}} brand={item} />
+                )}
+                ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
+              />
+            </View>
+          )}
 
           {/* Car Items */}
           <FlatList
@@ -156,21 +161,33 @@ const HomePage = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={Array.from({ length: 8 })}
-          numColumns={4}
-          keyExtractor={(item, index) => "#" + index}
-          renderItem={() => (
-            <BrandItem
-              size={70}
-              onPress={() => {
-                handleCloseModal();
-                router.navigate("/brands");
-              }}
-            />
-          )}
-          ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
-        />
+
+        {brandQuery.isLoading ? (
+          <FlatList
+            data={Array.from({ length: 8 })}
+            numColumns={4}
+            keyExtractor={(item, index) => "#" + index}
+            renderItem={() => <BrandItemSkeleton />}
+            ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
+          />
+        ) : (
+          <FlatList
+            data={brandQuery?.data}
+            numColumns={4}
+            keyExtractor={(item, index) => "#" + index}
+            renderItem={({ item }) => (
+              <BrandItem
+                size={70}
+                onPress={() => {
+                  handleCloseModal();
+                  router.navigate("/brands");
+                }}
+                brand={item}
+              />
+            )}
+            ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
+          />
+        )}
       </CustomBottomSheetModal>
       <StatusBar style="light" translucent />
     </View>
