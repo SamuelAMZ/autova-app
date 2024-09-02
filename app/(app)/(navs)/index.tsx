@@ -48,8 +48,6 @@ const HomePage = () => {
     queryFn: loadBrands,
   });
 
-  // console.log(brandQuery, "brandQuery");
-
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
@@ -99,18 +97,31 @@ const HomePage = () => {
                 ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
             </View>
-          ) : (
+          ) : brandQuery.isSuccess ? (
             <View className="w-full px-4">
               <FlatList
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 horizontal
-                data={brandQuery?.data}
+                data={brandQuery?.data?.data}
                 renderItem={({ item }) => (
                   <BrandItem size={70} onPress={() => {}} brand={item} />
                 )}
                 ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
+            </View>
+          ) : (
+            <View className="flex-row items-center justify-center gap-3">
+              <ThemedText className="text-[17px]">
+                Something went wrong.
+              </ThemedText>
+              <TouchableOpacity
+                onPress={() => {
+                  brandQuery.refetch();
+                }}
+              >
+                <ThemedText className="text-[17px]">Refetch</ThemedText>
+              </TouchableOpacity>
             </View>
           )}
 
@@ -188,22 +199,26 @@ const HomePage = () => {
             ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
           />
         ) : (
-          <FlatList
-            data={brandQuery?.data}
-            numColumns={4}
-            keyExtractor={(item, index) => "#" + index}
-            renderItem={({ item }) => (
-              <BrandItem
-                size={70}
-                onPress={() => {
-                  handleCloseModal();
-                  router.navigate("/brands");
-                }}
-                brand={item}
-              />
-            )}
-            ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
-          />
+          <View className="w-full px-4">
+            <FlatList
+              data={brandQuery?.data?.data}
+              numColumns={4}
+              keyExtractor={(item, index) => "#" + index}
+              renderItem={({ item }) => (
+                <View className="mr-7">
+                  <BrandItem
+                    size={70}
+                    onPress={() => {
+                      handleCloseModal();
+                      router.navigate("/brands");
+                    }}
+                    brand={item}
+                  />
+                </View>
+              )}
+              ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
+            />
+          </View>
         )}
       </CustomBottomSheetModal>
       <StatusBar style="light" translucent />
