@@ -48,6 +48,8 @@ const HomePage = () => {
     queryFn: loadBrands,
   });
 
+  // console.log(brandQuery, "brandQuery");
+
   return (
     <View className={`flex-1 bg-[${Colors.background}]`}>
       <View
