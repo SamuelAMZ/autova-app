@@ -24,9 +24,11 @@ const CustomButton = ({
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor }]}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <ThemedText
-        style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}>
+        style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}
+      >
         {title}
       </ThemedText>
     </TouchableOpacity>
@@ -39,6 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   buttonText: {
     fontSize: 17,

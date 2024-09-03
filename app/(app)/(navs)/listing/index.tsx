@@ -111,6 +111,7 @@ import {
 } from "@/constants";
 import CarItem from "@/components/cars/CarItem";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
+import { FilterDataProps, ItemDataProps } from "@/constants/types";
 
 const initialItemIsOpen = {
   makeModel: true,

@@ -5,6 +5,7 @@ import Colors from "@/constants/Colors";
 import ClearFilter from "./clearFilter";
 import { defaultRangeHighValue, defaultRangeLowValue } from "@/constants";
 import { thousandSeparator } from "@/constants/utils";
+import { RangeProps } from "@/constants/types";
 
 const PriceRangeSearch = ({
   onValueChange,
@@ -66,8 +67,14 @@ const PriceRangeSearch = ({
         <View className="w-[45%] border border-[#D0D5DD] rounded-[80px] h-[33px] items-center justify-center">
           <TextInput
             keyboardType="numeric"
-            value={lowValue.toString()}
+            value={
+              !isHighInputFocused
+                ? thousandSeparator(lowValue)
+                : lowValue.toString()
+            }
             className="w-full text-center h-full"
+            onFocus={() => setIsHighInputFocused(true)}
+            onBlur={() => setIsHighInputFocused(!isHighInputFocused)}
             onChangeText={(value) => setLowValue(Number(value))}
           />
         </View>

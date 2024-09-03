@@ -1,19 +1,19 @@
-interface RangeProps {
+export interface RangeProps {
   low: number;
   high: number;
 }
 
-interface ItemDataProps {
+export interface ItemDataProps {
   label: string;
   id: string;
 }
 
-interface selectedTypeProps {
+export interface selectedTypeProps {
   type: string;
   data: ItemDataProps[];
 }
 
-interface FilterDataProps {
+export interface FilterDataProps {
   selectedMakeItem: ItemDataProps | undefined;
   selectedModelItem: ItemDataProps | undefined;
   selectedBodyItem: ItemDataProps | undefined;
@@ -30,4 +30,10 @@ export interface requestProps {
   url: string;
   isFileUpload?: boolean;
   extras?: requestExtrasProps[];
+}
+
+export interface TokenCache {
+  getToken: (key: string) => Promise<string | undefined | null>;
+  saveToken: (key: string, token: string) => Promise<void>;
+  clearToken?: (key: string) => void;
 }

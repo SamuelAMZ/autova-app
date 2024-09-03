@@ -31,6 +31,7 @@ import {
   initialFilterData,
 } from "@/constants";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { FilterDataProps, ItemDataProps } from "@/constants/types";
 
 const initialItemIsOpenData = {
   makeModel: true,

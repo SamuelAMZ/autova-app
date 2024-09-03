@@ -6,6 +6,7 @@ import { searchTypesData } from "@/constants/searchTypes";
 import { ArrowDown2 } from "iconsax-react-native";
 import SelectSearchTypeModal, { SearchTypeProps } from "./typSearchModals";
 import { initialFilterData } from "@/constants";
+import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import SearchContent from "./searchContent";
 
 function SearchCard() {
