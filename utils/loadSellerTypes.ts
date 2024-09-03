@@ -8,7 +8,7 @@ export async function loadSellerTypes() {
     const response: AxiosResponse = await axios.post(url, {});
     return response?.data ?? [];
   } catch (error: any) {
-    console.log(error, "error loadBrands");
+    console.log(error, "error loadSellerTypes");
     return [];
   }
 }
