@@ -224,7 +224,7 @@ export default function MyListing() {
           </TouchableOpacity>
         </View>
 
-        {true ? (
+        {false ? (
           <FlatList
             className="px-[4%]"
             data={Array.from({ length: 10 })}

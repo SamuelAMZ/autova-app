@@ -3,8 +3,9 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import ThemedText from "./ThemedText";
 
 type BrandType = {
-  title: string;
-  image: string;
+  name: string;
+  logo: string;
+  _id?: string;
 };
 
 const BrandItem = ({
@@ -16,8 +17,9 @@ const BrandItem = ({
   size: number;
   brand: BrandType;
 }) => {
+  console.log(brand, "brand");
   return (
-    <View className="flex-1 items-center">
+    <View className="flex items-center">
       <TouchableOpacity
         onPress={onPress}
         style={{ height: size, width: size, borderRadius: 70 }}
@@ -25,8 +27,8 @@ const BrandItem = ({
       >
         <Image
           source={
-            brand?.image
-              ? { uri: brand.image }
+            brand?.logo
+              ? { uri: brand.logo }
               : require("@/assets/images/bmw.png")
           }
           style={{
@@ -35,7 +37,7 @@ const BrandItem = ({
           }}
         />
       </TouchableOpacity>
-      <ThemedText className="font-semibold">{brand?.title}</ThemedText>
+      <ThemedText className="font-semibold">{brand?.name}</ThemedText>
     </View>
   );
 };
