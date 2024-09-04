@@ -6,7 +6,11 @@ import { searchTypesData } from "@/constants/searchTypes";
 import { ArrowDown2 } from "iconsax-react-native";
 import SelectSearchTypeModal, { SearchTypeProps } from "./typSearchModals";
 import { initialFilterData } from "@/constants";
-import { FilterDataProps, ItemDataProps } from "@/constants/types";
+import {
+  FilterDataProps,
+  ItemDataProps,
+  makedModelsProps,
+} from "@/constants/types";
 import SearchContent from "./searchContent";
 
 function SearchCard() {
@@ -92,7 +96,7 @@ function SearchCard() {
         onPress={() =>
           router.navigate({
             pathname: "/(app)/search/carSearch",
-            params: { data: JSON.stringify(filterData) },
+            params: { searchData: JSON.stringify(filterData) },
           })
         }
       />

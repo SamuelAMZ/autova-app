@@ -17,7 +17,6 @@ import Icon from "@expo/vector-icons/AntDesign";
 import CarItem from "@/components/cars/CarItem";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { CarData } from "@/constants/CarData";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
@@ -43,7 +42,7 @@ const initialItemIsOpenData = {
 
 const CarSearchScreen = () => {
   const textIinputRef = useRef(null);
-  const { data } = useLocalSearchParams();
+  const { searchData } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
   const [filterData, setFilterData] =
@@ -56,7 +55,10 @@ const CarSearchScreen = () => {
   };
 
   useEffect(() => {
-    const initialData = data ? JSON.parse(data as string) : initialFilterData;
+    const initialData = searchData
+      ? JSON.parse(searchData as string)
+      : initialFilterData;
+    console.log(initialData);
     setFilterData(initialData);
   }, []);
 

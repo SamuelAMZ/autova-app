@@ -1,11 +1,13 @@
+import Brand, { Models } from "@/models/brand.model";
+
 export interface RangeProps {
   low: number;
   high: number;
 }
 
 export interface ItemDataProps {
-  label: string;
-  id: string;
+  name: string;
+  _id: string;
 }
 
 export interface selectedTypeProps {
@@ -45,3 +47,13 @@ export interface IUser {
   phone: string;
   createdAt: string;
 }
+
+export interface makedModelsProps {
+  makes: Brand[];
+  models: Models[];
+}
+
+export type makeModalSearchProps = {
+  models: any[];
+  makes: any[];
+};
