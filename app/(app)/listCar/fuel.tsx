@@ -8,6 +8,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { fuel } from "@/constants/data";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { loadFuelTypes } from "@/utils/fuelTypesRequest";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Fuel() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
@@ -15,6 +17,11 @@ export default function Fuel() {
   const handleSelect = (degree: string) => {
     setSelectedDegree(degree);
   };
+
+  const fuelQuery = useQuery({
+    queryKey: ["brands"],
+    queryFn: loadFuelTypes,
+  });
 
   return (
     <>
@@ -51,7 +58,7 @@ export default function Fuel() {
         <ScrollView className="flex pb-[80px] relative">
           <View className="flex gap-[20px]">
             <View className="">
-              {fuel.map((item) => (
+              {fuelQuery?.data?.data.map((item) => (
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => handleSelect(item.name)}
