@@ -37,3 +37,11 @@ export interface TokenCache {
   saveToken: (key: string, token: string) => Promise<void>;
   clearToken?: (key: string) => void;
 }
+
+export interface IUser {
+  _id: string;
+  username: string;
+  email?: string;
+  phone: string;
+  createdAt: string;
+}

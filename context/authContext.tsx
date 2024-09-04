@@ -1,9 +1,14 @@
 import { useContext, createContext, type PropsWithChildren } from "react";
 import { useStorageState } from "@/hooks/useStorageHook";
-import User from "@/models/user.model";
+import { IUser } from "@/constants/types";
+import { appSignUp } from "@/utils/auth";
+import { AxiosResponse } from "axios";
 
 const AuthContext = createContext<{
-  signIn: () => Promise<User | undefined>;
+  signIn: (
+    data: any,
+    token: string
+  ) => Promise<AxiosResponse<any, any> | undefined>;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
@@ -29,12 +34,19 @@ export function useSession() {
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
 
+  const signUp = async (data: any, token: string) => {
+    const result = await appSignUp(data);
+    if (result && result.data) {
+      const { username, phone } = result.data as IUser;
+      setSession(JSON.stringify({ username, phone, token }));
+    }
+    return result;
+  };
+
   return (
     <AuthContext.Provider
       value={{
-        signIn: async () => {
-          return undefined;
-        },
+        signIn: signUp,
         signOut: () => {
           setSession(null);
         },

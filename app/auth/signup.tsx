@@ -14,37 +14,48 @@ export default function SignUp() {
   const [verifying, setVerifying] = useState(false);
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function handleSendOtpCode() {
-    setVerifying(true);
-    // const regex = /^(9[01236789]|7[012])\d{6}$/;
-    // if (!phone || !regex.test(phone)) {
-    //   return toastify("Invalid", "Please enter correct phone number");
-    // }
-    // try {
-    //   await supabaseClient.auth.signInWithOtp({
-    //     phone: `228${phone}`,
-    //   });
-    //   setVerifying(true);
-    // } catch (err) {
-    //   console.error("Error:", JSON.stringify(err, null, 2));
-    // }
+    const regex = /^(9[01236789]|7[012])\d{6}$/;
+    if (!phone || !regex.test(phone)) {
+      return toastify("Invalid", "Please enter correct phone number");
+    }
+    try {
+      const phoneValid = `228${phone}`;
+      setIsLoading(true);
+      await supabaseClient.auth.signInWithOtp({
+        phone: phoneValid,
+      });
+      setIsLoading(false);
+      setVerifying(true);
+    } catch (err) {
+      setIsLoading(false);
+      console.error("Error:", JSON.stringify(err, null, 2));
+    }
   }
 
   async function handleVerifyOtpCode() {
-    return router.navigate({ pathname: "/auth/account", params: { phone } });
     if (!code) return;
-    console.log(code.toString().replaceAll(",", ""));
     try {
+      setIsLoading(true);
       const result = await supabaseClient.auth.verifyOtp({
         phone: `228${phone}`,
         token: code.toString().replaceAll(",", ""),
         type: "sms",
       });
+      setIsLoading(false);
       const res = result.data;
       if (res.session && res.session.access_token) {
+        return router.navigate({
+          pathname: "/auth/account",
+          params: { phone, token: res.session.access_token },
+        });
+      } else {
+        toastify("Invalid code", "Verification code is invalid");
       }
     } catch (err) {
+      setIsLoading(false);
       console.error("Error:", JSON.stringify(err, null, 2));
     }
   }
@@ -52,6 +63,7 @@ export default function SignUp() {
   if (verifying) {
     return (
       <VerifyCode
+        isLoading={isLoading}
         code={code}
         phone={phone}
         onChange={(value: string[]) => setCode(value)}
@@ -97,7 +109,11 @@ export default function SignUp() {
                 className={`bg-[${Colors.backgroundSecondary}] h-[50px] flex-1 rounded-r-lg py-[16px] px-[20px]`}
               />
             </View>
-            <CustomButton title="Continue" onPress={handleSendOtpCode} />
+            <CustomButton
+              isLoading={isLoading}
+              title="Continue"
+              onPress={handleSendOtpCode}
+            />
           </View>
           <TermsOfServices />
         </View>

@@ -9,9 +9,11 @@ import { router } from "expo-router";
 export const LogoutModal = ({
   visible,
   onClose,
+  onLogout,
 }: {
   visible: boolean;
   onClose: any;
+  onLogout: () => void;
 }) => {
   // set status bar
   useStatusBar("dark-content", "#0F172A8F", false);
@@ -24,7 +26,8 @@ export const LogoutModal = ({
             <TouchableWithoutFeedback>
               <View
                 className="bg-white flex gap-[24px] w-full rounded-[12px] "
-                style={{ paddingHorizontal: 30, paddingVertical: 20 }}>
+                style={{ paddingHorizontal: 30, paddingVertical: 20 }}
+              >
                 <View className="flex gap-[12px]">
                   <ThemedText className="text-[#101828] text-[16px] text-center">
                     Are you sure you want to Logout?
@@ -32,10 +35,17 @@ export const LogoutModal = ({
                 </View>
                 <View className="flex-row flex justify-center items-center gap-[12px]">
                   <TouchableOpacity
+                    onPress={() => {
+                      onLogout();
+                      onClose();
+                      router.navigate("/(app)/(navs)");
+                    }}
                     className={`  bg-[${Colors.background}] border-solid border-2 border-[${Colors.background}]  rounded-[50px] `}
-                    style={{ paddingHorizontal: 28, paddingVertical: 10 }}>
+                    style={{ paddingHorizontal: 28, paddingVertical: 10 }}
+                  >
                     <ThemedText
-                      className={`text-[#FFFFFF] text-[17px]  text-center  `}>
+                      className={`text-[#FFFFFF] text-[17px]  text-center  `}
+                    >
                       Yes
                     </ThemedText>
                   </TouchableOpacity>
@@ -43,9 +53,11 @@ export const LogoutModal = ({
                   <TouchableOpacity
                     className={`  border-solid border border-[${Colors.background}] rounded-[50px] `}
                     onPress={onClose}
-                    style={{ paddingHorizontal: 28, paddingVertical: 10 }}>
+                    style={{ paddingHorizontal: 28, paddingVertical: 10 }}
+                  >
                     <ThemedText
-                      className={`text-[${Colors.background}] text-[17px]  text-center  `}>
+                      className={`text-[${Colors.background}] text-[17px]  text-center  `}
+                    >
                       No
                     </ThemedText>
                   </TouchableOpacity>

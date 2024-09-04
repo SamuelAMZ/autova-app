@@ -1,21 +1,45 @@
-import { Text, View, StatusBar, TextInput, ScrollView } from "react-native";
+import { Text, View, StatusBar, TextInput } from "react-native";
 import ThemedText from "@/components/ThemedText";
-
 import CustomButton from "@/components/CustomButton";
 import { router, useLocalSearchParams } from "expo-router";
 import Colors from "@/constants/Colors";
 import TermsOfServices from "@/components/TermsOfServices";
 import { useEffect, useState } from "react";
+import { toastify } from "@/constants/utils";
+import { useSession } from "@/context/authContext";
 
 export default function Account() {
-  const { phone } = useLocalSearchParams();
+  const { signIn } = useSession();
+  const { phone, token } = useLocalSearchParams();
   const [data, setData] = useState({ username: "", phone: "", password: "" });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setData({ ...data, phone: phone.toString() });
   }, [phone]);
 
-  const handleSubmitData = () => {};
+  const handleSignUp = async () => {
+    try {
+      if (!data.username || !data.password) {
+        return toastify("Invalid data", "Fill all fields");
+      }
+      setIsLoading(true);
+      const result = await signIn(
+        { ...data, phone: `228${phone}` },
+        token.toString() ?? "token"
+      );
+      setIsLoading(false);
+      if (result && result.status == 201) {
+        return result && router.navigate("/(app)/(navs)");
+      }
+      if (result?.status == 409) {
+        return toastify("Duplication error", "Account already exists");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      toastify("Ouppss!!", "Error while creating account. Try again");
+    }
+  };
 
   return (
     <>
@@ -91,11 +115,10 @@ export default function Account() {
               </ThemedText>
             </View>
             <CustomButton
+              isLoading={isLoading}
               title="Create account"
               textColor={Colors.textPrimary}
-              onPress={() => {
-                router.navigate("/auth/notif");
-              }}
+              onPress={handleSignUp}
             />
           </View>
           <TermsOfServices />

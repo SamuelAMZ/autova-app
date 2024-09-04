@@ -49,6 +49,8 @@ import {
 } from "@expo-google-fonts/space-grotesk";
 import Toast from "react-native-toast-message";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { SessionProvider } from "@/context/authContext";
+import { UserProvider } from "@/context/userContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -74,13 +76,11 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-      <ClerkLoaded>
-        <QueryClientProvider client={queryClient}>
-          <Slot />
-          <Toast />
-        </QueryClientProvider>
-      </ClerkLoaded>
-    </ClerkProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <Slot />
+        <Toast />
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }

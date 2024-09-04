@@ -16,11 +16,13 @@ export const VerifyCode = ({
   onChange,
   phone,
   onPress,
+  isLoading,
 }: {
   code: string[];
   onChange: (value: string[]) => void;
   phone: string;
   onPress: () => void;
+  isLoading: boolean;
 }) => {
   const inputs = useRef<TextInput[]>([]);
 
@@ -55,7 +57,7 @@ export const VerifyCode = ({
     <View className="flex-1 w-full px-4 justify-center items-center gap-[36px]">
       <View className="flex gap-[12px]">
         <ThemedText
-          style={{ fontFamily: "Poppins_600SemiBold" }}
+          style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           className="text-[26px] text-[#101828]"
         >
           We just sent you a code
@@ -84,7 +86,7 @@ export const VerifyCode = ({
           ))}
         </View>
         <ThemedText
-          style={{ fontFamily: "Poppins_500Medium" }}
+          style={{ fontFamily: "SpaceGrotesk_500Medium" }}
           className="font-normal text-[14px] text-[#344054]"
         >
           I didn’t receive a code{" "}
@@ -99,9 +101,9 @@ export const VerifyCode = ({
         </ThemedText>
       </View>
       <View className="flex w-full gap-[20px] pb-11">
-        <CustomButton title="Confirm" onPress={onPress} />
+        <CustomButton isLoading={isLoading} title="Confirm" onPress={onPress} />
         <ThemedText
-          style={{ fontFamily: "Poppins_500Medium" }}
+          style={{ fontFamily: "SpaceGrotesk_500Medium" }}
           className="text-center text-[16px] text-[#2E69E6]"
         >
           Already have an account?

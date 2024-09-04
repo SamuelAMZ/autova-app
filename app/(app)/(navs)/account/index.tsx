@@ -1,6 +1,5 @@
 import ThemedText from "@/components/ThemedText";
 import {
-  Add,
   ArrowRight2,
   Call,
   Camera,
@@ -8,10 +7,9 @@ import {
   Setting2,
   Whatsapp,
 } from "iconsax-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
   ScrollView,
   Image,
   Pressable,
@@ -24,9 +22,16 @@ import { router } from "expo-router";
 import Colors from "@/constants/Colors";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import CustomButton from "@/components/CustomButton";
+import { useSession } from "@/context/authContext";
+import { IUser } from "@/constants/types";
 
 const AccountPage = () => {
   const [image, setImage] = useState("");
+  const [userData, setUserData] = useState({
+    username: "",
+    phone: "",
+  });
+  const { session } = useSession();
 
   const pickImage = async () => {
     try {
@@ -56,10 +61,17 @@ const AccountPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (session) {
+      const { username, phone } = JSON.parse(session) as IUser;
+      setUserData({ username, phone });
+    }
+  }, [session]);
+
   return (
     <>
       <CustomHeader />
-      <SignedIn>
+      {session ? (
         <ScrollView className="">
           <View className=" flex-1 px-[16px] py-[30px] gap-[30px]">
             <View className="flex flex-row gap-[12px] items-center justify-start ">
@@ -96,10 +108,10 @@ const AccountPage = () => {
                   className="text-[#101828] text-[18px]"
                   style={{ fontFamily: "SpaceGrotesk_700Bold" }}
                 >
-                  Omar Hassan
+                  {userData.username}
                 </ThemedText>
                 <ThemedText className="text-[#667085] text-[14px]">
-                  omarhassan@carnext.com
+                  +{userData.phone}
                 </ThemedText>
               </View>
             </View>
@@ -292,8 +304,7 @@ const AccountPage = () => {
             </View>
           </View>
         </ScrollView>
-      </SignedIn>
-      <SignedOut>
+      ) : (
         <View className="flex-1 justify-center items-center px-4">
           <ThemedText className="text-[18px] mb-4 self-start">
             Sign In to continue
@@ -303,7 +314,7 @@ const AccountPage = () => {
             onPress={() => router.navigate("/auth/signup")}
           />
         </View>
-      </SignedOut>
+      )}
     </>
   );
 };
