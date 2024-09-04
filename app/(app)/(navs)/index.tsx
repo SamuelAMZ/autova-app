@@ -1,29 +1,20 @@
 import { SearchNormal1 } from "iconsax-react-native";
 import React, { useMemo } from "react";
-import {
-  View,
-  ScrollView,
-  FlatList,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
+import { View, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import AppIcon from "@/assets/icons/app-logo.svg";
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useQuery } from "@tanstack/react-query";
-
 import BrandItem from "@/components/BrandItem";
 import CarHome from "@/components/cars/CarHome";
 import ThemedText from "@/components/ThemedText";
 import SearchCard from "@/components/searchCard/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
-import { CarData } from "@/constants/CarData";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
-import postReq from "@/constants/postReq";
 
 import { loadBrands } from "@/utils/brandsRequest";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
@@ -66,7 +57,7 @@ const HomePage = () => {
       </View>
       <ScrollView bounces={false}>
         <Animated.View className="w-full px-[16px] pb-[30px]">
-          <SearchCard></SearchCard>
+          <SearchCard />
         </Animated.View>
         <View className="flex gap-[30px] bg-white">
           <View className="px-[4%] flex-1 flex-row justify-between items-end mt-[30px]">
@@ -86,7 +77,6 @@ const HomePage = () => {
           </View>
 
           {/* Brands Items */}
-
           {brandQuery.isLoading ? (
             <View className="w-full px-4">
               <FlatList
@@ -117,31 +107,6 @@ const HomePage = () => {
           {brandQuery.isError ? (
             <ErrorLoadingData refetch={brandQuery.refetch} />
           ) : null}
-
-          {/* Car Items */}
-          {/* <FlatList
-            className="px-[4%]"
-            data={listingCarsQuery?.data?.data}
-            renderItem={({ item }) => (
-              <CarHome
-                car={item}
-                onPress={() => {
-                  router.navigate({
-                    pathname: "/(app)/brands/carDetail",
-                    params: {
-                      carId: item._id,
-                    },
-                  });
-                }}
-              />
-            )}
-            ItemSeparatorComponent={() => (
-              <View style={{ height: Platform.OS === "ios" ? 2 : 16 }} />
-            )}
-            scrollEnabled={false}
-            keyExtractor={(_, index) => index.toString()}
-            ListFooterComponent={() => <View style={{ height: 40 }} />}
-          /> */}
 
           <View className="px-[4%]">
             <CarHome />

@@ -6,17 +6,14 @@ import { ArrowDown2, Chainlink, TickCircle } from "iconsax-react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import ClearFilter from "./clearFilter";
-
-const mockData: any = {
-  models: [
-    { id: "1", label: "Model 1" },
-    { id: "2", label: "Model 2" },
-  ],
-  makes: [
-    { id: "1", label: "Make 1" },
-    { id: "2", label: "Make 2" },
-  ],
-};
+import {
+  ItemDataProps,
+  makeModalSearchProps,
+  selectedTypeProps,
+} from "@/constants/types";
+import { useQuery } from "@tanstack/react-query";
+import { Models } from "@/models/brand.model";
+import { loadBrands, loadModels } from "@/utils/brandsRequest";
 
 const MakeModelsSearch = ({
   onChange,
@@ -30,9 +27,21 @@ const MakeModelsSearch = ({
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [selectedType, setSelectedType] = useState<selectedTypeProps>();
 
+  // Models
+  const models = useQuery({
+    queryKey: ["models"],
+    queryFn: loadModels,
+  });
+
+  //  Makes
+  const makes = useQuery({
+    queryKey: ["makes"],
+    queryFn: loadBrands,
+  });
+
   // callbacks
   const handleTypeChange = (type: string) => {
-    setSelectedType({ type, data: mockData[type] });
+    setSelectedType({ type, data: [] });
     setIsModalVisible(true);
   };
 
@@ -48,9 +57,9 @@ const MakeModelsSearch = ({
 
   const handleIsSelected = (item: ItemDataProps): boolean => {
     if (selectedType?.type == "models") {
-      return selectedModelItem?.id == item.id;
+      return selectedModelItem?._id == item._id;
     } else {
-      return selectedMakeItem?.id == item.id;
+      return selectedMakeItem?._id == item._id;
     }
   };
 
@@ -74,7 +83,7 @@ const MakeModelsSearch = ({
           <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
-                {selectedMakeItem?.label ?? "Select Make"}
+                {selectedMakeItem?.name ?? "Select Make"}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
@@ -100,7 +109,7 @@ const MakeModelsSearch = ({
           <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
-                {selectedModelItem?.label ?? "Select Model"}
+                {selectedModelItem?.name ?? "Select Model"}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
@@ -112,50 +121,92 @@ const MakeModelsSearch = ({
           )}
         </TouchableOpacity>
       </View>
-      <CustomBottomSheetModal
-        isVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        snapPoints={snapPoints}
-        index={1}
-      >
-        <View className="w-full px-[4%]">
-          <View className="px-4 py-3 flex-row justify-between items-center">
-            <ThemedText className="text-[18px]">Choose item</ThemedText>
-            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-              <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
-                <AntDesign name="close" size={16} color="#3D3D3D" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <FlatList
-            data={selectedType?.data}
-            renderItem={(item) => {
-              const isSelected = handleIsSelected(item.item);
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    handleSelectItem(selectedType?.type, item.item)
-                  }
-                  className="p-4 border-t border-[#F2F4F7] flex-row justify-between items-center"
-                >
-                  <View className="flex-row gap-3 items-center">
-                    <Chainlink
-                      color={isSelected ? "#5856D6" : "#475467"}
-                      variant="Bold"
-                    />
-                    <ThemedText className="text-[#475467]">
-                      {item.item.label}
-                    </ThemedText>
-                  </View>
-                  {isSelected && <TickCircle color="#5856D6" />}
-                </TouchableOpacity>
-              );
-            }}
-          />
-        </View>
-      </CustomBottomSheetModal>
+      {isModalVisible && (
+        <LaodDataModal
+          makeModels={{ makes: makes.data.data, models: models.data.data }}
+          handleIsSelected={handleIsSelected}
+          handleSelectItem={handleSelectItem}
+          type={selectedType?.type!}
+          isModalVisible={isModalVisible}
+          snapPoints={snapPoints}
+          handleCloseModal={() => setIsModalVisible(false)}
+          selectedMakeItem={selectedMakeItem}
+        />
+      )}
     </>
   );
 };
 
 export default MakeModelsSearch;
+
+const LaodDataModal = ({
+  type,
+  isModalVisible,
+  snapPoints,
+  handleCloseModal,
+  handleIsSelected,
+  handleSelectItem,
+  makeModels,
+  selectedMakeItem,
+}: {
+  type: string;
+  isModalVisible: boolean;
+  snapPoints: any[];
+  handleCloseModal: () => void;
+  handleIsSelected: Function;
+  handleSelectItem: Function;
+  makeModels: makeModalSearchProps;
+  selectedMakeItem: ItemDataProps | undefined;
+}) => {
+  const handleDisplayData = () => {
+    if (type == "models" && selectedMakeItem) {
+      return makeModels["models"]
+        .filter((e: Models) => e.brandId._id == selectedMakeItem._id)
+        .map((e) => e as ItemDataProps);
+    }
+    return makeModels[type] as ItemDataProps[];
+  };
+
+  return (
+    <CustomBottomSheetModal
+      isVisible={isModalVisible}
+      onClose={handleCloseModal}
+      snapPoints={snapPoints}
+      index={1}
+    >
+      <View className="w-full px-[4%]">
+        <View className="px-4 py-3 flex-row justify-between items-center">
+          <ThemedText className="text-[18px]">Choose item</ThemedText>
+          <TouchableOpacity onPress={handleCloseModal}>
+            <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
+              <AntDesign name="close" size={16} color="#3D3D3D" />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={handleDisplayData()}
+          renderItem={(item) => {
+            const isSelected = handleIsSelected(item.item);
+            return (
+              <TouchableOpacity
+                onPress={() => handleSelectItem(type, item.item)}
+                className="p-4 border-t border-[#F2F4F7] flex-row justify-between items-center"
+              >
+                <View className="flex-row gap-3 items-center">
+                  <Chainlink
+                    color={isSelected ? "#5856D6" : "#475467"}
+                    variant="Bold"
+                  />
+                  <ThemedText className="text-[#475467]">
+                    {item.item.name}
+                  </ThemedText>
+                </View>
+                {isSelected && <TickCircle color="#5856D6" />}
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View>
+    </CustomBottomSheetModal>
+  );
+};
