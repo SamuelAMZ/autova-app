@@ -16,13 +16,28 @@ import { carsData } from "@/constants/data";
 import { HorizontalSeperator } from "@/components/Separator";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { loadBrands } from "@/utils/brandsRequest";
+import { useQuery } from "@tanstack/react-query";
+import { ErrorLoadingData } from "@/components/ErrorLoading";
+import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 
 export default function Brand() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
 
   const handleSelect = (degree: string) => {
     setSelectedDegree(degree);
   };
+
+  const brandQuery = useQuery({
+    queryKey: ["brands"],
+    queryFn: loadBrands,
+  });
+
+   // Filtre les modèles en fonction de la recherche
+   const filteredBrands = brandQuery?.data?.data.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <>
@@ -31,20 +46,17 @@ export default function Brand() {
       </HeaderListing>
       <View
         className="flex   bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}
-      >
+        style={{ paddingTop: 30, paddingBottom: 60 }}>
         <ScrollView className="flex pb-[80px] relative px-[16px]">
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Brand
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
               Select a brand for your car
             </ThemedText>
           </View>
@@ -58,47 +70,68 @@ export default function Brand() {
               className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
               placeholder="Search a brand"
               placeholderTextColor="#1D2939"
+              onChangeText={(text) => setSearch(text)}
             />
           </View>
 
           <View className="flex gap-[20px] mb-[30px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Popular Brand
             </ThemedText>
-            <FlatList
-              className=""
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={Array.from({ length: 12 })}
-              renderItem={({ item }) => (
-                <BrandItem size={70} onPress={() => {}} />
-              )}
-              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-            />
+            {brandQuery.isLoading ? (
+              <View className="w-full ">
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  data={Array.from({ length: 10 })}
+                  renderItem={() => <BrandItemSkeleton />}
+                  ItemSeparatorComponent={() => (
+                    <HorizontalSeperator size={16} />
+                  )}
+                />
+              </View>
+            ) : null}
+            {brandQuery.isSuccess ? (
+              <View className="w-full px-4">
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  data={filteredBrands}
+                  renderItem={({ item }) => (
+                    <BrandItem size={70} onPress={() => {}} brand={item} />
+                  )}
+                  ItemSeparatorComponent={() => (
+                    <HorizontalSeperator size={16} />
+                  )}
+                />
+              </View>
+            ) : null}
+
+            {brandQuery.isError ? (
+              <ErrorLoadingData refetch={brandQuery.refetch} />
+            ) : null}
           </View>
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Popular Brand
             </ThemedText>
 
             <View className="">
-              {carsData.map((item) => (
+              {filteredBrands.map((item) => (
                 <TouchableOpacity
-                  key={item.name}
-                  onPress={() => handleSelect(item.name)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
-                >
+                  key={item._id}
+                  onPress={() => handleSelect(item._id)}
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
                   <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                     {item.name}
                   </ThemedText>
-                  {selectedDegree === item.name && (
+                  {selectedDegree === item._id && (
                     <AntDesign
                       name="check"
                       size={20}
@@ -115,18 +148,20 @@ export default function Brand() {
           style={{
             paddingBottom: 20,
           }}
-          className="px-[16px]"
-        >
+          className="px-[16px]">
           <TouchableOpacity
             onPress={() => {
-              router.navigate("./Model");
+              router.navigate({
+                pathname: "./Model",
+                params: {
+                  brandId: selectedDegree,
+                },
+              });
             }}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
-          >
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}>
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-            >
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Continue
             </ThemedText>
           </TouchableOpacity>

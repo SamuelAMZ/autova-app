@@ -25,7 +25,7 @@ import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
 import postReq from "@/constants/postReq";
 
-import { loadBrands } from "@/utils/loadBrands";
+import { loadBrands } from "@/utils/brandsRequest";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 

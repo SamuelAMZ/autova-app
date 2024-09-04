@@ -10,13 +10,14 @@ import {
 } from "react-native";
 import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
-
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { ENV } from "@/constants/env";
 import { StatusBar } from "expo-status-bar";
 import { PropsWithChildren } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -29,7 +30,7 @@ import colors from "@/constants/Colors";
 
 import { ImageSliderSkeleton } from "@/components/skeleton/carDetails/imageSliderSkeleton";
 import { CarModelDetailSkeleton } from "@/components/skeleton/carDetails/carModelDetailSkeleton";
-import { getCarById } from "@/utils/carRequest";
+import { thousandSeparator } from "@/constants/utils";
 import { useGlobalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
@@ -128,11 +129,132 @@ export default function CarDetail() {
   };
 
   // get car detail
-  const { carId }: { carId: string } = useGlobalSearchParams();
+  const { carId }: { carId: string } = useLocalSearchParams();
+
+  async function getCarById(data: { id: string }) {
+    try {
+      const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/car/get`;
+      const response: AxiosResponse = await axios.post(url, data);
+      return response?.data ?? [];
+    } catch (error: any) {
+      console.error(error, "error loadCars");
+      return [];
+    }
+  }
+  
+  if (!carId) {
+    return null; 
+  }
+
   const carDetailQuery = useQuery({
-    queryKey: ["carDetail"],
+    queryKey: ["carDetail", carId],
     queryFn: () => getCarById({ id: carId }),
   });
+
+
+  function CarSpecifications() {
+    const data = [
+      {
+        Brand: carDetailQuery.data?.brandId.name,
+      },
+      {
+        Model: carDetailQuery.data?.modelId.name,
+      },
+      {
+        Title: carDetailQuery.data?.titleId.name,
+      },
+      {
+        "Year of Manufacture": carDetailQuery.data?.year,
+      },
+      {
+        "Registration Year": carDetailQuery.data?.year,
+      },
+      {
+        Condition: "New",
+      },
+      {
+        Transmission: carDetailQuery.data?.transmissionId.name,
+      },
+      {
+        "Body Type": "SUV / 4x4",
+      },
+      {
+        "Fuel Type": carDetailQuery.data?.fuelTypeId.name,
+      },
+      {
+        "Engine Capacity": carDetailQuery.data?.engineTypeId.name,
+      },
+      {
+        Color: carDetailQuery.data?.colorId.name,
+      },
+      {
+        Cylinder: carDetailQuery.data?.cylinders,
+      },
+      {
+        "Doors count": carDetailQuery.data?.doorsCount,
+      },
+      {
+        Odometer: carDetailQuery.data?.engineTypeId.name,
+      },
+      {
+        "Country City":
+          carDetailQuery.data?.countryId.name +
+          ", " +
+          carDetailQuery.data?.cityId.name,
+      },
+      {
+        Hybrid: carDetailQuery.data?.isHybrid ? " Yes" : " No",
+      },
+      {
+        Electric: carDetailQuery.data?.isElectric ? " Yes" : " No",
+      },
+    ];
+    return (
+      <View className="flex gap-[16px] justify-center py-[12px]">
+        {data?.map((item, idx) => {
+          return (
+            <View
+              key={idx}
+              className="flex-1 flex-row justify-start gap-[14px] items-center">
+              <ThemedText
+                style={{
+                  flex: 0.5,
+                }}
+                className="text-[#1D2939] text-[16px] underline">
+                {Object.keys(item)[0]}:
+              </ThemedText>
+              <ThemedText
+                style={{
+                  flex: 0.5,
+                }}
+                className="text-[#475467] text-[16px]">
+                {Object.values(item)[0]}
+              </ThemedText>
+            </View>
+          );
+        })}
+      </View>
+    );
+  }
+
+  function CarDetails() {
+    return (
+      <View className="py-[10px] flex gap-4">
+        <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
+          Details
+        </ThemedText>
+        {
+          <View>
+            <ThemedText className="text-[#344054] text-[15px] font-[400]">
+             {carDetailQuery.data?.note}
+            </ThemedText>
+           
+          </View>
+        }
+      </View>
+    );
+  }
+  
 
   console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery");
 
@@ -146,27 +268,23 @@ export default function CarDetail() {
             ? { uri: carDetailQuery.data?.imagesUrls[0] }
             : CarData[0].img
         }
-        blurRadius={290}
-      >
+        blurRadius={290}>
         <View className="flex-1">
           <View className="flex-1 ">
             <View
-              onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
-            >
+              onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}>
               <CustomHeader title={carDetailQuery.data?.name} />
             </View>
             <View
               style={{
                 flex: 1,
-              }}
-            >
+              }}>
               {positionAbsolute ? (
                 <View
                   style={{
                     alignItems: "center",
                   }}
-                  className="w-full px-[4%] py-[.75rem] bg-white"
-                >
+                  className="w-full px-[4%] py-[.75rem] bg-white">
                   <CarInformationButtons
                     handleSpecificationsView={handleSpecificationsView}
                     handleDetailsView={handleDetailsView}
@@ -179,8 +297,7 @@ export default function CarDetail() {
                 bounces={false}
                 className={`flex-1 pb-[1rem]`}
                 onScroll={handleScroll}
-                scrollEventThrottle={16}
-              >
+                scrollEventThrottle={16}>
                 {carDetailQuery.isLoading ? <ImageSliderSkeleton /> : null}
                 {carDetailQuery.isSuccess ? (
                   carDetailQuery.data?.imagesUrls?.length ? (
@@ -188,8 +305,7 @@ export default function CarDetail() {
                       style={{
                         width: width,
                         minHeight: 263,
-                      }}
-                    >
+                      }}>
                       <CarImagesSlider
                         Slides={carDetailQuery.data?.imagesUrls}
                       />
@@ -203,14 +319,12 @@ export default function CarDetail() {
                     paddingBottom: 60,
                     backgroundColor: colors.backgroundSecondaryVariant,
                   }}
-                  className="px-[5%] flex gap-[20px]"
-                >
+                  className="px-[5%] flex gap-[20px]">
                   <ThemedText
                     style={{
                       fontFamily: "SpaceGrotesk_600SemiBold",
                     }}
-                    className="text-[#1D2939] text-[20px]"
-                  >
+                    className="text-[#1D2939] text-[20px]">
                     {carDetailQuery.data?.name}
                   </ThemedText>
 
@@ -302,9 +416,8 @@ export default function CarDetail() {
                     style={{
                       fontFamily: "SpaceGrotesk_600SemiBold",
                     }}
-                    className={`text-[${colors.background}] text-[28px]`}
-                  >
-                    $100
+                    className={`text-[${colors.background}] text-[28px]`}>
+                    $ {carDetailQuery.data?.salesPrice && thousandSeparator(carDetailQuery.data?.salesPrice)}
                   </ThemedText>
 
                   <View className="flex items-start gap-[16px] w-full">
@@ -329,8 +442,7 @@ export default function CarDetail() {
                   <View
                     collapsable={false}
                     ref={specificationsRef}
-                    onLayout={handleSelectedViewWhenScrolling}
-                  >
+                    onLayout={handleSelectedViewWhenScrolling}>
                     <CarSpecifications />
                   </View>
 
@@ -352,12 +464,10 @@ export default function CarDetail() {
                 paddingBottom: 30,
                 paddingTop: 8,
               }}
-              className="px-[4%] bg-white"
-            >
+              className="px-[4%] bg-white">
               <TouchableOpacity
                 onPress={handlePresentModalPress}
-                className={`bg-[${colors.background}] p-[12px_20px] rounded-[12px] border border-solid border-[${colors.background}]`}
-              >
+                className={`bg-[${colors.background}] p-[12px_20px] rounded-[12px] border border-solid border-[${colors.background}]`}>
                 <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
                   Contact Seller
                 </ThemedText>
@@ -369,8 +479,7 @@ export default function CarDetail() {
             isVisible={isModalVisible}
             onClose={handleCloseModal}
             snapPoints={snapPoints}
-            index={Platform.OS === "ios" ? 0 : 1}
-          >
+            index={Platform.OS === "ios" ? 0 : 1}>
             <ContactDealer handleCloseModal={handleCloseModal} />
           </CustomBottomSheetModal>
         </View>
@@ -400,14 +509,12 @@ function CarInformationButtons({
           // backgroundColor:
           //   selected === "Specifications" ? "#5856D6" : "transparent",
         }}
-        className="flex items-center justify-center"
-      >
+        className="flex items-center justify-center">
         <ThemedText
           style={{
             color: selected === "Specifications" ? "#5856D6" : "#101828",
           }}
-          className="p-[10px_20px] text-[16px]"
-        >
+          className="p-[10px_20px] text-[16px]">
           Specifications
         </ThemedText>
       </TouchableOpacity>
@@ -420,14 +527,12 @@ function CarInformationButtons({
           borderColor: selected === "Details" ? "#5856D6" : "#EAECF0",
           // backgroundColor: selected === "Details" ? "#5856D6" : "transparent",
         }}
-        className="flex items-center justify-center"
-      >
+        className="flex items-center justify-center">
         <ThemedText
           style={{
             color: selected === "Details" ? "#5856D6" : "#101828",
           }}
-          className="p-[10px_20px] text-[16px]"
-        >
+          className="p-[10px_20px] text-[16px]">
           Details
         </ThemedText>
       </TouchableOpacity>
@@ -435,94 +540,8 @@ function CarInformationButtons({
   );
 }
 
-function CarDetails() {
-  return (
-    <View className="py-[10px] flex gap-4">
-      <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
-        Details
-      </ThemedText>
-      {
-        <View>
-          <ThemedText className="text-[#344054] text-[15px] font-[400]">
-            Nisi purus felis enim dolor aliquet at enim viverra aenean. Placerat
-            auctor arcu eu mollis tempor eu. Felis aliquet pharetra laoreet
-            amet. Elit tristique id viverra velit interdum nullam non.
-          </ThemedText>
-          <ThemedText className="text-[#344054] text-[15px] font-[400]">
-            Elementum netus mi scelerisque sit morbi quis. Augue pharetra mauris
-            elit consequat amet. Neque ridiculus vitae pharetra at. Pulvinar sit
-            habitant sit fermentum. Convallis sapien leo elementum et lectus
-            quam eget porttitor. Nulla nisi ultricies id euismod.
-          </ThemedText>
-        </View>
-      }
-    </View>
-  );
-}
 
-function CarSpecifications() {
-  const data = [
-    {
-      Brand: "Tesla",
-    },
-    {
-      Model: "Model X Long Range",
-    },
-    {
-      "Trim/Edition": "Hybrid Edition",
-    },
-    {
-      "Year of Manufacture": "2022",
-    },
-    {
-      "Registration Year": "2024",
-    },
-    {
-      Condition: "New",
-    },
-    {
-      Transmission: "Automatic",
-    },
-    {
-      "Body Type": "SUV / 4x4",
-    },
-    {
-      "Fuel Type": "Octane",
-    },
-    {
-      "Engine Capacity": "1500cc",
-    },
-  ];
-  return (
-    <View className="flex gap-[16px] justify-center py-[12px]">
-      {data?.map((item, idx) => {
-        return (
-          <View
-            key={idx}
-            className="flex-1 flex-row justify-start gap-[14px] items-center"
-          >
-            <ThemedText
-              style={{
-                flex: 0.5,
-              }}
-              className="text-[#1D2939] text-[16px] underline"
-            >
-              {Object.keys(item)[0]}:
-            </ThemedText>
-            <ThemedText
-              style={{
-                flex: 0.5,
-              }}
-              className="text-[#475467] text-[16px]"
-            >
-              {Object.values(item)[0]}
-            </ThemedText>
-          </View>
-        );
-      })}
-    </View>
-  );
-}
+
 
 function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
   return (
@@ -531,15 +550,13 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
         flex: 1,
         alignItems: "center",
       }}
-      className="w-full px-[4%] "
-    >
+      className="w-full px-[4%] ">
       <View className="pt-[1rem] flex-row justify-between items-center w-full">
         <ThemedText
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
           }}
-          className="text-[20px] text-[#000000]"
-        >
+          className="text-[20px] text-[#000000]">
           Contact Dealer
         </ThemedText>
         <TouchableOpacity onPress={handleCloseModal}>
@@ -554,15 +571,13 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
           }}
-          className="text-[#101828] text-[17px] text-center"
-        >
+          className="text-[#101828] text-[17px] text-center">
           How would you like to contact the dealer?
         </ThemedText>
         <View className="flex items-start justify-center gap-[16px]">
           <TouchableOpacity
             onPress={() => openWhatsApp()}
-            className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full"
-          >
+            className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
             <Image
               style={{
                 width: 20,
@@ -576,8 +591,7 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => openTelegram()}
-            className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full"
-          >
+            className="flex-row  items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
             <Image
               style={{
                 width: 20,
@@ -591,8 +605,7 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => makePhoneCall()}
-            className="flex-row items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full"
-          >
+            className="flex-row items-center justify-center gap-[12px] w-full p-[12px_32px] border border-solid border-[#D8DADC] rounded-full">
             <Image
               style={{
                 width: 20,
@@ -634,8 +647,7 @@ function CustomHeader({ title }: { title?: string }) {
               borderRadius: 100,
             }}
             className="flex flex-row items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a777] p-[11px]"
-            onPress={() => router.back()}
-          >
+            onPress={() => router.back()}>
             <ArrowLeft size={18} variant="Outline" color="#000000" />
           </TouchableOpacity>
           <ThemedText className="text-[#101828] text-[20px] font-[600]">
@@ -645,15 +657,13 @@ function CustomHeader({ title }: { title?: string }) {
         <View className="flex-row items-center justify-center gap-[12px]">
           <TouchableOpacity
             onPress={handleShare}
-            className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"
-          >
+            className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]">
             <EvilIcons name="share-google" size={28} color="black" />
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={handleLike}
-            className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"
-          >
+            className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]">
             <Heart
               color={isLiked ? colors.background : "black"}
               variant={isLiked ? "Bold" : "Linear"}
@@ -676,8 +686,7 @@ const Header = ({
     <View
       className={` ${className}`}
       style={{ paddingTop: insets.top }}
-      {...rest}
-    >
+      {...rest}>
       <StatusBar style="dark" translucent />
       {children}
     </View>

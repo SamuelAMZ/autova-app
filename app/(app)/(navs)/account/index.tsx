@@ -20,7 +20,6 @@ import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import { router } from "expo-router";
 import Colors from "@/constants/Colors";
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import CustomButton from "@/components/CustomButton";
 import { useSession } from "@/context/authContext";
 import { IUser } from "@/constants/types";

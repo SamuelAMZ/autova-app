@@ -9,19 +9,43 @@ import {
 } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { SearchNormal1 } from "iconsax-react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { modelData } from "@/constants/data";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { loadModels } from "@/utils/modelsRequest";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Model() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
 
   const handleSelect = (degree: string) => {
     setSelectedDegree(degree);
   };
+
+  const { brandId }: { brandId: string } = useLocalSearchParams();
+
+  const ModelQuery = useQuery({
+    queryKey: ["models"],
+    queryFn: loadModels,
+  });
+
+  console.log(ModelQuery?.data?.data);
+
+  const filterModel = () => {
+
+    const data = ModelQuery?.data?.data.for
+  }
+  
+   // Filtre les modèles en fonction de la recherche
+   const filteredModels = ModelQuery?.data?.data.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+
 
   return (
     <>
@@ -57,6 +81,7 @@ export default function Model() {
                 className=" w-full py-[13px]"
                 placeholder="Search a model"
                 placeholderTextColor="#1D2939"
+                onChangeText={(text) => setSearch(text)} 
               />
               <View style={{ position: "absolute", top: "0", right: 13 }}>
                 <SearchNormal1 size="20" color="#000" />
@@ -73,16 +98,16 @@ export default function Model() {
             </ThemedText>
 
             <View className="">
-              {modelData.map((item) => (
+              {filteredModels?.map((item) => (
                 <TouchableOpacity
-                  key={item.name}
-                  onPress={() => handleSelect(item.name)}
+                  key={item._id}
+                  onPress={() => handleSelect(item._id)}
                   className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
                 >
                   <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                     {item.name}
                   </ThemedText>
-                  {selectedDegree === item.name && (
+                  {selectedDegree === item._id && (
                     <AntDesign
                       name="check"
                       size={20}
