@@ -21,7 +21,7 @@ interface Slide {
 }
 
 interface CarImagesSliderProps {
-  Slides: Slide[];
+  Slides: Array<string>;
 }
 
 const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
@@ -34,6 +34,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   const zoomImageRef = useRef<any>(null);
 
   const [loop, setLoop] = useState<boolean>(true);
+  const [isFast, setIsFast] = React.useState(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(true);
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -92,6 +93,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         height={263}
         data={Slides}
         scrollAnimationDuration={1000}
+        autoPlayInterval={isFast ? 1000 : 5000}
         // withAnimation={{
         //   type: "timing",
         //   config: {},
@@ -105,7 +107,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
         autoPlay={autoPlay}
         renderItem={({ item, index }) => (
           <ImageZoom
-            key={`${item.img}-${index}`}
+            key={`${item}-${index}`}
             ref={zoomImageRef}
             cropWidth={width}
             cropHeight={263}
@@ -134,7 +136,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
               }
             }}
           >
-            <Image style={{ width, minHeight: 263 }} source={item.img} />
+            <Image style={{ width, minHeight: 263 }} source={{ uri: item }} />
           </ImageZoom>
         )}
       />
@@ -142,7 +144,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
       <TargetItemZoom onPress={handleZoom} />
       <DisplayItemsRatio
         current={scrollIndex + 1}
-        totalItemsCount={Slides.length}
+        totalItemsCount={Slides?.length}
       />
     </View>
   );

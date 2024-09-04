@@ -17,7 +17,6 @@ const BrandItem = ({
   size: number;
   brand: BrandType;
 }) => {
-  console.log(brand, "brand");
   return (
     <View className="flex items-center">
       <TouchableOpacity

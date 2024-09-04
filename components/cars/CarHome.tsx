@@ -1,8 +1,4 @@
-import {
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, TouchableOpacity, Dimensions } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { useRef, useState } from "react";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
@@ -13,16 +9,12 @@ import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
 import BrandCar from "./CarItem";
 import { CarItemSkeleton } from "../skeleton/CarItemSkeleton";
+import { useQuery } from "@tanstack/react-query";
+import { loadCars } from "@/utils/carRequest";
+import { router } from "expo-router";
+import { ErrorLoadingData } from "../ErrorLoading";
 
-export default function CarHome({
-  car,
-  onPress,
-  imgHeight,
-}: {
-  car: Car;
-  onPress: () => void;
-  imgHeight?: number;
-}) {
+export default function CarHome({ imgHeight }: { imgHeight?: number }) {
   const width = Dimensions.get("window").width;
   const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -42,11 +34,27 @@ export default function CarHome({
         width: width,
       } as const);
 
-  const renderItem = ({ item, index }: { item: Car; index: number }) => {
+  const listingCarsQuery = useQuery({
+    queryKey: ["listing-cars"],
+    queryFn: loadCars,
+  });
+
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <BrandCar onPress={onPress} car={item} className="mx-[5px]" />
+          <BrandCar
+            onPress={() => {
+              router.navigate({
+                pathname: "/(app)/brands/carDetail",
+                params: {
+                  carId: item._id,
+                },
+              });
+            }}
+            car={item}
+            className="mx-[5px]"
+          />
         </Animated.View>
       </LongPressGestureHandler>
     );
@@ -69,7 +77,7 @@ export default function CarHome({
           </ThemedText>
         </TouchableOpacity>
       </View>
-      {false ? (
+      {listingCarsQuery.isLoading ? (
         <Carousel
           ref={ref}
           {...baseOptions}
@@ -97,7 +105,9 @@ export default function CarHome({
           )}
           onSnapToItem={(index) => setCurrentIndex(index)}
         />
-      ) : (
+      ) : null}
+
+      {listingCarsQuery.isSuccess ? (
         <Carousel
           ref={ref}
           {...baseOptions}
@@ -114,7 +124,7 @@ export default function CarHome({
           }}
           loop={loop}
           autoPlay={autoPlay}
-          data={CarData}
+          data={listingCarsQuery?.data?.data}
           mode="parallax"
           modeConfig={{
             parallaxScrollingScale: 1,
@@ -123,7 +133,11 @@ export default function CarHome({
           renderItem={renderItem}
           onSnapToItem={(index) => setCurrentIndex(index)}
         />
-      )}
+      ) : null}
+
+      {listingCarsQuery.isError ? (
+        <ErrorLoadingData refetch={listingCarsQuery.refetch} />
+      ) : null}
     </View>
   );
 }

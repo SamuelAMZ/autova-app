@@ -32,6 +32,8 @@ import {
 } from "@/constants";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
+import { useQuery } from "@tanstack/react-query";
+import { loadCars } from "@/utils/carRequest";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -119,6 +121,11 @@ const CarSearchScreen = () => {
   }, [filterData]);
 
   //
+
+  const listingCarsQuery = useQuery({
+    queryKey: ["listing-cars"],
+    queryFn: loadCars,
+  });
   return (
     <>
       <View
@@ -176,13 +183,16 @@ const CarSearchScreen = () => {
 
           <FlatList
             className="px-[4%]"
-            data={CarData}
+            data={listingCarsQuery?.data?.data}
             renderItem={({ item }) => (
               <CarItem
                 car={item}
                 onPress={() => {
                   router.navigate({
                     pathname: "/(app)/brands/carDetail",
+                    params: {
+                      carId: item._id,
+                    },
                   });
                 }}
               />

@@ -14,21 +14,35 @@ import ThemedText from "@/components/ThemedText";
 import { CarData } from "@/constants/CarData";
 import CarItem from "@/components/cars/CarItem";
 import Colors from "@/constants/Colors";
-
+import { loadCars } from "@/utils/carRequest";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Brand() {
+  // load brands
+  const listingCarsQuery = useQuery({
+    queryKey: ["listing-cars"],
+    queryFn: loadCars,
+  });
+
+  console.log(
+    JSON.stringify(listingCarsQuery?.data?.data, null, 2),
+    "listingCarsQuery"
+  );
   return (
     <View className={`flex-1 bg-[${Colors.backgroundSecondaryVariant}]`}>
       <CustomHeader />
       <ScrollView className="flex-1 px-[4%] pt-[1rem]">
         <FlatList
-          data={CarData}
+          data={listingCarsQuery?.data?.data}
           renderItem={({ item }) => (
             <CarItem
               car={item}
               onPress={() => {
                 router.navigate({
                   pathname: "/(app)/brands/carDetail",
+                  params: {
+                    carId: item._id,
+                  },
                 });
               }}
             />
@@ -67,5 +81,3 @@ function CustomHeader({ title }: { title?: string }) {
     </Header>
   );
 }
-
-

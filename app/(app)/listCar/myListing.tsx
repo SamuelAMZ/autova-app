@@ -14,8 +14,19 @@ import { router } from "expo-router";
 import CarItem from "@/components/cars/CarItem";
 import { CarData } from "@/constants/CarData";
 import Colors from "@/constants/Colors";
+import { useQuery } from "@tanstack/react-query";
+import { loadCars } from "@/utils/carRequest";
 
 export default function MyListing() {
+  const listingCarsQuery = useQuery({
+    queryKey: ["listing-cars"],
+    queryFn: loadCars,
+  });
+
+  console.log(
+    JSON.stringify(listingCarsQuery?.data?.data, null, 2),
+    "listingCarsQuery"
+  );
   return (
     <>
       <CustomHeader />
@@ -67,13 +78,16 @@ export default function MyListing() {
             </ThemedText>
             <FlatList
               className="w-full"
-              data={[{}, {}, {}]}
+              data={listingCarsQuery?.data?.data}
               renderItem={({ index, item }) => (
                 <CarItem
-                  car={CarData[0]}
+                  car={listingCarsQuery?.data?.data[0]}
                   onPress={() => {
                     router.navigate({
                       pathname: "/(app)/brands/carDetail",
+                      params: {
+                        carId: item._id,
+                      },
                     });
                   }}
                 />

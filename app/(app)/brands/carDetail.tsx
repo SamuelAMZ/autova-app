@@ -29,6 +29,11 @@ import colors from "@/constants/Colors";
 
 import { ImageSliderSkeleton } from "@/components/skeleton/carDetails/imageSliderSkeleton";
 import { CarModelDetailSkeleton } from "@/components/skeleton/carDetails/carModelDetailSkeleton";
+import { getCarById } from "@/utils/carRequest";
+import { useGlobalSearchParams } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
+import { ErrorLoadingData } from "@/components/ErrorLoading";
+import { CarData } from "@/constants/CarData";
 
 import {
   openTelegram,
@@ -36,18 +41,6 @@ import {
   makePhoneCall,
 } from "@/utils/handleDeepLinks";
 import { extractLastDigits } from "@/utils/extractLastDigits";
-
-const data = [
-  {
-    img: require("@/assets/cars/teslaX.png"),
-  },
-  {
-    img: require("@/assets/cars/teslaS.png"),
-  },
-  {
-    img: require("@/assets/cars/teslaY.png"),
-  },
-];
 
 export default function CarDetail() {
   useStatusBar("dark-content", "transparent", true);
@@ -134,12 +127,25 @@ export default function CarDetail() {
     handleSelectedViewWhenScrolling();
   };
 
+  // get car detail
+  const { carId }: { carId: string } = useGlobalSearchParams();
+  const carDetailQuery = useQuery({
+    queryKey: ["carDetail"],
+    queryFn: () => getCarById({ id: carId }),
+  });
+
+  console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery");
+
   return (
     <>
       <ImageBackground
         style={{ flex: 1, width: width, height: height }}
         resizeMode="cover"
-        source={data[0].img}
+        source={
+          carDetailQuery.data?.imagesUrls[0]
+            ? { uri: carDetailQuery.data?.imagesUrls[0] }
+            : CarData[0].img
+        }
         blurRadius={290}
       >
         <View className="flex-1">
@@ -147,7 +153,7 @@ export default function CarDetail() {
             <View
               onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
             >
-              <CustomHeader />
+              <CustomHeader title={carDetailQuery.data?.name} />
             </View>
             <View
               style={{
@@ -175,18 +181,21 @@ export default function CarDetail() {
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
               >
-                <View
-                  style={{
-                    width: width,
-                    minHeight: 263,
-                  }}
-                >
-                  {false ? (
-                    <ImageSliderSkeleton />
-                  ) : (
-                    <CarImagesSlider Slides={data} />
-                  )}
-                </View>
+                {carDetailQuery.isLoading ? <ImageSliderSkeleton /> : null}
+                {carDetailQuery.isSuccess ? (
+                  carDetailQuery.data?.imagesUrls?.length ? (
+                    <View
+                      style={{
+                        width: width,
+                        minHeight: 263,
+                      }}
+                    >
+                      <CarImagesSlider
+                        Slides={carDetailQuery.data?.imagesUrls}
+                      />
+                    </View>
+                  ) : null
+                ) : null}
 
                 <View
                   style={{
@@ -196,149 +205,107 @@ export default function CarDetail() {
                   }}
                   className="px-[5%] flex gap-[20px]"
                 >
-                  {false ? (
-                    <View
-                      style={{
-                        height: 18,
-                        width: "100%",
-                      }}
-                      className="bg-slate-500 rounded animate-pulse"
-                    ></View>
-                  ) : (
-                    <ThemedText
-                      style={{
-                        fontFamily: "SpaceGrotesk_600SemiBold",
-                      }}
-                      className="text-[#1D2939] text-[20px]"
-                    >
-                      Tesla Model X Long Range 316kW
-                    </ThemedText>
-                  )}
+                  <ThemedText
+                    style={{
+                      fontFamily: "SpaceGrotesk_600SemiBold",
+                    }}
+                    className="text-[#1D2939] text-[20px]"
+                  >
+                    {carDetailQuery.data?.name}
+                  </ThemedText>
 
                   <View className="flex-col gap-[22px] items-between">
                     <View className="flex-row items-center justify-between">
-                      {false ? (
-                        <CarModelDetailSkeleton />
-                      ) : (
-                        <View className="flex-row items-center justify-center gap-[8px]">
-                          <Image
-                            style={{
-                              width: 24,
-                              height: 24,
-                            }}
-                            source={require("@/assets/cars/engine.png")}
-                          />
-                          <ThemedText className="text-[#344054] font-[400] text-[16px]">
-                            Automatic
-                          </ThemedText>
-                        </View>
-                      )}
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/engine.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[16px]">
+                          Automatic
+                        </ThemedText>
+                      </View>
 
-                      {false ? (
-                        <CarModelDetailSkeleton />
-                      ) : (
-                        <View className="flex-row items-center justify-center gap-[8px]">
-                          <Image
-                            style={{
-                              width: 24,
-                              height: 24,
-                            }}
-                            source={require("@/assets/cars/calendar.png")}
-                          />
-                          <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                            12 X 12
-                          </ThemedText>
-                        </View>
-                      )}
-                      {false ? (
-                        <CarModelDetailSkeleton />
-                      ) : (
-                        <View className="flex-row items-center justify-center gap-[8px]">
-                          <Image
-                            style={{
-                              width: 24,
-                              height: 24,
-                            }}
-                            source={require("@/assets/cars/type.png")}
-                          />
-                          <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                            Electric
-                          </ThemedText>
-                        </View>
-                      )}
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/calendar.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          12 X 12
+                        </ThemedText>
+                      </View>
+
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/type.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          Electric
+                        </ThemedText>
+                      </View>
                     </View>
 
                     <View className="flex-row items-center justify-between">
-                      {false ? (
-                        <CarModelDetailSkeleton />
-                      ) : (
-                        <View className="flex-row items-center justify-center gap-[8px]">
-                          <Image
-                            style={{
-                              width: 24,
-                              height: 24,
-                            }}
-                            source={require("@/assets/cars/km.png")}
-                          />
-                          <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                            316 kW
-                          </ThemedText>
-                        </View>
-                      )}
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/km.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          316 kW
+                        </ThemedText>
+                      </View>
 
-                      {false ? (
-                        <CarModelDetailSkeleton />
-                      ) : (
-                        <View className="flex-row items-center justify-center gap-[8px]">
-                          <Image
-                            style={{
-                              width: 24,
-                              height: 24,
-                            }}
-                            source={require("@/assets/cars/plus.png")}
-                          />
-                          <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                            10/2023
-                          </ThemedText>
-                        </View>
-                      )}
-                      {false ? (
-                        <CarModelDetailSkeleton />
-                      ) : (
-                        <View className="flex-row items-center justify-center gap-[8px]">
-                          <Image
-                            style={{
-                              width: 24,
-                              height: 24,
-                            }}
-                            source={require("@/assets/cars/limit.png")}
-                          />
-                          <ThemedText className="text-[#344054] font-[400] text-[14px]">
-                            60 705 km
-                          </ThemedText>
-                        </View>
-                      )}
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/plus.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          10/2023
+                        </ThemedText>
+                      </View>
+
+                      <View className="flex-row items-center justify-center gap-[8px]">
+                        <Image
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}
+                          source={require("@/assets/cars/limit.png")}
+                        />
+                        <ThemedText className="text-[#344054] font-[400] text-[14px]">
+                          60 705 km
+                        </ThemedText>
+                      </View>
                     </View>
                   </View>
 
-                  {false ? (
-                    <View
-                      style={{
-                        height: 18,
-                        width: "30%",
-                      }}
-                      className="bg-slate-500 rounded animate-pulse"
-                    ></View>
-                  ) : (
-                    <ThemedText
-                      style={{
-                        fontFamily: "SpaceGrotesk_600SemiBold",
-                      }}
-                      className={`text-[${colors.background}] text-[28px]`}
-                    >
-                      $68,490
-                    </ThemedText>
-                  )}
+                  <ThemedText
+                    style={{
+                      fontFamily: "SpaceGrotesk_600SemiBold",
+                    }}
+                    className={`text-[${colors.background}] text-[28px]`}
+                  >
+                    $100
+                  </ThemedText>
 
                   <View className="flex items-start gap-[16px] w-full">
                     <Image
@@ -474,28 +441,7 @@ function CarDetails() {
       <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
         Details
       </ThemedText>
-      {false ? (
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "red",
-          }}
-          className="flex-1 justify-start items-center gap-[10px] animate-pulse"
-        >
-          {Array.from({ length: 6 }).map((_, idx) => {
-            return (
-              <View
-                key={idx}
-                style={{
-                  height: 12,
-                  width: "100%",
-                }}
-                className="bg-slate-500 rounded"
-              ></View>
-            );
-          })}
-        </View>
-      ) : (
+      {
         <View>
           <ThemedText className="text-[#344054] text-[15px] font-[400]">
             Nisi purus felis enim dolor aliquet at enim viverra aenean. Placerat
@@ -509,7 +455,7 @@ function CarDetails() {
             quam eget porttitor. Nulla nisi ultricies id euismod.
           </ThemedText>
         </View>
-      )}
+      }
     </View>
   );
 }
@@ -549,55 +495,31 @@ function CarSpecifications() {
   ];
   return (
     <View className="flex gap-[16px] justify-center py-[12px]">
-      {false
-        ? Array.from({ length: 6 }).map((item, idx) => {
-            return (
-              <View
-                key={idx}
-                className="flex-1 flex-row justify-start gap-[30px] items-center animate-pulse"
-              >
-                <View
-                  style={{
-                    height: 18,
-                    width: "45%",
-                  }}
-                  className="bg-slate-500 rounded"
-                ></View>
-                <View
-                  style={{
-                    height: 18,
-                    width: "45%",
-                  }}
-                  className="bg-slate-500 rounded"
-                ></View>
-              </View>
-            );
-          })
-        : data.map((item, idx) => {
-            return (
-              <View
-                key={idx}
-                className="flex-1 flex-row justify-start gap-[14px] items-center"
-              >
-                <ThemedText
-                  style={{
-                    flex: 0.5,
-                  }}
-                  className="text-[#1D2939] text-[16px] underline"
-                >
-                  {Object.keys(item)[0]}:
-                </ThemedText>
-                <ThemedText
-                  style={{
-                    flex: 0.5,
-                  }}
-                  className="text-[#475467] text-[16px]"
-                >
-                  {Object.values(item)[0]}
-                </ThemedText>
-              </View>
-            );
-          })}
+      {data?.map((item, idx) => {
+        return (
+          <View
+            key={idx}
+            className="flex-1 flex-row justify-start gap-[14px] items-center"
+          >
+            <ThemedText
+              style={{
+                flex: 0.5,
+              }}
+              className="text-[#1D2939] text-[16px] underline"
+            >
+              {Object.keys(item)[0]}:
+            </ThemedText>
+            <ThemedText
+              style={{
+                flex: 0.5,
+              }}
+              className="text-[#475467] text-[16px]"
+            >
+              {Object.values(item)[0]}
+            </ThemedText>
+          </View>
+        );
+      })}
     </View>
   );
 }
@@ -717,7 +639,7 @@ function CustomHeader({ title }: { title?: string }) {
             <ArrowLeft size={18} variant="Outline" color="#000000" />
           </TouchableOpacity>
           <ThemedText className="text-[#101828] text-[20px] font-[600]">
-            Tesla Model X
+            {title}
           </ThemedText>
         </View>
         <View className="flex-row items-center justify-center gap-[12px]">

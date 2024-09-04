@@ -27,6 +27,7 @@ import postReq from "@/constants/postReq";
 
 import { loadBrands } from "@/utils/loadBrands";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
+import { ErrorLoadingData } from "@/components/ErrorLoading";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -85,6 +86,7 @@ const HomePage = () => {
           </View>
 
           {/* Brands Items */}
+
           {brandQuery.isLoading ? (
             <View className="w-full px-4">
               <FlatList
@@ -96,7 +98,8 @@ const HomePage = () => {
                 ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
             </View>
-          ) : brandQuery.isSuccess ? (
+          ) : null}
+          {brandQuery.isSuccess ? (
             <View className="w-full px-4">
               <FlatList
                 showsVerticalScrollIndicator={false}
@@ -109,31 +112,25 @@ const HomePage = () => {
                 ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
             </View>
-          ) : (
-            <View className="flex-row items-center justify-center gap-3">
-              <ThemedText className="text-[17px]">
-                Something went wrong.
-              </ThemedText>
-              <TouchableOpacity
-                onPress={() => {
-                  brandQuery.refetch();
-                }}
-              >
-                <ThemedText className="text-[17px]">Refetch</ThemedText>
-              </TouchableOpacity>
-            </View>
-          )}
+          ) : null}
+
+          {brandQuery.isError ? (
+            <ErrorLoadingData refetch={brandQuery.refetch} />
+          ) : null}
 
           {/* Car Items */}
-          <FlatList
+          {/* <FlatList
             className="px-[4%]"
-            data={CarData}
+            data={listingCarsQuery?.data?.data}
             renderItem={({ item }) => (
               <CarHome
                 car={item}
                 onPress={() => {
                   router.navigate({
                     pathname: "/(app)/brands/carDetail",
+                    params: {
+                      carId: item._id,
+                    },
                   });
                 }}
               />
@@ -144,7 +141,11 @@ const HomePage = () => {
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
-          />
+          /> */}
+
+          <View className="px-[4%]">
+            <CarHome />
+          </View>
         </View>
       </ScrollView>
       <CustomBottomSheetModal
@@ -183,7 +184,8 @@ const HomePage = () => {
             renderItem={() => <BrandItemSkeleton />}
             ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
           />
-        ) : (
+        ) : null}
+        {brandQuery.isSuccess ? (
           <View className="w-full px-4">
             <FlatList
               data={brandQuery?.data?.data}
@@ -204,7 +206,11 @@ const HomePage = () => {
               ItemSeparatorComponent={() => <VerticalSeperator size={12} />}
             />
           </View>
-        )}
+        ) : null}
+
+        {brandQuery.isError ? (
+          <ErrorLoadingData refetch={brandQuery.refetch} />
+        ) : null}
       </CustomBottomSheetModal>
       <StatusBar style="light" translucent />
     </View>

@@ -1,77 +1,3 @@
-/* import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-  ScrollView,
-} from "react-native";
-import Header from "@/components/Header";
-import ThemedText from "@/components/ThemedText";
-import { Notification, Gps, SearchNormal1, Add } from "iconsax-react-native";
-import { Image } from "react-native";
-import { router } from "expo-router";
-import Colors from "@/constants/Colors";
-
-const ListingPage = () => {
-  return (
-    <>
-      <CustomHeader />
-      <ScrollView className="bg-[#fff]">
-        <View className="flex items-center px-[16px] py-[50px] gap-[30px] h-full justify-center ">
-          <Image
-            source={require("@/assets/empty.png")}
-            style={{ width: 200, height: 200 }}
-          />
-          <View className="flex gap-[24px] ">
-            <ThemedText
-              className="text-[#101828] text-[20px] text-center"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              You don’t have any listing yet!
-            </ThemedText>
-            <ThemedText
-              className="text-[#344054] text-center text-[14px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              We make it easy to reach millions of potential buyers. Start your
-              free listing by providing your location below:
-            </ThemedText>
-            <View className="flex gap-[16px] relative">
-              <Gps
-                size="24"
-                color="#1D2939"
-                style={{
-                  position: "absolute",
-                  right: 20,
-                  top: Platform.OS === "android" ? 15 : 10,
-                }}
-              />
-              <TextInput
-                className={`bg-[#7878801F] relative border border-[${Colors.background}] py-[12px] px-[20px] rounded-[12px]`}
-                placeholder="Enter ZIP code"
-                placeholderTextColor="#1D2939"
-              />
-              <TouchableOpacity
-                onPress={() => {
-                  router.navigate("/(app)/listCar/condition");
-                }}
-                className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}>
-                <ThemedText
-                  className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Start your listing
-                </ThemedText>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </>
-  );
-};
-
-export default ListingPage; */
-
 import React, { useEffect, useMemo, useState } from "react";
 import {
   View,
@@ -112,6 +38,9 @@ import {
 import CarItem from "@/components/cars/CarItem";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
+import { loadCars } from "@/utils/carRequest";
+import { useQuery } from "@tanstack/react-query";
+import { ErrorLoadingData } from "@/components/ErrorLoading";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -191,6 +120,17 @@ export default function MyListing() {
     );
   }, [filterData]);
 
+  // load brands
+  const listingCarsQuery = useQuery({
+    queryKey: ["listing-cars"],
+    queryFn: loadCars,
+  });
+
+  console.log(
+    JSON.stringify(listingCarsQuery?.data?.data, null, 2),
+    "listingCarsQuery"
+  );
+
   return (
     <>
       <CustomHeader />
@@ -224,7 +164,7 @@ export default function MyListing() {
           </TouchableOpacity>
         </View>
 
-        {false ? (
+        {listingCarsQuery.isLoading ? (
           <FlatList
             className="px-[4%]"
             data={Array.from({ length: 10 })}
@@ -234,16 +174,20 @@ export default function MyListing() {
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
           />
-        ) : (
+        ) : null}
+        {listingCarsQuery.isSuccess ? (
           <FlatList
             className="px-[4%]"
-            data={CarData}
+            data={listingCarsQuery?.data?.data}
             renderItem={({ item }) => (
               <CarItem
                 car={item}
                 onPress={() => {
                   router.navigate({
                     pathname: "/(app)/brands/carDetail",
+                    params: {
+                      carId: item?._id,
+                    },
                   });
                 }}
               />
@@ -253,7 +197,10 @@ export default function MyListing() {
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
           />
-        )}
+        ) : null}
+        {listingCarsQuery.isError ? (
+          <ErrorLoadingData refetch={listingCarsQuery.refetch} />
+        ) : null}
       </ScrollView>
       <CustomBottomSheetModal
         isVisible={isModalVisible}

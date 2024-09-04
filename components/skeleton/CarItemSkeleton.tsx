@@ -8,10 +8,10 @@ export function CarItemSkeleton({
   page?: string;
 }) {
   return (
-    <View className={`${className} animate-pulse`}>
+    <View className={`${className}`}>
       <View
         style={[styles.card, { gap: 18 }]}
-        className="p-[16px] flex flex-col bg-[#FFFFFF]"
+        className="p-[16px] flex flex-col bg-[#FFFFFF] animate-pulse"
       >
         <View className="bg-slate-500 rounded max-w-[349px] h-[180px] aspect-auto w-full" />
         <View
