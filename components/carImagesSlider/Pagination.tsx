@@ -8,14 +8,14 @@ import Animated, {
 } from "react-native-reanimated";
 
 interface PaginationProps {
-  data: Array<{ img: any }>;
+  data: Array<string>;
   index: number;
 }
 
 const Pagination: React.FC<PaginationProps> = ({ data, index }) => {
   return (
     <View style={styles.container}>
-      {data.map((_, idx) => {
+      {data?.map((_, idx) => {
         const widthStyle = useAnimatedStyle(() => ({
           width: interpolate(
             index,

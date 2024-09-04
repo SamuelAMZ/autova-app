@@ -30,7 +30,7 @@ export default function CarItem({
       >
         <View className="relative w-full">
           <Image
-            source={car.img}
+            source={{ uri: car.imagesUrls[0] }}
             style={{
               borderRadius: 10,
               // width: "100%",
@@ -72,8 +72,8 @@ export default function CarItem({
                 {car.year}
               </ThemedText>
             </View>
-            <ThemedText className="text-[#344054] font-[500] text-[13px]">
-              {car.label}
+            <ThemedText className="text-[#344054] font-[500] text-[16px]">
+              {car.cityId.name} | {car.countryId.name}
             </ThemedText>
           </View>
           {/* <View>
