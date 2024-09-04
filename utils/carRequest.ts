@@ -43,10 +43,16 @@ export async function savedCar(data: savedCarRequestProps) {
   }
 }
 
-export async function getSavedCar({ userId }: { userId: string }) {
+export async function getSavedCar({
+  userId,
+  expand = false,
+}: {
+  userId: string;
+  expand?: boolean;
+}) {
   try {
     const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/saved_cars/get`;
-    const response: AxiosResponse = await axios.post(url, { userId });
+    const response: AxiosResponse = await axios.post(url, { userId, expand });
     return response?.data ?? [];
   } catch (error: any) {
     console.error(error, "error savedCar");

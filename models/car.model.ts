@@ -12,6 +12,10 @@ interface Car {
   cityId: {
     name: string;
   };
+  odometer: string;
+  salesPrice: string;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export default Car;

@@ -1,11 +1,9 @@
 import { CollectionItem } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import {
-  Add,
-  InfoCircle,
-} from "iconsax-react-native";
+import { Add, InfoCircle } from "iconsax-react-native";
 import React from "react";
+import Car from "@/models/car.model";
 import {
   View,
   FlatList,
@@ -17,8 +15,19 @@ import { router } from "expo-router";
 
 import Colors from "@/constants/Colors";
 import { SavedCarSkeleton } from "@/components/skeleton/SavedCarSkeleton";
+import { useQuery } from "@tanstack/react-query";
+import { getSavedCar } from "@/utils/carRequest";
+import { ErrorLoadingData } from "@/components/ErrorLoading";
+import { refresh } from "@react-native-community/netinfo";
 
 const SavedPage = () => {
+  const getSavedCarsQueryList = useQuery({
+    queryKey: ["get-saved-cars-list"],
+    queryFn: () =>
+      getSavedCar({ userId: "66d08d69f683984aa2acef6f", expand: true }),
+  });
+
+  // console.log(getSavedCarsQueryList, "getSavedCarsQueryList");
   return (
     <View className="flex-1 bg-white">
       <Header>
@@ -83,7 +92,7 @@ const SavedPage = () => {
           Saved Cars
         </ThemedText>
 
-        {false ? (
+        {getSavedCarsQueryList.isLoading ? (
           <FlatList
             className="mt-5"
             data={Array.from({ length: 5 })}
@@ -94,18 +103,24 @@ const SavedPage = () => {
             initialNumToRender={5}
             ListFooterComponent={() => <View style={{ height: 30 }} />}
           />
-        ) : (
+        ) : null}
+
+        {getSavedCarsQueryList.isSuccess ? (
           <FlatList
             className="mt-5"
-            data={Array.from({ length: 3 })}
-            renderItem={({ item }) => <SavedCarItem />}
+            data={getSavedCarsQueryList.data?.cars}
+            renderItem={({ item }) => <SavedCarItem car={item} />}
             ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
             initialNumToRender={5}
             ListFooterComponent={() => <View style={{ height: 30 }} />}
           />
-        )}
+        ) : null}
+
+        {getSavedCarsQueryList.isError ? (
+          <ErrorLoadingData refetch={getSavedCarsQueryList.refetch} />
+        ) : null}
       </ScrollView>
     </View>
   );
@@ -113,7 +128,39 @@ const SavedPage = () => {
 
 export default SavedPage;
 
-const SavedCarItem = () => {
+const SavedCarItem = ({ car }: { car: Car }) => {
+  const date = new Date(car.updatedAt);
+  // Get the day of the month
+  const day = date.getDate();
+
+  // Get the month name
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[date.getMonth()];
+
+  // Get the hours and format them for 12-hour time
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  // Convert 24-hour time to 12-hour time
+  hours = hours % 12;
+  hours = hours ? hours : 12; // if hour is 0, display it as 12
+
+  // Format the string
+  const formattedDate = `${day} ${month}, ${hours}:${minutes} ${ampm}`;
   return (
     <TouchableOpacity
       onPress={() => router.navigate("/(app)/brands/carDetail")}
@@ -121,26 +168,30 @@ const SavedCarItem = () => {
     >
       <Image
         className="w-[80] h-[70] rounded-lg"
-        source={require("@/assets/images/audi.png")}
+        source={
+          car.imagesUrls[0]
+            ? { uri: car.imagesUrls[0] }
+            : require("@/assets/images/audi.png")
+        }
       />
       <View className="flex-1 justify-between">
         <ThemedText
           className="text-[#101828]  text-[16px]"
           style={{ fontFamily: "SpaceGrotesk_700Bold" }}
         >
-          Audi A4 2.0T Premium
+          {car?.name}
         </ThemedText>
         <ThemedText className="text-[#667085]">
-          15,000 miles | New York, NY
+          {car?.odometer} miles | {car?.cityId?.name}, {car?.countryId?.name}
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
           <ThemedText
             className="text-[#5856D6]  text-[16px]"
             style={{ fontFamily: "SpaceGrotesk_700Bold" }}
           >
-            $25,000
+            ${car?.salesPrice}
           </ThemedText>
-          <ThemedText className="text-[#667085]">16 Aug, 10:20 PM</ThemedText>
+          <ThemedText className="text-[#667085]">{formattedDate}</ThemedText>
         </View>
       </View>
     </TouchableOpacity>

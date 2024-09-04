@@ -52,8 +52,15 @@ export default function CarItem({
         });
       }
 
+      // refetch saved cars id
       queryClient.invalidateQueries({
         queryKey: ["get-saved-cars"],
+        exact: true,
+      });
+
+      // refetch saved cars data
+      queryClient.invalidateQueries({
+        queryKey: ["get-saved-cars-list"],
         exact: true,
       });
     } catch (e) {
@@ -97,7 +104,7 @@ export default function CarItem({
               }}
               className="text-[#101828] text-[19px]"
             >
-              {car.name}
+              {car?.name}
             </ThemedText>
           </View>
           <View className="flex flex-row items-center justify-start gap-4">
@@ -108,11 +115,11 @@ export default function CarItem({
               }}
             >
               <ThemedText className="p-[5px_12px] text-[15px] font-[600] text-[#101828]">
-                {car.year}
+                {car?.year}
               </ThemedText>
             </View>
             <ThemedText className="text-[#344054] font-[500] text-[16px]">
-              {car.cityId.name} | {car.countryId.name}
+              {car?.cityId?.name} | {car?.countryId?.name}
             </ThemedText>
           </View>
           {/* <View>
