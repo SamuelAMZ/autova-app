@@ -11,10 +11,9 @@ import {
   makeModalSearchProps,
   selectedTypeProps,
 } from "@/constants/types";
-import { loadBrands } from "@/utils/loadBrands";
-import { loadModels } from "@/utils/loadModels";
 import { useQuery } from "@tanstack/react-query";
 import { Models } from "@/models/brand.model";
+import { loadBrands, loadModels } from "@/utils/brandsRequest";
 
 const MakeModelsSearch = ({
   onChange,
