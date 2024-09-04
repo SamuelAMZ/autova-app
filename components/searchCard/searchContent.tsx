@@ -2,6 +2,7 @@ import { View } from "react-native";
 import BodyStylesSearch from "./bodyStyleSearch";
 import PriceRangeSearch from "./priceRangeSearch";
 import MakeModelsSearch from "./makeModelSearch";
+import { FilterDataProps, ItemDataProps } from "@/constants/types";
 
 const SearchContent = ({
   type,

@@ -1,143 +1,124 @@
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  StatusBar,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { View, StatusBar, TextInput } from "react-native";
 import ThemedText from "@/components/ThemedText";
-
 import CustomButton from "@/components/CustomButton";
-import { router } from "expo-router";
 import Colors from "@/constants/Colors";
+import { useState } from "react";
+import { supabaseClient } from "@/services/supabase.service";
+import TermsOfServices from "@/components/TermsOfServices";
+import { toastify } from "@/constants/utils";
+import { VerifyCode } from "./verify";
+import TogoFlag from "@/assets/icons/togo.svg";
+import { router } from "expo-router";
 
 export default function SignUp() {
+  const [verifying, setVerifying] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  async function handleSendOtpCode() {
+    const regex = /^(9[01236789]|7[012])\d{6}$/;
+    if (!phone || !regex.test(phone)) {
+      return toastify("Invalid", "Please enter correct phone number");
+    }
+    try {
+      const phoneValid = `228${phone}`;
+      setIsLoading(true);
+      await supabaseClient.auth.signInWithOtp({
+        phone: phoneValid,
+      });
+      setIsLoading(false);
+      setVerifying(true);
+    } catch (err) {
+      setIsLoading(false);
+      console.error("Error:", JSON.stringify(err, null, 2));
+    }
+  }
+
+  async function handleVerifyOtpCode() {
+    if (!code) return;
+    try {
+      setIsLoading(true);
+      const result = await supabaseClient.auth.verifyOtp({
+        phone: `228${phone}`,
+        token: code.toString().replaceAll(",", ""),
+        type: "sms",
+      });
+      setIsLoading(false);
+      const res = result.data;
+      if (res.session && res.session.access_token) {
+        return router.navigate({
+          pathname: "/auth/account",
+          params: { phone, token: res.session.access_token },
+        });
+      } else {
+        toastify("Invalid code", "Verification code is invalid");
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.error("Error:", JSON.stringify(err, null, 2));
+    }
+  }
+
+  if (verifying) {
+    return (
+      <VerifyCode
+        isLoading={isLoading}
+        code={code}
+        phone={phone}
+        onChange={(value: string[]) => setCode(value)}
+        onPress={handleVerifyOtpCode}
+      />
+    );
+  }
+
   return (
     <>
       <View
-        className={`flex-1 bg-[${Colors.textPrimary}] px-[15px] pt-[100px] w-full`}>
+        className={`flex-1 justify-center bg-[${Colors.textPrimary}] px-4 w-full`}
+      >
         <View className="items-start gap-[32px]">
           <View className="flex gap-[12px] items-start">
             <ThemedText
               className={`text-[${Colors.backgroundPrimary}] text-[15px] font-[600]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Step 1 of 2
             </ThemedText>
             <ThemedText
               className={`text-[${Colors.backgroundPrimary}] text-[28px] font-[600]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Create Your Account
             </ThemedText>
           </View>
-          <View className="flex gap-[20px] w-[100%]">
-            <View className="flex gap-[12px]">
-              <TouchableOpacity
-                className={`border border-[${Colors.borderSecondary}] px-[32px] py-[20px] flex-row items-center justify-center gap-[12px] rounded-[28px]`}>
-                <Image
-                  source={require("@/assets/Google.png")}
-                  style={{ width: 20, height: 20 }}
-                />
-                <ThemedText
-                  className="text-[16px] font-[600] text-center"
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Continue with Google
-                </ThemedText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className={`border border-[${Colors.borderSecondary}] flex flex-row px-[32px] justify-center gap-[12px] py-[20px] rounded-[28px]`}>
-                <Image
-                  source={require("@/assets/apple.png")}
-                  style={{ width: 20, height: 20 }}
-                />
-                <ThemedText
-                  className="text-[16px] font-[600]"
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Continue with Apple
-                </ThemedText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className={`border border-[${Colors.borderSecondary}] px-[32px] py-[20px] flex flex-row items-center justify-center gap-[12px] rounded-[28px]`}>
-                <Image
-                  source={require("@/assets/fb.png")}
-                  style={{ width: 20, height: 20 }}
-                />
-                <ThemedText
-                  className="text-[16px] font-[600]"
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Continue with Facebook
-                </ThemedText>
-              </TouchableOpacity>
+          <View className="flex gap-[20px] w-full">
+            <View className="flex flex-row items-center">
+              <View
+                className={`flex-row gap-2 bg-[${Colors.backgroundSecondary}] h-[50px] items-center justify-center pl-3 rounded-l-lg`}
+              >
+                <TogoFlag height={24} width={24} className="self-center" />
+                <ThemedText>+228</ThemedText>
+              </View>
+              <TextInput
+                value={phone}
+                onChangeText={(value) => value.length <= 8 && setPhone(value)}
+                keyboardType="numeric"
+                placeholder="Phone number"
+                placeholderTextColor={Colors.textSecondary}
+                className={`bg-[${Colors.backgroundSecondary}] h-[50px] flex-1 rounded-r-lg py-[16px] px-[20px]`}
+              />
             </View>
-            <View style={styles.container}>
-              <View style={styles.line} />
-              <Text style={styles.text}>Or Register with</Text>
-              <View style={styles.line} />
-            </View>
-            <TextInput
-              placeholder="Email address"
-              placeholderTextColor={Colors.textSecondary}
-              className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-            />
             <CustomButton
+              isLoading={isLoading}
               title="Continue"
-              onPress={() => {
-                router.navigate("/auth/account");
-              }}
+              onPress={handleSendOtpCode}
             />
           </View>
-          <ThemedText
-            className={` text-[${Colors.textSecondary}] text-[13px] font-[400]`}>
-            By signing up, you agree to our{" "}
-            <ThemedText
-              className={`text-[${Colors.textTertiary}] font-[500] underline`}
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              {" "}
-              Terms of Service{" "}
-            </ThemedText>{" "}
-            and{" "}
-            <ThemedText
-              className={`text-[${Colors.textTertiary}] font-[500] underline`}
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              Privacy Policy
-            </ThemedText>{" "}
-            for creating your account.
-          </ThemedText>
-          <ThemedText
-            className={` text-[${Colors.textSecondary}] text-[13px] font-[400]`}>
-            Are you dealer? Create a{" "}
-            <ThemedText
-              className={`text-[${Colors.textTertiary}] font-[500]`}
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              dealer account
-            </ThemedText>{" "}
-            instead.
-          </ThemedText>
+          <TermsOfServices />
         </View>
       </View>
       <StatusBar backgroundColor={Colors.textPrimary} barStyle="dark-content" />
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: Colors.lineColor,
-  },
-  text: {
-    fontSize: 15,
-    color: Colors.textQuinary,
-    textAlign: "center",
-    marginHorizontal: 10,
-    fontFamily: "SpaceGrotesk_400Regular",
-  },
-});

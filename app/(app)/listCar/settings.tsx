@@ -25,8 +25,10 @@ import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
 import { LangageData } from "@/constants/data";
 import { useKeyboardState } from "@/hooks/useKeyboardState";
+import { useSession } from "@/context/authContext";
 
 export default function Settings() {
+  const { signOut } = useSession();
   useStatusBar("dark", "#fff", false);
   const [isLogout, setIsLogout] = useState(false);
   const { isKeyboardVisible } = useKeyboardState();
@@ -412,7 +414,11 @@ export default function Settings() {
           </ThemedText>
         </TouchableOpacity>
       </View>
-      <LogoutModal visible={isLogout} onClose={handleLogout} />
+      <LogoutModal
+        onLogout={() => signOut()}
+        visible={isLogout}
+        onClose={handleLogout}
+      />
     </>
   );
 }

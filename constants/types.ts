@@ -1,22 +1,47 @@
-interface RangeProps {
+export interface RangeProps {
   low: number;
   high: number;
 }
 
-interface ItemDataProps {
+export interface ItemDataProps {
   label: string;
   id: string;
 }
 
-interface selectedTypeProps {
+export interface selectedTypeProps {
   type: string;
   data: ItemDataProps[];
 }
 
-interface FilterDataProps {
+export interface FilterDataProps {
   selectedMakeItem: ItemDataProps | undefined;
   selectedModelItem: ItemDataProps | undefined;
   selectedBodyItem: ItemDataProps | undefined;
   rangeValue: RangeProps;
   carDoors: number;
+}
+export interface requestExtrasProps {
+  key: string;
+  value: string;
+}
+
+export interface requestProps {
+  data: any;
+  url: string;
+  isFileUpload?: boolean;
+  extras?: requestExtrasProps[];
+}
+
+export interface TokenCache {
+  getToken: (key: string) => Promise<string | undefined | null>;
+  saveToken: (key: string, token: string) => Promise<void>;
+  clearToken?: (key: string) => void;
+}
+
+export interface IUser {
+  _id: string;
+  username: string;
+  email?: string;
+  phone: string;
+  createdAt: string;
 }

@@ -1,5 +1,5 @@
-import { Notification, SearchNormal1 } from "iconsax-react-native";
-import React, { useMemo, useRef, useState } from "react";
+import { SearchNormal1 } from "iconsax-react-native";
+import React, { useMemo } from "react";
 import {
   View,
   ScrollView,
@@ -14,7 +14,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import BrandItem from "@/components/BrandItem";
 import CarHome from "@/components/cars/CarHome";
-import FilterTag from "@/components/FilterTag";
 import ThemedText from "@/components/ThemedText";
 import SearchCard from "@/components/searchCard/SearchCard";
 import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
@@ -24,6 +23,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
+import postReq from "@/constants/postReq";
 
 import { loadBrands } from "@/utils/brandsRequest";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
@@ -117,20 +117,6 @@ const HomePage = () => {
           {brandQuery.isError ? (
             <ErrorLoadingData refetch={brandQuery.refetch} />
           ) : null}
-
-          {/* Filter tags */}
-          {/*  <View className="w-full px-4">
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={[{}, {}, {}, {}, {}, {}]}
-              renderItem={({ index, item }) => (
-                <FilterTag title="Title" active={index == 0} />
-              )}
-              ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
-            />
-          </View> */}
 
           {/* Car Items */}
           {/* <FlatList

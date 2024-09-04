@@ -4,15 +4,18 @@ import {
   Text,
   StyleSheet,
   TouchableOpacityProps,
+  ActivityIndicator,
 } from "react-native";
 import ThemedText from "./ThemedText";
 import Colors from "@/constants/Colors";
+import { isLoading } from "expo-font";
 
 type CustomButtonProps = TouchableOpacityProps & {
   title: string;
   onPress: () => void;
   backgroundColor?: string;
   textColor?: string;
+  isLoading?: boolean;
 };
 
 const CustomButton = ({
@@ -20,15 +23,22 @@ const CustomButton = ({
   onPress,
   backgroundColor = Colors.background,
   textColor = Colors.textPrimary,
+  isLoading,
 }: CustomButtonProps) => {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor }]}
-      onPress={onPress}>
-      <ThemedText
-        style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}>
-        {title}
-      </ThemedText>
+      onPress={onPress}
+    >
+      {isLoading ? (
+        <ActivityIndicator color="white" size="large" />
+      ) : (
+        <ThemedText
+          style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}
+        >
+          {title}
+        </ThemedText>
+      )}
     </TouchableOpacity>
   );
 };
@@ -39,6 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   buttonText: {
     fontSize: 17,
