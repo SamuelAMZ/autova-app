@@ -17,7 +17,7 @@ import { router } from "expo-router";
 
 import Car from "@/models/car.model";
 import { CarData } from "@/constants/CarData";
-import BrandCar from "./CarItem";
+import CarItem from "./CarItem";
 import ThemedText from "@/components/ThemedText";
 import { parallaxLayout } from "./parallax";
 
@@ -40,7 +40,6 @@ export default function RelatedCar() {
         width: width,
       } as const);
 
-      
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
@@ -49,13 +48,11 @@ export default function RelatedCar() {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <TouchableOpacity
-            className="mx-[5px]"
-            onPress={() => {}}
-            key={index}>
+          <TouchableOpacity className="mx-[5px]" onPress={() => {}} key={index}>
             <View
               style={[styles.card, index === 0 && { marginLeft: 0 }]}
-              className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]">
+              className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]"
+            >
               <View className="relative w-full">
                 <Image
                   source={item.img}
@@ -70,7 +67,8 @@ export default function RelatedCar() {
                   style={{
                     borderRadius: 100,
                   }}
-                  className="absolute right-2 top-2 bg-[#FFFFFF85] p-[10px]">
+                  className="absolute right-2 top-2 bg-[#FFFFFF85] p-[10px]"
+                >
                   <Heart
                     color={isLiked ? "#5856D6" : "black"}
                     variant={isLiked ? "Bold" : "Linear"}
@@ -82,7 +80,8 @@ export default function RelatedCar() {
                   style={{
                     fontFamily: "SpaceGrotesk_600SemiBold",
                   }}
-                  className="text-[#101828] text-[19px]">
+                  className="text-[#101828] text-[19px]"
+                >
                   {item.name}
                 </ThemedText>
                 <View className="flex flex-row items-center justify-start gap-4">
@@ -90,7 +89,8 @@ export default function RelatedCar() {
                     style={{
                       borderRadius: 100,
                       backgroundColor: "#F2F4F7",
-                    }}>
+                    }}
+                  >
                     <ThemedText className="p-[5px_12px] text-[15px] font-[600] text-[#101828]">
                       {item.year}
                     </ThemedText>
@@ -114,7 +114,8 @@ export default function RelatedCar() {
           style={{
             fontFamily: "SpaceGrotesk_600SemiBold",
           }}
-          className="font-semibold text-[18px]">
+          className="font-semibold text-[18px]"
+        >
           Featured Dealers
         </ThemedText>
         <TouchableOpacity>

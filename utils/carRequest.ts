@@ -27,3 +27,29 @@ export async function getCarById(data: getRequestProps) {
     return [];
   }
 }
+
+interface savedCarRequestProps {
+  carsId: Array<string>;
+  userId: string;
+}
+export async function savedCar(data: savedCarRequestProps) {
+  try {
+    const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/saved_cars/create`;
+    const response: AxiosResponse = await axios.post(url, data);
+    return response?.data ?? [];
+  } catch (error: any) {
+    console.error(error, "error savedCar");
+    return [];
+  }
+}
+
+export async function getSavedCar({ userId }: { userId: string }) {
+  try {
+    const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/saved_cars/get`;
+    const response: AxiosResponse = await axios.post(url, { userId });
+    return response?.data ?? [];
+  } catch (error: any) {
+    console.error(error, "error savedCar");
+    return [];
+  }
+}

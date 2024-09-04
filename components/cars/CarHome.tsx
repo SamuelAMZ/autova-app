@@ -7,10 +7,11 @@ import { CarData } from "@/constants/CarData";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
-import BrandCar from "./CarItem";
+import CarItem from "./CarItem";
 import { CarItemSkeleton } from "../skeleton/CarItemSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { loadCars } from "@/utils/carRequest";
+import { getSavedCar } from "@/utils/carRequest";
 import { router } from "expo-router";
 import { ErrorLoadingData } from "../ErrorLoading";
 
@@ -20,7 +21,6 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
-  const [isLiked, setIsLiked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const baseOptions = isVertical
@@ -39,11 +39,16 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
     queryFn: loadCars,
   });
 
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
+  });
+
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <BrandCar
+          <CarItem
             onPress={() => {
               router.navigate({
                 pathname: "/(app)/brands/carDetail",
@@ -53,6 +58,7 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
               });
             }}
             car={item}
+            savedCarsId={getSavedCarsQuery.data?.carsId || []}
             className="mx-[5px]"
           />
         </Animated.View>
