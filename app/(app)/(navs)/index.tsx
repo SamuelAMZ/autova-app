@@ -15,7 +15,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
-import { loadBrands, loadModels } from "@/utils/loadBrands";
+
+import { loadBrands } from "@/utils/brandsRequest";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 
@@ -36,12 +37,6 @@ const HomePage = () => {
   const brandQuery = useQuery({
     queryKey: ["brands"],
     queryFn: loadBrands,
-  });
-
-  // load Models
-  const modelQuery = useQuery({
-    queryKey: ["models"],
-    queryFn: loadModels,
   });
 
   return (

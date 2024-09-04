@@ -135,7 +135,7 @@ export default function Condition() {
         >
           <TouchableOpacity
             onPress={() => {
-              router.navigate("./Model");
+              router.navigate("./brand");
             }}
             className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
           >
