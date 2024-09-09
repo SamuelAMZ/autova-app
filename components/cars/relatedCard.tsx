@@ -2,24 +2,23 @@ import { useRef, useState } from "react";
 
 import {
   View,
-  Image,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
 } from "react-native";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
-import type { AnimateProps } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
-import { Heart } from "iconsax-react-native";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import { router } from "expo-router";
 
 import Car from "@/models/car.model";
-import { CarData } from "@/constants/CarData";
 import CarItem from "./CarItem";
 import ThemedText from "@/components/ThemedText";
-import { parallaxLayout } from "./parallax";
+
+import { loadCars } from "@/utils/carRequest";
+import { useQuery } from "@tanstack/react-query";
+import { getSavedCar } from "@/utils/carRequest";
 
 export default function RelatedCar() {
   const width = Dimensions.get("window").width;
@@ -27,7 +26,6 @@ export default function RelatedCar() {
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
-  const [isLiked, setIsLiked] = useState(false);
 
   const baseOptions = isVertical
     ? ({
@@ -40,68 +38,34 @@ export default function RelatedCar() {
         width: width,
       } as const);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  // load brands
+  const listingCarsQuery = useQuery({
+    queryKey: ["listing-cars"],
+    queryFn: loadCars,
+  });
+
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
+  });
 
   const renderItem = ({ item, index }: { item: Car; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <TouchableOpacity className="mx-[5px]" onPress={() => {}} key={index}>
-            <View
-              style={[styles.card, index === 0 && { marginLeft: 0 }]}
-              className="p-[16px] flex flex-col gap-[17px] bg-[#FFFFFF]"
-            >
-              <View className="relative w-full">
-                <Image
-                  source={item.img}
-                  style={{
-                    borderRadius: 10,
-                    width: "100%",
-                  }}
-                  className="aspect-auto"
-                />
-                <TouchableOpacity
-                  onPress={handleLike}
-                  style={{
-                    borderRadius: 100,
-                  }}
-                  className="absolute right-2 top-2 bg-[#FFFFFF85] p-[10px]"
-                >
-                  <Heart
-                    color={isLiked ? "#5856D6" : "black"}
-                    variant={isLiked ? "Bold" : "Linear"}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View className="flex-col gap-[15px] justify-center items-start">
-                <ThemedText
-                  style={{
-                    fontFamily: "SpaceGrotesk_600SemiBold",
-                  }}
-                  className="text-[#101828] text-[19px]"
-                >
-                  {item.name}
-                </ThemedText>
-                <View className="flex flex-row items-center justify-start gap-4">
-                  <View
-                    style={{
-                      borderRadius: 100,
-                      backgroundColor: "#F2F4F7",
-                    }}
-                  >
-                    <ThemedText className="p-[5px_12px] text-[15px] font-[600] text-[#101828]">
-                      {item.year}
-                    </ThemedText>
-                  </View>
-                  <ThemedText className="text-[#344054] font-[500] text-[13px]">
-                    {item.label}
-                  </ThemedText>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
+          <CarItem
+            className="mx-[5px]"
+            car={item}
+            savedCarsId={getSavedCarsQuery.data?.carsId || []}
+            onPress={() => {
+              router.navigate({
+                pathname: "/(app)/brands/carDetail",
+                params: {
+                  carId: item._id,
+                },
+              });
+            }}
+          />
         </Animated.View>
       </LongPressGestureHandler>
     );
@@ -140,7 +104,7 @@ export default function RelatedCar() {
         }}
         loop={loop}
         autoPlay={autoPlay}
-        data={CarData}
+        data={listingCarsQuery?.data?.data}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 1,
