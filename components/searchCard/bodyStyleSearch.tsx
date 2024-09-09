@@ -7,11 +7,12 @@ import { ArrowDown2, Chainlink, TickCircle } from "iconsax-react-native";
 import { carDoorsElements } from "@/constants/searchTypes";
 import Colors from "@/constants/Colors";
 import ClearFilter from "./clearFilter";
+import { ItemDataProps } from "@/constants/types";
 
 const mockData = [
-  { id: "1", label: "Item 1" },
-  { id: "2", label: "Item 2" },
-  { id: "3", label: "Item 3" },
+  { _id: "1", name: "Item 1" },
+  { _id: "2", name: "Item 2" },
+  { _id: "3", name: "Item 3" },
 ];
 
 const BodyStylesSearch = ({
@@ -86,7 +87,7 @@ const BodyStylesSearch = ({
         <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
         <View className="h-[50%] w-full gap-4 ml-3 flex-row items-center">
           <ThemedText className="text-[#344054] font-semibold">
-            {selectedItem?.label ?? "Select body type"}
+            {selectedItem?.name ?? "Select body type"}
           </ThemedText>
           <ArrowDown2 color="#344054" size={16} />
         </View>
@@ -113,7 +114,7 @@ const BodyStylesSearch = ({
           <FlatList
             data={mockData}
             renderItem={(item) => {
-              const isSelected = selectedItem?.id == item.item.id;
+              const isSelected = selectedItem?._id == item.item._id;
               return (
                 <TouchableOpacity
                   onPress={() => handleSelectItem(item.item)}
@@ -125,7 +126,7 @@ const BodyStylesSearch = ({
                       variant="Bold"
                     />
                     <ThemedText className="text-[#475467]">
-                      {item.item.label}
+                      {item.item.name}
                     </ThemedText>
                   </View>
                   {isSelected && <TickCircle color="#5856D6" />}

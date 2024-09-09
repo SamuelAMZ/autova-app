@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { ENV } from "@/constants/env";
+import { FilterDataProps } from "@/constants/types";
 
 // load brands
 export async function loadCars() {
