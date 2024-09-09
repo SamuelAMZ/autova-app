@@ -13,10 +13,18 @@ import HeaderListing from "@/components/HeaderListing";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
 import { useKeyboardState } from "@/hooks/useKeyboardState";
+import { useProduct } from "@/context/carContext";
 
 export default function Description() {
   const [text, setText] = useState("");
   const { isKeyboardVisible } = useKeyboardState();
+
+  const { updateProductData, productData } = useProduct();
+
+  const handleBrandSelect = () => {
+    updateProductData({ note: text });
+    router.navigate('/(app)/listCar/isHelectric')
+  };
 
   return (
     <>
@@ -65,9 +73,7 @@ export default function Description() {
           }}
         >
           <TouchableOpacity
-            onPress={() => {
-              router.navigate("./price");
-            }}
+            onPress={handleBrandSelect}
             className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
           >
             <ThemedText

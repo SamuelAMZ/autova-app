@@ -10,9 +10,16 @@ import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
 import { loadFuelTypes } from "@/utils/fuelTypesRequest";
 import { useQuery } from "@tanstack/react-query";
+import { useProduct } from "@/context/carContext";
 
 export default function Fuel() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
+
+  const { updateProductData, productData } = useProduct();
+
+  const handleBrandSelect = (brandId:string) => {
+    updateProductData({ brandId: brandId });
+  };
 
   const handleSelect = (degree: string) => {
     setSelectedDegree(degree);
@@ -58,7 +65,7 @@ export default function Fuel() {
         <ScrollView className="flex pb-[80px] relative">
           <View className="flex gap-[20px]">
             <View className="">
-              {fuelQuery?.data?.data.map((item) => (
+              {fuelQuery?.data?.data.map((item: { name: string }) => (
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => handleSelect(item.name)}

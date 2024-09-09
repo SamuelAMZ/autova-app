@@ -7,8 +7,16 @@ import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { useProduct } from "@/context/carContext";
 
 export default function BodyType() {
+
+  const { updateProductData, productData } = useProduct();
+
+  const handleBrandSelect = (brandId:string) => {
+    updateProductData({ brandId: brandId });
+  };
+  
   return (
     <>
       <HeaderListing progress={9 / 14}>

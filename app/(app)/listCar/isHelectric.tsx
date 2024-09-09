@@ -38,30 +38,17 @@ export function MyCheckbox({
   );
 }
 
-export default function Price() {
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-  const [price, setPrice] = useState(0);
+export default function IsHelectric() {
+  const [isHelectric, setHelectric] = useState(false);
+  const [isHybrid, setHybrid] = useState(false);
 
   const { updateProductData, productData } = useProduct();
-
   const handleBrandSelect = () => {
-    updateProductData({ price: price });
-    router.navigate("/(app)/listCar/description")
+    updateProductData({ isHelectric: isHelectric, isHybrid: isHybrid });
+    router.navigate("/(app)/listCar/upload");
   };
 
   const { isKeyboardVisible } = useKeyboardState();
-
-  const currencies = ["USD", "EUR", "XOF"];
-
-  const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
-
-  const handleCurrencySelect = (currency: string) => {
-    setSelectedCurrency(currency);
-    setIsDropdownVisible(false); // Hide dropdown after selection
-  };
 
   return (
     <>
@@ -94,7 +81,7 @@ export default function Price() {
                 ""
               ) : (
                 <Image
-                  source={require("@/assets/money.png")}
+                  source={require("@/assets/car.png")}
                   style={{
                     width: 150,
                     height: 150,
@@ -103,55 +90,20 @@ export default function Price() {
                 />
               )}
               <View className="flex gap-[12px]">
-                <TouchableWithoutFeedback onPress={() => {}}>
-                  <View className="flex-row items-center bg-[#7878801F] border border-[#D0D5DD] rounded-[12px] ">
-                    <TouchableOpacity
-                      onPress={toggleDropdown}
-                      className="p-[12px] flex flex-row gap-[12px] items-center">
-                      <ThemedText
-                        className="text-[15px]  font-[700] text-[#101828]"
-                        style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
-                        {selectedCurrency}
-                      </ThemedText>
-                      <ArrowDown2 size="20" color="#000" />
-                    </TouchableOpacity>
-                    <View className="h-full w-[1px] bg-[#D0D5DD]" />
-                    <TextInput
-                      className="flex-1 py-[12px] px-[20px]"
-                      placeholder="1000"
-                      placeholderTextColor="#98A2B3"
-                      keyboardType="decimal-pad"
-                      onChangeText={(e) => {
-                        setPrice(Number(e));
-                      }}
-                    />
-                  </View>
-                </TouchableWithoutFeedback>
-                {isDropdownVisible && (
-                  <View className="bg-white border border-[#D0D5DD] rounded-[12px]  ">
-                    <FlatList
-                      data={currencies}
-                      renderItem={({ item }) => (
-                        <TouchableOpacity
-                          className="p-[12px]"
-                          onPress={() => handleCurrencySelect(item)}>
-                          <ThemedText
-                            className="text-[15px] font-[500] text-[#101828]"
-                            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                            {item}
-                          </ThemedText>
-                        </TouchableOpacity>
-                      )}
-                      keyExtractor={(item) => item}
-                    />
-                  </View>
-                )}
                 <View className="flex flex-row gap-[8px] items-center">
                   <MyCheckbox />
                   <ThemedText
                     className="text-[#344054] text-[16px]"
                     style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                    Negotiable
+                    is Helectric ?
+                  </ThemedText>
+                </View>
+                <View className="flex flex-row gap-[8px] items-center">
+                  <MyCheckbox />
+                  <ThemedText
+                    className="text-[#344054] text-[16px]"
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+                    is Hybrid ?
                   </ThemedText>
                 </View>
               </View>
@@ -163,7 +115,9 @@ export default function Price() {
             paddingBottom: 40,
           }}>
           <TouchableOpacity
-            onPress={handleBrandSelect}
+            onPress={() => {
+              router.navigate("./upload");
+            }}
             className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
