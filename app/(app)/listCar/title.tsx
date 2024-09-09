@@ -16,46 +16,32 @@ import { modelData } from "@/constants/data";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
 import { loadModels } from "@/utils/modelsRequest";
+import { loadTitles } from "@/utils/titlesRequest";
 import { useQuery } from "@tanstack/react-query";
 import { useProduct } from "@/context/carContext";
 
-export default function Model() {
+export default function Title() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    updateProductData({ modelId: selectedDegree });
-    router.navigate("./title");
+    updateProductData({ titleId: selectedDegree });
+    router.navigate("./year");
   };
 
   const handleSelect = (degree: string) => {
     setSelectedDegree(degree);
   };
 
-  const { brandId }: { brandId: string } = useLocalSearchParams();
-
-  console.log(brandId);
-
-  const ModelQuery = useQuery({
-    queryKey: ["models"],
-    queryFn: loadModels,
+  const titleQuery = useQuery({
+    queryKey: ["titles"],
+    queryFn: loadTitles,
   });
 
-  console.log(ModelQuery?.data?.data);
-
-  const Models = ModelQuery?.data?.data.filter(
-    (item: { brandId: { _id: string } }) => item.brandId._id === brandId
-  );
-
-  if (!Models) {
-    return null;
-  }
-
-  console.log(Models);
   // Filtre les modèles en fonction de la recherche
-  const filteredModels = Models.filter((item: { name: string; }) =>
+  const filteredTitles = titleQuery?.data?.data.filter((item: { name: string; }) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -72,12 +58,12 @@ export default function Model() {
             <ThemedText
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Model
+              Title
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              Select the model for your car
+              Select the title for your car
             </ThemedText>
           </View>
           <KeyboardAvoidingView
@@ -87,7 +73,7 @@ export default function Model() {
             <View className="relative flex-1 flex-row  items-center justify-between bg-[#7878801F] border border-[#D0D5DD]  pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
               <TextInput
                 className=" w-full py-[13px]"
-                placeholder="Search a model"
+                placeholder="Search a title"
                 placeholderTextColor="#1D2939"
                 onChangeText={(text) => setSearch(text)}
               />
@@ -101,11 +87,11 @@ export default function Model() {
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              All Model
+              All Title
             </ThemedText>
 
             <View className="">
-              {filteredModels?.map((item: { _id: string; name: string | number }) => (
+              {filteredTitles?.map((item: { _id: string; name: string | number }) => (
                 <TouchableOpacity
                   key={item._id}
                   onPress={() => handleSelect(item._id)}

@@ -18,10 +18,17 @@ import ListingCarHeader from "@/components/ListingCarHeader";
 import * as ImagePicker from "expo-image-picker";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 import Toast from "react-native-toast-message";
+import { useProduct } from "@/context/carContext";
 
 export default function Upload() {
   //
   const [images, setImages] = useState<string[]>([]);
+
+  const { updateProductData, productData } = useProduct();
+
+  const handleBrandSelect = (brandId:string) => {
+    updateProductData({ brandId: brandId });
+  };
 
   //
   const pickImage = async () => {

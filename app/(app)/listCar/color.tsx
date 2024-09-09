@@ -16,25 +16,22 @@ import { carsData } from "@/constants/data";
 import { HorizontalSeperator } from "@/components/Separator";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
-import { loadBrands } from "@/utils/brandsRequest";
+import { loadColors } from "@/utils/colorsRequest";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 import { useProduct } from "@/context/carContext";
 
-export default function Brand() {
+export default function Color() {
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    updateProductData({ brandId: selectedDegree });
+    updateProductData({ colorId: selectedDegree });
     router.navigate({
-      pathname: "./Model",
-      params: {
-        brandId: selectedDegree,
-      },
+      pathname: "./city",
     });
   };
 
@@ -42,14 +39,15 @@ export default function Brand() {
     setSelectedDegree(degree);
   };
 
-  const brandQuery = useQuery({
-    queryKey: ["brands"],
-    queryFn: loadBrands,
+  const colorQuery = useQuery({
+    queryKey: ["colors"],
+    queryFn: loadColors,
   });
 
   // Filtre les modèles en fonction de la recherche
-  const filteredBrands = brandQuery?.data?.data.filter((item: { name: string; }) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+  const filteredColors = colorQuery?.data?.data?.filter(
+    (item: { name: string }) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -65,12 +63,12 @@ export default function Brand() {
             <ThemedText
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Brand
+              Color
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              Select a brand for your car
+              Select a color for your car
             </ThemedText>
           </View>
           <View className="relative">
@@ -81,19 +79,19 @@ export default function Brand() {
             />
             <TextInput
               className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
-              placeholder="Search a brand"
+              placeholder="Search a color"
               placeholderTextColor="#1D2939"
               onChangeText={(text) => setSearch(text)}
             />
           </View>
 
-          <View className="flex gap-[20px] mb-[30px]">
+          {/*    <View className="flex gap-[20px] mb-[30px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Popular Brand
             </ThemedText>
-            {brandQuery.isLoading ? (
+            {colorQuery.isLoading ? (
               <View className="w-full ">
                 <FlatList
                   showsVerticalScrollIndicator={false}
@@ -107,13 +105,13 @@ export default function Brand() {
                 />
               </View>
             ) : null}
-            {brandQuery.isSuccess ? (
+            {colorQuery.isSuccess ? (
               <View className="w-full px-4">
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   showsHorizontalScrollIndicator={false}
                   horizontal
-                  data={filteredBrands}
+                  data={filteredColors}
                   renderItem={({ item }) => (
                     <BrandItem size={70} onPress={() => {}} brand={item} />
                   )}
@@ -124,35 +122,37 @@ export default function Brand() {
               </View>
             ) : null}
 
-            {brandQuery.isError ? (
-              <ErrorLoadingData refetch={brandQuery.refetch} />
+            {colorQuery.isError ? (
+              <ErrorLoadingData refetch={colorQuery.refetch} />
             ) : null}
-          </View>
+          </View> */}
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Popular Brand
+              Popular Color
             </ThemedText>
 
             <View className="">
-              {filteredBrands.map((item: { _id: string; name: string | number  }) => (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={() => handleSelect(item._id)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
-                  <ThemedText className="py-[16px] text-[#101828] text-[14px]">
-                    {item.name}
-                  </ThemedText>
-                  {selectedDegree === item._id && (
-                    <AntDesign
-                      name="check"
-                      size={20}
-                      color={Colors.background}
-                    />
-                  )}
-                </TouchableOpacity>
-              ))}
+              {filteredColors?.map(
+                (item: { _id: string; name: string | number }) => (
+                  <TouchableOpacity
+                    key={item._id}
+                    onPress={() => handleSelect(item._id)}
+                    className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
+                    <ThemedText className="py-[16px] text-[#101828] text-[14px]">
+                      {item.name}
+                    </ThemedText>
+                    {selectedDegree === item._id && (
+                      <AntDesign
+                        name="check"
+                        size={20}
+                        color={Colors.background}
+                      />
+                    )}
+                  </TouchableOpacity>
+                )
+              )}
             </View>
           </View>
         </ScrollView>

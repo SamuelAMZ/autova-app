@@ -32,7 +32,7 @@ const BodyStylesSearch = ({
   };
 
   return (
-    <View className="mb-3 flex-col justify-between">
+    <View className="mb-3 flex-col justify-between" >
       <View
         style={{
           height: 90,

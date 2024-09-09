@@ -52,6 +52,7 @@ export default function SignUp() {
           params: { phone, token: res.session.access_token },
         });
       } else {
+       
         toastify("Invalid code", "Verification code is invalid");
       }
     } catch (err) {

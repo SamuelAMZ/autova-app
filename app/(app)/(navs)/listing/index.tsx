@@ -305,7 +305,7 @@ function CustomHeader() {
           </ThemedText>
           <TouchableOpacity
             onPress={() => {
-              router.navigate("/(app)/listCar/condition");
+              router.navigate("/(app)/listCar/name");
             }}
             className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
           >

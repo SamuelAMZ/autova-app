@@ -42,6 +42,7 @@ import Toast from "react-native-toast-message";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SessionProvider } from "@/context/authContext";
 import { UserProvider } from "@/context/userContext";
+import { ProductProvider } from "@/context/carContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -68,10 +69,12 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        <Slot />
-        <Toast />
-      </QueryClientProvider>
+      <ProductProvider>
+        <QueryClientProvider client={queryClient}>
+          <Slot />
+          <Toast />
+        </QueryClientProvider>
+      </ProductProvider>
     </SessionProvider>
   );
 }
