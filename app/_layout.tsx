@@ -41,7 +41,6 @@ import {
 import Toast from "react-native-toast-message";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SessionProvider } from "@/context/authContext";
-import { UserProvider } from "@/context/userContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
