@@ -110,3 +110,15 @@ export async function isCarSaved(data: { carId: string; userId: string }) {
     return [];
   }
 }
+// load brands
+export async function filterCars(data: FilterDataProps) {
+  try {
+    console.log(data);
+    const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/car/filter`;
+    const response: AxiosResponse = await axios.post(url, data);
+    return response?.data ?? [];
+  } catch (error: any) {
+    console.error(error, "error loadCars");
+    return [];
+  }
+}

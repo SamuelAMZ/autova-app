@@ -143,7 +143,7 @@ export default function CarDetail() {
     // enabled: !!carId, // should be remove
   });
 
-  if (carDetailQuery.isSuccess || carDetailQuery.isError) setIsLoading(false);
+  // if (carDetailQuery.isSuccess || carDetailQuery.isError) setIsLoading(false);
 
   console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery", carId);
 
@@ -254,9 +254,9 @@ export default function CarDetail() {
 
   return (
     <>
-      {isLoading || carDetailQuery.isLoading ? (
+      {isLoading && carDetailQuery.isLoading ? (
         <View className="flex flex-1 items-center justify-center gap-3">
-          <BarIndicator color={Colors.textPrimary} />
+          <BarIndicator color={Colors.buttonPrimary} />
           <ThemedText className="text-[16px]">Loading...</ThemedText>
         </View>
       ) : null}

@@ -7,6 +7,7 @@ import {
 } from "iconsax-react-native";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  Dimensions,
   FlatList,
   ScrollView,
   TextInput,
@@ -32,11 +33,12 @@ import {
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import { useQuery } from "@tanstack/react-query";
-import { loadCars } from "@/utils/carRequest";
 import { getSavedCar } from "@/utils/carRequest";
 import { filterCars, loadCars } from "@/utils/carRequest";
 import Car from "@/models/car.model";
 import NoCarFound from "@/assets/icons/no-car.svg";
+import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
+import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -55,6 +57,7 @@ const CarSearchScreen = () => {
   const [usedFilter, setUsedFilter] = useState<number>();
   const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpenData);
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const filteredData = data.filter((e: Car) =>
@@ -71,6 +74,20 @@ const CarSearchScreen = () => {
       ? JSON.parse(searchData as string)
       : initialFilterData;
     setFilterData(initialData);
+    await loadCars(initialData);
+  };
+
+  //
+  const loadCars = async (data: FilterDataProps) => {
+    setIsLoading(true);
+    const cars = await filterCars(data);
+    setIsLoading(false);
+    setData(cars);
+  };
+
+  //
+  useEffect(() => {
+    initializeStateData();
   }, []);
 
   // Make & Model Props change
@@ -133,17 +150,26 @@ const CarSearchScreen = () => {
     setUsedFilter(count);
   }, [filterData]);
 
+  const filteredCars: Car[] =
+    data.length > 0
+      ? data.filter((e: Car) =>
+          e.name
+            .toLocaleLowerCase()
+            .includes(searchInputValue.toLocaleLowerCase().trim())
+        )
+      : [];
+
   //
 
-  const listingCarsQuery = useQuery({
-    queryKey: ["listing-cars"],
-    queryFn: loadCars,
-  });
+  // const listingCarsQuery = useQuery({
+  //   queryKey: ["listing-cars"],
+  //   queryFn: loadCars,
+  // });
 
-  const getSavedCarsQuery = useQuery({
-    queryKey: ["get-saved-cars"],
-    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
-  });
+  // const getSavedCarsQuery = useQuery({
+  //   queryKey: ["get-saved-cars"],
+  //   queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
+  // });
   return (
     <>
       <View
@@ -201,30 +227,16 @@ const CarSearchScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <FlatList
-            className="px-[4%]"
-            data={listingCarsQuery?.data?.data}
-            renderItem={({ item }) => (
-              <CarItem
-                car={item}
-                savedCarsId={getSavedCarsQuery.data?.carsId || []}
-                onPress={() => {
-                  router.navigate({
-                    pathname: "/(app)/brands/carDetail",
-                    params: {
-                      carId: item._id,
-                    },
-                  });
-                }}
-              />
-            )}
-            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-            scrollEnabled={false}
-            keyExtractor={(_, index) => index.toString()}
-            ListFooterComponent={() => <View style={{ height: 40 }} />}
-          />
-          {/*  */}
-          {data.length > 0 ? (
+          {isLoading ? (
+            <FlatList
+              className="px-[4%]"
+              data={Array.from({ length: 5 })}
+              renderItem={(item) => (
+                <CarItemSkeleton className="mx-[5px]" page="home" />
+              )}
+              scrollEnabled={false}
+            />
+          ) : data && data.length > 0 ? (
             <FlatList
               className="px-[4%]"
               data={filteredCars}
