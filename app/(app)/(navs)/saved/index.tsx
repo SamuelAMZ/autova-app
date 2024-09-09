@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { router } from "expo-router";
 import { More, TickCircle, Trash } from "iconsax-react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -114,6 +114,20 @@ const CollectionDetails = () => {
     setmodalVisible(undefined);
   };
 
+  const handleSwipeableOpen = (idx: string) => {
+    const isSelected = handleIsSelected(idx);
+    if (!isSelected) {
+      handleLongPress(idx);
+    }
+  };
+
+  const handleSwipeableClose = (idx: string) => {
+    const isSelected = handleIsSelected(idx);
+    if (isSelected) {
+      handleLongPress(idx);
+    }
+  };
+
   // Fetch the list of saved cars using a query
   const getSavedCarsQueryList = useQuery({
     queryKey: ["get-saved-cars-list"],
@@ -179,17 +193,17 @@ const CollectionDetails = () => {
         >
           Saved Cars
         </ThemedText>
-        {!itemsEmpty && (
+        {!itemsEmpty ? (
           <TouchableOpacity
             onPress={() => handleSelectAll(!isSelectAllCheked)}
-            className="flex-row p-4 items-center gap-2"
+            className="flex-row py-4 items-center gap-2"
           >
             <CustomCheckBox isChecked={isSelectAllCheked} />
             <ThemedText style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
               Select all items
             </ThemedText>
           </TouchableOpacity>
-        )}
+        ) : null}
 
         {getSavedCarsQueryList.isLoading ? (
           <FlatList
@@ -218,16 +232,18 @@ const CollectionDetails = () => {
                       onRemove={() => {
                         handelModalVisible("delete");
                       }}
+                      onSwipeableOpen={() => {
+                        handleSwipeableOpen(item._id);
+                      }}
+                      onSwipeableClose={() => {
+                        handleSwipeableClose(item._id);
+                      }}
                       pressable={
                         !(getSavedCarsQueryList.data?.cars.length === 0)
                       }
                       onLongPress={() => handleLongPress(item._id)}
+                      isActive={isActive}
                     />
-                    {isActive && (
-                      <View className="absolute right-1 top-1">
-                        <TickCircle color="#5856D6" variant="Bold" />
-                      </View>
-                    )}
                   </View>
                 );
               }}
@@ -280,10 +296,12 @@ const SavedCarItem = ({
   car,
   onLongPress,
   onPress,
+  isActive,
 }: {
   car: Car;
   onLongPress: () => void;
   onPress?: () => void;
+  isActive: boolean;
 }) => {
   const date = new Date(car.updatedAt);
   // Get the day of the month
@@ -358,6 +376,11 @@ const SavedCarItem = ({
           <ThemedText className="text-[#667085]">{formattedDate}</ThemedText>
         </View>
       </View>
+      {isActive && (
+        <View className="absolute right-2 top-2">
+          <TickCircle color="#5856D6" variant="Bold" />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -367,18 +390,34 @@ const SwipeToRemove = ({
   onLongPress,
   pressable,
   onRemove,
+  onSwipeableOpen,
+  onSwipeableClose,
+  isActive,
 }: {
   car: Car;
   pressable: boolean;
   onLongPress: () => void;
   onRemove: () => void;
+  onSwipeableOpen: () => void;
+  onSwipeableClose: () => void;
+  isActive: boolean;
 }) => {
+  const swipeableRef = useRef<Swipeable>(null);
+  if (!isActive) {
+    swipeableRef.current?.close();
+  }
   return (
-    <Swipeable renderRightActions={() => <RighAction onRemove={onRemove} />}>
+    <Swipeable
+      ref={swipeableRef}
+      onSwipeableOpen={onSwipeableOpen}
+      onSwipeableClose={onSwipeableClose}
+      renderRightActions={() => <RighAction onRemove={onRemove} />}
+    >
       <SavedCarItem
         car={car}
         onPress={pressable ? onLongPress : undefined}
         onLongPress={onLongPress}
+        isActive={isActive}
       />
     </Swipeable>
   );

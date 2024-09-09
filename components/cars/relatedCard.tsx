@@ -41,7 +41,7 @@ export default function RelatedCar() {
   // load brands
   const listingCarsQuery = useQuery({
     queryKey: ["listing-cars"],
-    queryFn: loadCars,
+    queryFn: () => loadCars({ page: 1 }),
   });
 
   const getSavedCarsQuery = useQuery({

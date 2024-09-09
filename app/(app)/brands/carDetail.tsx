@@ -682,7 +682,7 @@ function CustomHeader({ title }: { title?: string }) {
     }
     // refetch current car state
     queryClient.invalidateQueries({
-      queryKey: ["check-car-saved"],
+      queryKey: ["check-car-saved", carId],
       exact: true,
     });
 

@@ -3,33 +3,22 @@ import { ENV } from "@/constants/env";
 import { FilterDataProps } from "@/constants/types";
 
 // load brands
-export async function loadCars() {
+export async function loadCars({
+  page = 1,
+  perPage = 10,
+}: {
+  page?: number;
+  perPage?: number;
+}) {
   try {
     const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/car`;
-    const response: AxiosResponse = await axios.post(url, {});
+    const response: AxiosResponse = await axios.post(url, { page, perPage });
     return response?.data ?? [];
   } catch (error: any) {
     console.error(error, "error loadCars");
     return [];
   }
 }
-
-// export async function loadCars({
-//   page = 1,
-//   perPage = 10,
-// }: {
-//   page: number;
-//   perPage: number;
-// }) {
-//   try {
-//     const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/car`;
-//     const response: AxiosResponse = await axios.post(url, { page, perPage });
-//     return response?.data ?? [];
-//   } catch (error: any) {
-//     console.error(error, "error loadCars");
-//     return [];
-//   }
-// }
 
 interface getRequestProps {
   id: string;
