@@ -253,7 +253,7 @@ export default function CarDetail() {
     <>
       {true && carDetailQuery.isLoading ? (
         <View className="flex flex-1 items-center justify-center bg-slate-100">
-          <View className="flex items-center justify-center gap-3">
+          <View className="h-[110px] ">
             <BarIndicator color={Colors.buttonPrimary} />
             <ThemedText
               style={{
