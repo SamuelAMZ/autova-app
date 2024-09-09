@@ -1,4 +1,9 @@
-import { View, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { useRef, useState } from "react";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
@@ -7,12 +12,14 @@ import { CarData } from "@/constants/CarData";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
-import BrandCar from "./CarItem";
+import CarItem from "./CarItem";
 import { CarItemSkeleton } from "../skeleton/CarItemSkeleton";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { loadCars } from "@/utils/carRequest";
+import { getSavedCar } from "@/utils/carRequest";
 import { router } from "expo-router";
 import { ErrorLoadingData } from "../ErrorLoading";
+import Colors from "@/constants/Colors";
 
 export default function CarHome({ imgHeight }: { imgHeight?: number }) {
   const width = Dimensions.get("window").width;
@@ -20,7 +27,6 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
   const [isVertical, setIsVertical] = useState<boolean>(false);
   const ref = useRef<ICarouselInstance>(null);
-  const [isLiked, setIsLiked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const baseOptions = isVertical
@@ -34,16 +40,61 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
         width: width,
       } as const);
 
-  const listingCarsQuery = useQuery({
-    queryKey: ["listing-cars"],
-    queryFn: loadCars,
+  // const listingCarsQuery = useQuery({
+  //   queryKey: ["listing-cars"],
+  //   queryFn: loadCars,
+  // });
+
+  // load cars
+  const listingCarsQuery = useInfiniteQuery({
+    queryKey: ["infinite-listing-cars"],
+    queryFn: async ({ pageParam = 1 }) => {
+      return await loadCars({ page: pageParam, perPage: 2 });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      return undefined;
+    },
+    getPreviousPageParam: (
+      firstPage,
+      allPages,
+      firstPageParam,
+      allPageParams
+    ) => {
+      if (firstPage.page > 1) return firstPage.page - 1;
+      return undefined;
+    },
+  });
+
+  // Handle load more
+  const handleLoadMore = () => {
+    if (listingCarsQuery.hasNextPage && !listingCarsQuery.isFetchingNextPage) {
+      listingCarsQuery.fetchNextPage();
+    }
+  };
+
+  console.log(listingCarsQuery?.data?.pages, "listingCarsQuery?.data?.pages");
+
+  if (
+    currentIndex ===
+      listingCarsQuery?.data?.pages?.flatMap((page) => page?.data)?.length ||
+    0 - 1
+  ) {
+    console.log("Loading more", currentIndex);
+    handleLoadMore();
+  }
+
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
   });
 
   const renderItem = ({ item, index }: { item: any; index: number }) => {
     return (
       <LongPressGestureHandler>
         <Animated.View>
-          <BrandCar
+          <CarItem
             onPress={() => {
               router.navigate({
                 pathname: "/(app)/brands/carDetail",
@@ -53,8 +104,14 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
               });
             }}
             car={item}
+            savedCarsId={getSavedCarsQuery.data?.carsId || []}
             className="mx-[5px]"
           />
+          {listingCarsQuery.isFetchingNextPage ? (
+            <View>
+              <ActivityIndicator size="large" color={Colors.buttonPrimary} />
+            </View>
+          ) : null}
         </Animated.View>
       </LongPressGestureHandler>
     );
@@ -124,7 +181,7 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
           }}
           loop={loop}
           autoPlay={autoPlay}
-          data={listingCarsQuery?.data?.data}
+          data={listingCarsQuery?.data?.pages.flatMap((page) => page.data)}
           mode="parallax"
           modeConfig={{
             parallaxScrollingScale: 1,

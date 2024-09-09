@@ -8,6 +8,7 @@ import {
   Platform,
   StyleSheet,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
@@ -39,8 +40,11 @@ import CarItem from "@/components/cars/CarItem";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import { loadCars } from "@/utils/carRequest";
-import { useQuery } from "@tanstack/react-query";
+import { getSavedCar } from "@/utils/carRequest";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
+import { ENV } from "@/constants/env";
+import axios, { AxiosResponse } from "axios";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -120,16 +124,44 @@ export default function MyListing() {
     );
   }, [filterData]);
 
-  // load brands
-  const listingCarsQuery = useQuery({
-    queryKey: ["listing-cars"],
-    queryFn: loadCars,
+  // load cars
+  const listingCarsQuery = useInfiniteQuery({
+    queryKey: ["infinite-listing-cars"],
+    queryFn: async ({ pageParam = 1 }) => {
+      return await loadCars({ page: pageParam, perPage: 2 });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      return undefined;
+    },
+    getPreviousPageParam: (
+      firstPage,
+      allPages,
+      firstPageParam,
+      allPageParams
+    ) => {
+      if (firstPage.page > 1) return firstPage.page - 1;
+      return undefined;
+    },
   });
 
-  console.log(
-    JSON.stringify(listingCarsQuery?.data?.data, null, 2),
-    "listingCarsQuery"
-  );
+  // Handle load more
+  const handleLoadMore = () => {
+    if (listingCarsQuery.hasNextPage && !listingCarsQuery.isFetchingNextPage) {
+      listingCarsQuery.fetchNextPage();
+    }
+  };
+
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
+  });
+
+  // console.log(
+  //   JSON.stringify(listingCarsQuery?.data, null, 2),
+  //   "listingCarsQuery"
+  // );
 
   return (
     <>
@@ -169,7 +201,7 @@ export default function MyListing() {
             className="px-[4%]"
             data={Array.from({ length: 10 })}
             renderItem={() => <CarItemSkeleton />}
-            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 0.9 }} />}
             scrollEnabled={false}
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
@@ -178,10 +210,11 @@ export default function MyListing() {
         {listingCarsQuery.isSuccess ? (
           <FlatList
             className="px-[4%]"
-            data={listingCarsQuery?.data?.data}
+            data={listingCarsQuery?.data?.pages.flatMap((page) => page.data)}
             renderItem={({ item }) => (
               <CarItem
                 car={item}
+                savedCarsId={getSavedCarsQuery.data?.carsId || []}
                 onPress={() => {
                   router.navigate({
                     pathname: "/(app)/brands/carDetail",
@@ -194,8 +227,21 @@ export default function MyListing() {
             )}
             ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
             scrollEnabled={false}
-            keyExtractor={(_, index) => index.toString()}
-            ListFooterComponent={() => <View style={{ height: 40 }} />}
+            keyExtractor={(item) => item._id}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={
+              listingCarsQuery.isFetchingNextPage ? (
+                <View style={{ height: 40 }}>
+                  <ActivityIndicator
+                    size="large"
+                    color={Colors.buttonPrimary}
+                  />
+                </View>
+              ) : (
+                <View style={{ height: 40 }} />
+              )
+            }
           />
         ) : null}
         {listingCarsQuery.isError ? (

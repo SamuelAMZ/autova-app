@@ -18,7 +18,6 @@ export async function loadModels() {
   try {
     const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/model`;
     const response: AxiosResponse = await axios.post(url, {});
-    console.log(response.data.data[0].brandId);
     return response?.data ?? [];
   } catch (error: any) {
     console.log(error, "error loadBrands");

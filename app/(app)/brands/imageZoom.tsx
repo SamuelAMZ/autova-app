@@ -9,33 +9,24 @@ import useStatusBar from "@/hooks/useStatusBar";
 
 import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useGlobalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 import ZoomCarImagesSlider from "@/components/carImagesSlider/zoomSlider";
 
-const data = [
-  {
-    img: require("@/assets/cars/teslaX.png"),
-  },
-  {
-    img: require("@/assets/cars/teslaS.png"),
-  },
-  {
-    img: require("@/assets/cars/teslaY.png"),
-  },
-];
-
 export default function CarImagesDetail() {
   const { width } = useWindowDimensions();
-  const { currentIndex } = useGlobalSearchParams();
-
+  const {
+    currentIndex,
+    carId,
+    ...slides
+  }: { carId: string; currentIndex: string } = useLocalSearchParams();
   useStatusBar("light-content", "transparent", true);
 
   return (
     <>
       <View className="flex-1">
         <View className="flex-1 ">
-          <CustomHeader currentIndex={currentIndex} />
+          <CustomHeader currentIndex={currentIndex} carId={carId} />
           <View
             style={{
               flex: 1,
@@ -43,7 +34,10 @@ export default function CarImagesDetail() {
               minHeight: 263,
             }}
           >
-            <ZoomCarImagesSlider Slides={data} currentIndex={currentIndex} />
+            <ZoomCarImagesSlider
+              Slides={Object.values(slides)}
+              currentIndex={currentIndex}
+            />
           </View>
         </View>
       </View>
@@ -54,9 +48,11 @@ export default function CarImagesDetail() {
 function CustomHeader({
   title,
   currentIndex,
+  carId,
 }: {
   title?: string;
   currentIndex: string | string[];
+  carId: string;
 }) {
   return (
     <Header className=" px-[5%] bg-black">
@@ -73,6 +69,7 @@ function CustomHeader({
               router.navigate({
                 pathname: "./carDetail",
                 params: {
+                  carId: carId,
                   currentIndex: currentIndex,
                 },
               });

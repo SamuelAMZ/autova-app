@@ -1,8 +1,9 @@
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import { Heart } from "iconsax-react-native";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { savedCar } from "@/utils/carRequest";
+import { useQueryClient } from "@tanstack/react-query";
 import Car from "@/models/car.model";
 
 export default function CarItem({
@@ -10,16 +11,61 @@ export default function CarItem({
   onPress,
   imgHeight,
   className = "",
+  savedCarsId = [],
 }: {
   car: Car;
   onPress: () => void;
   imgHeight?: number;
   className?: any;
+  savedCarsId?: Array<string>;
 }) {
   const [isLiked, setIsLiked] = useState(false);
+  const queryClient = useQueryClient();
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
+  useEffect(() => {
+    setIsLiked(savedCarsId?.includes(car._id) || false);
+  }, [savedCarsId.length]);
+
+  // console.log(savedCarsId, "savedCarsId", isLiked, "isLiked");
+
+  const handleLike = async () => {
+    try {
+      if (isLiked) {
+        // Copy the array and remove the car._id from it
+        const newSavedCarsId = [...savedCarsId];
+        newSavedCarsId.splice(savedCarsId.indexOf(car._id), 1);
+
+        // Update the saved cars
+        await savedCar({
+          carsId: newSavedCarsId,
+          userId: "66d08d69f683984aa2acef6f",
+        });
+      } else {
+        // Copy the array and add the car._id to it
+        const newSavedCarsId = savedCarsId ? [...savedCarsId] : [];
+        newSavedCarsId.push(car._id);
+
+        // Update the saved cars
+        await savedCar({
+          carsId: newSavedCarsId,
+          userId: "66d08d69f683984aa2acef6f",
+        });
+      }
+
+      // refetch saved cars id
+      queryClient.invalidateQueries({
+        queryKey: ["get-saved-cars"],
+        exact: true,
+      });
+
+      // refetch saved cars data
+      queryClient.invalidateQueries({
+        queryKey: ["get-saved-cars-list"],
+        exact: true,
+      });
+    } catch (e) {
+      console.log(e, "error saved car");
+    }
   };
 
   return (
@@ -58,7 +104,7 @@ export default function CarItem({
               }}
               className="text-[#101828] text-[19px]"
             >
-              {car.name}
+              {car?.name}
             </ThemedText>
           </View>
           <View className="flex flex-row items-center justify-start gap-4">
@@ -69,11 +115,11 @@ export default function CarItem({
               }}
             >
               <ThemedText className="p-[5px_12px] text-[15px] font-[600] text-[#101828]">
-                {car.year}
+                {car?.year}
               </ThemedText>
             </View>
             <ThemedText className="text-[#344054] font-[500] text-[16px]">
-              {car.cityId.name} | {car.countryId.name}
+              {car?.cityId?.name} | {car?.countryId?.name}
             </ThemedText>
           </View>
           {/* <View>

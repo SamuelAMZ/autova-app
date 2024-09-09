@@ -16,18 +16,25 @@ import CarItem from "@/components/cars/CarItem";
 import Colors from "@/constants/Colors";
 import { loadCars } from "@/utils/carRequest";
 import { useQuery } from "@tanstack/react-query";
+import { getSavedCar } from "@/utils/carRequest";
 
 export default function Brand() {
   // load brands
   const listingCarsQuery = useQuery({
     queryKey: ["listing-cars"],
-    queryFn: loadCars,
+    queryFn: () => loadCars({ page: 1 }),
   });
 
-  console.log(
-    JSON.stringify(listingCarsQuery?.data?.data, null, 2),
-    "listingCarsQuery"
-  );
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
+  });
+
+  // console.log(
+  //   JSON.stringify(listingCarsQuery?.data?.data, null, 2),
+  //   "listingCarsQuery"
+  // );
+
   return (
     <View className={`flex-1 bg-[${Colors.backgroundSecondaryVariant}]`}>
       <CustomHeader />
@@ -37,6 +44,7 @@ export default function Brand() {
           renderItem={({ item }) => (
             <CarItem
               car={item}
+              savedCarsId={getSavedCarsQuery.data?.carsId || []}
               onPress={() => {
                 router.navigate({
                   pathname: "/(app)/brands/carDetail",

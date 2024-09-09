@@ -39,7 +39,10 @@ export const CollectionItem = () => {
         />
       </View>
       <View className="flex-1 justify-around">
-        <ThemedText className="text-[#101828]  text-[16px]" style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
+        <ThemedText
+          className="text-[#101828]  text-[16px]"
+          style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+        >
           Used Cars
         </ThemedText>
         <ThemedText className="text-[#667085]">3 items</ThemedText>
@@ -92,32 +95,38 @@ export const CollectionOptionModal = ({
   renamePress,
   deletePress,
 }: {
-  renamePress: () => void;
-  deletePress: () => void;
+  renamePress?: () => void;
+  deletePress?: () => void;
 }) => {
   return (
     <View className="min-w-[120] bg-white absolute top-[40] right-[20] z-10 rounded-lg items-start border border-gray-300">
-      <TouchableOpacity
-        onPress={renamePress}
-        className="p-4 flex-row items-center gap-3"
-      >
-        <Edit2 color="black" />
-        <ThemedText style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
-          Rename
-        </ThemedText>
-      </TouchableOpacity>
-      <View className="w-[100%] h-[0.7] bg-slate-400 "></View>
-      <TouchableOpacity
-        onPress={deletePress}
-        className="p-4 flex-row items-center gap-3"
-      >
-        <Trash color="red" />
-        <ThemedText
-          style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+      {renamePress ? (
+        <TouchableOpacity
+          onPress={renamePress}
+          className="p-4 flex-row items-center gap-3"
         >
-          Delete
-        </ThemedText>
-      </TouchableOpacity>
+          <Edit2 color="black" />
+          <ThemedText style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
+            Rename
+          </ThemedText>
+        </TouchableOpacity>
+      ) : null}
+      {renamePress && deletePress ? (
+        <View className="w-[100%] h-[0.7] bg-slate-400 "></View>
+      ) : null}
+      {deletePress ? (
+        <TouchableOpacity
+          onPress={deletePress}
+          className="p-4 flex-row items-center gap-3"
+        >
+          <Trash color="red" />
+          <ThemedText
+            style={{ fontFamily: "SpaceGrotesk_700Bold", color: "red" }}
+          >
+            Delete
+          </ThemedText>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

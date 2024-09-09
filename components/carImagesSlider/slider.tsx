@@ -16,15 +16,12 @@ import { useGlobalSearchParams } from "expo-router";
 import Pagination from "./Pagination";
 import ThemedText from "../ThemedText";
 
-interface Slide {
-  img: any;
-}
-
 interface CarImagesSliderProps {
   Slides: Array<string>;
+  carId: string;
 }
 
-const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
+const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides, carId }) => {
   const { width } = useWindowDimensions();
   const { currentIndex = 0 } = useGlobalSearchParams();
 
@@ -45,11 +42,13 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides }) => {
   }, [currentIndex]);
 
   const handleZoom = () => {
+    const slides = {};
+    Slides.forEach((slide, idx) => {
+      slides[idx.toString()] = slide;
+    });
     router.navigate({
       pathname: "/(app)/brands/imageZoom",
-      params: {
-        currentIndex: index,
-      },
+      params: { currentIndex: index, ...slides, carId: carId },
     });
   };
 

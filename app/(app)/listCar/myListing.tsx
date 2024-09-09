@@ -16,17 +16,23 @@ import { CarData } from "@/constants/CarData";
 import Colors from "@/constants/Colors";
 import { useQuery } from "@tanstack/react-query";
 import { loadCars } from "@/utils/carRequest";
+import { getSavedCar } from "@/utils/carRequest";
 
 export default function MyListing() {
   const listingCarsQuery = useQuery({
     queryKey: ["listing-cars"],
-    queryFn: loadCars,
+    queryFn: () => loadCars({ page: 1 }),
   });
 
-  console.log(
-    JSON.stringify(listingCarsQuery?.data?.data, null, 2),
-    "listingCarsQuery"
-  );
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
+  });
+
+  // console.log(
+  //   JSON.stringify(listingCarsQuery?.data?.data, null, 2),
+  //   "listingCarsQuery"
+  // );
   return (
     <>
       <CustomHeader />
@@ -82,6 +88,7 @@ export default function MyListing() {
               renderItem={({ index, item }) => (
                 <CarItem
                   car={listingCarsQuery?.data?.data[0]}
+                  savedCarsId={getSavedCarsQuery.data?.carsId || []}
                   onPress={() => {
                     router.navigate({
                       pathname: "/(app)/brands/carDetail",
