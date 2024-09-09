@@ -31,8 +31,9 @@ import {
 } from "@/constants";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
-import { useQuery } from "@tanstack/react-query";
-import { loadCars } from "@/utils/carRequest";
+import { filterCars, loadCars } from "@/utils/carRequest";
+import Car from "@/models/car.model";
+import NoCarFound from "@/assets/icons/no-car.svg";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -43,23 +44,42 @@ const initialItemIsOpenData = {
 const CarSearchScreen = () => {
   const textIinputRef = useRef(null);
   const { searchData } = useLocalSearchParams();
+  const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
   const [filterData, setFilterData] =
     useState<FilterDataProps>(initialFilterData);
   const [usedFilter, setUsedFilter] = useState<number>();
   const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpenData);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const filteredData = data.filter((e: Car) =>
+      e.name.includes(searchInputValue)
+    );
+  }, [searchInputValue]);
 
   const handleOpenItem = (type: string) => {
     setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
   };
 
-  useEffect(() => {
+  const initializeStateData = async () => {
     const initialData = searchData
       ? JSON.parse(searchData as string)
       : initialFilterData;
-    console.log(initialData);
     setFilterData(initialData);
+    await loadCars(initialData);
+  };
+
+  //
+  const loadCars = async (data: FilterDataProps) => {
+    const cars = await filterCars(data);
+    setData(cars);
+  };
+
+  //
+  useEffect(() => {
+    initializeStateData();
   }, []);
 
   // Make & Model Props change
@@ -122,12 +142,16 @@ const CarSearchScreen = () => {
     setUsedFilter(count);
   }, [filterData]);
 
-  //
+  const filteredCars: Car[] =
+    data.length > 0
+      ? data.filter((e: Car) =>
+          e.name
+            .toLocaleLowerCase()
+            .includes(searchInputValue.toLocaleLowerCase().trim())
+        )
+      : [];
 
-  const listingCarsQuery = useQuery({
-    queryKey: ["listing-cars"],
-    queryFn: loadCars,
-  });
+  //
   return (
     <>
       <View
@@ -162,6 +186,8 @@ const CarSearchScreen = () => {
             >
               <SearchNormal color={Colors.textQuinary} />
               <TextInput
+                value={searchInputValue}
+                onChangeText={(value) => setSearchInputValue(value)}
                 className="flex-1"
                 placeholder="Search..."
                 placeholderTextColor="#000"
@@ -183,111 +209,144 @@ const CarSearchScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <FlatList
-            className="px-[4%]"
-            data={listingCarsQuery?.data?.data}
-            renderItem={({ item }) => (
-              <CarItem
-                car={item}
-                onPress={() => {
-                  router.navigate({
-                    pathname: "/(app)/brands/carDetail",
-                    params: {
-                      carId: item._id,
-                    },
-                  });
-                }}
-              />
-            )}
-            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-            scrollEnabled={false}
-            keyExtractor={(_, index) => index.toString()}
-            ListFooterComponent={() => <View style={{ height: 40 }} />}
-          />
+          {/*  */}
+          {data.length > 0 ? (
+            <FlatList
+              className="px-[4%]"
+              data={filteredCars}
+              renderItem={({ item }: { item: Car }) => (
+                <CarItem
+                  car={item}
+                  onPress={() => {
+                    router.navigate({
+                      pathname: "/(app)/brands/carDetail",
+                      params: {
+                        carId: item._id,
+                      },
+                    });
+                  }}
+                />
+              )}
+              ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+              scrollEnabled={false}
+              keyExtractor={(_, index) => index.toString()}
+              ListFooterComponent={() => <View style={{ height: 40 }} />}
+            />
+          ) : (
+            <View className="flex-1 h-[350] items-center justify-center">
+              <NoCarFound />
+              <ThemedText
+                style={{ fontFamily: "SpaceGrotesk_500SemiBold" }}
+                className="text-[16px]"
+              >
+                No car found
+              </ThemedText>
+              <TouchableOpacity className="p-3">
+                <ThemedText
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+                  className="text-[blue] text-[16px]"
+                >
+                  Retry
+                </ThemedText>
+              </TouchableOpacity>
+            </View>
+          )}
         </ScrollView>
       </View>
 
-      <CustomBottomSheetModal
-        isVisible={isModalVisible}
-        onClose={handleCloseModal}
-        snapPoints={snapPoints}
-        index={1}
-      >
-        <View className="flex-1 w-full z-0">
-          <View className="py-5 px-[4%] flex-row justify-between items-center ">
-            <ThemedText
-              className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}
-            >
-              Filter Search
-            </ThemedText>
-            <TouchableOpacity onPress={handleCloseModal}>
-              <View
-                className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}
+      {isModalVisible && (
+        <CustomBottomSheetModal
+          isVisible={isModalVisible}
+          onClose={handleCloseModal}
+          snapPoints={snapPoints}
+          index={1}
+        >
+          <View className="flex-1 w-full z-0">
+            <View className="py-5 px-[4%] flex-row justify-between items-center ">
+              <ThemedText
+                className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}
               >
-                <AntDesign name="close" size={16} color={Colors.iconPrimary} />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <BottomSheetScrollView
-            className={`pb-4 bg-[${Colors.backgroundQuaternary}]`}
-          >
-            <View
-              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+                Filter Search
+              </ThemedText>
+              <TouchableOpacity onPress={handleCloseModal}>
+                <View
+                  className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}
+                >
+                  <AntDesign
+                    name="close"
+                    size={16}
+                    color={Colors.iconPrimary}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <BottomSheetScrollView
+              className={`pb-4 bg-[${Colors.backgroundQuaternary}]`}
             >
-              <OpenCloseItem
-                title="Make & Model"
-                onPress={() => handleOpenItem("makeModel")}
-              />
-              {itemIsOpen.makeModel && (
-                <MakeModelsSearch
-                  selectedModelItem={filterData.selectedModelItem}
-                  selectedMakeItem={filterData.selectedMakeItem}
-                  onChange={handleMakeModalChange}
+              <View
+                className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
+              >
+                <OpenCloseItem
+                  title="Make & Model"
+                  onPress={() => handleOpenItem("makeModel")}
                 />
-              )}
+                {itemIsOpen.makeModel && (
+                  <MakeModelsSearch
+                    selectedModelItem={filterData.selectedModelItem}
+                    selectedMakeItem={filterData.selectedMakeItem}
+                    onChange={handleMakeModalChange}
+                  />
+                )}
 
-              {/* Price Range */}
-              <OpenCloseItem
-                title="Price Range"
-                onPress={() => handleOpenItem("priceRange")}
-              />
-              <View className="z-20">
-                {itemIsOpen.priceRange && (
-                  <PriceRangeSearch
-                    style={{ zIndex: 30 }}
-                    rangeValue={filterData.rangeValue}
-                    onValueChange={handlePriceRangeChange}
+                {/* Price Range */}
+                <OpenCloseItem
+                  title="Price Range"
+                  onPress={() => handleOpenItem("priceRange")}
+                />
+                <View className="z-20">
+                  {itemIsOpen.priceRange && (
+                    <PriceRangeSearch
+                      style={{ zIndex: 30 }}
+                      rangeValue={filterData.rangeValue}
+                      onValueChange={handlePriceRangeChange}
+                    />
+                  )}
+                </View>
+
+                {/* Body Styles */}
+                <OpenCloseItem
+                  title="Body Styles"
+                  onPress={() => handleOpenItem("bodyStyle")}
+                />
+                {itemIsOpen.bodyStyle && (
+                  <BodyStylesSearch
+                    selectedItem={filterData.selectedBodyItem}
+                    carDoors={filterData.carDoors}
+                    onBodyValueChange={handleBodyStyleChange}
                   />
                 )}
               </View>
-
-              {/* Body Styles */}
-              <OpenCloseItem
-                title="Body Styles"
-                onPress={() => handleOpenItem("bodyStyle")}
-              />
-              {itemIsOpen.bodyStyle && (
-                <BodyStylesSearch
-                  selectedItem={filterData.selectedBodyItem}
-                  carDoors={filterData.carDoors}
-                  onBodyValueChange={handleBodyStyleChange}
+            </BottomSheetScrollView>
+            <View className="px-4 py-5 flex-row gap-3 self-center">
+              <View className="flex-1">
+                <CustomButton
+                  onPress={() => {
+                    loadCars(filterData);
+                    setIsModalVisible(false);
+                  }}
+                  title={"Search"}
                 />
-              )}
+              </View>
+              <TouchableOpacity
+                onPress={() => onReset()}
+                className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center"
+              >
+                <Icon name="close" size={26} color="white" />
+              </TouchableOpacity>
             </View>
-          </BottomSheetScrollView>
-          <View className="px-4 py-5 flex-row gap-3 self-center">
-            <View className="flex-1">
-              <CustomButton onPress={() => {}} title={"Search"} />
-            </View>
-            <TouchableOpacity
-              onPress={() => onReset()}
-              className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center"
-            >
-              <Icon name="close" size={26} color="white" />
-            </TouchableOpacity>
           </View>
-        </View>
-      </CustomBottomSheetModal>
+        </CustomBottomSheetModal>
+      )}
     </>
   );
 };
