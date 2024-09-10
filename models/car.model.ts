@@ -6,10 +6,10 @@ interface Car {
   name: string;
   year: string;
   price: string;
-  countryId: {
+  country: {
     name: string;
   };
-  cityId: {
+  city: {
     name: string;
   };
   odometer: string;

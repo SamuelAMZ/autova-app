@@ -146,13 +146,13 @@ export default function CarDetail() {
   function CarSpecifications() {
     const data = [
       {
-        Brand: carDetailQuery.data?.brandId?.name,
+        Brand: carDetailQuery.data?.brand?.name,
       },
       {
-        Model: carDetailQuery.data?.modelId?.name,
+        Model: carDetailQuery.data?.model?.name,
       },
       {
-        Title: carDetailQuery.data?.titleId?.name,
+        Title: carDetailQuery.data?.title?.name,
       },
       {
         "Year of Manufacture": carDetailQuery.data?.year,
@@ -164,19 +164,19 @@ export default function CarDetail() {
         Condition: "New",
       },
       {
-        Transmission: carDetailQuery.data?.transmissionId?.name,
+        Transmission: carDetailQuery.data?.transmission?.name,
       },
       {
         "Body Type": "SUV / 4x4",
       },
       {
-        "Fuel Type": carDetailQuery.data?.fuelTypeId?.name,
+        "Fuel Type": carDetailQuery.data?.fuelType?.name,
       },
       {
-        "Engine Capacity": carDetailQuery.data?.engineTypeId?.name,
+        "Engine Capacity": carDetailQuery.data?.engineType?.name,
       },
       {
-        Color: carDetailQuery.data?.colorId?.name,
+        Color: carDetailQuery.data?.color?.name,
       },
       {
         Cylinder: carDetailQuery.data?.cylinders,
@@ -185,13 +185,13 @@ export default function CarDetail() {
         "Doors count": carDetailQuery.data?.doorsCount,
       },
       {
-        Odometer: carDetailQuery.data?.engineTypeId?.name,
+        Odometer: carDetailQuery.data?.engineType?.name,
       },
       {
         "Country City":
-          carDetailQuery.data?.countryId?.name +
+          carDetailQuery.data?.country?.name +
           ", " +
-          carDetailQuery.data?.cityId?.name,
+          carDetailQuery.data?.city?.name,
       },
       {
         Hybrid: carDetailQuery.data?.isHybrid ? " Yes" : " No",
@@ -273,7 +273,7 @@ export default function CarDetail() {
           source={
             carDetailQuery.data?.imagesUrls[0]
               ? { uri: carDetailQuery.data?.imagesUrls[0] }
-              : CarData[0].img
+              : CarData[0]?.img
           }
           blurRadius={290}
         >

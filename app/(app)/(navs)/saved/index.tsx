@@ -390,7 +390,7 @@ const SavedCarItem = ({
           {car?.name}
         </ThemedText>
         <ThemedText className="text-[#667085]">
-          {car?.odometer} miles | {car?.cityId?.name}, {car?.countryId?.name}
+          {car?.odometer} miles | {car?.city?.name}, {car?.country?.name}
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
           <ThemedText

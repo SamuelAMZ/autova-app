@@ -10,13 +10,12 @@ import ListingCarHeader from "@/components/ListingCarHeader";
 import { useProduct } from "@/context/carContext";
 
 export default function BodyType() {
-
   const { updateProductData, productData } = useProduct();
 
-  const handleBrandSelect = (brandId:string) => {
-    updateProductData({ brandId: brandId });
+  const handleBrandSelect = (brand: string) => {
+    updateProductData({ brand: brand });
   };
-  
+
   return (
     <>
       <HeaderListing progress={9 / 14}>

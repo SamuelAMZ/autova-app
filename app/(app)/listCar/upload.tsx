@@ -26,8 +26,8 @@ export default function Upload() {
 
   const { updateProductData, productData } = useProduct();
 
-  const handleBrandSelect = (brandId:string) => {
-    updateProductData({ brandId: brandId });
+  const handleBrandSelect = (brand: string) => {
+    updateProductData({ brand: brand });
   };
 
   //

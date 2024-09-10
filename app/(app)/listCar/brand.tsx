@@ -29,11 +29,11 @@ export default function Brand() {
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    updateProductData({ brandId: selectedDegree });
+    updateProductData({ brand: selectedDegree });
     router.navigate({
       pathname: "./Model",
       params: {
-        brandId: selectedDegree,
+        brand: selectedDegree,
       },
     });
   };
@@ -48,8 +48,9 @@ export default function Brand() {
   });
 
   // Filtre les modèles en fonction de la recherche
-  const filteredBrands = brandQuery?.data?.data.filter((item: { name: string; }) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+  const filteredBrands = brandQuery?.data?.data.filter(
+    (item: { name: string }) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -59,17 +60,20 @@ export default function Brand() {
       </HeaderListing>
       <View
         className="flex   bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
+        style={{ paddingTop: 30, paddingBottom: 60 }}
+      >
         <ScrollView className="flex pb-[80px] relative px-[16px]">
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Brand
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
               Select a brand for your car
             </ThemedText>
           </View>
@@ -90,7 +94,8 @@ export default function Brand() {
           <View className="flex gap-[20px] mb-[30px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Popular Brand
             </ThemedText>
             {brandQuery.isLoading ? (
@@ -131,28 +136,32 @@ export default function Brand() {
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Popular Brand
             </ThemedText>
 
             <View className="">
-              {filteredBrands.map((item: { _id: string; name: string | number  }) => (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={() => handleSelect(item._id)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
-                  <ThemedText className="py-[16px] text-[#101828] text-[14px]">
-                    {item.name}
-                  </ThemedText>
-                  {selectedDegree === item._id && (
-                    <AntDesign
-                      name="check"
-                      size={20}
-                      color={Colors.background}
-                    />
-                  )}
-                </TouchableOpacity>
-              ))}
+              {filteredBrands.map(
+                (item: { _id: string; name: string | number }) => (
+                  <TouchableOpacity
+                    key={item._id}
+                    onPress={() => handleSelect(item._id)}
+                    className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
+                  >
+                    <ThemedText className="py-[16px] text-[#101828] text-[14px]">
+                      {item.name}
+                    </ThemedText>
+                    {selectedDegree === item._id && (
+                      <AntDesign
+                        name="check"
+                        size={20}
+                        color={Colors.background}
+                      />
+                    )}
+                  </TouchableOpacity>
+                )
+              )}
             </View>
           </View>
         </ScrollView>
@@ -161,13 +170,16 @@ export default function Brand() {
           style={{
             paddingBottom: 20,
           }}
-          className="px-[16px]">
+          className="px-[16px]"
+        >
           <TouchableOpacity
             onPress={handleBrandSelect}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Continue
             </ThemedText>
           </TouchableOpacity>

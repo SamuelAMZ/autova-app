@@ -161,7 +161,7 @@ const LaodDataModal = ({
   const handleDisplayData = () => {
     if (type == "models" && selectedMakeItem) {
       return makeModels["models"]
-        .filter((e: Models) => e.brandId._id == selectedMakeItem._id)
+        .filter((e: Models) => e.brand._id == selectedMakeItem._id)
         .map((e) => e as ItemDataProps);
     }
     return makeModels[type] as ItemDataProps[];

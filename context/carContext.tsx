@@ -9,14 +9,14 @@ const ProductContext = createContext({
 export const ProductProvider = ({ children }: { children: any }) => {
   const [productData, setProductData] = useState({
     name: "",
-    modelId: "",
-    colorId: "",
-    engineTypeId: "",
-    transmissionId: "",
-    fuelTypeId: "",
-    titleId: "",
-    cityId: "",
-    sellerId: "",
+    model: "",
+    color: "",
+    engineType: "",
+    transmission: "",
+    fuelType: "",
+    title: "",
+    city: "",
+    seller: "",
     cylinders: 0,
     year: 2023,
     doorsCount: 4,
@@ -30,7 +30,28 @@ export const ProductProvider = ({ children }: { children: any }) => {
     note: "",
   });
 
-  const updateProductData = (newData: { name: string; modelId: string; colorId: string; engineTypeId: string; transmissionId: string; fuelTypeId: string; titleId: string; cityId: string; sellerId: string; cylinders: number; year: number; doorsCount: number; odometer: number; salesPrice: number; minPrice: number; imagesUrls: never[]; keywords: never[]; isElectric: boolean; isHybrid: boolean; note: string; }) => {
+  const updateProductData = (newData: {
+    name: string;
+    model: string;
+    color: string;
+    engineType: string;
+    transmission: string;
+    fuelType: string;
+    title: string;
+    city: string;
+    seller: string;
+    cylinders: number;
+    year: number;
+    doorsCount: number;
+    odometer: number;
+    salesPrice: number;
+    minPrice: number;
+    imagesUrls: never[];
+    keywords: never[];
+    isElectric: boolean;
+    isHybrid: boolean;
+    note: string;
+  }) => {
     setProductData((prevData) => ({
       ...prevData,
       ...newData,
