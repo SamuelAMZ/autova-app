@@ -8,7 +8,7 @@ import {
   Platform,
   ImageBackground,
 } from "react-native";
-import { Heart } from "iconsax-react-native";
+import { Car, Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { StatusBar } from "expo-status-bar";
 import { PropsWithChildren } from "react";
@@ -139,7 +139,6 @@ export default function CarDetail() {
   const carDetailQuery = useQuery({
     queryKey: ["carDetail", carId],
     queryFn: () => getCarById({ id: carId }),
-    // enabled: !!carId, // should be remove
   });
 
   // console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery", carId);
@@ -475,7 +474,9 @@ export default function CarDetail() {
                       <CarDetails />
                     </View>
 
-                    <RelatedCar />
+                    {carDetailQuery.isSuccess ? (
+                      <RelatedCar carId={carId} />
+                    ) : null}
                     {/* <View
                     style={{
                       height: +selectedElmHeight,
@@ -724,9 +725,9 @@ function CustomHeader({
 
   const handleShare = () => {};
 
-  // Fetch prominent colors from an image.
+  // Fetch prominent headerColors from an image.
 
-  const [colors, setColors] = useState<{
+  const [headerColors, setHeaderColors] = useState<{
     dominant: string;
   }>({ dominant: "" });
   const [textColor, setTextColor] = useState<string>("");
@@ -754,7 +755,7 @@ function CustomHeader({
         key: url,
       })
         .then((color) => {
-          setColors(color);
+          setHeaderColors(color);
           const luminance = getLuminance(color["dominant"]);
           // Check if the dominant color is light or dark and set the text color
           if (luminance > 128) {
@@ -768,17 +769,17 @@ function CustomHeader({
           }
         })
         .catch((e) => {
-          console.log(e, "Error fetching image colors");
+          console.log(e, "Error fetching image headerColors");
         });
     }
   }, [imageUri]);
 
-  // console.log(colors, "colors");
+  // console.log(headerColors, "headerColors");
   return (
     <Header
       className=" px-[5%]"
       style={{
-        backgroundColor: colors["dominant"],
+        backgroundColor: headerColors["dominant"],
       }}
     >
       <View className="flex-row justify-between items-center py-[18px]">

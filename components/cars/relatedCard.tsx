@@ -1,11 +1,6 @@
 import { useRef, useState } from "react";
 
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import { LongPressGestureHandler } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { BlurView as _BlurView } from "expo-blur";
@@ -16,11 +11,11 @@ import Car from "@/models/car.model";
 import CarItem from "./CarItem";
 import ThemedText from "@/components/ThemedText";
 
-import { loadCars } from "@/utils/carRequest";
+import { loadRelatedCars } from "@/utils/carRequest";
 import { useQuery } from "@tanstack/react-query";
 import { getSavedCar } from "@/utils/carRequest";
 
-export default function RelatedCar() {
+export default function RelatedCar({ carId }: { carId: string }) {
   const width = Dimensions.get("window").width;
   const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -39,9 +34,9 @@ export default function RelatedCar() {
       } as const);
 
   // load brands
-  const listingCarsQuery = useQuery({
+  const listingRelatedCarsQuery = useQuery({
     queryKey: ["listing-cars"],
-    queryFn: () => loadCars({ page: 1 }),
+    queryFn: () => loadRelatedCars({ page: 1, carId: carId }),
   });
 
   const getSavedCarsQuery = useQuery({
@@ -104,7 +99,7 @@ export default function RelatedCar() {
         }}
         loop={loop}
         autoPlay={autoPlay}
-        data={listingCarsQuery?.data?.data}
+        data={listingRelatedCarsQuery?.data?.data}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 1,

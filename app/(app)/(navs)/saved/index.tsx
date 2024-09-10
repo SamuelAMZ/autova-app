@@ -20,6 +20,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSavedCar, unSaveSingleCar } from "@/utils/carRequest";
 import { SavedCarSkeleton } from "@/components/skeleton/SavedCarSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
+import NoCarFound from "@/assets/icons/no-car.svg";
 import Car from "@/models/car.model";
 
 interface modalInitialState {
@@ -254,6 +255,28 @@ const CollectionDetails = () => {
               ListFooterComponent={() => (
                 <View style={{ height: Platform.OS == "android" ? 40 : 60 }} />
               )}
+              ListEmptyComponent={() => (
+                <View className="flex-1 h-[350] items-center justify-center">
+                  <NoCarFound />
+                  <ThemedText
+                    style={{ fontFamily: "SpaceGrotesk_500SemiBold" }}
+                    className="text-[16px]"
+                  >
+                    No car found
+                  </ThemedText>
+                  <TouchableOpacity
+                    onPress={() => getSavedCarsQueryList.refetch()}
+                    className="p-3"
+                  >
+                    <ThemedText
+                      style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+                      className="text-[blue] text-[16px]"
+                    >
+                      Retry
+                    </ThemedText>
+                  </TouchableOpacity>
+                </View>
+              )}
             />
           </View>
         ) : null}
@@ -262,30 +285,33 @@ const CollectionDetails = () => {
           <ErrorLoadingData refetch={getSavedCarsQueryList.refetch} />
         ) : null}
       </View>
-      <CollectionActionModal
-        okPress={() => handleRemoveItem()}
-        cancelPress={() => setmodalVisible(undefined)}
-        childrenTop={
-          <View className="p-5 rounded-full items-center justify-center bg-[#F5F5F5]">
-            <Trash color="red" />
-          </View>
-        }
-        childrenCenter={
-          <View className="py-4 items-center">
-            <ThemedText
-              className="text-[18px]"
-              style={{ fontFamily: "SpaceGrotesk_700Bold" }}
-            >
-              You are about to remove this item
-            </ThemedText>
-            <ThemedText className="text-center">
-              This will remove your product from save Are you sure?
-            </ThemedText>
-          </View>
-        }
-        rightText="Delete"
-        visible={modalVisible?.type == "delete" && modalVisible.visible}
-      />
+      {getSavedCarsQueryList.isSuccess &&
+      getSavedCarsQueryList.data?.cars?.length > 0 ? (
+        <CollectionActionModal
+          okPress={() => handleRemoveItem()}
+          cancelPress={() => setmodalVisible(undefined)}
+          childrenTop={
+            <View className="p-5 rounded-full items-center justify-center bg-[#F5F5F5]">
+              <Trash color="red" />
+            </View>
+          }
+          childrenCenter={
+            <View className="py-4 items-center">
+              <ThemedText
+                className="text-[18px]"
+                style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+              >
+                You are about to remove this item
+              </ThemedText>
+              <ThemedText className="text-center">
+                This will remove your product from save Are you sure?
+              </ThemedText>
+            </View>
+          }
+          rightText="Delete"
+          visible={modalVisible?.type == "delete" && modalVisible.visible}
+        />
+      ) : null}
     </>
   );
 };

@@ -102,7 +102,7 @@ const CarImagesSlider: React.FC<CarImagesSliderProps> = ({ Slides, carId }) => {
         onProgressChange={() => {
           setScrollIndex(+carouselRef.current?.getCurrentIndex() || 0);
         }}
-        loop={loop}
+        loop={loop && Slides.length > 1}
         autoPlay={autoPlay}
         renderItem={({ item, index }) => (
           <ImageZoom

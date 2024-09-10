@@ -20,6 +20,29 @@ export async function loadCars({
   }
 }
 
+export async function loadRelatedCars({
+  page = 1,
+  perPage = 10,
+  carId,
+}: {
+  page?: number;
+  perPage?: number;
+  carId: string;
+}) {
+  try {
+    const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/car/related-cars`;
+    const response: AxiosResponse = await axios.post(url, {
+      page,
+      perPage,
+      carId,
+    });
+    return response?.data ?? [];
+  } catch (error: any) {
+    console.error(error, "error loadCars");
+    return [];
+  }
+}
+
 interface getRequestProps {
   id: string;
 }
