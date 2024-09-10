@@ -22,7 +22,7 @@ export default function Engine() {
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    updateProductData({ engineTypeId: engine });
+    updateProductData({ engineType: engine });
   };
 
   return (

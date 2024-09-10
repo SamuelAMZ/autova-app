@@ -27,7 +27,7 @@ export default function BrandPage() {
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = (brand) => {
-    updateProductData({ modelId: brand });
+    updateProductData({ model: brand });
   };
 
   return (

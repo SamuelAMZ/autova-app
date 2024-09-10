@@ -26,7 +26,7 @@ export default function Model() {
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    updateProductData({ modelId: selectedDegree });
+    updateProductData({ model: selectedDegree });
     router.navigate("./title");
   };
 
