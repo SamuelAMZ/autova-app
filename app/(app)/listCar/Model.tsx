@@ -12,7 +12,6 @@ import { SearchNormal1 } from "iconsax-react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { modelData } from "@/constants/data";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
 import { loadModels } from "@/utils/modelsRequest";
@@ -95,7 +94,7 @@ export default function Model() {
                 placeholderTextColor="#1D2939"
                 onChangeText={(text) => setSearch(text)}
               />
-              <View style={{ position: "absolute", top: "0", right: 13 }}>
+              <View style={{ position: "absolute", top: 0, right: 13 }}>
                 <SearchNormal1 size="20" color="#000" />
               </View>
             </View>

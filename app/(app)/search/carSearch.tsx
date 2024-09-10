@@ -7,7 +7,6 @@ import {
 } from "iconsax-react-native";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Dimensions,
   FlatList,
   ScrollView,
   TextInput,
@@ -36,10 +35,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getSavedCar } from "@/utils/carRequest";
 import { filterCars, loadCars } from "@/utils/carRequest";
 import Car from "@/models/car.model";
-import NoCarFound from "@/assets/icons/no-car.svg";
+import NoCarFoundIcon from "@/assets/icons/no-car.svg";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { debounce } from "@/constants/utils";
+import NoCarFound from "@/components/cars/__NoCarFound";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -112,14 +112,6 @@ const CarSearchScreen = () => {
     setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
   };
 
-  //
-  // const loadCars = async (data: FilterDataProps & { search: string }) => {
-  //   setIsLoading(true);
-  //   const cars = await filterCars(data);
-  //   setIsLoading(false);
-  //   setData(cars);
-  // };
-
   // Make & Model Props change
   const handleMakeModalChange = (
     type: string | undefined,
@@ -156,7 +148,7 @@ const CarSearchScreen = () => {
 
   // refresh
   const handleRefresh = () => {
-    initializeStateData();
+    refetchListing();
   };
 
   // callbacks
@@ -185,26 +177,6 @@ const CarSearchScreen = () => {
     setUsedFilter(count);
   }, [filterData]);
 
-  // const filteredCars: Car[] =
-  //   data.length > 0
-  //     ? data.filter((e: Car) =>
-  //         e.name
-  //           .toLocaleLowerCase()
-  //           .includes(searchInputValue.toLocaleLowerCase().trim())
-  //       )
-  //     : [];
-
-  //
-
-  // const listingCarsQuery = useQuery({
-  //   queryKey: ["listing-cars"],
-  //   queryFn: loadCars,
-  // });
-
-  // const getSavedCarsQuery = useQuery({
-  //   queryKey: ["get-saved-cars"],
-  //   queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
-  // });
   return (
     <>
       <View
@@ -300,23 +272,7 @@ const CarSearchScreen = () => {
               ListFooterComponent={() => <View style={{ height: 40 }} />}
             />
           ) : (
-            <View className="flex-1 h-[350] items-center justify-center">
-              <NoCarFound />
-              <ThemedText
-                style={{ fontFamily: "SpaceGrotesk_500SemiBold" }}
-                className="text-[16px]"
-              >
-                No car found
-              </ThemedText>
-              <TouchableOpacity onPress={() => handleRefresh()} className="p-3">
-                <ThemedText
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-                  className="text-[blue] text-[16px]"
-                >
-                  Retry
-                </ThemedText>
-              </TouchableOpacity>
-            </View>
+            <NoCarFound handleRefresh={handleRefresh} />
           )}
         </ScrollView>
       </View>

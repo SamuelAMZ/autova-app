@@ -46,6 +46,7 @@ import { ErrorLoadingData } from "@/components/ErrorLoading";
 import { ENV } from "@/constants/env";
 import axios, { AxiosResponse } from "axios";
 import { debounce } from "@/constants/utils";
+import NoCarFound from "@/components/cars/__NoCarFound";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -138,29 +139,35 @@ export default function MyListing() {
     debouncedSearch(value);
   };
 
-  // load cars
-  const listingCarsQuery = useInfiniteQuery({
-    queryKey: ["infinite-listing-cars"],
-    queryFn: async ({ pageParam = 1 }) => {
-      return await loadCars({ page: pageParam, perPage: 2 });
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
-      return undefined;
-    },
-    getPreviousPageParam: (
-      firstPage,
-      allPages,
-      firstPageParam,
-      allPageParams
-    ) => {
-      if (firstPage.page > 1) return firstPage.page - 1;
-      return undefined;
-    },
-  });
+  // // load cars
+  // const listingCarsQuery = useInfiniteQuery({
+  //   queryKey: ["infinite-listing-cars"],
+  //   queryFn: async ({ pageParam = 1 }) => {
+  //     return await loadCars({ page: pageParam, perPage: 2 });
+  //   },
+  //   initialPageParam: 1,
+  //   getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+  //     if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+  //     return undefined;
+  //   },
+  //   getPreviousPageParam: (
+  //     firstPage,
+  //     allPages,
+  //     firstPageParam,
+  //     allPageParams
+  //   ) => {
+  //     if (firstPage.page > 1) return firstPage.page - 1;
+  //     return undefined;
+  //   },
+  // });
 
-  const { data: listingQuery, refetch: refetchListing } = useQuery({
+  const {
+    data: listingQuery,
+    refetch: refetchListing,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useQuery({
     queryKey: [],
     queryFn: async () => {
       const result = await filterCars({
@@ -173,21 +180,16 @@ export default function MyListing() {
   });
 
   // Handle load more
-  const handleLoadMore = () => {
-    if (listingCarsQuery.hasNextPage && !listingCarsQuery.isFetchingNextPage) {
-      listingCarsQuery.fetchNextPage();
-    }
-  };
+  // const handleLoadMore = () => {
+  //   if (listingCarsQuery.hasNextPage && !listingCarsQuery.isFetchingNextPage) {
+  //     listingCarsQuery.fetchNextPage();
+  //   }
+  // };
 
   const getSavedCarsQuery = useQuery({
     queryKey: ["get-saved-cars"],
     queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
   });
-
-  // console.log(
-  //   JSON.stringify(listingCarsQuery?.data, null, 2),
-  //   "listingCarsQuery"
-  // );
 
   return (
     <>
@@ -228,7 +230,7 @@ export default function MyListing() {
           </TouchableOpacity>
         </View>
 
-        {listingCarsQuery.isLoading ? (
+        {isLoading ? (
           <FlatList
             className="px-[4%]"
             data={Array.from({ length: 10 })}
@@ -238,8 +240,7 @@ export default function MyListing() {
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
           />
-        ) : null}
-        {listingCarsQuery.isSuccess ? (
+        ) : isSuccess ? (
           <FlatList
             className="px-[4%]"
             data={listingQuery}
@@ -260,10 +261,10 @@ export default function MyListing() {
             ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
             scrollEnabled={false}
             keyExtractor={(item) => item._id}
-            onEndReached={handleLoadMore}
+            // onEndReached={handleLoadMore}
             onEndReachedThreshold={0.1}
             ListFooterComponent={
-              listingCarsQuery.isFetchingNextPage ? (
+              listingQuery.isFetchingNextPage ? (
                 <View style={{ height: 40 }}>
                   <ActivityIndicator
                     size="large"
@@ -275,10 +276,11 @@ export default function MyListing() {
               )
             }
           />
+        ) : listingQuery?.length <= 0 ? (
+          <NoCarFound handleRefresh={() => refetchListing()} />
         ) : null}
-        {listingCarsQuery.isError ? (
-          <ErrorLoadingData refetch={listingCarsQuery.refetch} />
-        ) : null}
+
+        {isError ? <ErrorLoadingData refetch={listingQuery.refetch} /> : null}
       </ScrollView>
       <CustomBottomSheetModal
         isVisible={isModalVisible}

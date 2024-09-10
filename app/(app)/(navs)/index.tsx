@@ -171,7 +171,10 @@ const HomePage = () => {
                     size={70}
                     onPress={() => {
                       handleCloseModal();
-                      router.navigate("/brands");
+                      router.navigate({
+                        pathname: "/brands",
+                        params: { ...item },
+                      });
                     }}
                     brand={item}
                   />
