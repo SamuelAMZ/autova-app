@@ -26,13 +26,13 @@ import { useProduct } from "@/context/ProductContext";
 export default function BrandPage() {
   const { updateProductData, productData } = useProduct();
 
-  const handleBrandSelect = (brandId) => {
-    updateProductData({ modelId: brandId });
+  const handleBrandSelect = (brand) => {
+    updateProductData({ modelId: brand });
   };
 
   return (
     // Your UI logic for selecting a brand
-    <TouchableOpacity onPress={() => handleBrandSelect("selectedBrandId")}>
+    <TouchableOpacity onPress={() => handleBrandSelect("selectedbrand")}>
       <ThemedText>Select Brand</ThemedText>
     </TouchableOpacity>
   );

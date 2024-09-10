@@ -34,9 +34,9 @@ export default function Model() {
     setSelectedDegree(degree);
   };
 
-  const { brandId }: { brandId: string } = useLocalSearchParams();
+  const { brand }: { brand: string } = useLocalSearchParams();
 
-  console.log(brandId);
+  console.log(brand);
 
   const ModelQuery = useQuery({
     queryKey: ["models"],
@@ -46,7 +46,7 @@ export default function Model() {
   console.log(ModelQuery?.data?.data);
 
   const Models = ModelQuery?.data?.data.filter(
-    (item: { brandId: { _id: string } }) => item.brandId._id === brandId
+    (item: { brand: { _id: string } }) => item.brand._id === brand
   );
 
   if (!Models) {
@@ -55,7 +55,7 @@ export default function Model() {
 
   console.log(Models);
   // Filtre les modèles en fonction de la recherche
-  const filteredModels = Models.filter((item: { name: string; }) =>
+  const filteredModels = Models.filter((item: { name: string }) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -66,24 +66,28 @@ export default function Model() {
       </HeaderListing>
       <View
         className="flex   bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
+        style={{ paddingTop: 30, paddingBottom: 60 }}
+      >
         <ScrollView className="flex pb-[80px] relative px-[16px]">
           <View className="flex items-start gap-[12px] mb-[30px] ">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Model
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
               Select the model for your car
             </ThemedText>
           </View>
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : null}
             style={{ flex: 1 }}
-            keyboardVerticalOffset={110}>
+            keyboardVerticalOffset={110}
+          >
             <View className="relative flex-1 flex-row  items-center justify-between bg-[#7878801F] border border-[#D0D5DD]  pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
               <TextInput
                 className=" w-full py-[13px]"
@@ -100,28 +104,32 @@ export default function Model() {
           <View className="flex gap-[20px]">
             <ThemedText
               className="text-[17px]  font-[600] text-[#101828]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               All Model
             </ThemedText>
 
             <View className="">
-              {filteredModels?.map((item: { _id: string; name: string | number }) => (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={() => handleSelect(item._id)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
-                  <ThemedText className="py-[16px] text-[#101828] text-[14px]">
-                    {item.name}
-                  </ThemedText>
-                  {selectedDegree === item._id && (
-                    <AntDesign
-                      name="check"
-                      size={20}
-                      color={Colors.background}
-                    />
-                  )}
-                </TouchableOpacity>
-              ))}
+              {filteredModels?.map(
+                (item: { _id: string; name: string | number }) => (
+                  <TouchableOpacity
+                    key={item._id}
+                    onPress={() => handleSelect(item._id)}
+                    className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
+                  >
+                    <ThemedText className="py-[16px] text-[#101828] text-[14px]">
+                      {item.name}
+                    </ThemedText>
+                    {selectedDegree === item._id && (
+                      <AntDesign
+                        name="check"
+                        size={20}
+                        color={Colors.background}
+                      />
+                    )}
+                  </TouchableOpacity>
+                )
+              )}
             </View>
           </View>
         </ScrollView>
@@ -129,13 +137,16 @@ export default function Model() {
           style={{
             paddingBottom: 20,
           }}
-          className="px-[16px]">
+          className="px-[16px]"
+        >
           <TouchableOpacity
             onPress={handleBrandSelect}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
               Continue
             </ThemedText>
           </TouchableOpacity>

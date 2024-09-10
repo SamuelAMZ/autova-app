@@ -17,8 +17,8 @@ export default function Fuel() {
 
   const { updateProductData, productData } = useProduct();
 
-  const handleBrandSelect = (brandId:string) => {
-    updateProductData({ brandId: brandId });
+  const handleBrandSelect = (brand: string) => {
+    updateProductData({ brand: brand });
   };
 
   const handleSelect = (degree: string) => {

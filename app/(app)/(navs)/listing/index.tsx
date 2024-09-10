@@ -39,12 +39,13 @@ import {
 import CarItem from "@/components/cars/CarItem";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
-import { loadCars } from "@/utils/carRequest";
+import { filterCars, loadCars } from "@/utils/carRequest";
 import { getSavedCar } from "@/utils/carRequest";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import { ENV } from "@/constants/env";
 import axios, { AxiosResponse } from "axios";
+import { debounce } from "@/constants/utils";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -53,6 +54,7 @@ const initialItemIsOpen = {
 };
 
 export default function MyListing() {
+  const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
   const [filterData, setFilterData] =
@@ -113,9 +115,9 @@ export default function MyListing() {
     const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
     const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
     const rangeHigh =
-      filterData.rangeValue.high != defaultRangeHighValue ? 0.5 : 0;
+      filterData.rangeValue?.high != defaultRangeHighValue ? 0.5 : 0;
     const rangeLow =
-      filterData.rangeValue.low != defaultRangeLowValue ? 0.5 : 0;
+      filterData.rangeValue?.low != defaultRangeLowValue ? 0.5 : 0;
     const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
     const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
     const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
@@ -123,6 +125,18 @@ export default function MyListing() {
       makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount
     );
   }, [filterData]);
+
+  const [debouncedSearch] = useState(() =>
+    debounce((value: string) => {
+      // setFilter((prev) => ({ ...prev, search: value }));
+      // setPageNumber("1");
+      refetchListing();
+    }, 500)
+  ); // 500ms delay
+
+  const handleSearchValueChange = (value: string) => {
+    debouncedSearch(value);
+  };
 
   // load cars
   const listingCarsQuery = useInfiniteQuery({
@@ -143,6 +157,18 @@ export default function MyListing() {
     ) => {
       if (firstPage.page > 1) return firstPage.page - 1;
       return undefined;
+    },
+  });
+
+  const { data: listingQuery, refetch: refetchListing } = useQuery({
+    queryKey: [],
+    queryFn: async () => {
+      const result = await filterCars({
+        ...filterData,
+        search: searchInputValue,
+      });
+      console.log(result);
+      return result;
     },
   });
 
@@ -175,6 +201,12 @@ export default function MyListing() {
           >
             <SearchNormal color={Colors.textQuinary} />
             <TextInput
+              value={searchInputValue}
+              onChangeText={(value) => {
+                console.log(value);
+                setSearchInputValue(value);
+                handleSearchValueChange(value);
+              }}
               className="flex-1"
               placeholder="Search..."
               placeholderTextColor="#000"
@@ -210,7 +242,7 @@ export default function MyListing() {
         {listingCarsQuery.isSuccess ? (
           <FlatList
             className="px-[4%]"
-            data={listingCarsQuery?.data?.pages.flatMap((page) => page.data)}
+            data={listingQuery}
             renderItem={({ item }) => (
               <CarItem
                 car={item}
@@ -322,7 +354,13 @@ export default function MyListing() {
               className="px-4 flex-row mt-4 gap-3 absolute self-center"
             >
               <View className="flex-1">
-                <CustomButton onPress={() => {}} title={"Search"} />
+                <CustomButton
+                  onPress={() => {
+                    refetchListing();
+                    setIsModalVisible(false);
+                  }}
+                  title={"Search"}
+                />
               </View>
               <TouchableOpacity
                 onPress={() => onReset()}

@@ -12,3 +12,13 @@ export const toastify = (title: string, body: string) => {
     position: "top",
   });
 };
+
+export function debounce(func: any, timeout = 500) {
+  let timer: NodeJS.Timeout;
+  return (...args: any) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}

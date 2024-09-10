@@ -146,7 +146,7 @@ export default function CarDetail() {
   function CarSpecifications() {
     const data = [
       {
-        Brand: carDetailQuery.data?.brandId?.name,
+        Brand: carDetailQuery.data?.brand?.name,
       },
       {
         Model: carDetailQuery.data?.modelId?.name,
