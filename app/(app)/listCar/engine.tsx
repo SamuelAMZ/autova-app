@@ -36,7 +36,7 @@ export default function Engine() {
   });
 
   const handleBrandSelect = () => {
-    updateProductData({ engineTypeId: selectedDegree });
+    updateProductData({ engineType: selectedDegree });
     router.navigate("./fuel");
   };
 

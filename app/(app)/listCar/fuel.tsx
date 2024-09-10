@@ -18,7 +18,7 @@ export default function Fuel() {
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    updateProductData({ fuelTypeId: selectedDegree });
+    updateProductData({ fuelType: selectedDegree });
     router.navigate("./transmission");
   };
 
