@@ -15,7 +15,7 @@ export default function Mileage() {
   console.log(productData);
 
   const handleBrandSelect = () => {
-    updateProductData({ cylinder: cylinder});
+    updateProductData({ cylinders: cylinder});
     router.navigate("./color");
   };
 

@@ -26,8 +26,10 @@ export default function Upload() {
 
   const { updateProductData, productData } = useProduct();
 
-  const handleBrandSelect = (brandId:string) => {
-    updateProductData({ brandId: brandId });
+  const handleBrandSelect = () => {
+    
+    updateProductData({ imagesUrls: images });
+    router.navigate("./contact");
   };
 
   //
@@ -159,9 +161,7 @@ export default function Upload() {
             }}
           >
             <TouchableOpacity
-              onPress={() => {
-                router.navigate("./contact");
-              }}
+              onPress={handleBrandSelect}
               className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
             >
               <ThemedText

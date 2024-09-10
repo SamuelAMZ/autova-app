@@ -17,8 +17,9 @@ export default function Fuel() {
 
   const { updateProductData, productData } = useProduct();
 
-  const handleBrandSelect = (brandId:string) => {
-    updateProductData({ brandId: brandId });
+  const handleBrandSelect = () => {
+    updateProductData({ fuelTypeId: selectedDegree });
+    router.navigate("./transmission");
   };
 
   const handleSelect = (degree: string) => {
@@ -26,7 +27,7 @@ export default function Fuel() {
   };
 
   const fuelQuery = useQuery({
-    queryKey: ["brands"],
+    queryKey: ["fuels"],
     queryFn: loadFuelTypes,
   });
 
@@ -93,9 +94,7 @@ export default function Fuel() {
           }}
         >
           <TouchableOpacity
-            onPress={() => {
-              router.navigate("./transmission");
-            }}
+            onPress={handleBrandSelect}
             className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[10px]`}
           >
             <ThemedText
