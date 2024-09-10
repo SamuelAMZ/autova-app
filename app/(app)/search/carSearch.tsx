@@ -59,11 +59,11 @@ const CarSearchScreen = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const filteredData = data.filter((e: Car) =>
-      e.name.includes(searchInputValue)
-    );
-  }, [searchInputValue]);
+  // useEffect(() => {
+  //   const filteredData = data.filter((e: Car) =>
+  //     e.name.includes(searchInputValue)
+  //   );
+  // }, [searchInputValue]);
 
   const handleOpenItem = (type: string) => {
     setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
@@ -122,6 +122,11 @@ const CarSearchScreen = () => {
   // Reset filter
   const onReset = () => {
     setFilterData(initialFilterData);
+  };
+
+  // refresh
+  const handleRefresh = () => {
+    initializeStateData();
   };
 
   // callbacks
@@ -267,7 +272,7 @@ const CarSearchScreen = () => {
               >
                 No car found
               </ThemedText>
-              <TouchableOpacity className="p-3">
+              <TouchableOpacity onPress={() => handleRefresh()} className="p-3">
                 <ThemedText
                   style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                   className="text-[blue] text-[16px]"

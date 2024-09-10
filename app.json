@@ -15,8 +15,13 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["telegram", "whatsapp", "tel"]
-      }
+        "LSApplicationQueriesSchemes": [
+          "telegram",
+          "whatsapp",
+          "tel"
+        ]
+      },
+      "bundleIdentifier": "com.afi.carapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +29,10 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.afi.carapp",
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +50,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "959c9272-60b3-4d86-a103-d5045df7ccb2"
+      }
+    },
+    "owner": "samueldevpro09"
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -8,7 +8,7 @@ import {
   Platform,
   ImageBackground,
 } from "react-native";
-import { Heart } from "iconsax-react-native";
+import { Car, Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { StatusBar } from "expo-status-bar";
 import { PropsWithChildren } from "react";
@@ -25,13 +25,13 @@ import ThemedText from "@/components/ThemedText";
 import RelatedCar from "@/components/cars/relatedCard";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import CarImagesSlider from "@/components/carImagesSlider/slider";
-import useStatusBar from "@/hooks/useStatusBar";
 import colors from "@/constants/Colors";
 
 import { ImageSliderSkeleton } from "@/components/skeleton/carDetails/imageSliderSkeleton";
 import { thousandSeparator } from "@/constants/utils";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { CarData } from "@/constants/CarData";
+import { getColors } from "react-native-image-colors";
+
 import {
   isCarSaved,
   saveSingleCar,
@@ -49,9 +49,8 @@ import { ErrorLoadingData } from "@/components/ErrorLoading";
 import Colors from "@/constants/Colors";
 
 export default function CarDetail() {
-  useStatusBar("dark-content", "transparent", true);
+  const [statusBarType, setStatusBarType] = useState("dark");
   const { width, height } = useWindowDimensions();
-  const [isLoading, setIsLoading] = useState(true);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["55%", "60%", "90%"], []);
@@ -140,12 +139,9 @@ export default function CarDetail() {
   const carDetailQuery = useQuery({
     queryKey: ["carDetail", carId],
     queryFn: () => getCarById({ id: carId }),
-    // enabled: !!carId, // should be remove
   });
 
-  // if (carDetailQuery.isSuccess || carDetailQuery.isError) setIsLoading(false);
-
-  console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery", carId);
+  // console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery", carId);
 
   function CarSpecifications() {
     const data = [
@@ -254,10 +250,19 @@ export default function CarDetail() {
 
   return (
     <>
-      {isLoading && carDetailQuery.isLoading ? (
-        <View className="flex flex-1 items-center justify-center gap-3">
-          <BarIndicator color={Colors.buttonPrimary} />
-          <ThemedText className="text-[16px]">Loading...</ThemedText>
+      {true && carDetailQuery.isLoading ? (
+        <View className="flex flex-1 items-center justify-center bg-slate-100">
+          <View className="h-[110px] ">
+            <BarIndicator color={Colors.buttonPrimary} />
+            <ThemedText
+              style={{
+                color: Colors.buttonPrimary,
+              }}
+              className="text-[17px]"
+            >
+              Loading...
+            </ThemedText>
+          </View>
         </View>
       ) : null}
 
@@ -277,7 +282,11 @@ export default function CarDetail() {
               <View
                 onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
               >
-                <CustomHeader title={carDetailQuery.data?.name} />
+                <CustomHeader
+                  title={carDetailQuery.data?.name}
+                  imageUri={carDetailQuery.data?.imagesUrls[0]}
+                  setStatusBarType={setStatusBarType}
+                />
               </View>
               <View
                 style={{
@@ -465,7 +474,9 @@ export default function CarDetail() {
                       <CarDetails />
                     </View>
 
-                    <RelatedCar />
+                    {carDetailQuery.isSuccess ? (
+                      <RelatedCar carId={carId} />
+                    ) : null}
                     {/* <View
                     style={{
                       height: +selectedElmHeight,
@@ -506,6 +517,11 @@ export default function CarDetail() {
 
       {carDetailQuery.isError ? (
         <ErrorLoadingData refetch={carDetailQuery.refetch} />
+      ) : null}
+
+      {statusBarType === "dark" ? <StatusBar style="dark" translucent /> : null}
+      {statusBarType === "light" ? (
+        <StatusBar style="light" translucent />
       ) : null}
     </>
   );
@@ -655,7 +671,15 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
   );
 }
 
-function CustomHeader({ title }: { title?: string }) {
+function CustomHeader({
+  title,
+  imageUri,
+  setStatusBarType,
+}: {
+  title?: string;
+  imageUri?: string;
+  setStatusBarType: (color: string) => void;
+}) {
   const { carId }: { carId: string } = useLocalSearchParams();
 
   if (!carId) return;
@@ -700,8 +724,64 @@ function CustomHeader({ title }: { title?: string }) {
   };
 
   const handleShare = () => {};
+
+  // Fetch prominent headerColors from an image.
+
+  const [headerColors, setHeaderColors] = useState<{
+    dominant: string;
+  }>({ dominant: "" });
+  const [textColor, setTextColor] = useState<string>("");
+
+  // Function to calculate luminance
+  const getLuminance = (hex: string): number => {
+    // Convert hex to RGB
+    const rgb = parseInt(hex.replace("#", ""), 16);
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = (rgb >> 0) & 0xff;
+
+    // Standard formula for relative luminance
+    const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return luminance;
+  };
+
+  useEffect(() => {
+    const url: string = imageUri || "";
+
+    if (url) {
+      getColors(url, {
+        fallback: "#C8C8D0",
+        cache: true,
+        key: url,
+      })
+        .then((color) => {
+          setHeaderColors(color);
+          const luminance = getLuminance(color["dominant"]);
+          // Check if the dominant color is light or dark and set the text color
+          if (luminance > 128) {
+            // Light dominant color -> use dark text
+            setTextColor("#1D2939");
+            setStatusBarType("dark");
+          } else {
+            // Dark dominant color -> use light text
+            setTextColor("#EFEFEF");
+            setStatusBarType("light");
+          }
+        })
+        .catch((e) => {
+          console.log(e, "Error fetching image headerColors");
+        });
+    }
+  }, [imageUri]);
+
+  // console.log(headerColors, "headerColors");
   return (
-    <Header className=" px-[5%]">
+    <Header
+      className=" px-[5%]"
+      style={{
+        backgroundColor: headerColors["dominant"],
+      }}
+    >
       <View className="flex-row justify-between items-center py-[18px]">
         <View className="flex-row justify-start items-center gap-[13px] ">
           <TouchableOpacity
@@ -715,11 +795,16 @@ function CustomHeader({ title }: { title?: string }) {
           >
             <ArrowLeft size={18} variant="Outline" color="#000000" />
           </TouchableOpacity>
-          <ThemedText className="text-[#101828] text-[20px] font-[600]">
-            {title}
+          <ThemedText
+            style={{
+              color: textColor,
+            }}
+            className=" text-[20px] font-[600] mr-1"
+          >
+            {title?.length > 18 ? title?.slice(0, 18) + "..." : title}
           </ThemedText>
         </View>
-        <View className="flex-row items-center justify-center gap-[12px]">
+        <View className="flex-row items-center justify-center gap-[10px]">
           <TouchableOpacity
             onPress={handleShare}
             className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"
@@ -753,6 +838,7 @@ function CustomHeader({ title }: { title?: string }) {
 const Header = ({
   children,
   className,
+  style,
   ...rest
 }: PropsWithChildren & ViewProps) => {
   const insets = useSafeAreaInsets();
@@ -760,7 +846,7 @@ const Header = ({
   return (
     <View
       className={` ${className}`}
-      style={{ paddingTop: insets.top }}
+      style={{ paddingTop: insets.top, ...style }}
       {...rest}
     >
       <StatusBar style="dark" translucent />
