@@ -10,6 +10,6 @@ export default Brand;
 
 export interface Models {
   _id: string;
-  brandId: Brand;
+  brand: Brand;
   name: string;
 }

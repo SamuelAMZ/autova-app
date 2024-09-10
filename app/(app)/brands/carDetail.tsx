@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import {
   View,
   ScrollView,
@@ -8,7 +8,7 @@ import {
   Platform,
   ImageBackground,
 } from "react-native";
-import { Car, Heart } from "iconsax-react-native";
+import { Heart } from "iconsax-react-native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { StatusBar } from "expo-status-bar";
 import { PropsWithChildren } from "react";
@@ -30,7 +30,6 @@ import colors from "@/constants/Colors";
 import { ImageSliderSkeleton } from "@/components/skeleton/carDetails/imageSliderSkeleton";
 import { thousandSeparator } from "@/constants/utils";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getColors } from "react-native-image-colors";
 
 import {
   isCarSaved,
@@ -146,13 +145,13 @@ export default function CarDetail() {
   function CarSpecifications() {
     const data = [
       {
-        Brand: carDetailQuery.data?.brandId?.name,
+        Brand: carDetailQuery.data?.brand?.name,
       },
       {
-        Model: carDetailQuery.data?.modelId?.name,
+        Model: carDetailQuery.data?.model?.name,
       },
       {
-        Title: carDetailQuery.data?.titleId?.name,
+        Title: carDetailQuery.data?.title?.name,
       },
       {
         "Year of Manufacture": carDetailQuery.data?.year,
@@ -164,19 +163,19 @@ export default function CarDetail() {
         Condition: "New",
       },
       {
-        Transmission: carDetailQuery.data?.transmissionId?.name,
+        Transmission: carDetailQuery.data?.transmission?.name,
       },
       {
         "Body Type": "SUV / 4x4",
       },
       {
-        "Fuel Type": carDetailQuery.data?.fuelTypeId?.name,
+        "Fuel Type": carDetailQuery.data?.fuelType?.name,
       },
       {
-        "Engine Capacity": carDetailQuery.data?.engineTypeId?.name,
+        "Engine Capacity": carDetailQuery.data?.engineType?.name,
       },
       {
-        Color: carDetailQuery.data?.colorId?.name,
+        Color: carDetailQuery.data?.color?.name,
       },
       {
         Cylinder: carDetailQuery.data?.cylinders,
@@ -185,13 +184,13 @@ export default function CarDetail() {
         "Doors count": carDetailQuery.data?.doorsCount,
       },
       {
-        Odometer: carDetailQuery.data?.engineTypeId?.name,
+        Odometer: carDetailQuery.data?.engineType?.name,
       },
       {
         "Country City":
-          carDetailQuery.data?.countryId?.name +
+          carDetailQuery.data?.country?.name +
           ", " +
-          carDetailQuery.data?.cityId?.name,
+          carDetailQuery.data?.city?.name,
       },
       {
         Hybrid: carDetailQuery.data?.isHybrid ? " Yes" : " No",
@@ -273,7 +272,7 @@ export default function CarDetail() {
           source={
             carDetailQuery.data?.imagesUrls[0]
               ? { uri: carDetailQuery.data?.imagesUrls[0] }
-              : CarData[0].img
+              : CarData[0]?.img
           }
           blurRadius={290}
         >
@@ -282,11 +281,7 @@ export default function CarDetail() {
               <View
                 onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
               >
-                <CustomHeader
-                  title={carDetailQuery.data?.name}
-                  imageUri={carDetailQuery.data?.imagesUrls[0]}
-                  setStatusBarType={setStatusBarType}
-                />
+                <CustomHeader title={carDetailQuery.data?.name} />
               </View>
               <View
                 style={{
@@ -518,11 +513,6 @@ export default function CarDetail() {
       {carDetailQuery.isError ? (
         <ErrorLoadingData refetch={carDetailQuery.refetch} />
       ) : null}
-
-      {statusBarType === "dark" ? <StatusBar style="dark" translucent /> : null}
-      {statusBarType === "light" ? (
-        <StatusBar style="light" translucent />
-      ) : null}
     </>
   );
 }
@@ -671,15 +661,7 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
   );
 }
 
-function CustomHeader({
-  title,
-  imageUri,
-  setStatusBarType,
-}: {
-  title?: string;
-  imageUri?: string;
-  setStatusBarType: (color: string) => void;
-}) {
+function CustomHeader({ title }: { title?: string }) {
   const { carId }: { carId: string } = useLocalSearchParams();
 
   if (!carId) return;
@@ -725,61 +707,11 @@ function CustomHeader({
 
   const handleShare = () => {};
 
-  // Fetch prominent headerColors from an image.
-
-  const [headerColors, setHeaderColors] = useState<{
-    dominant: string;
-  }>({ dominant: "" });
-  const [textColor, setTextColor] = useState<string>("");
-
-  // Function to calculate luminance
-  const getLuminance = (hex: string): number => {
-    // Convert hex to RGB
-    const rgb = parseInt(hex.replace("#", ""), 16);
-    const r = (rgb >> 16) & 0xff;
-    const g = (rgb >> 8) & 0xff;
-    const b = (rgb >> 0) & 0xff;
-
-    // Standard formula for relative luminance
-    const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    return luminance;
-  };
-
-  useEffect(() => {
-    const url: string = imageUri || "";
-
-    if (url) {
-      getColors(url, {
-        fallback: "#C8C8D0",
-        cache: true,
-        key: url,
-      })
-        .then((color) => {
-          setHeaderColors(color);
-          const luminance = getLuminance(color["dominant"]);
-          // Check if the dominant color is light or dark and set the text color
-          if (luminance > 128) {
-            // Light dominant color -> use dark text
-            setTextColor("#1D2939");
-            setStatusBarType("dark");
-          } else {
-            // Dark dominant color -> use light text
-            setTextColor("#EFEFEF");
-            setStatusBarType("light");
-          }
-        })
-        .catch((e) => {
-          console.log(e, "Error fetching image headerColors");
-        });
-    }
-  }, [imageUri]);
-
-  // console.log(headerColors, "headerColors");
   return (
     <Header
       className=" px-[5%]"
       style={{
-        backgroundColor: headerColors["dominant"],
+        backgroundColor: colors.background,
       }}
     >
       <View className="flex-row justify-between items-center py-[18px]">
@@ -797,7 +729,7 @@ function CustomHeader({
           </TouchableOpacity>
           <ThemedText
             style={{
-              color: textColor,
+              color: colors.textPrimary,
             }}
             className=" text-[20px] font-[600] mr-1"
           >
@@ -849,7 +781,7 @@ const Header = ({
       style={{ paddingTop: insets.top, ...style }}
       {...rest}
     >
-      <StatusBar style="dark" translucent />
+      <StatusBar style="light" translucent />
       {children}
     </View>
   );

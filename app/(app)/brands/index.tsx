@@ -5,24 +5,37 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { ArrowLeft } from "iconsax-react-native";
 
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 
-import { CarData } from "@/constants/CarData";
 import CarItem from "@/components/cars/CarItem";
 import Colors from "@/constants/Colors";
-import { loadCars } from "@/utils/carRequest";
+import { filterCars, loadCars } from "@/utils/carRequest";
 import { useQuery } from "@tanstack/react-query";
 import { getSavedCar } from "@/utils/carRequest";
+import { initialFilterData } from "@/constants";
+import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
+import NoCarFound from "@/components/cars/__NoCarFound";
 
-export default function Brand() {
+export default function BrandCars() {
+  const { _id, name }: { _id: string; name: string } = useLocalSearchParams();
   // load brands
-  const listingCarsQuery = useQuery({
+  const {
+    data: listingCarsQuery,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ["listing-cars"],
-    queryFn: () => loadCars({ page: 1 }),
+    queryFn: () => {
+      return filterCars({
+        ...initialFilterData,
+        selectedMakeItem: { _id, name },
+      });
+    },
   });
 
   const getSavedCarsQuery = useQuery({
@@ -30,17 +43,25 @@ export default function Brand() {
     queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
   });
 
-  // console.log(
-  //   JSON.stringify(listingCarsQuery?.data?.data, null, 2),
-  //   "listingCarsQuery"
-  // );
-
   return (
     <View className={`flex-1 bg-[${Colors.backgroundSecondaryVariant}]`}>
-      <CustomHeader />
-      <ScrollView className="flex-1 px-[4%] pt-[1rem]">
+      <CustomHeader title={name} />
+      {isLoading ? (
         <FlatList
-          data={listingCarsQuery?.data?.data}
+          data={Array.from({ length: 5 })}
+          renderItem={({ item }) => <CarItemSkeleton />}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: Platform.OS === "ios" ? 2 : 16 }} />
+          )}
+          scrollEnabled={false}
+          keyExtractor={(_, index) => index.toString()}
+          initialNumToRender={5}
+          ListFooterComponent={() => <View style={{ height: 60 }} />}
+        />
+      ) : listingCarsQuery.length > 0 ? (
+        <FlatList
+          className="px-[4%] mt-4"
+          data={listingCarsQuery}
           renderItem={({ item }) => (
             <CarItem
               car={item}
@@ -58,12 +79,13 @@ export default function Brand() {
           ItemSeparatorComponent={() => (
             <View style={{ height: Platform.OS === "ios" ? 2 : 16 }} />
           )}
-          scrollEnabled={false}
           keyExtractor={(_, index) => index.toString()}
           initialNumToRender={5}
           ListFooterComponent={() => <View style={{ height: 60 }} />}
         />
-      </ScrollView>
+      ) : (
+        <NoCarFound handleRefresh={() => refetch()} />
+      )}
     </View>
   );
 }
@@ -83,7 +105,7 @@ function CustomHeader({ title }: { title?: string }) {
         <ThemedText
           className={`text-[${Colors.textPrimary}] text-[20px] font-[600]`}
         >
-          Tesla Brand Cars
+          {title} Brand Cars
         </ThemedText>
       </View>
     </Header>

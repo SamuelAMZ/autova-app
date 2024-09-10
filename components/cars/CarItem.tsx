@@ -119,7 +119,7 @@ export default function CarItem({
               </ThemedText>
             </View>
             <ThemedText className="text-[#344054] font-[500] text-[16px]">
-              {car?.cityId?.name} | {car?.countryId?.name}
+              {car?.city?.name} | {car?.country?.name}
             </ThemedText>
           </View>
           {/* <View>

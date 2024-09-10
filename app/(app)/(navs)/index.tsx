@@ -97,7 +97,16 @@ const HomePage = () => {
                 horizontal
                 data={brandQuery?.data?.data}
                 renderItem={({ item }) => (
-                  <BrandItem size={70} onPress={() => {}} brand={item} />
+                  <BrandItem
+                    size={70}
+                    onPress={() => {
+                      router.navigate({
+                        pathname: "/brands",
+                        params: { ...item },
+                      });
+                    }}
+                    brand={item}
+                  />
                 )}
                 ItemSeparatorComponent={() => <HorizontalSeperator size={16} />}
               />
@@ -162,7 +171,10 @@ const HomePage = () => {
                     size={70}
                     onPress={() => {
                       handleCloseModal();
-                      router.navigate("/brands");
+                      router.navigate({
+                        pathname: "/brands",
+                        params: { ...item },
+                      });
                     }}
                     brand={item}
                   />

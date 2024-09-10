@@ -7,7 +7,6 @@ import {
 } from "iconsax-react-native";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Dimensions,
   FlatList,
   ScrollView,
   TextInput,
@@ -36,9 +35,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getSavedCar } from "@/utils/carRequest";
 import { filterCars, loadCars } from "@/utils/carRequest";
 import Car from "@/models/car.model";
-import NoCarFound from "@/assets/icons/no-car.svg";
+import NoCarFoundIcon from "@/assets/icons/no-car.svg";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
+import { debounce } from "@/constants/utils";
+import NoCarFound from "@/components/cars/__NoCarFound";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -57,38 +58,59 @@ const CarSearchScreen = () => {
   const [usedFilter, setUsedFilter] = useState<number>();
   const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpenData);
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
-  // useEffect(() => {
-  //   const filteredData = data.filter((e: Car) =>
-  //     e.name.includes(searchInputValue)
-  //   );
-  // }, [searchInputValue]);
-
-  const handleOpenItem = (type: string) => {
-    setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
-  };
+  //
+  useEffect(() => {
+    initializeStateData();
+  }, []);
 
   const initializeStateData = async () => {
     const initialData = searchData
       ? JSON.parse(searchData as string)
       : initialFilterData;
     setFilterData(initialData);
-    await loadCars(initialData);
+    setInitialized(true);
   };
 
-  //
-  const loadCars = async (data: FilterDataProps) => {
-    setIsLoading(true);
-    const cars = await filterCars(data);
-    setIsLoading(false);
-    setData(cars);
+  const [debouncedSearch] = useState(() =>
+    debounce((value: string) => {
+      // setFilter((prev) => ({ ...prev, search: value }));
+      // setPageNumber("1");
+      refetchListing();
+    }, 500)
+  ); // 500ms delay
+
+  const handleSearchValueChange = (value: string) => {
+    debouncedSearch(value);
   };
 
-  //
+  const {
+    data: listingQuery,
+    refetch: refetchListing,
+    isLoading,
+  } = useQuery({
+    queryKey: [],
+    queryFn: async () => {
+      const result = await filterCars({
+        ...filterData,
+        search: searchInputValue,
+      });
+      return result;
+    },
+    enabled: false,
+  });
+
   useEffect(() => {
-    initializeStateData();
-  }, []);
+    if (initialized) {
+      console.log(filterData);
+      refetchListing();
+    }
+  }, [initialized]);
+
+  const handleOpenItem = (type: string) => {
+    setItemIsOpen({ ...itemIsOpen, [`${type}`]: !itemIsOpen[`${type}`] });
+  };
 
   // Make & Model Props change
   const handleMakeModalChange = (
@@ -126,7 +148,7 @@ const CarSearchScreen = () => {
 
   // refresh
   const handleRefresh = () => {
-    initializeStateData();
+    refetchListing();
   };
 
   // callbacks
@@ -144,9 +166,9 @@ const CarSearchScreen = () => {
     const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
     const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
     const rangeHigh =
-      filterData.rangeValue.high != defaultRangeHighValue ? 0.5 : 0;
+      filterData.rangeValue?.high != defaultRangeHighValue ? 0.5 : 0;
     const rangeLow =
-      filterData.rangeValue.low != defaultRangeLowValue ? 0.5 : 0;
+      filterData.rangeValue?.low != defaultRangeLowValue ? 0.5 : 0;
     const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
     const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
     const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
@@ -155,26 +177,6 @@ const CarSearchScreen = () => {
     setUsedFilter(count);
   }, [filterData]);
 
-  const filteredCars: Car[] =
-    data.length > 0
-      ? data.filter((e: Car) =>
-          e.name
-            .toLocaleLowerCase()
-            .includes(searchInputValue.toLocaleLowerCase().trim())
-        )
-      : [];
-
-  //
-
-  // const listingCarsQuery = useQuery({
-  //   queryKey: ["listing-cars"],
-  //   queryFn: loadCars,
-  // });
-
-  // const getSavedCarsQuery = useQuery({
-  //   queryKey: ["get-saved-cars"],
-  //   queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
-  // });
   return (
     <>
       <View
@@ -210,7 +212,10 @@ const CarSearchScreen = () => {
               <SearchNormal color={Colors.textQuinary} />
               <TextInput
                 value={searchInputValue}
-                onChangeText={(value) => setSearchInputValue(value)}
+                onChangeText={(value) => {
+                  setSearchInputValue(value);
+                  handleSearchValueChange(value);
+                }}
                 className="flex-1"
                 placeholder="Search..."
                 placeholderTextColor="#000"
@@ -241,46 +246,33 @@ const CarSearchScreen = () => {
               )}
               scrollEnabled={false}
             />
-          ) : data && data.length > 0 ? (
+          ) : listingQuery && listingQuery.length > 0 ? (
             <FlatList
               className="px-[4%]"
-              data={filteredCars}
-              renderItem={({ item }: { item: Car }) => (
-                <CarItem
-                  car={item}
-                  onPress={() => {
-                    router.navigate({
-                      pathname: "/(app)/brands/carDetail",
-                      params: {
-                        carId: item._id,
-                      },
-                    });
-                  }}
-                />
-              )}
+              data={listingQuery}
+              renderItem={({ item }: { item: Car }) => {
+                console.log(item._id);
+                return (
+                  <CarItem
+                    car={item}
+                    onPress={() => {
+                      router.navigate({
+                        pathname: "/(app)/brands/carDetail",
+                        params: {
+                          carId: item._id,
+                        },
+                      });
+                    }}
+                  />
+                );
+              }}
               ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
               scrollEnabled={false}
               keyExtractor={(_, index) => index.toString()}
               ListFooterComponent={() => <View style={{ height: 40 }} />}
             />
           ) : (
-            <View className="flex-1 h-[350] items-center justify-center">
-              <NoCarFound />
-              <ThemedText
-                style={{ fontFamily: "SpaceGrotesk_500SemiBold" }}
-                className="text-[16px]"
-              >
-                No car found
-              </ThemedText>
-              <TouchableOpacity onPress={() => handleRefresh()} className="p-3">
-                <ThemedText
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-                  className="text-[blue] text-[16px]"
-                >
-                  Retry
-                </ThemedText>
-              </TouchableOpacity>
-            </View>
+            <NoCarFound handleRefresh={handleRefresh} />
           )}
         </ScrollView>
       </View>
@@ -362,7 +354,7 @@ const CarSearchScreen = () => {
               <View className="flex-1">
                 <CustomButton
                   onPress={() => {
-                    loadCars(filterData);
+                    refetchListing();
                     setIsModalVisible(false);
                   }}
                   title={"Search"}
