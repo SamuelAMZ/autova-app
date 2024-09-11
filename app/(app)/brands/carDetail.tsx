@@ -729,6 +729,7 @@ function CustomHeader({ title }: { title?: string }) {
           </TouchableOpacity>
           <ThemedText
             style={{
+              fontFamily: "SpaceGrotesk_600SemiBold",
               color: colors.textPrimary,
             }}
             className=" text-[20px] font-[600] mr-1"

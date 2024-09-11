@@ -81,7 +81,7 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
       listingCarsQuery?.data?.pages?.flatMap((page) => page?.data)?.length ||
     0 - 1
   ) {
-    console.log("Loading more", currentIndex);
+    // console.log("Loading more", currentIndex);
     handleLoadMore();
   }
 

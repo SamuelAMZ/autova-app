@@ -7,7 +7,7 @@ const NoCarFound = ({ handleRefresh }: { handleRefresh: () => void }) => {
     <View className="flex-1 h-[350] items-center justify-center">
       <NoCarFoundIcon />
       <ThemedText
-        style={{ fontFamily: "SpaceGrotesk_500SemiBold" }}
+        style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
         className="text-[16px]"
       >
         No car found
