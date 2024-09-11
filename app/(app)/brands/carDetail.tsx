@@ -48,7 +48,6 @@ import { ErrorLoadingData } from "@/components/ErrorLoading";
 import Colors from "@/constants/Colors";
 
 export default function CarDetail() {
-  const [statusBarType, setStatusBarType] = useState("dark");
   const { width, height } = useWindowDimensions();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -153,9 +152,9 @@ export default function CarDetail() {
       {
         Title: carDetailQuery.data?.title?.name,
       },
-   
+
       {
-        "Year": carDetailQuery.data?.year,
+        Year: carDetailQuery.data?.year,
       },
       {
         Transmission: carDetailQuery.data?.transmission?.name,
@@ -327,6 +326,7 @@ export default function CarDetail() {
                     className="px-[5%] flex gap-[20px]"
                   >
                     <ThemedText
+                      numberOfLines={1}
                       style={{
                         fontFamily: "SpaceGrotesk_600SemiBold",
                       }}
@@ -706,8 +706,8 @@ function CustomHeader({ title }: { title?: string }) {
         backgroundColor: colors.background,
       }}
     >
-      <View className="flex-row justify-between items-center py-[18px]">
-        <View className="flex-row justify-start items-center gap-[13px] ">
+      <View className="flex-row   justify-between items-center py-[18px]">
+        <View className="flex-row w-[70%]   justify-start items-center gap-[13px] ">
           <TouchableOpacity
             style={{
               maxWidth: 45,
@@ -719,17 +719,20 @@ function CustomHeader({ title }: { title?: string }) {
           >
             <ArrowLeft size={18} variant="Outline" color="#000000" />
           </TouchableOpacity>
-          <ThemedText
-            style={{
-              fontFamily: "SpaceGrotesk_600SemiBold",
-              color: colors.textPrimary,
-            }}
-            className=" text-[20px] font-[600] mr-1"
-          >
-            {title?.length > 17 ? title?.slice(0, 17) + "..." : title}
-          </ThemedText>
+          <View className="w-[80%]">
+            <ThemedText
+              numberOfLines={1}
+              style={{
+                fontFamily: "SpaceGrotesk_600SemiBold",
+                color: colors.textPrimary,
+              }}
+              className=" text-[20px] font-[600] mr-1"
+            >
+              {title}
+            </ThemedText>
+          </View>
         </View>
-        <View className="flex-row items-center justify-center gap-[10px]">
+        <View className="flex-row  items-center justify-center gap-[10px]">
           <TouchableOpacity
             onPress={handleShare}
             className="h-[45] w-[45] rounded-[100px] items-center justify-center bg-[#FFFFFF85] border border-solid border-[#a7a7a730]"

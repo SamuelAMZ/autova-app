@@ -379,16 +379,18 @@ const SavedCarItem = ({
       />
       <View className="flex-1 justify-between">
         <ThemedText
+          numberOfLines={1}
           className="text-[#101828]  text-[16px]"
           style={{ fontFamily: "SpaceGrotesk_700Bold" }}
         >
           {car?.name}
         </ThemedText>
-        <ThemedText className="text-[#667085]">
+        <ThemedText numberOfLines={1} className="text-[#667085]">
           {car?.odometer} miles | {car?.city?.name}, {car?.country?.name}
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
           <ThemedText
+            numberOfLines={1}
             className="text-[#5856D6]  text-[16px]"
             style={{ fontFamily: "SpaceGrotesk_700Bold" }}
           >

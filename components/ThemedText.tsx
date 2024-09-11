@@ -11,6 +11,7 @@ const ThemedText = ({
 }: ThemedTextProps) => {
   return (
     <Text
+      ellipsizeMode="tail"
       style={{ fontFamily: fontFamily ?? "SpaceGrotesk_400Regular" }}
       {...otherProps}
     >

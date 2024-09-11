@@ -100,16 +100,15 @@ export default function CarItem({
           </TouchableOpacity>
         </View>
         <View className="flex-col gap-[15px] justify-center items-start">
-          <View>
+          <View className="w-full">
             <ThemedText
+              numberOfLines={1}
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
               }}
               className="text-[#101828] text-[19px]"
             >
-              {car?.name?.length > 25
-                ? car?.name?.slice(0, 25) + "..."
-                : car?.name}
+              {car?.name}
             </ThemedText>
           </View>
           <View className="flex flex-row items-center justify-start gap-4">
