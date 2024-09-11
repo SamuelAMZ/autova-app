@@ -55,12 +55,14 @@ const HomePage = () => {
           <SearchNormal1 size="20" color={Colors.textPrimary} />
         </TouchableOpacity>
       </View>
-      <ScrollView bounces={false}>
-        <Animated.View className="w-full px-[16px] pb-[30px]">
+
+      <ScrollView bounces={false} contentContainerStyle={{ flexGrow: 1 }}>
+        <View className="w-full px-[16px] pb-[30px]">
           <SearchCard />
-        </Animated.View>
-        <View className="flex gap-[30px] bg-white">
-          <View className="px-[4%] flex-1 flex-row justify-between items-end mt-[30px]">
+        </View>
+
+        <View className="flex-grow flex bg-white">
+          <View className="px-[4%] flex-row justify-between pt-[30px] mb-[30px]">
             <ThemedText
               style={{
                 fontFamily: "SpaceGrotesk_600SemiBold",
@@ -78,7 +80,7 @@ const HomePage = () => {
 
           {/* Brands Items */}
           {brandQuery.isLoading ? (
-            <View className="w-full px-4">
+            <View className="w-full px-4 mb-[30px]">
               <FlatList
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
@@ -90,7 +92,7 @@ const HomePage = () => {
             </View>
           ) : null}
           {brandQuery.isSuccess ? (
-            <View className="w-full px-4">
+            <View className="w-full px-4  mb-[30px]">
               <FlatList
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
@@ -122,6 +124,7 @@ const HomePage = () => {
           </View>
         </View>
       </ScrollView>
+
       <CustomBottomSheetModal
         isVisible={isModalVisible}
         onClose={handleCloseModal}
@@ -189,6 +192,7 @@ const HomePage = () => {
           <ErrorLoadingData refetch={brandQuery.refetch} />
         ) : null}
       </CustomBottomSheetModal>
+
       <StatusBar style="light" translucent />
     </View>
   );
