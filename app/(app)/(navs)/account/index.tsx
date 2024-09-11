@@ -112,6 +112,7 @@ const AccountPage = () => {
   };
 
   useEffect(() => {
+    console.log("ddd",session)
     if (session) {
       const { username, phone } = JSON.parse(session) as IUser;
       setUserData({ username, phone });

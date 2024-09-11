@@ -22,10 +22,13 @@ import { useProduct } from "@/context/carContext";
 
 export function MyCheckbox({
   onPress,
+  checked,
+  setChecked,
 }: {
   onPress?: (value: boolean) => void;
+  checked: any;
+  setChecked: any;
 }) {
-  const [checked, setChecked] = useState(false);
   return (
     <Pressable
       style={[styles.checkboxBase, checked && styles.checkboxChecked]}
@@ -42,12 +45,14 @@ export default function Price() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [price, setPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
+  const [checked, setChecked] = useState(false);
 
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
     updateProductData({ price: price });
-    router.navigate("/(app)/listCar/description")
+    router.navigate("/(app)/listCar/description");
   };
 
   const { isKeyboardVisible } = useKeyboardState();
@@ -147,7 +152,7 @@ export default function Price() {
                   </View>
                 )}
                 <View className="flex flex-row gap-[8px] items-center">
-                  <MyCheckbox />
+                  <MyCheckbox checked={checked} setChecked={setChecked} />
                   <ThemedText
                     className="text-[#344054] text-[16px]"
                     style={{ fontFamily: "SpaceGrotesk_500Medium" }}>

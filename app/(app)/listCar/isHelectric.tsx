@@ -22,18 +22,21 @@ import { useProduct } from "@/context/carContext";
 
 export function MyCheckbox({
   onPress,
+  setHelectric,
+  Helectric,
 }: {
   onPress?: (value: boolean) => void;
+  setHelectric: any;
+  Helectric: any;
 }) {
-  const [checked, setChecked] = useState(false);
   return (
     <Pressable
-      style={[styles.checkboxBase, checked && styles.checkboxChecked]}
+      style={[styles.checkboxBase, Helectric && styles.checkboxChecked]}
       onPress={() => {
-        setChecked(!checked);
-        onPress && onPress(!checked);
+        setHelectric(!Helectric);
+        onPress && onPress(!Helectric);
       }}>
-      {checked && <Ionicons name="checkmark" size={20} color="white" />}
+      {Helectric && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
   );
 }
@@ -44,6 +47,8 @@ export default function IsHelectric() {
 
   const { updateProductData, productData } = useProduct();
   const handleBrandSelect = () => {
+    console.log(isHelectric, isHybrid);
+
     updateProductData({ isHelectric: isHelectric, isHybrid: isHybrid });
     router.navigate("/(app)/listCar/upload");
   };
@@ -69,12 +74,12 @@ export default function IsHelectric() {
                 <ThemedText
                   className="text-[#101828] text-[20px]"
                   style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Price
+                  Hybrid | Helectric
                 </ThemedText>
                 <ThemedText
                   className="text-[#344054] text-[16px]"
                   style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  What is the price of your car
+                  What is the type of your car
                 </ThemedText>
               </View>
               {isKeyboardVisible ? (
@@ -91,7 +96,10 @@ export default function IsHelectric() {
               )}
               <View className="flex gap-[12px]">
                 <View className="flex flex-row gap-[8px] items-center">
-                  <MyCheckbox />
+                  <MyCheckbox
+                    setHelectric={setHelectric}
+                    Helectric={isHelectric}
+                  />
                   <ThemedText
                     className="text-[#344054] text-[16px]"
                     style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
@@ -99,7 +107,7 @@ export default function IsHelectric() {
                   </ThemedText>
                 </View>
                 <View className="flex flex-row gap-[8px] items-center">
-                  <MyCheckbox />
+                  <MyCheckbox setHelectric={setHybrid} Helectric={isHybrid} />
                   <ThemedText
                     className="text-[#344054] text-[16px]"
                     style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
@@ -115,9 +123,7 @@ export default function IsHelectric() {
             paddingBottom: 40,
           }}>
           <TouchableOpacity
-            onPress={() => {
-              router.navigate("./upload");
-            }}
+            onPress={handleBrandSelect}
             className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}

@@ -37,8 +37,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const signUp = async (data: any, token: string) => {
     const result = await appSignUp(data);
     if (result && result.data) {
-      const { username, phone } = result.data as IUser;
-      setSession(JSON.stringify({ username, phone, token }));
+      console.log(result.data);
+      
+      const { phone } = result.data as IUser;
+      setSession(JSON.stringify({ phone, token }));
     }
     return result;
   };
