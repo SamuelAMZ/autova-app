@@ -40,7 +40,7 @@ import OtherFilterSearch from "@/components/searchCard/OtherFilterSearch";
 const initialItemIsOpen = {
   makeModel: true,
   priceRange: true,
-  bodyStyle: true,
+  others: true,
 };
 
 export default function MyListing() {

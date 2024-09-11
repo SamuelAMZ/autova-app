@@ -106,7 +106,7 @@ const HomePage = () => {
             </View>
 
             <View className="flex-grow flex bg-white">
-              <View className="px-[4%] flex-row justify-between pt-[30px] my-[30px]">
+              <View className="px-[4%] flex-row justify-between pt-[30px] mb-[30px]">
                 <ThemedText
                   style={{
                     fontFamily: "SpaceGrotesk_600SemiBold",
