@@ -218,7 +218,6 @@ const AccountPage = () => {
                     style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
                    +{userData.phone}
                   </ThemedText>
-                 
                 </View>
               </View>
 
