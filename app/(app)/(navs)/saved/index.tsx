@@ -4,7 +4,7 @@ import {
 } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { More, TickCircle, Trash } from "iconsax-react-native";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -36,6 +36,10 @@ const CollectionDetails = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isSelectAllCheked, setIsSelectAllCheked] = useState(false);
 
+  useEffect(() => {
+    setSelectedItems([]);
+  }, []);
+
   const queryClient = useQueryClient();
 
   const handelModalVisible = (type: string) => {
@@ -57,11 +61,13 @@ const CollectionDetails = () => {
 
     // Update selected items
     setSelectedItems(updatedSelectedItems);
-
-    // Check if all items are selected
-    const allSelected = updatedSelectedItems.length === allItems.length;
-    setIsSelectAllCheked(allSelected);
   };
+
+  useEffect(() => {
+    // Check if all items are selected
+    const allSelected = selectedItems.length === allItems.length;
+    setIsSelectAllCheked(allSelected);
+  }, [selectedItems.length]);
 
   // Check if the item is selected
   const handleIsSelected = (idx: string): boolean => {
@@ -89,15 +95,8 @@ const CollectionDetails = () => {
         carsId: selectedItems,
       });
 
-      let updatedSelectedItems = [...selectedItems];
-      selectedItems.forEach((idx) => {
-        // Remove the item if already selected
-        updatedSelectedItems = updatedSelectedItems.filter((e) => e !== idx);
-      });
-
-      console.log(selectedItems, updatedSelectedItems, "check");
       // Update selected items
-      setSelectedItems(updatedSelectedItems);
+      setSelectedItems([]);
 
       // refetch saved cars id
       queryClient.invalidateQueries({
@@ -140,7 +139,13 @@ const CollectionDetails = () => {
       const data = getSavedCarsQueryList.data?.carsId || [];
       setAllItems(data);
     }
-  }, [getSavedCarsQueryList.isSuccess, getSavedCarsQueryList.isLoading]);
+  }, [
+    getSavedCarsQueryList.isSuccess,
+    getSavedCarsQueryList.isRefetching,
+    getSavedCarsQueryList.isLoading,
+  ]);
+  // console.log(allItems, "allitems");
+  // console.log(getSavedCarsQueryList, "test saved car list");
 
   const itemsLength = allItems.length;
   const itemsEmpty = selectedItems.length === 0;

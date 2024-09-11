@@ -74,7 +74,7 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
     }
   };
 
-  console.log(listingCarsQuery?.data?.pages, "listingCarsQuery?.data?.pages");
+  // console.log(listingCarsQuery?.data?.pages, "listingCarsQuery?.data?.pages");
 
   if (
     currentIndex ===
