@@ -4,7 +4,7 @@ import {
 } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { More, TickCircle, Trash } from "iconsax-react-native";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -13,11 +13,12 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
 } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import CustomCheckBox from "@/components/CustomCheckbox";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getSavedCar, unSaveSingleCar } from "@/utils/carRequest";
+import { getSavedCar, updateSavedCar } from "@/utils/carRequest";
 import { SavedCarSkeleton } from "@/components/skeleton/SavedCarSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import NoCarFound from "@/assets/icons/no-car.svg";
@@ -34,6 +35,10 @@ const CollectionDetails = () => {
   const [modalVisible, setmodalVisible] = useState<modalInitialState>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isSelectAllCheked, setIsSelectAllCheked] = useState(false);
+
+  useEffect(() => {
+    setSelectedItems([]);
+  }, []);
 
   const queryClient = useQueryClient();
 
@@ -56,11 +61,13 @@ const CollectionDetails = () => {
 
     // Update selected items
     setSelectedItems(updatedSelectedItems);
-
-    // Check if all items are selected
-    const allSelected = updatedSelectedItems.length === allItems.length;
-    setIsSelectAllCheked(allSelected);
   };
+
+  useEffect(() => {
+    // Check if all items are selected
+    const allSelected = selectedItems.length === allItems.length;
+    setIsSelectAllCheked(allSelected);
+  }, [selectedItems.length]);
 
   // Check if the item is selected
   const handleIsSelected = (idx: string): boolean => {
@@ -78,27 +85,18 @@ const CollectionDetails = () => {
     setIsSelectAllCheked(checked);
   };
 
+  console.log(selectedItems, "selectedItems");
+
   // Handles removing an item by index
   const handleRemoveItem = async (idx?: number) => {
     if (selectedItems.length) {
-      await Promise.all(
-        selectedItems.map((carId) =>
-          unSaveSingleCar({
-            carId,
-            userId: "66d08d69f683984aa2acef6f",
-          })
-        )
-      );
-
-      let updatedSelectedItems = [...selectedItems];
-      selectedItems.forEach((idx) => {
-        // Remove the item if already selected
-        updatedSelectedItems = updatedSelectedItems.filter((e) => e !== idx);
+      await updateSavedCar({
+        id: getSavedCarsQueryList.data?._id,
+        carsId: selectedItems,
       });
 
-      console.log(selectedItems, updatedSelectedItems, "check");
       // Update selected items
-      setSelectedItems(updatedSelectedItems);
+      setSelectedItems([]);
 
       // refetch saved cars id
       queryClient.invalidateQueries({
@@ -141,7 +139,13 @@ const CollectionDetails = () => {
       const data = getSavedCarsQueryList.data?.carsId || [];
       setAllItems(data);
     }
-  }, [getSavedCarsQueryList.isSuccess, getSavedCarsQueryList.isLoading]);
+  }, [
+    getSavedCarsQueryList.isSuccess,
+    getSavedCarsQueryList.isRefetching,
+    getSavedCarsQueryList.isLoading,
+  ]);
+  // console.log(allItems, "allitems");
+  // console.log(getSavedCarsQueryList, "test saved car list");
 
   const itemsLength = allItems.length;
   const itemsEmpty = selectedItems.length === 0;
@@ -220,7 +224,7 @@ const CollectionDetails = () => {
         ) : null}
 
         {getSavedCarsQueryList.isSuccess ? (
-          <View>
+          <ScrollView>
             <FlatList
               className="z-0 mt-5"
               data={getSavedCarsQueryList.data?.cars}
@@ -239,9 +243,7 @@ const CollectionDetails = () => {
                       onSwipeableClose={() => {
                         handleSwipeableClose(item._id);
                       }}
-                      pressable={
-                        !(getSavedCarsQueryList.data?.cars.length === 0)
-                      }
+                      pressable={!(selectedItems.length === 0)}
                       onLongPress={() => handleLongPress(item._id)}
                       isActive={isActive}
                     />
@@ -259,7 +261,7 @@ const CollectionDetails = () => {
                 <View className="flex-1 h-[350] items-center justify-center">
                   <NoCarFound />
                   <ThemedText
-                    style={{ fontFamily: "SpaceGrotesk_500SemiBold" }}
+                    style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                     className="text-[16px]"
                   >
                     No car found
@@ -278,7 +280,7 @@ const CollectionDetails = () => {
                 </View>
               )}
             />
-          </View>
+          </ScrollView>
         ) : null}
 
         {getSavedCarsQueryList.isError ? (
@@ -326,7 +328,7 @@ const SavedCarItem = ({
 }: {
   car: Car;
   onLongPress: () => void;
-  onPress?: () => void;
+  onPress: () => void;
   isActive: boolean;
 }) => {
   const date = new Date(car.updatedAt);
@@ -364,14 +366,7 @@ const SavedCarItem = ({
   return (
     <TouchableOpacity
       onLongPress={onLongPress}
-      onPress={() =>
-        router.navigate({
-          pathname: "/(app)/brands/carDetail",
-          params: {
-            carId: car._id,
-          },
-        })
-      }
+      onPress={() => onPress()}
       className="flex-row border border-[#D0D5DD] p-3 gap-3 rounded-xl"
     >
       <Image
@@ -441,7 +436,18 @@ const SwipeToRemove = ({
     >
       <SavedCarItem
         car={car}
-        onPress={pressable ? onLongPress : undefined}
+        onPress={
+          pressable
+            ? onLongPress
+            : () => {
+                router.navigate({
+                  pathname: "/(app)/brands/carDetail",
+                  params: {
+                    carId: car._id,
+                  },
+                });
+              }
+        }
         onLongPress={onLongPress}
         isActive={isActive}
       />

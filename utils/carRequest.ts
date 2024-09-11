@@ -112,6 +112,20 @@ export async function unSaveSingleCar(data: { carId: string; userId: string }) {
   }
 }
 
+export async function updateSavedCar(data: {
+  id: string;
+  carsId: Array<string>;
+}) {
+  try {
+    const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/saved_cars/update`;
+    const response: AxiosResponse = await axios.post(url, data);
+    return response?.data ?? [];
+  } catch (error: any) {
+    console.error(error, "error savedCar");
+    return [];
+  }
+}
+
 export async function isCarSaved(data: { carId: string; userId: string }) {
   try {
     const url = `${ENV.EXPO_PUBLIC_BACKEND_ENDPOINT}/saved_cars/check`;

@@ -74,14 +74,14 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
     }
   };
 
-  console.log(listingCarsQuery?.data?.pages, "listingCarsQuery?.data?.pages");
+  // console.log(listingCarsQuery?.data?.pages, "listingCarsQuery?.data?.pages");
 
   if (
     currentIndex ===
       listingCarsQuery?.data?.pages?.flatMap((page) => page?.data)?.length ||
     0 - 1
   ) {
-    console.log("Loading more", currentIndex);
+    // console.log("Loading more", currentIndex);
     handleLoadMore();
   }
 
