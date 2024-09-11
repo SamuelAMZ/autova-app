@@ -73,9 +73,9 @@ export default function MyListing() {
     item: ItemDataProps | undefined
   ) => {
     if (type == "models") {
-      setFilterData({ ...filterData, ["selectedModelItem"]: item });
+      setFilterData({ ...filterData, ["selectedModel"]: item });
     } else {
-      setFilterData({ ...filterData, ["selectedMakeItem"]: item });
+      setFilterData({ ...filterData, ["selectedMake"]: item });
     }
   };
 
@@ -113,8 +113,8 @@ export default function MyListing() {
 
   //
   useEffect(() => {
-    const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
-    const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
+    const makeCount = filterData.selectedMake != undefined ? 1 : 0;
+    const modelCount = filterData.selectedModel != undefined ? 1 : 0;
     const rangeHigh =
       filterData.rangeValue?.high != defaultRangeHighValue ? 0.5 : 0;
     const rangeLow =
@@ -317,8 +317,8 @@ export default function MyListing() {
               />
               {itemIsOpen.makeModel && (
                 <MakeModelsSearch
-                  selectedModelItem={filterData.selectedModelItem}
-                  selectedMakeItem={filterData.selectedMakeItem}
+                  selectedModel={filterData.selectedModel}
+                  selectedMake={filterData.selectedMake}
                   onChange={handleMakeModalChange}
                 />
               )}

@@ -6,11 +6,7 @@ import { searchTypesData } from "@/constants/searchTypes";
 import { ArrowDown2 } from "iconsax-react-native";
 import SelectSearchTypeModal, { SearchTypeProps } from "./typSearchModals";
 import { initialFilterData } from "@/constants";
-import {
-  FilterDataProps,
-  ItemDataProps,
-  makedModelsProps,
-} from "@/constants/types";
+import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import SearchContent from "./searchContent";
 
 function SearchCard() {
@@ -48,9 +44,9 @@ function SearchCard() {
     item: ItemDataProps | undefined
   ) => {
     if (type != undefined && type == "models") {
-      setFilterData({ ...filterData, selectedModelItem: item });
+      setFilterData({ ...filterData, selectedModel: item });
     } else {
-      setFilterData({ ...filterData, selectedMakeItem: item });
+      setFilterData({ ...filterData, selectedMake: item });
     }
   };
 
@@ -59,12 +55,15 @@ function SearchCard() {
     setFilterData({ ...filterData, rangeValue: { low, high } });
   };
 
-  // Body Styles props change
-  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
-    if (typeof item == "number") {
-      setFilterData({ ...filterData, carDoors: item });
+  // Engine Type & Transmission Props change
+  const handleEngTransChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    if (type != undefined && type == "transmissions") {
+      setFilterData({ ...filterData, selectedTransmission: item });
     } else {
-      setFilterData({ ...filterData, selectedBodyItem: item });
+      setFilterData({ ...filterData, selectedEngineType: item });
     }
   };
 
@@ -87,7 +86,7 @@ function SearchCard() {
         filterData={filterData}
         onMakeModalChange={handleMakeModalChange}
         onPriceRangeChange={handlePriceRangeChange}
-        onBodyStyleChange={handleBodyStyleChange}
+        onEngTransChange={handleEngTransChange}
       />
       <View className="mt-1"></View>
       {/* Search */}

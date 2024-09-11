@@ -13,12 +13,12 @@ import { HorizontalSeperator, VerticalSeperator } from "@/components/Separator";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import Animated from "react-native-reanimated";
 import Colors from "@/constants/Colors";
 
 import { loadBrands } from "@/utils/brandsRequest";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
+import { initialFilterData } from "@/constants";
 
 const HomePage = () => {
   const insets = useSafeAreaInsets();
@@ -49,7 +49,12 @@ const HomePage = () => {
           <AppIcon height={36} />
         </View>
         <TouchableOpacity
-          onPress={() => router.navigate("/(app)/search/carSearch")}
+          onPress={() =>
+            router.navigate({
+              pathname: "/(app)/search/carSearch",
+              params: { isFocusable: "true" },
+            })
+          }
           className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
         >
           <SearchNormal1 size="20" color={Colors.textPrimary} />
@@ -103,8 +108,13 @@ const HomePage = () => {
                     size={70}
                     onPress={() => {
                       router.navigate({
-                        pathname: "/brands",
-                        params: { ...item },
+                        pathname: "/(app)/search/carSearch",
+                        params: {
+                          searchData: JSON.stringify({
+                            ...initialFilterData,
+                            selectedMake: item,
+                          }),
+                        },
                       });
                     }}
                     brand={item}
@@ -175,8 +185,13 @@ const HomePage = () => {
                     onPress={() => {
                       handleCloseModal();
                       router.navigate({
-                        pathname: "/brands",
-                        params: { ...item },
+                        pathname: "/(app)/search/carSearch",
+                        params: {
+                          searchData: JSON.stringify({
+                            ...initialFilterData,
+                            selectedMake: item,
+                          }),
+                        },
                       });
                     }}
                     brand={item}

@@ -19,7 +19,6 @@ import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
 import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
 import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import Colors from "@/constants/Colors";
@@ -32,19 +31,17 @@ import {
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import { useQuery } from "@tanstack/react-query";
-import { getSavedCar } from "@/utils/carRequest";
-import { filterCars, loadCars } from "@/utils/carRequest";
+import { filterCars } from "@/utils/carRequest";
 import Car from "@/models/car.model";
-import NoCarFoundIcon from "@/assets/icons/no-car.svg";
-import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { debounce } from "@/constants/utils";
 import NoCarFound from "@/components/cars/__NoCarFound";
+import OtherFilterSearch from "@/components/searchCard/OtherFilterSearch";
 
 const initialItemIsOpenData = {
   makeModel: true,
   priceRange: true,
-  bodyStyle: true,
+  others: true,
 };
 
 const CarSearchScreen = () => {
@@ -57,8 +54,8 @@ const CarSearchScreen = () => {
     useState<FilterDataProps>(initialFilterData);
   const [usedFilter, setUsedFilter] = useState<number>();
   const [itemIsOpen, setItemIsOpen] = useState<any>(initialItemIsOpenData);
-  const [data, setData] = useState([]);
   const [initialized, setInitialized] = useState(false);
+  const { isFocusable } = useLocalSearchParams();
 
   //
   useEffect(() => {
@@ -118,9 +115,21 @@ const CarSearchScreen = () => {
     item: ItemDataProps | undefined
   ) => {
     if (type != undefined && type == "models") {
-      setFilterData({ ...filterData, ["selectedModelItem"]: item });
+      setFilterData({ ...filterData, ["selectedModel"]: item });
     } else {
-      setFilterData({ ...filterData, ["selectedMakeItem"]: item });
+      setFilterData({ ...filterData, ["selectedMake"]: item });
+    }
+  };
+
+  // Engine Type & Transmission Props change
+  const handleEngTransChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    if (type != undefined && type == "transmissions") {
+      setFilterData({ ...filterData, ["selectedTransmission"]: item });
+    } else {
+      setFilterData({ ...filterData, ["selectedEngineType"]: item });
     }
   };
 
@@ -130,15 +139,6 @@ const CarSearchScreen = () => {
       ...prevData,
       rangeValue: { low, high },
     }));
-  };
-
-  // Body Styles props changes
-  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
-    if (typeof item == "number") {
-      setFilterData({ ...filterData, ["carDoors"]: item });
-    } else {
-      setFilterData({ ...filterData, ["selectedBodyItem"]: item });
-    }
   };
 
   // Reset filter
@@ -163,17 +163,18 @@ const CarSearchScreen = () => {
 
   //
   useEffect(() => {
-    const makeCount = filterData.selectedMakeItem != undefined ? 1 : 0;
-    const modelCount = filterData.selectedModelItem != undefined ? 1 : 0;
+    const makeCount = filterData.selectedMake != undefined ? 1 : 0;
+    const modelCount = filterData.selectedModel != undefined ? 1 : 0;
     const rangeHigh =
       filterData.rangeValue?.high != defaultRangeHighValue ? 0.5 : 0;
     const rangeLow =
       filterData.rangeValue?.low != defaultRangeLowValue ? 0.5 : 0;
-    const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
-    const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
+    const enginTypeCount = filterData.selectedEngineType != undefined ? 1 : 0;
+    const transmissionCount =
+      filterData.selectedTransmission != undefined ? 1 : 0;
     const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
     const count =
-      makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount;
+      makeCount + modelCount + priceRange + enginTypeCount + transmissionCount;
     setUsedFilter(count);
   }, [filterData]);
 
@@ -197,7 +198,7 @@ const CarSearchScreen = () => {
             <ThemedText
               className={`text-[${Colors.textPrimary}] text-[20px] font-[600]`}
             >
-              Cars by body styles
+              Search results
             </ThemedText>
           </View>
         </Header>
@@ -220,6 +221,8 @@ const CarSearchScreen = () => {
                 placeholder="Search..."
                 placeholderTextColor="#000"
                 ref={textIinputRef}
+                focusable={true}
+                autoFocus={Boolean(isFocusable)}
               />
             </View>
             <TouchableOpacity
@@ -315,8 +318,8 @@ const CarSearchScreen = () => {
                 />
                 {itemIsOpen.makeModel && (
                   <MakeModelsSearch
-                    selectedModelItem={filterData.selectedModelItem}
-                    selectedMakeItem={filterData.selectedMakeItem}
+                    selectedModel={filterData.selectedModel}
+                    selectedMake={filterData.selectedMake}
                     onChange={handleMakeModalChange}
                   />
                 )}
@@ -336,16 +339,16 @@ const CarSearchScreen = () => {
                   )}
                 </View>
 
-                {/* Body Styles */}
+                {/* E Type, Trans */}
                 <OpenCloseItem
-                  title="Body Styles"
-                  onPress={() => handleOpenItem("bodyStyle")}
+                  title="Engine Type & Transmission"
+                  onPress={() => handleOpenItem("others")}
                 />
-                {itemIsOpen.bodyStyle && (
-                  <BodyStylesSearch
-                    selectedItem={filterData.selectedBodyItem}
-                    carDoors={filterData.carDoors}
-                    onBodyValueChange={handleBodyStyleChange}
+                {itemIsOpen.others && (
+                  <OtherFilterSearch
+                    selectedTransmission={filterData.selectedTransmission}
+                    selectedEngineType={filterData.selectedEngineType}
+                    onChange={handleEngTransChange}
                   />
                 )}
               </View>

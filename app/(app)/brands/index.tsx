@@ -33,7 +33,7 @@ export default function BrandCars() {
     queryFn: () => {
       return filterCars({
         ...initialFilterData,
-        selectedMakeItem: { _id, name },
+        selectedMake: { _id, name },
       });
     },
   });

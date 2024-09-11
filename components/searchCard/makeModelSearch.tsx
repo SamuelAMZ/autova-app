@@ -17,12 +17,12 @@ import { loadBrands, loadModels } from "@/utils/brandsRequest";
 
 const MakeModelsSearch = ({
   onChange,
-  selectedModelItem,
-  selectedMakeItem,
+  selectedModel,
+  selectedMake,
 }: {
   onChange: (type: string | undefined, item: ItemDataProps | undefined) => void;
-  selectedModelItem?: ItemDataProps;
-  selectedMakeItem?: ItemDataProps;
+  selectedModel?: ItemDataProps;
+  selectedMake?: ItemDataProps;
 }) => {
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [selectedType, setSelectedType] = useState<selectedTypeProps>();
@@ -57,9 +57,9 @@ const MakeModelsSearch = ({
 
   const handleIsSelected = (item: ItemDataProps): boolean => {
     if (selectedType?.type == "models") {
-      return selectedModelItem?._id == item._id;
+      return selectedModel?._id == item._id;
     } else {
-      return selectedMakeItem?._id == item._id;
+      return selectedMake?._id == item._id;
     }
   };
 
@@ -70,7 +70,7 @@ const MakeModelsSearch = ({
           onPress={() => handleTypeChange("makes")}
           className="bg-white h-[80] w-[47%] shadow-sm rounded-lg relative"
           style={{
-            borderWidth: selectedMakeItem ? 1 : 0,
+            borderWidth: selectedMake ? 1 : 0,
             borderColor: `${Colors.background}`,
           }}
         >
@@ -83,12 +83,12 @@ const MakeModelsSearch = ({
           <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
-                {selectedMakeItem?.name ?? "Select Make"}
+                {selectedMake?.name ?? "Select Make"}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
           </View>
-          {selectedMakeItem && (
+          {selectedMake && (
             <ClearFilter onPress={() => handleSelectItem("make", undefined)} />
           )}
         </TouchableOpacity>
@@ -96,7 +96,7 @@ const MakeModelsSearch = ({
           onPress={() => handleTypeChange("models")}
           className="bg-white h-[80] w-[47%] shadow-sm rounded-lg relative"
           style={{
-            borderWidth: selectedModelItem ? 1 : 0,
+            borderWidth: selectedModel ? 1 : 0,
             borderColor: `${Colors.background}`,
           }}
         >
@@ -109,12 +109,12 @@ const MakeModelsSearch = ({
           <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
-                {selectedModelItem?.name ?? "Select Model"}
+                {selectedModel?.name ?? "Select Model"}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
           </View>
-          {selectedModelItem && (
+          {selectedModel && (
             <ClearFilter
               onPress={() => handleSelectItem("models", undefined)}
             />
@@ -130,7 +130,7 @@ const MakeModelsSearch = ({
           isModalVisible={isModalVisible}
           snapPoints={snapPoints}
           handleCloseModal={() => setIsModalVisible(false)}
-          selectedMakeItem={selectedMakeItem}
+          selectedMake={selectedMake}
         />
       )}
     </>
@@ -147,7 +147,7 @@ const LaodDataModal = ({
   handleIsSelected,
   handleSelectItem,
   makeModels,
-  selectedMakeItem,
+  selectedMake,
 }: {
   type: string;
   isModalVisible: boolean;
@@ -156,14 +156,19 @@ const LaodDataModal = ({
   handleIsSelected: Function;
   handleSelectItem: Function;
   makeModels: makeModalSearchProps;
-  selectedMakeItem: ItemDataProps | undefined;
+  selectedMake: ItemDataProps | undefined;
 }) => {
   const handleDisplayData = () => {
-    if (type == "models" && selectedMakeItem) {
-      console.log(makeModels["models"]);
-      return makeModels["models"]
-        .filter((e: Models) => e.brand?._id ?? "" == selectedMakeItem._id)
+    if (type == "models" && selectedMake) {
+      // console.log(makeModels["models"]);
+      console.log(selectedMake._id, "Selected Make Id");
+      const models = makeModels["models"]
+        .filter((e: Models) => {
+          console.log(e.brand);
+          return e.brand?._id == selectedMake._id;
+        })
         .map((e) => e as ItemDataProps);
+      return models;
     }
     return makeModels[type] as ItemDataProps[];
   };

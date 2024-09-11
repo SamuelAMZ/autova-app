@@ -16,11 +16,11 @@ export interface selectedTypeProps {
 }
 
 export interface FilterDataProps {
-  selectedMakeItem: ItemDataProps | undefined;
-  selectedModelItem: ItemDataProps | undefined;
-  selectedBodyItem: ItemDataProps | undefined;
+  selectedMake: ItemDataProps | undefined;
+  selectedModel: ItemDataProps | undefined;
+  selectedTransmission: ItemDataProps | undefined;
+  selectedEngineType: ItemDataProps | undefined;
   rangeValue: RangeProps;
-  carDoors: number;
 }
 export interface requestExtrasProps {
   key: string;

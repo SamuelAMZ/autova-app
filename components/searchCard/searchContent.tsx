@@ -2,18 +2,15 @@ import { View } from "react-native";
 import BodyStylesSearch from "./bodyStyleSearch";
 import PriceRangeSearch from "./priceRangeSearch";
 import MakeModelsSearch from "./makeModelSearch";
-import {
-  FilterDataProps,
-  ItemDataProps,
-  makedModelsProps,
-} from "@/constants/types";
+import { FilterDataProps, ItemDataProps } from "@/constants/types";
+import OtherFilterSearch from "./OtherFilterSearch";
 
 const SearchContent = ({
   type,
   filterData,
   onMakeModalChange,
   onPriceRangeChange,
-  onBodyStyleChange,
+  onEngTransChange,
 }: {
   type: string;
   filterData: FilterDataProps;
@@ -22,7 +19,10 @@ const SearchContent = ({
     item: ItemDataProps | undefined
   ) => void;
   onPriceRangeChange: (low: number, high: number) => void;
-  onBodyStyleChange: (item: ItemDataProps | number | undefined) => void;
+  onEngTransChange: (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => void;
 }) => {
   // Make & Model Props change
   const handleMakeModalChange = (
@@ -37,15 +37,18 @@ const SearchContent = ({
     onPriceRangeChange(low, high);
   };
 
-  // Body Styles props change
-  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
-    onBodyStyleChange(item);
+  // EngineType & Transmission Props change
+  const handleEngTransChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    onEngTransChange(type, item);
   };
 
   return type === "model" ? (
     <MakeModelsSearch
-      selectedModelItem={filterData.selectedModelItem}
-      selectedMakeItem={filterData.selectedMakeItem}
+      selectedModel={filterData.selectedModel}
+      selectedMake={filterData.selectedMake}
       onChange={handleMakeModalChange}
     />
   ) : type === "price" ? (
@@ -55,11 +58,11 @@ const SearchContent = ({
         onValueChange={handlePriceRangeChange}
       />
     </View>
-  ) : type == "body" ? (
-    <BodyStylesSearch
-      selectedItem={filterData.selectedBodyItem}
-      carDoors={filterData.carDoors}
-      onBodyValueChange={handleBodyStyleChange}
+  ) : type == "others" ? (
+    <OtherFilterSearch
+      selectedTransmission={filterData.selectedTransmission}
+      selectedEngineType={filterData.selectedEngineType}
+      onChange={handleEngTransChange}
     />
   ) : (
     <View className=""></View>
