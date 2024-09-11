@@ -12,22 +12,12 @@ import {
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import {
-  Notification,
-  Gps,
-  Add,
-  Car,
-  ArrowDown2,
-  SearchNormal,
-  Setting5,
-} from "iconsax-react-native";
+import { Add, ArrowDown2, SearchNormal, Setting5 } from "iconsax-react-native";
 import Icon from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
-import { CarData } from "@/constants/CarData";
 import Colors from "@/constants/Colors";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
 import CustomButton from "@/components/CustomButton";
-import BodyStylesSearch from "@/components/searchCard/bodyStyleSearch";
 import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
 import { AntDesign } from "@expo/vector-icons";
@@ -39,14 +29,13 @@ import {
 import CarItem from "@/components/cars/CarItem";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
-import { filterCars, loadCars } from "@/utils/carRequest";
+import { filterCars } from "@/utils/carRequest";
 import { getSavedCar } from "@/utils/carRequest";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
-import { ENV } from "@/constants/env";
-import axios, { AxiosResponse } from "axios";
 import { debounce } from "@/constants/utils";
 import NoCarFound from "@/components/cars/__NoCarFound";
+import OtherFilterSearch from "@/components/searchCard/OtherFilterSearch";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -79,21 +68,24 @@ export default function MyListing() {
     }
   };
 
+  // Engine Type & Transmission Props change
+  const handleEngTransChange = (
+    type: string | undefined,
+    item: ItemDataProps | undefined
+  ) => {
+    if (type != undefined && type == "transmissions") {
+      setFilterData({ ...filterData, ["selectedTransmission"]: item });
+    } else {
+      setFilterData({ ...filterData, ["selectedEngineType"]: item });
+    }
+  };
+
   // Price Range Props change
   const handlePriceRangeChange = (low: number, high: number) => {
     setFilterData((prevData) => ({
       ...prevData,
       rangeValue: { low, high },
     }));
-  };
-
-  // Body Styles props change
-  const handleBodyStyleChange = (item: ItemDataProps | number | undefined) => {
-    if (typeof item == "number") {
-      setFilterData({ ...filterData, ["carDoors"]: item });
-    } else {
-      setFilterData({ ...filterData, ["selectedBodyItem"]: item });
-    }
   };
 
   // Reset filter
@@ -119,12 +111,13 @@ export default function MyListing() {
       filterData.rangeValue?.high != defaultRangeHighValue ? 0.5 : 0;
     const rangeLow =
       filterData.rangeValue?.low != defaultRangeLowValue ? 0.5 : 0;
-    const carDoorsCount = filterData.carDoors != 0 ? 1 : 0;
-    const bodyStyleCount = filterData.selectedBodyItem != undefined ? 1 : 0;
+    const enginTypeCount = filterData.selectedEngineType != undefined ? 1 : 0;
+    const transmissionCount =
+      filterData.selectedTransmission != undefined ? 1 : 0;
     const priceRange = rangeHigh + rangeLow > 0 ? 1 : 0;
-    setUsedFilter(
-      makeCount + modelCount + priceRange + carDoorsCount + bodyStyleCount
-    );
+    const count =
+      makeCount + modelCount + priceRange + enginTypeCount + transmissionCount;
+    setUsedFilter(count);
   }, [filterData]);
 
   const [debouncedSearch] = useState(() =>
@@ -168,7 +161,7 @@ export default function MyListing() {
     isSuccess,
     isError,
   } = useQuery({
-    queryKey: [],
+    queryKey: ["list-cars-key"],
     queryFn: async () => {
       const result = await filterCars({
         ...filterData,
@@ -240,7 +233,7 @@ export default function MyListing() {
             keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={() => <View style={{ height: 40 }} />}
           />
-        ) : isSuccess ? (
+        ) : isSuccess && listingQuery.length > 0 ? (
           <FlatList
             className="px-[4%]"
             data={listingQuery}
@@ -276,10 +269,9 @@ export default function MyListing() {
               )
             }
           />
-        ) : listingQuery?.length <= 0 ? (
+        ) : (
           <NoCarFound handleRefresh={() => refetchListing()} />
-        ) : null}
-
+        )}
         {isError ? <ErrorLoadingData refetch={listingQuery.refetch} /> : null}
       </ScrollView>
       <CustomBottomSheetModal
@@ -338,16 +330,16 @@ export default function MyListing() {
                 )}
               </View>
 
-              {/* Body Styles */}
+              {/* E Type, Trans */}
               <OpenCloseItem
-                title="Body Styles"
-                onPress={() => handleOpenItem("bodyStyle")}
+                title="Engine Type & Transmission"
+                onPress={() => handleOpenItem("others")}
               />
-              {itemIsOpen.bodyStyle && (
-                <BodyStylesSearch
-                  selectedItem={filterData.selectedBodyItem}
-                  carDoors={filterData.carDoors}
-                  onBodyValueChange={handleBodyStyleChange}
+              {itemIsOpen.others && (
+                <OtherFilterSearch
+                  selectedTransmission={filterData.selectedTransmission}
+                  selectedEngineType={filterData.selectedEngineType}
+                  onChange={handleEngTransChange}
                 />
               )}
             </View>

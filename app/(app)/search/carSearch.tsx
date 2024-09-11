@@ -87,7 +87,7 @@ const CarSearchScreen = () => {
     refetch: refetchListing,
     isLoading,
   } = useQuery({
-    queryKey: [],
+    queryKey: ["filter-cars-key"],
     queryFn: async () => {
       const result = await filterCars({
         ...filterData,
