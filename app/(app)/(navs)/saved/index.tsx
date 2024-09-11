@@ -1,12 +1,11 @@
 import {
   CollectionActionModal,
-  CollectionOptionModal,
 } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { router, useFocusEffect } from "expo-router";
-import { More, TickCircle, Trash } from "iconsax-react-native";
-import { useEffect, useRef, useState } from "react";
+import { TickCircle, Trash } from "iconsax-react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -23,7 +22,7 @@ import { SavedCarSkeleton } from "@/components/skeleton/SavedCarSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import NoCarFound from "@/assets/icons/no-car.svg";
 import Car from "@/models/car.model";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
 interface modalInitialState {
   type: string;
   visible: boolean;
@@ -35,6 +34,7 @@ const CollectionDetails = () => {
   const [modalVisible, setmodalVisible] = useState<modalInitialState>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isSelectAllCheked, setIsSelectAllCheked] = useState(false);
+  const [displaySelectAll, setDisplaySelectAll] = useState(false);
 
   useEffect(() => {
     setSelectedItems([]);
@@ -63,9 +63,16 @@ const CollectionDetails = () => {
     setSelectedItems(updatedSelectedItems);
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      setDisplaySelectAll(false);
+    }, [])
+  );
+
   useEffect(() => {
     // Check if all items are selected
-    const allSelected = selectedItems.length === allItems.length;
+    const allSelected =
+      selectedItems.length === allItems.length && allItems.length > 0;
     setIsSelectAllCheked(allSelected);
   }, [selectedItems.length]);
 
@@ -85,7 +92,7 @@ const CollectionDetails = () => {
     setIsSelectAllCheked(checked);
   };
 
-  console.log(selectedItems, "selectedItems");
+  console.log(selectedItems, "selectedItems", isSelectAllCheked);
 
   // Handles removing an item by index
   const handleRemoveItem = async (idx?: number) => {
@@ -176,29 +183,22 @@ const CollectionDetails = () => {
             {!itemsEmpty ? (
               <Trash color="white" size={20} />
             ) : (
-              <More
-                style={{ transform: [{ rotate: "90deg" }] }}
-                color="white"
-                size={20}
-              />
-            )}
-            {moreVisible && (
-              <CollectionOptionModal
-                deletePress={() => handelModalVisible("delete")}
-              />
+              <AntDesign name="info" size={24} color="#FFF" />
             )}
           </TouchableOpacity>
         </View>
       </Header>
 
       <View className="flex-1 bg-white px-4">
+
+        
         <ThemedText
           className=" text-[18px] mt-5"
           style={{ fontFamily: "SpaceGrotesk_700Bold" }}
         >
           Saved Cars
         </ThemedText>
-        {!itemsEmpty ? (
+        {!itemsEmpty || displaySelectAll ? (
           <TouchableOpacity
             onPress={() => handleSelectAll(!isSelectAllCheked)}
             className="flex-row py-4 items-center gap-2"
@@ -229,7 +229,7 @@ const CollectionDetails = () => {
               className="z-0 mt-5"
               data={getSavedCarsQueryList.data?.cars}
               renderItem={({ item, index }) => {
-                const isActive = handleIsSelected(item._id);
+                const isActive = handleIsSelected(item?._id);
                 return (
                   <View className="relative">
                     <SwipeToRemove
@@ -238,13 +238,13 @@ const CollectionDetails = () => {
                         handelModalVisible("delete");
                       }}
                       onSwipeableOpen={() => {
-                        handleSwipeableOpen(item._id);
+                        handleSwipeableOpen(item?._id);
                       }}
                       onSwipeableClose={() => {
-                        handleSwipeableClose(item._id);
+                        handleSwipeableClose(item?._id);
                       }}
-                      pressable={!(selectedItems.length === 0)}
-                      onLongPress={() => handleLongPress(item._id)}
+                      pressable={!(selectedItems?.length === 0)}
+                      onLongPress={() => handleLongPress(item?._id)}
                       isActive={isActive}
                     />
                   </View>
@@ -331,7 +331,7 @@ const SavedCarItem = ({
   onPress: () => void;
   isActive: boolean;
 }) => {
-  const date = new Date(car.updatedAt);
+  const date = new Date(car?.updatedAt);
   // Get the day of the month
   const day = date.getDate();
 
@@ -372,8 +372,8 @@ const SavedCarItem = ({
       <Image
         className="w-[80] h-[70] rounded-lg"
         source={
-          car.imagesUrls[0]
-            ? { uri: car.imagesUrls[0] }
+          car?.imagesUrls[0]
+            ? { uri: car?.imagesUrls[0] }
             : require("@/assets/images/audi.png")
         }
       />
@@ -443,7 +443,7 @@ const SwipeToRemove = ({
                 router.navigate({
                   pathname: "/(app)/brands/carDetail",
                   params: {
-                    carId: car._id,
+                    carId: car?._id,
                   },
                 });
               }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { savedCar } from "@/utils/carRequest";
 import { useQueryClient } from "@tanstack/react-query";
 import Car from "@/models/car.model";
+import { thousandSeparator } from "@/constants/utils";
 
 export default function CarItem({
   car,
@@ -68,6 +69,8 @@ export default function CarItem({
     }
   };
 
+  console.log(car, "car");
+
   return (
     <TouchableOpacity className={`${className}`} onPress={() => onPress()}>
       <View
@@ -79,9 +82,9 @@ export default function CarItem({
             source={{ uri: car.imagesUrls[0] }}
             style={{
               borderRadius: 10,
-              // width: "100%",
+              width: "100%",
             }}
-            className=" max-w-[349px] h-[180px] aspect-auto w-full"
+            className="h-[180px] aspect-auto w-full"
           />
           <TouchableOpacity
             onPress={handleLike}
@@ -104,7 +107,9 @@ export default function CarItem({
               }}
               className="text-[#101828] text-[19px]"
             >
-              {car?.name}
+              {car?.name?.length > 25
+                ? car?.name?.slice(0, 25) + "..."
+                : car?.name}
             </ThemedText>
           </View>
           <View className="flex flex-row items-center justify-start gap-4">
@@ -119,7 +124,7 @@ export default function CarItem({
               </ThemedText>
             </View>
             <ThemedText className="text-[#344054] font-[500] text-[16px]">
-              {car?.city?.name} | {car?.country?.name}
+              $ {car?.salesPrice && thousandSeparator(+car?.salesPrice)}
             </ThemedText>
           </View>
           {/* <View>

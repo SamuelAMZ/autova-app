@@ -153,20 +153,12 @@ export default function CarDetail() {
       {
         Title: carDetailQuery.data?.title?.name,
       },
+   
       {
-        "Year of Manufacture": carDetailQuery.data?.year,
-      },
-      {
-        "Registration Year": carDetailQuery.data?.year,
-      },
-      {
-        Condition: "New",
+        "Year": carDetailQuery.data?.year,
       },
       {
         Transmission: carDetailQuery.data?.transmission?.name,
-      },
-      {
-        "Body Type": "SUV / 4x4",
       },
       {
         "Fuel Type": carDetailQuery.data?.fuelType?.name,
@@ -734,7 +726,7 @@ function CustomHeader({ title }: { title?: string }) {
             }}
             className=" text-[20px] font-[600] mr-1"
           >
-            {title?.length > 18 ? title?.slice(0, 18) + "..." : title}
+            {title?.length > 17 ? title?.slice(0, 17) + "..." : title}
           </ThemedText>
         </View>
         <View className="flex-row items-center justify-center gap-[10px]">

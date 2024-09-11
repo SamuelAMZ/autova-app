@@ -197,7 +197,7 @@ const CarSearchScreen = () => {
             <ThemedText
               className={`text-[${Colors.textPrimary}] text-[20px] font-[600]`}
             >
-              Cars by body styles
+              Search results
             </ThemedText>
           </View>
         </Header>
