@@ -31,7 +31,7 @@ import {
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import { useQuery } from "@tanstack/react-query";
-import { filterCars } from "@/utils/carRequest";
+import { filterCars, getSavedCar } from "@/utils/carRequest";
 import Car from "@/models/car.model";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { debounce } from "@/constants/utils";
@@ -96,6 +96,11 @@ const CarSearchScreen = () => {
       return result;
     },
     enabled: false,
+  });
+
+  const getSavedCarsQuery = useQuery({
+    queryKey: ["get-saved-cars"],
+    queryFn: () => getSavedCar({ userId: "66d08d69f683984aa2acef6f" }),
   });
 
   useEffect(() => {
@@ -258,6 +263,7 @@ const CarSearchScreen = () => {
                 return (
                   <CarItem
                     car={item}
+                    savedCarsId={getSavedCarsQuery.data?.carsId || []}
                     onPress={() => {
                       router.navigate({
                         pathname: "/(app)/brands/carDetail",
