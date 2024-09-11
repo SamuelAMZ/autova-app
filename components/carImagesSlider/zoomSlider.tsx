@@ -102,7 +102,7 @@ const ZoomCarImagesSlider: React.FC<CarImagesSliderProps> = ({
               }}
             >
               <Image
-                resizeMode="contain"
+                resizeMode="cover"
                 style={{ width, minHeight: 263 }}
                 source={{ uri: item }}
               />

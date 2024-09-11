@@ -13,7 +13,7 @@ import ThemedText from "@/components/ThemedText";
 
 import { loadRelatedCars } from "@/utils/carRequest";
 import { useQuery } from "@tanstack/react-query";
-import { getSavedCar } from "@/utils/carRequest";
+import { getSavedCar, loadCars } from "@/utils/carRequest";
 
 export default function RelatedCar({ carId }: { carId: string }) {
   const width = Dimensions.get("window").width;
@@ -34,9 +34,14 @@ export default function RelatedCar({ carId }: { carId: string }) {
       } as const);
 
   // load brands
+  // const listingRelatedCarsQuery = useQuery({
+  //   queryKey: ["listing-cars"],
+  //   queryFn: () => loadRelatedCars({ page: 1, carId: carId }),
+  // });
+
   const listingRelatedCarsQuery = useQuery({
     queryKey: ["listing-cars"],
-    queryFn: () => loadRelatedCars({ page: 1, carId: carId }),
+    queryFn: () => loadCars({ page: 1 }),
   });
 
   const getSavedCarsQuery = useQuery({
