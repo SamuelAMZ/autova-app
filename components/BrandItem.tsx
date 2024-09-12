@@ -37,6 +37,7 @@ export default BrandItem;
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { SvgXml } from "react-native-svg";
+import Colors from "@/constants/Colors";
 
 const BrandLogo = ({ brand }: { brand: any }) => {
   const [svgData, setSvgData] = useState<string | null>(null);
@@ -61,10 +62,10 @@ const BrandLogo = ({ brand }: { brand: any }) => {
     } catch (e) {
       console.log(e, "error fetching svg content");
     }
-  }, [brand]);
+  }, [brand.logo]);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator color={Colors.background} />;
   }
 
   return (

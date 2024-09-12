@@ -1,6 +1,4 @@
-import {
-  CollectionActionModal,
-} from "@/components/collection";
+import { CollectionActionModal } from "@/components/collection";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import { router, useFocusEffect } from "expo-router";
@@ -190,8 +188,6 @@ const CollectionDetails = () => {
       </Header>
 
       <View className="flex-1 bg-white px-4">
-
-        
         <ThemedText
           className=" text-[18px] mt-5"
           style={{ fontFamily: "SpaceGrotesk_700Bold" }}
@@ -426,9 +422,15 @@ const SwipeToRemove = ({
   isActive: boolean;
 }) => {
   const swipeableRef = useRef<Swipeable>(null);
-  if (!isActive) {
-    swipeableRef.current?.close();
-  }
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!isActive) {
+        swipeableRef.current?.close();
+      }
+    }, [isActive])
+  );
+
   return (
     <Swipeable
       ref={swipeableRef}
