@@ -16,6 +16,7 @@ type CustomButtonProps = TouchableOpacityProps & {
   backgroundColor?: string;
   textColor?: string;
   isLoading?: boolean;
+  disabled?: boolean;
 };
 
 const CustomButton = ({
@@ -24,18 +25,22 @@ const CustomButton = ({
   backgroundColor = Colors.background,
   textColor = Colors.textPrimary,
   isLoading,
+  disabled,
 }: CustomButtonProps) => {
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor }]}
+      style={
+        !disabled
+          ? [styles.button, { backgroundColor }]
+          : [styles.button, { backgroundColor: "#98A2B3" }]
+      }
       onPress={onPress}
-    >
+      disabled={disabled}>
       {isLoading ? (
         <ActivityIndicator color="white" size="large" />
       ) : (
         <ThemedText
-          style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}
-        >
+          style={[styles.buttonText, { color: textColor, fontWeight: 500 }]}>
           {title}
         </ThemedText>
       )}

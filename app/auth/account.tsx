@@ -128,6 +128,7 @@ export default function Account() {
               title="Create account"
               textColor={Colors.textPrimary}
               onPress={handleSignUp}
+              
             />
           </View>
           <TermsOfServices />

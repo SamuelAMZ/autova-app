@@ -21,18 +21,27 @@ import { LogoutModal } from "@/components/LogoutModal";
 import useStatusBar from "@/hooks/useStatusBar";
 import Colors from "@/constants/Colors";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
 import { LangageData } from "@/constants/data";
 import { useKeyboardState } from "@/hooks/useKeyboardState";
 import { useSession } from "@/context/authContext";
+import { changePass } from "@/utils/auth";
+import { toastify } from "@/constants/utils";
+import Toast from "react-native-toast-message";
 
 export default function Settings() {
   const { signOut } = useSession();
   useStatusBar("dark", "#fff", false);
   const [isLogout, setIsLogout] = useState(false);
   const { isKeyboardVisible } = useKeyboardState();
-
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const [oldPass, setOldPass] = useState("");
+  const [loading, setIsLoading] = useState(false);
+  const [showOld, setShowOld] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [changePasscodeModalVisible, setChangePasscodeModalVisible] =
     useState(false);
   const [changePhoneNumberModalVisible, setChangePhoneNumberModalVisible] =
@@ -88,6 +97,9 @@ export default function Settings() {
     closePhoneNumberModal();
     closePasscodeModal();
     closeLangageModal();
+    setOldPass("");
+    setNewPass("");
+    setConfirmPass("");
   };
   const handleFocusModal = (type: string = "") => {
     if (type && type.length) {
@@ -120,6 +132,41 @@ export default function Settings() {
     setSelectedDegree(degree);
   };
 
+  const isFormFilled = () => {
+    return newPass !== "" && oldPass !== null && confirmPass !== "";
+  };
+
+  const handleChangePass = async () => {
+    try {
+      setIsLoading(true);
+      if (newPass === confirmPass) {
+        const res = await changePass({
+          _id: "66e0966446078c608a336609",
+          oldPass: oldPass,
+          newPass: newPass,
+        });
+        setIsLoading(false);
+        closePasscodeModal();
+        setOldPass("");
+        setNewPass("");
+        setConfirmPass("");
+        Toast.show({
+          type: "success",
+          text1: "success",
+          text2: "password change with success",
+          position: "top",
+        });
+      } else {
+        setIsLoading(false);
+        return toastify("Invalid data", "two passcodes are different");
+      }
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+      return toastify("Invalid data", "Invalid credentials");
+    }
+  };
+
   return (
     <>
       <CustomHeader />
@@ -127,8 +174,7 @@ export default function Settings() {
         <View className="flex flex-col gap-[1.25rem]">
           <ThemedText
             className="text-[1.25rem]  text-[#101828]"
-            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-          >
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
             Security
           </ThemedText>
           <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
@@ -136,8 +182,7 @@ export default function Settings() {
               <View className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}
-                  >
+                    className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}>
                     <ArrangeHorizontal size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
@@ -149,8 +194,7 @@ export default function Settings() {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handlePasscodeChange}
-              className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center"
-            >
+              className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
               <View className="flex items-center flex-row gap-[0.5rem]">
                 <Image
                   source={require("@/assets/code.png")}
@@ -166,8 +210,7 @@ export default function Settings() {
               <View className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}
-                  >
+                    className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
                     <ArrangeHorizontal size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
@@ -181,8 +224,7 @@ export default function Settings() {
               <View className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    className={`justify-center items-center w-[30] h-[30] bg-[red] rounded-3xl`}
-                  >
+                    className={`justify-center items-center w-[30] h-[30] bg-[red] rounded-3xl`}>
                     <Trash size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
@@ -200,22 +242,19 @@ export default function Settings() {
           isVisible={changeLangageModalVisible}
           onClose={closeModal}
           snapPoints={snapPointLangage}
-          index={Platform.OS === "ios" ? 1 : 1}
-        >
+          index={Platform.OS === "ios" ? 1 : 1}>
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}
-            className="w-full px-[4%] "
-          >
+            className="w-full px-[4%] ">
             <View className="pt-[1rem] flex-row justify-between items-center w-full">
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
-                className="text-[20px] text-[#000000]"
-              >
+                className="text-[20px] text-[#000000]">
                 Change Langage
               </ThemedText>
               <TouchableOpacity onPress={closeModal}>
@@ -230,8 +269,7 @@ export default function Settings() {
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => handleSelect(item.name)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
-                >
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
                   <View className="flex flex-row gap-[12px] items-center">
                     <Image
                       source={item.image}
@@ -267,22 +305,19 @@ export default function Settings() {
               : Platform.OS === "android"
               ? 1
               : 0
-          }
-        >
+          }>
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}
-            className="w-full px-[4%] "
-          >
+            className="w-full px-[4%] ">
             <View className="pt-[1rem] flex-row justify-between items-center w-full">
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
-                className="text-[20px] text-[#000000]"
-              >
+                className="text-[20px] text-[#000000]">
                 Change phone number
               </ThemedText>
               <TouchableOpacity onPress={closeModal}>
@@ -328,22 +363,19 @@ export default function Settings() {
               : Platform.OS === "android"
               ? 1
               : 0
-          }
-        >
+          }>
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}
-            className="w-full px-[4%] "
-          >
+            className="w-full px-[4%] ">
             <View className="pt-[1rem] flex-row justify-between items-center w-full">
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
-                className="text-[20px] text-[#000000]"
-              >
+                className="text-[20px] text-[#000000]">
                 Change Passcode
               </ThemedText>
               <TouchableOpacity onPress={closeModal}>
@@ -355,48 +387,92 @@ export default function Settings() {
 
             <View className="flex justify-center gap-[26px] pt-[36px] w-full">
               <View className="flex gap-4 w-full">
-                <TextInput
-                  placeholder="Old Password"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onPressIn={() => {
-                    handleFocusModal("changePasscodeSnapPoint");
-                  }}
-                  onBlur={() => {
-                    handleBlurModal("changePasscodeSnapPoint");
-                  }}
-                />
-                <TextInput
-                  placeholder="New Password"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onPressIn={() => {
-                    handleFocusModal("changePasscodeSnapPoint");
-                  }}
-                  onBlur={() => {
-                    handleBlurModal("changePasscodeSnapPoint");
-                  }}
-                />
-                <TextInput
-                  placeholder="Confirm Password"
-                  placeholderTextColor={Colors.textSecondary}
-                  className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
-                  onPressIn={() => {
-                    handleFocusModal("changePasscodeSnapPoint");
-                  }}
-                  onBlur={() => {
-                    handleBlurModal("changePasscodeSnapPoint");
-                  }}
-                />
+                <View>
+                  <TextInput
+                    placeholder="Old Password"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onPressIn={() => {
+                      handleFocusModal("changePasscodeSnapPoint");
+                    }}
+                    onBlur={() => {
+                      handleBlurModal("changePasscodeSnapPoint");
+                    }}
+                    onChangeText={setOldPass}
+                    secureTextEntry={!showOld}
+                  />
+                  {oldPass ? (
+                    <Ionicons
+                      onPress={() => setShowOld(!showOld)}
+                      name={`${showOld ? "eye-off-outline" : "eye-outline"}`}
+                      size={24}
+                      color="#344054"
+                      className="absolute right-4 top-4 "
+                    />
+                  ) : null}
+                </View>
+                <View>
+                  <TextInput
+                    placeholder="New Password"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onPressIn={() => {
+                      handleFocusModal("changePasscodeSnapPoint");
+                    }}
+                    onBlur={() => {
+                      handleBlurModal("changePasscodeSnapPoint");
+                    }}
+                    secureTextEntry={!showNew}
+                    onChangeText={setNewPass}
+                  />
+                  {newPass ? (
+                    <Ionicons
+                      onPress={() => setShowNew(!showNew)}
+                      name={`${showNew ? "eye-off-outline" : "eye-outline"}`}
+                      size={24}
+                      color="#344054"
+                      className="absolute right-4 top-4 "
+                    />
+                  ) : null}
+                </View>
+
+                <View>
+                  <TextInput
+                    placeholder="Confirm Password"
+                    placeholderTextColor={Colors.textSecondary}
+                    className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
+                    onPressIn={() => {
+                      handleFocusModal("changePasscodeSnapPoint");
+                    }}
+                    onBlur={() => {
+                      handleBlurModal("changePasscodeSnapPoint");
+                    }}
+                    secureTextEntry={!showConfirm}
+                    onChangeText={setConfirmPass}
+                  />
+                  {confirmPass ? (
+                    <Ionicons
+                      onPress={() => setShowConfirm(!showConfirm)}
+                      name={`${
+                        showConfirm ? "eye-off-outline" : "eye-outline"
+                      }`}
+                      size={24}
+                      color="#344054"
+                      className="absolute right-4 top-4 "
+                    />
+                  ) : null}
+                </View>
+
                 <ThemedText
-                  className={`text-[${Colors.textSecondary}] text-[14px]`}
-                >
+                  className={`text-[${Colors.textSecondary}] text-[14px]`}>
                   * Your password should be minimum 8 characters.
                 </ThemedText>
                 <CustomButton
                   title="Change"
+                  isLoading={loading}
                   textColor={Colors.textPrimary}
-                  onPress={() => {}}
+                  onPress={handleChangePass}
+                  disabled={!isFormFilled()}
                 />
               </View>
             </View>
@@ -404,12 +480,10 @@ export default function Settings() {
         </CustomBottomSheetModal>
         <TouchableOpacity
           onPress={handleLogout}
-          className="border border-[#FF4747]  rounded-[50px] flex items-center"
-        >
+          className="border border-[#FF4747]  rounded-[50px] flex items-center">
           <ThemedText
             className="text-[1rem] text-[#FF4747] py-[1rem]"
-            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
-          >
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
             Log Out
           </ThemedText>
         </TouchableOpacity>
@@ -431,15 +505,13 @@ function CustomHeader() {
           <Pressable
             onPress={() => {
               router.back();
-            }}
-          >
+            }}>
             <ArrowLeft size="24" color="#101828" />
           </Pressable>
 
           <ThemedText
             className="text-[#101828] text-[24px]"
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
-          >
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
             Settings
           </ThemedText>
           <InfoCircle size="24" color="#101828" />
