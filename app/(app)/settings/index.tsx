@@ -30,6 +30,7 @@ import { changePass } from "@/utils/auth";
 import { toastify } from "@/constants/utils";
 import Toast from "react-native-toast-message";
 import { useTranslation } from "react-i18next";
+import { getLangage } from "@/localization/i18n";
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
@@ -128,10 +129,11 @@ export default function Settings() {
     setIsLogout(!isLogout);
   };
 
-  const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
+  const [selectedLangage, setselectedLangage] = useState<string | null>(null);
 
-  const handleSelect = (degree: string) => {
-    setSelectedDegree(degree);
+  const handleSelectLangage = (code: string) => {
+    setselectedLangage(code);
+    setLangage(code);
   };
 
   const isFormFilled = () => {
@@ -173,6 +175,15 @@ export default function Settings() {
   const setLangage = (code: string) => {
     i18n.changeLanguage(code || "en");
   };
+
+  useEffect(() => {
+    getLangage()
+      .then((langage) => handleSelectLangage(langage))
+      .catch((e) => {
+        console.log(e, "useffect getlangage");
+        handleSelectLangage("en");
+      });
+  }, []);
 
   return (
     <>
@@ -284,8 +295,7 @@ export default function Settings() {
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => {
-                    handleSelect(item.name);
-                    setLangage(item.code);
+                    handleSelectLangage(item.code);
                   }}
                   className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
                 >
@@ -299,7 +309,7 @@ export default function Settings() {
                     </ThemedText>
                   </View>
 
-                  {selectedDegree === item.name && (
+                  {selectedLangage === item.code && (
                     <AntDesign
                       name="check"
                       size={20}

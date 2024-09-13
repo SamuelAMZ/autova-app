@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import { en, fr } from "./translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const STORE_LANGUAGE_KEY = "settings.lang";
+export const STORE_LANGUAGE_KEY = "settings.lang";
 
 class LanguageDetector {
   type: "languageDetector" = "languageDetector";
@@ -71,3 +71,13 @@ i18n
   });
 
 export default i18n;
+
+export async function getLangage() {
+  try {
+    const langage = await AsyncStorage.getItem(STORE_LANGUAGE_KEY);
+    return langage || "en";
+  } catch (e) {
+    console.log(e, "getLangage");
+    return "en";
+  }
+}
