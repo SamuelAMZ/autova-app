@@ -39,8 +39,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
     if (result && result.data) {
       console.log(result.data);
       
-      const { phone } = result.data as IUser;
-      setSession(JSON.stringify({ phone, token }));
+      const { phone, _id } = result.data as IUser;
+      setSession(JSON.stringify({ phone, token, _id }));
     }
     return result;
   };
