@@ -169,6 +169,22 @@
           }
         },
         "privacyNotice": "* Gardez votre communication privée. Évitez de partager des informations sensibles avec le vendeur."
+      },
+      "keys": {
+        "Brand": "Marque",
+        "Model": "Modèle",
+        "Title": "Titre",
+        "Year": "Année",
+        "Transmission": "Transmission",
+        "FuelType": "Type de carburant",
+        "EngineCapacity": "Capacité du moteur",
+        "Color": "Couleur",
+        "Cylinder": "Cylindres",
+        "Doorscount": "Nombre de portes",
+        "Odometer": "Odomètre",
+        "CountryCity": "Pays, Ville",
+        "Hybrid": "Hybride",
+        "Electric": "Électrique"
       }
     },
     "navsAccount": {

@@ -170,6 +170,22 @@
           }
         },
         "privacyNotice": "* Keep your communication private. Avoid sharing sensitive information with the seller."
+      },
+      "keys": {
+        "Brand": "Brand",
+        "Model": "Model",
+        "Title": "Title",
+        "Year": "Year",
+        "Transmission": "Transmission",
+        "FuelType": "Fuel Type",
+        "EngineCapacity": "Engine Capacity",
+        "Color": "Color",
+        "Cylinder": "Cylinder",
+        "Doorscount": "Doors count",
+        "Odometer": "Odometer",
+        "CountryCity": "Country City",
+        "Hybrid": "Hybrid",
+        "Electric": "Electric"
       }
     },
     "navsAccount": {

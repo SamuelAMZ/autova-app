@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -48,6 +48,7 @@ import { ErrorLoadingData } from "@/components/ErrorLoading";
 import Colors from "@/constants/Colors";
 import { shareCarApp } from "@/utils/shareCarLink";
 import { useTranslation } from "react-i18next";
+import { getLangage } from "@/localization/i18n";
 
 export default function CarDetail() {
   const { t } = useTranslation();
@@ -61,6 +62,16 @@ export default function CarDetail() {
   const specificationsRef = useRef<View>(null);
   const detailsRef = useRef<View>(null);
   const [selectedElmHeight, setSelectedElementHeightValue] = useState(0);
+  const [langage, setLangage] = useState("en");
+
+  useEffect(() => {
+    getLangage()
+      .then((langage) => setLangage(langage))
+      .catch((e) => {
+        console.log(e, "useffect getlangage");
+        setLangage("en");
+      });
+  }, []);
 
   const handleScrollTo = (ref: any, scale: number = 0) => {
     ref.current.measureLayout(scrollViewRef.current, (x: any, y: any) => {
@@ -145,52 +156,70 @@ export default function CarDetail() {
   // console.log(JSON.stringify(carDetailQuery, null, 2), "carDetailQuery", carId);
 
   function CarSpecifications() {
+    const { t } = useTranslation(); // Hook to use translations
+
     const data = [
       {
-        Brand: carDetailQuery.data?.brand?.name,
+        [t("screens.carDetail.keys.Brand")]: carDetailQuery.data?.brand?.name,
       },
       {
-        Model: carDetailQuery.data?.model?.name,
+        [t("screens.carDetail.keys.Model")]: carDetailQuery.data?.model?.name,
       },
       {
-        Title: carDetailQuery.data?.title?.name,
-      },
-
-      {
-        Year: carDetailQuery.data?.year,
+        [t("screens.carDetail.keys.Title")]: carDetailQuery.data?.title?.name,
       },
       {
-        Transmission: carDetailQuery.data?.transmission?.name,
+        [t("screens.carDetail.keys.Year")]: carDetailQuery.data?.year,
       },
       {
-        "Fuel Type": carDetailQuery.data?.fuelType?.name,
+        [t("screens.carDetail.keys.Transmission")]:
+          carDetailQuery.data?.transmission?.name,
       },
       {
-        "Engine Capacity": carDetailQuery.data?.engineType?.name,
+        [t("screens.carDetail.keys.FuelType")]:
+          carDetailQuery.data?.fuelType?.name,
       },
       {
-        Color: carDetailQuery.data?.color?.name,
+        [t("screens.carDetail.keys.EngineCapacity")]:
+          carDetailQuery.data?.engineType?.name,
       },
       {
-        Cylinder: carDetailQuery.data?.cylinders,
+        [t("screens.carDetail.keys.Color")]: carDetailQuery.data?.color?.name,
       },
       {
-        "Doors count": carDetailQuery.data?.doorsCount,
+        [t("screens.carDetail.keys.Cylinder")]: carDetailQuery.data?.cylinders,
       },
       {
-        Odometer: carDetailQuery.data?.engineType?.name,
+        [t("screens.carDetail.keys.Doorscount")]:
+          carDetailQuery.data?.doorsCount,
       },
       {
-        "Country City":
+        [t("screens.carDetail.keys.Odometer")]:
+          carDetailQuery.data?.engineType?.name,
+      },
+      {
+        [t("screens.carDetail.keys.CountryCity")]:
           carDetailQuery.data?.country?.name +
           ", " +
           carDetailQuery.data?.city?.name,
       },
       {
-        Hybrid: carDetailQuery.data?.isHybrid ? " Yes" : " No",
+        [t("screens.carDetail.keys.Hybrid")]: carDetailQuery.data?.isHybrid
+          ? langage === "en"
+            ? "Yes"
+            : "Oui"
+          : langage === "en"
+          ? "No"
+          : "Non",
       },
       {
-        Electric: carDetailQuery.data?.isElectric ? " Yes" : " No",
+        [t("screens.carDetail.keys.Electric")]: carDetailQuery.data?.isElectric
+          ? langage === "en"
+            ? "Yes"
+            : "Oui"
+          : langage === "en"
+          ? "No"
+          : "Non",
       },
     ];
     return (
@@ -224,20 +253,28 @@ export default function CarDetail() {
     );
   }
 
-  function CarDetails() {
+  function CarDetails({ lng }: { lng: string }) {
     const { t } = useTranslation();
     return (
       <View className="py-[10px] flex gap-4">
         <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
           {t("screens.carDetail.textDetails")}
         </ThemedText>
-        {
-          <View>
-            <ThemedText className="text-[#344054] text-[15px] font-[400]">
-              {carDetailQuery.data?.note}
-            </ThemedText>
-          </View>
-        }
+
+        <View>
+          <ThemedText className="text-[#344054] text-[15px] font-[400]">
+            {langage === "en" && carDetailQuery.data?.note_en
+              ? carDetailQuery.data?.note_en
+              : null}
+
+            {langage === "fr" && carDetailQuery.data?.note_fr
+              ? carDetailQuery.data?.note_fr
+              : null}
+            {!carDetailQuery.data?.note_en && !carDetailQuery.data?.note_fr
+              ? carDetailQuery.data?.note
+              : null}
+          </ThemedText>
+        </View>
       </View>
     );
   }
@@ -336,7 +373,17 @@ export default function CarDetail() {
                       }}
                       className="text-[#1D2939] text-[20px]"
                     >
-                      {carDetailQuery.data?.name}
+                      {langage === "en" && carDetailQuery.data?.name_en
+                        ? carDetailQuery.data?.name_en
+                        : null}
+
+                      {langage === "fr" && carDetailQuery.data?.name_fr
+                        ? carDetailQuery.data?.name_fr
+                        : null}
+                      {!carDetailQuery.data?.name_en &&
+                      !carDetailQuery.data?.name_fr
+                        ? carDetailQuery.data?.name
+                        : null}
                     </ThemedText>
 
                     <View className="flex-col gap-[22px] items-between">
@@ -462,7 +509,7 @@ export default function CarDetail() {
                     </View>
 
                     <View ref={detailsRef}>
-                      <CarDetails />
+                      <CarDetails lng={langage} />
                     </View>
 
                     {carDetailQuery.isSuccess ? (
