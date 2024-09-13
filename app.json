@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "com.afi.carapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -15,10 +15,11 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": [
-          "telegram",
-          "whatsapp",
-          "tel"
+        "LSApplicationQueriesSchemes": ["telegram", "whatsapp", "tel"],
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["com.afi.carapp"]
+          }
         ]
       },
       "bundleIdentifier": "com.afi.carapp"
@@ -30,8 +31,19 @@
       },
       "package": "com.afi.carapp",
       "softwareKeyboardLayoutMode": "pan",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "com.afi.carapp",
+              "host": "car",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["DEFAULT", "BROWSABLE"]
+        }
       ]
     },
     "web": {

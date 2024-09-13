@@ -46,7 +46,7 @@ import {
 import { extractLastDigits } from "@/utils/extractLastDigits";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import Colors from "@/constants/Colors";
-
+import { shareCarApp } from "@/utils/shareCarLink";
 import { useTranslation } from "react-i18next";
 
 export default function CarDetail() {
@@ -708,7 +708,10 @@ function CustomHeader({ title }: { title?: string }) {
     });
   };
 
-  const handleShare = () => {};
+  // Modify the handleShare function
+  const handleShare = async () => {
+    shareCarApp({ carId: carId });
+  };
 
   return (
     <Header
