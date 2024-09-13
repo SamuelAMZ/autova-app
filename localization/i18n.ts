@@ -61,9 +61,9 @@ i18n
   .init({
     resources,
     compatibilityJSON: "v3",
-    lng: "fr",
+    lng: "en",
     // fallback language is set to english
-    fallbackLng: "fr",
+    fallbackLng: "en",
     interpolation: {
       escapeValue: false,
     },

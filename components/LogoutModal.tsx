@@ -3,6 +3,7 @@ import useStatusBar from "@/hooks/useStatusBar";
 import { View, TouchableOpacity } from "react-native";
 import ThemedText from "@/components/ThemedText";
 import Colors from "@/constants/Colors";
+import { useTranslation } from "react-i18next";
 
 import { router } from "expo-router";
 
@@ -15,6 +16,7 @@ export const LogoutModal = ({
   onClose: any;
   onLogout: () => void;
 }) => {
+  const { t } = useTranslation();
   // set status bar
   useStatusBar("dark-content", "#0F172A8F", false);
 
@@ -30,7 +32,7 @@ export const LogoutModal = ({
               >
                 <View className="flex gap-[12px]">
                   <ThemedText className="text-[#101828] text-[16px] text-center">
-                    Are you sure you want to Logout?
+                    {t("screens.settings.logout.confirmText")}
                   </ThemedText>
                 </View>
                 <View className="flex-row flex justify-center items-center gap-[12px]">
@@ -46,7 +48,7 @@ export const LogoutModal = ({
                     <ThemedText
                       className={`text-[#FFFFFF] text-[17px]  text-center  `}
                     >
-                      Yes
+                      {t("screens.settings.logout.yes")}
                     </ThemedText>
                   </TouchableOpacity>
 
@@ -58,7 +60,7 @@ export const LogoutModal = ({
                     <ThemedText
                       className={`text-[${Colors.background}] text-[17px]  text-center  `}
                     >
-                      No
+                      {t("screens.settings.logout.no")}
                     </ThemedText>
                   </TouchableOpacity>
                 </View>

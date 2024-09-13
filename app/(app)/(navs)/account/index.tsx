@@ -426,7 +426,7 @@ const AccountPage = () => {
               </ThemedText>
               <TouchableOpacity
                 onPress={() => {
-                  router.navigate("/(app)/listCar/settings");
+                  router.navigate("/(app)/settings");
                 }}
                 className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
               >
@@ -642,7 +642,7 @@ function CustomHeader() {
           </ThemedText>
           <TouchableOpacity
             onPress={() => {
-              router.navigate("/(app)/listCar/settings");
+              router.navigate("/(app)/settings");
             }}
             className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
           >

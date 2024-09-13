@@ -11,8 +11,10 @@ import { useProduct } from "@/context/carContext";
 import { AntDesign } from "@expo/vector-icons";
 import { loadTransmissions } from "@/utils/transmissionsRequest";
 import { useQuery } from "react-query";
+import { useTranslation } from "react-i18next";
 
 export default function Transmission() {
+  const { t } = useTranslation();
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
 
   const { updateProductData, productData } = useProduct();
@@ -37,7 +39,7 @@ export default function Transmission() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
+        className="flex px-[16px] bg-[#fff] justify-between h-[90%]"
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
         <View>
@@ -46,13 +48,13 @@ export default function Transmission() {
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Transmission
+              {t("screens.transmission.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
-              Enter the transmission type of your car
+              {t("screens.transmission.subtitle")}
             </ThemedText>
           </View>
 
@@ -98,13 +100,13 @@ export default function Transmission() {
         >
           <TouchableOpacity
             onPress={handleBrandSelect}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%]`}
           >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Continue
+              {t("screens.transmission.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>

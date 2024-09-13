@@ -20,6 +20,7 @@ import { useKeyboardState } from "@/hooks/useKeyboardState";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useProduct } from "@/context/carContext";
 import { carDoorsElements } from "@/constants/searchTypes";
+import { useTranslation } from "react-i18next";
 
 export function MyCheckbox({
   onPress,
@@ -40,6 +41,7 @@ export function MyCheckbox({
 }
 
 export default function Doors() {
+  const {t} = useTranslation()
   const [selectedCurrency, setSelectedCurrency] = useState(0);
 
   const { updateProductData, productData } = useProduct();
@@ -56,26 +58,30 @@ export default function Doors() {
       <HeaderListing progress={12 / 14}>
         <ListingCarHeader />
       </HeaderListing>
-      <View className="flex-1 px-[16px] justify-between  bg-[#fff] h-[100%] ">
+      <View className="flex-1 px-[16px] justify-between bg-[#fff] h-[100%]">
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss();
           }}
-          className="flex-1">
+          className="flex-1"
+        >
           <View
-            className="flex bg-[#fff] justify-between h-[80%] "
-            style={{ paddingTop: 30, paddingBottom: 60 }}>
+            className="flex bg-[#fff] justify-between h-[80%]"
+            style={{ paddingTop: 30, paddingBottom: 60 }}
+          >
             <View className="flex-1 gap-[30px]">
               <View className="flex items-start gap-[12px]">
                 <ThemedText
                   className="text-[#101828] text-[20px]"
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Doors
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+                >
+                  {t("screens.doors.title")}
                 </ThemedText>
                 <ThemedText
                   className="text-[#344054] text-[16px]"
-                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  how many doors does your car have
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  {t("screens.doors.subtitle")}
                 </ThemedText>
               </View>
               {isKeyboardVisible ? (
@@ -100,12 +106,14 @@ export default function Doors() {
                         backgroundColor:
                           selectedCurrency == item ? "#5856D6" : undefined,
                       }}
-                      className="h-[30] w-[30] border border-[#D0D5DD] rounded-3xl justify-center items-center">
+                      className="h-[30] w-[30] border border-[#D0D5DD] rounded-3xl justify-center items-center"
+                    >
                       <ThemedText
                         style={{
                           color: selectedCurrency == item ? "white" : "#344054",
                           fontFamily: "SpaceGrotesk_600SemiBold",
-                        }}>
+                        }}
+                      >
                         {item}
                       </ThemedText>
                     </TouchableOpacity>
@@ -118,14 +126,17 @@ export default function Doors() {
         <View
           style={{
             paddingBottom: 40,
-          }}>
+          }}
+        >
           <TouchableOpacity
             onPress={handleBrandSelect}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Continue
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.doors.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>

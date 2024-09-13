@@ -7,8 +7,10 @@ import { router } from "expo-router";
 import HeaderListing from "@/components/HeaderListing";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
+import { useTranslation } from "react-i18next";
 
 export default function Condition() {
+  const { t } = useTranslation();
   return (
     <>
       <HeaderListing progress={1 / 14}>
@@ -31,13 +33,13 @@ export default function Condition() {
                 className="text-[#101828] text-[20px]"
                 style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               >
-                Condition
+                {t("screens.condition.title")}
               </ThemedText>
               <ThemedText
                 className="text-[#344054] text-[16px]"
                 style={{ fontFamily: "SpaceGrotesk_500Medium" }}
               >
-                What is the condition of your car?
+                {t("screens.condition.subtitle")}
               </ThemedText>
             </View>
 
@@ -65,7 +67,7 @@ export default function Condition() {
                     className="text-[16px] text-[#1D2939]"
                     style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                   >
-                    New
+                    {t("screens.condition.options.new.title")}
                   </ThemedText>
                   <ArrowRight2 size="16" color="#1D2939" />
                 </View>
@@ -73,7 +75,7 @@ export default function Condition() {
                   className="text-[14px] text-[#1D2939]"
                   style={{ fontFamily: "SpaceGrotesk_500Medium" }}
                 >
-                  Select if your car is unregistered and brand new.
+                  {t("screens.condition.options.new.description")}
                 </ThemedText>
               </TouchableOpacity>
               <TouchableOpacity
@@ -89,7 +91,7 @@ export default function Condition() {
                     className="text-[16px] text-[#1D2939]"
                     style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                   >
-                    Used
+                    {t("screens.condition.options.used.title")}
                   </ThemedText>
                   <ArrowRight2 size="16" color="#1D2939" />
                 </View>
@@ -97,7 +99,7 @@ export default function Condition() {
                   className="text-[14px] text-[#1D2939]"
                   style={{ fontFamily: "SpaceGrotesk_500Medium" }}
                 >
-                  Select if your car has been used before.
+                  {t("screens.condition.options.used.description")}
                 </ThemedText>
               </TouchableOpacity>
               <TouchableOpacity
@@ -113,7 +115,7 @@ export default function Condition() {
                     className="text-[16px] text-[#1D2939]"
                     style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                   >
-                    Reconditioned
+                    {t("screens.condition.options.reconditioned.title")}
                   </ThemedText>
                   <ArrowRight2 size="16" color="#1D2939" />
                 </View>
@@ -121,7 +123,7 @@ export default function Condition() {
                   className="text-[14px] text-[#1D2939]"
                   style={{ fontFamily: "SpaceGrotesk_500Medium" }}
                 >
-                  Select if your car is used but currently unregistered.
+                  {t("screens.condition.options.reconditioned.description")}
                 </ThemedText>
               </TouchableOpacity>
             </View>
@@ -143,7 +145,7 @@ export default function Condition() {
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Continue
+              {t("screens.condition.continueButton")}
             </ThemedText>
           </TouchableOpacity>
         </View>

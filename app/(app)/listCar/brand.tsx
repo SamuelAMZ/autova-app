@@ -21,8 +21,10 @@ import { useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 import { useProduct } from "@/context/carContext";
+import { useTranslation } from "react-i18next";
 
 export default function Brand() {
+  const { t } = useTranslation();
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
@@ -68,24 +70,24 @@ export default function Brand() {
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Brand
+              {t("screens.brand.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
-              Select a brand for your car
+              {t("screens.brand.subtitle")}
             </ThemedText>
           </View>
           <View className="relative">
             <SearchNormal1
               size="20"
               color="#000"
-              style={{ position: "absolute", right: 20, top: 15 }}
+              style={{ position: "absolute", right: 15, top: 10 }}
             />
             <TextInput
               className="bg-[#7878801F] relative border border-[#D0D5DD] py-[12px] px-[20px] rounded-[12px] mb-[30px]"
-              placeholder="Search a brand"
+              placeholder={t("screens.brand.searchPlaceholder")}
               placeholderTextColor="#1D2939"
               onChangeText={(text) => setSearch(text)}
             />
@@ -96,7 +98,7 @@ export default function Brand() {
               className="text-[17px]  font-[600] text-[#101828]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Popular Brand
+              {t("screens.brand.popularBrand")}
             </ThemedText>
             {brandQuery.isLoading ? (
               <View className="w-full ">
@@ -138,7 +140,7 @@ export default function Brand() {
               className="text-[17px]  font-[600] text-[#101828]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Popular Brand
+              {t("screens.brand.popularBrand")}
             </ThemedText>
 
             <View className="">
@@ -180,7 +182,7 @@ export default function Brand() {
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Continue
+              {t("screens.brand.continueButton")}
             </ThemedText>
           </TouchableOpacity>
         </View>

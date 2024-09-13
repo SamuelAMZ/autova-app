@@ -175,25 +175,25 @@
       "title": "Compte",
       "settings": "Paramètres",
       "contactInfo": {
-        "title": "Coordonnées",
+        "title": "Informations de contact",
         "phone": "Numéro de téléphone",
-        "whatsapp": "Numéro WhatsApp"
+        "whatsapp": "Numéro Whatsapp"
       },
       "aboutAutova": {
         "title": "À propos d'Autova",
         "aboutUs": "À propos de nous",
         "termsOfService": "Conditions d'utilisation",
         "privacyPolicy": "Politique de confidentialité",
-        "listingCar": "Liste des voitures"
+        "listingCar": "Annonce de voiture"
       },
       "section": {
         "title": "Section",
-        "contactUs": "Nous contacter",
+        "contactUs": "Contactez-nous",
         "inviteFriend": "Inviter un ami"
       },
       "enjoyingApp": {
-        "title": "Vous aimez l'application Carnext+ ?",
-        "referFriend": "Recommandez un ami"
+        "title": "Vous appréciez l'application Carnext+ ?",
+        "referFriend": "Recommander un ami"
       },
       "loginToUse": "Connectez-vous pour utiliser Autova",
       "createAccount": {
@@ -201,6 +201,171 @@
         "placeholder": "Numéro de téléphone",
         "continueBtn": "Continuer"
       }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "security": "Sécurité",
+      "changePhoneNumber": {
+        "title": "Changer le numéro de téléphone",
+        "placeholder": "Entrer le nouveau numéro de téléphone",
+        "buttonText": "Mettre à jour"
+      },
+      "changePasscode": {
+        "title": "Changer le code d'accès",
+        "oldPassCodePlaceholder": "Ancien mot de passe",
+        "newPassCodePlaceholder": "Nouveau mot de passe",
+        "ConfirmPassCodePlaceholder": "Confirmer le mot de passe",
+        "passwordWarnings": "* Votre mot de passe doit comporter au moins 8 caractères.",
+        "buttonText": "Changer"
+      },
+      "changeLanguage": {
+        "title": "Changer de langue"
+      },
+      "deleteAccount": "Supprimer le compte",
+      "version": "1.0.1",
+      "logout": {
+        "title": "Se déconnecter",
+        "confirmText": "Êtes-vous sûr de vouloir vous déconnecter ?",
+        "yes": "Oui",
+        "no": "Non"
+      }
+    },
+    "condition": {
+      "title": "Condition",
+      "subtitle": "Quelle est la condition de votre voiture ?",
+      "options": {
+        "new": {
+          "title": "Neuve",
+          "description": "Sélectionnez si votre voiture est non immatriculée et toute neuve."
+        },
+        "used": {
+          "title": "Occasion",
+          "description": "Sélectionnez si votre voiture a déjà été utilisée."
+        },
+        "reconditioned": {
+          "title": "Reconditionné",
+          "description": "Sélectionnez si votre voiture est d'occasion mais actuellement non immatriculée."
+        }
+      },
+      "continueButton": "Continuer"
+    },
+    "brand": {
+      "title": "Marque",
+      "subtitle": "Sélectionnez une marque pour votre voiture",
+      "searchPlaceholder": "Rechercher une marque",
+      "popularBrand": "Marque populaire",
+      "continueButton": "Continuer"
+    },
+    "model": {
+      "title": "Modèle",
+      "subtitle": "Sélectionnez le modèle de votre voiture",
+      "searchPlaceholder": "Rechercher un modèle",
+      "allModels": "Tous les modèles",
+      "continue": "Continuer"
+    },
+    "title": {
+      "title": "Titre",
+      "subtitle": "Sélectionnez le titre de votre voiture",
+      "searchPlaceholder": "Rechercher un titre",
+      "allTitles": "Tous les titres",
+      "continue": "Continuer"
+    },
+    "year": {
+      "title": "Année de production",
+      "subtitle": "Sélectionnez l'année de production de votre voiture",
+      "continue": "Continuer"
+    },
+    "odometer": {
+      "title": "Odomètre",
+      "subtitle": "Entrez l'odomètre de votre voiture",
+      "placeholder": "Entrer l'odomètre",
+      "unit": "KM",
+      "continue": "Continuer"
+    },
+    "engine": {
+      "title": "Moteur",
+      "subtitle": "Entrez la cylindrée du moteur de votre voiture",
+      "continue": "Continuer"
+    },
+    "fuelType": {
+      "title": "Type de carburant",
+      "subtitle": "Sélectionnez le type de carburant de votre voiture",
+      "continue": "Continuer"
+    },
+    "transmission": {
+      "title": "Transmission",
+      "subtitle": "Entrez le type de transmission de votre voiture",
+      "continue": "Continuer"
+    },
+    "cylinders": {
+      "title": "Cylindre",
+      "subtitle": "Entrez le nombre de cylindres de votre voiture",
+      "placeholder": "Entrer le kilométrage",
+      "continue": "Continuer"
+    },
+    "color": {
+      "title": "Couleur",
+      "subtitle": "Sélectionnez une couleur pour votre voiture",
+      "placeholder": "Rechercher une couleur",
+      "popular": "Couleur populaire",
+      "continue": "Continuer"
+    },
+    "city": {
+      "title": "Ville",
+      "subtitle": "Sélectionnez une ville pour votre voiture",
+      "placeholder": "Rechercher une ville",
+      "cities": "Villes",
+      "continue": "Continuer"
+    },
+    "doors": {
+      "title": "Portes",
+      "subtitle": "Combien de portes a votre voiture",
+      "continue": "Continuer"
+    },
+    "price": {
+      "title": "Prix",
+      "subtitle": "Quel est le prix de votre voiture",
+      "placeholder": "1000",
+      "negotiable": "Négociable",
+      "continue": "Continuer"
+    },
+    "description": {
+      "title": "Description",
+      "subtitle": "Entrez une description pour votre voiture",
+      "continue": "Continuer",
+      "placeholder": "Entrer la description"
+    },
+    "hybrid": {
+      "title": "Hybride | Électrique",
+      "subtitle": "Quel est le type de votre voiture",
+      "helectric": "Est-ce électrique ?",
+      "hybrid": "Est-ce hybride ?",
+      "continue": "Continuer"
+    },
+    "upload": {
+      "title": "Image/Vidéo",
+      "subtitle": "Téléchargez les images/vidéos de votre voiture",
+      "clickToUpload": "Cliquez pour télécharger",
+      "fileTypes": "MP4, PNG, JPG ou GIF (max. 100 mo)",
+      "continue": "Continuer"
+    },
+    "contact": {
+      "title": "Coordonnées",
+      "subtitle": "Comment souhaitez-vous être contacté par le client ?",
+      "nameLabel": "Nom",
+      "name": "Omer Hassan",
+      "emailLabel": "Adresse e-mail",
+      "email": "omar@carnextplus.com",
+      "whatsapp": "Entrer le numéro Whatsapp",
+      "telegram": "Entrer le numéro Telegram",
+      "phone": "Entrer le numéro de téléphone",
+      "review": "Revoir",
+      "continue": "Continuer"
+    },
+    "submitted": {
+      "title": "Annonce soumise pour examen !",
+      "message": "Merci d'avoir soumis votre annonce ! Nous l'examinons actuellement et vous serez informé dès qu'elle sera approuvée.",
+      "returnHome": "Retourner à l'accueil"
     }
   },
 

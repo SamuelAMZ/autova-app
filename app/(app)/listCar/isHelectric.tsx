@@ -19,6 +19,7 @@ import ListingCarHeader from "@/components/ListingCarHeader";
 import { useKeyboardState } from "@/hooks/useKeyboardState";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useProduct } from "@/context/carContext";
+import { useTranslation } from "react-i18next";
 
 export function MyCheckbox({
   onPress,
@@ -35,13 +36,15 @@ export function MyCheckbox({
       onPress={() => {
         setHelectric(!Helectric);
         onPress && onPress(!Helectric);
-      }}>
+      }}
+    >
       {Helectric && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
   );
 }
 
 export default function IsHelectric() {
+  const { t } = useTranslation();
   const [isHelectric, setHelectric] = useState(false);
   const [isHybrid, setHybrid] = useState(false);
 
@@ -60,26 +63,30 @@ export default function IsHelectric() {
       <HeaderListing progress={12 / 14}>
         <ListingCarHeader />
       </HeaderListing>
-      <View className="flex-1 px-[16px] justify-between  bg-[#fff] h-[100%] ">
+      <View className="flex-1 px-[16px] justify-between bg-[#fff] h-[100%]">
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss();
           }}
-          className="flex-1">
+          className="flex-1"
+        >
           <View
-            className="flex bg-[#fff] justify-between h-[80%] "
-            style={{ paddingTop: 30, paddingBottom: 60 }}>
+            className="flex bg-[#fff] justify-between h-[80%]"
+            style={{ paddingTop: 30, paddingBottom: 60 }}
+          >
             <View className="flex-1 gap-[30px]">
               <View className="flex items-start gap-[12px]">
                 <ThemedText
                   className="text-[#101828] text-[20px]"
-                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                  Hybrid | Helectric
+                  style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+                >
+                  {t("screens.hybrid.title")}
                 </ThemedText>
                 <ThemedText
                   className="text-[#344054] text-[16px]"
-                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  What is the type of your car
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  {t("screens.hybrid.subtitle")}
                 </ThemedText>
               </View>
               {isKeyboardVisible ? (
@@ -102,33 +109,34 @@ export default function IsHelectric() {
                   />
                   <ThemedText
                     className="text-[#344054] text-[16px]"
-                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                    is Helectric ?
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                  >
+                    {t("screens.hybrid.helectric")}
                   </ThemedText>
                 </View>
                 <View className="flex flex-row gap-[8px] items-center">
                   <MyCheckbox setHelectric={setHybrid} Helectric={isHybrid} />
                   <ThemedText
                     className="text-[#344054] text-[16px]"
-                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                    is Hybrid ?
+                    style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                  >
+                    {t("screens.hybrid.hybrid")}
                   </ThemedText>
                 </View>
               </View>
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <View
-          style={{
-            paddingBottom: 40,
-          }}>
+        <View style={{ paddingBottom: 40 }}>
           <TouchableOpacity
             onPress={handleBrandSelect}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Continue
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.hybrid.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>

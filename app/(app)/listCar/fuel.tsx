@@ -11,8 +11,10 @@ import ListingCarHeader from "@/components/ListingCarHeader";
 import { loadFuelTypes } from "@/utils/fuelTypesRequest";
 import { useQuery } from "@tanstack/react-query";
 import { useProduct } from "@/context/carContext";
+import { useTranslation } from "react-i18next";
 
 export default function Fuel() {
+  const { t } = useTranslation();
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
 
   const { updateProductData, productData } = useProduct();
@@ -37,7 +39,7 @@ export default function Fuel() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
+        className="flex px-[16px] bg-[#fff] justify-between h-[90%]"
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
         <View className="flex items-start gap-[12px]">
@@ -45,13 +47,13 @@ export default function Fuel() {
             className="text-[#101828] text-[20px]"
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
-            Fuel Type
+            {t("screens.fuelType.title")}
           </ThemedText>
           <ThemedText
             className="text-[#344054] text-[16px]"
             style={{ fontFamily: "SpaceGrotesk_500Medium" }}
           >
-            Select the fuel type of your car
+            {t("screens.fuelType.subtitle")}
           </ThemedText>
         </View>
         <Image
@@ -101,7 +103,7 @@ export default function Fuel() {
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Continue
+              {t("screens.fuelType.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>

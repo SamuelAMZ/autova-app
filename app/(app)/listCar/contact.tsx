@@ -7,8 +7,10 @@ import HeaderListing from "@/components/HeaderListing";
 import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
 import { useProduct } from "@/context/carContext";
+import { useTranslation } from "react-i18next";
 
 export default function Contact() {
+  const { t } = useTranslation();
   const { updateProductData, productData } = useProduct();
 
   console.log(productData);
@@ -19,19 +21,22 @@ export default function Contact() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30 }}>
-        <ScrollView className="w-full px-[16px] ">
+        className="flex bg-[#fff] justify-between h-[90%]"
+        style={{ paddingTop: 30 }}
+      >
+        <ScrollView className="w-full px-[16px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Contact Details
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.contact.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[15px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              How you would like to contact the customer?
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
+              {t("screens.contact.subtitle")}
             </ThemedText>
           </View>
 
@@ -39,25 +44,29 @@ export default function Contact() {
             <View className="flex gap-[12px]">
               <ThemedText
                 className="text-[15px] text-[#667085]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                Name
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
+                {t("screens.contact.nameLabel")}
               </ThemedText>
               <ThemedText
                 className="text-[#101828] text-[17px]"
-                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                Omer Hassan
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+              >
+                {t("screens.contact.name")}
               </ThemedText>
             </View>
             <View className="flex gap-[12px]">
               <ThemedText
                 className="text-[15px] text-[#667085]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                Email
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
+                {t("screens.contact.emailLabel")}
               </ThemedText>
               <ThemedText
                 className="text-[#101828] text-[17px]"
-                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                omar@carnextplus.com
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+              >
+                {t("screens.contact.email")}
               </ThemedText>
             </View>
           </View>
@@ -70,8 +79,9 @@ export default function Contact() {
               />
               <ThemedText
                 className="text-[16px] font-[600] text-center"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                Enter WhatsApp number
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
+                {t("screens.contact.whatsapp")}
               </ThemedText>
             </TouchableOpacity>
             <TouchableOpacity className="border border-[#D8DADC] p-[20px] flex-row items-center justify-start gap-[12px] rounded-[12px]">
@@ -81,8 +91,9 @@ export default function Contact() {
               />
               <ThemedText
                 className="text-[16px] font-[600]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                Enter Telegram number
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
+                {t("screens.contact.telegram")}
               </ThemedText>
             </TouchableOpacity>
             <TouchableOpacity className="border border-[#D8DADC] p-[20px] flex-row items-center justify-start gap-[12px] rounded-[12px]">
@@ -92,8 +103,9 @@ export default function Contact() {
               />
               <ThemedText
                 className="text-[16px] font-[600]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                Enter phone number
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
+                {t("screens.contact.phone")}
               </ThemedText>
             </TouchableOpacity>
           </View>
@@ -101,22 +113,26 @@ export default function Contact() {
         <View className="flex gap-[19px] px-[16px]">
           <TouchableOpacity
             onPress={() => {}}
-            className={`bg-[#7878801F] border border-[${Colors.background}] px-[20px] py-[12px] rounded-[12px] w-[100%] `}>
+            className={`bg-[#7878801F] border border-[${Colors.background}] px-[20px] py-[12px] rounded-[12px] w-[100%]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.background}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Review
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.contact.review")}
             </ThemedText>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               router.navigate("./submitted");
             }}
-            className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px] w-[100%] mb-[80px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px] w-[100%] mb-[80px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Continue
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.contact.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>

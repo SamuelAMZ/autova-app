@@ -202,6 +202,171 @@
         "placeholder": "Phone number",
         "continueBtn": "Continue"
       }
+    },
+    "settings": {
+      "title": "Settings",
+      "security": "Security",
+      "changePhoneNumber": {
+        "title": "Change phone number",
+        "placeholder": "Enter new phone number",
+        "buttonText": "Update"
+      },
+      "changePasscode": {
+        "title": "Change Passcode",
+        "oldPassCodePlaceholder": "Old Password",
+        "newPassCodePlaceholder": "New Password",
+        "ConfirmPassCodePlaceholder": "Confirm Password",
+        "passwordWarnings": "* Your password should be minimum 8 characters.",
+        "buttonText": "Change"
+      },
+      "changeLanguage": {
+        "title": "Change Language"
+      },
+      "deleteAccount": "Delete account",
+      "version": "1.0.1",
+      "logout": {
+        "title": "Log Out",
+        "confirmText": "Are you sure you want to Logout?",
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "condition": {
+      "title": "Condition",
+      "subtitle": "What is the condition of your car?",
+      "options": {
+        "new": {
+          "title": "New",
+          "description": "Select if your car is unregistered and brand new."
+        },
+        "used": {
+          "title": "Used",
+          "description": "Select if your car has been used before."
+        },
+        "reconditioned": {
+          "title": "Reconditioned",
+          "description": "Select if your car is used but currently unregistered."
+        }
+      },
+      "continueButton": "Continue"
+    },
+    "brand": {
+      "title": "Brand",
+      "subtitle": "Select a brand for your car",
+      "searchPlaceholder": "Search a brand",
+      "popularBrand": "Popular Brand",
+      "continueButton": "Continue"
+    },
+    "model": {
+      "title": "Model",
+      "subtitle": "Select the model for your car",
+      "searchPlaceholder": "Search a model",
+      "allModels": "All Models",
+      "continue": "Continue"
+    },
+    "title": {
+      "title": "Title",
+      "subtitle": "Select the title for your car",
+      "searchPlaceholder": "Search a title",
+      "allTitles": "All Titles",
+      "continue": "Continue"
+    },
+    "year": {
+      "title": "Production Year",
+      "subtitle": "Select the year of production for your car",
+      "continue": "Continue"
+    },
+    "odometer": {
+      "title": "Odometer",
+      "subtitle": "Enter the odometer of your car",
+      "placeholder": "Enter odometer",
+      "unit": "KM",
+      "continue": "Continue"
+    },
+    "engine": {
+      "title": "Engine",
+      "subtitle": "Enter the engine capacity of your car",
+      "continue": "Continue"
+    },
+    "fuelType": {
+      "title": "Fuel Type",
+      "subtitle": "Select the fuel type of your car",
+      "continue": "Continue"
+    },
+    "transmission": {
+      "title": "Transmission",
+      "subtitle": "Enter the transmission type of your car",
+      "continue": "Continue"
+    },
+    "cylinders": {
+      "title": "Cylinder",
+      "subtitle": "Enter the cylinder of your car",
+      "placeholder": "Enter mileage",
+      "continue": "Continue"
+    },
+    "color": {
+      "title": "Color",
+      "subtitle": "Select a color for your car",
+      "placeholder": "Search a color",
+      "popular": "Popular Color",
+      "continue": "Continue"
+    },
+    "city": {
+      "title": "City",
+      "subtitle": "Select a city for your car",
+      "placeholder": "Search a city",
+      "cities": "Cities",
+      "continue": "Continue"
+    },
+    "doors": {
+      "title": "Doors",
+      "subtitle": "How many doors does your car have",
+      "continue": "Continue"
+    },
+    "price": {
+      "title": "Price",
+      "subtitle": "What is the price of your car",
+      "placeholder": "1000",
+      "negotiable": "Negotiable",
+      "continue": "Continue"
+    },
+    "description": {
+      "title": "Description",
+      "subtitle": "Enter a description for your car",
+      "continue": "Continue",
+      "placeholder": "Enter description"
+    },
+    "hybrid": {
+      "title": "Hybrid | Electric",
+      "subtitle": "What is the type of your car",
+      "helectric": "Is Electric?",
+      "hybrid": "Is Hybrid?",
+      "continue": "Continue"
+    },
+    "upload": {
+      "title": "Image/Video",
+      "subtitle": "Upload the Image/Videos of your car",
+      "clickToUpload": "Click to upload",
+      "fileTypes": "MP4, PNG, JPG or GIF (max. 100 mb)",
+      "continue": "Continue"
+    },
+    "contact": {
+      "title": "Contact Details",
+      "subtitle": "How you would like to contact the customer?",
+      "nameLabel": "Name",
+      "name": "Omer Hassan",
+      "emailLabel": "Email",
+      "email": "omar@carnextplus.com",
+      "whatsapp": "Enter WhatsApp number",
+      "telegram": "Enter Telegram number",
+      "phone": "Enter phone number",
+      "review": "Review",
+      "continue": "Continue"
+    },
+    "submitted": {
+      "title": "Listing Submitted for Review!",
+      "message": "Thank you for submitting your listing! We’re currently reviewing it, and you’ll be notified as soon as it’s approved.",
+      "returnHome": "Return Home"
     }
   },
 

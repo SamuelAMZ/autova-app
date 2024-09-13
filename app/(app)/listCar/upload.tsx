@@ -19,15 +19,16 @@ import * as ImagePicker from "expo-image-picker";
 import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
 import Toast from "react-native-toast-message";
 import { useProduct } from "@/context/carContext";
+import { useTranslation } from "react-i18next";
 
 export default function Upload() {
   //
+  const { t } = useTranslation();
   const [images, setImages] = useState<string[]>([]);
 
   const { updateProductData, productData } = useProduct();
 
   const handleBrandSelect = () => {
-    
     updateProductData({ imagesUrls: images });
     router.navigate("./contact");
   };
@@ -82,7 +83,7 @@ export default function Upload() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff]"
+        className="flex px-[16px] bg-[#fff]"
         style={{ paddingVertical: 30 }}
       >
         <View className="flex pb-[80px]">
@@ -91,13 +92,13 @@ export default function Upload() {
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Image/Video
+              {t("screens.upload.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
-              Upload the Image/Videos of your car
+              {t("screens.upload.subtitle")}
             </ThemedText>
           </View>
 
@@ -112,13 +113,13 @@ export default function Upload() {
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               className={`text-[${Colors.background}] mt-3`}
             >
-              Click to upload
+              {t("screens.upload.clickToUpload")}
             </ThemedText>
             <ThemedText
               className="mt-2 text-[#1E293B]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
-              MP4, PNG, JPG or GIF (max. 100 mb)
+              {t("screens.upload.fileTypes")}
             </ThemedText>
           </TouchableOpacity>
 
@@ -142,7 +143,7 @@ export default function Upload() {
                         />
                         <TouchableOpacity
                           onPress={() => handleRemoveImage(item.index)}
-                          className="absolute top-1 right-1 "
+                          className="absolute top-1 right-1"
                         >
                           <MinusCirlce color="red" variant="Bold" size={20} />
                         </TouchableOpacity>
@@ -155,11 +156,7 @@ export default function Upload() {
             />
           </View>
 
-          <View
-            style={{
-              paddingBottom: 20,
-            }}
-          >
+          <View style={{ paddingBottom: 20 }}>
             <TouchableOpacity
               onPress={handleBrandSelect}
               className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
@@ -168,7 +165,7 @@ export default function Upload() {
                 className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
                 style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
               >
-                Continue
+                {t("screens.upload.continue")}
               </ThemedText>
             </TouchableOpacity>
           </View>

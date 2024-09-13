@@ -29,8 +29,10 @@ import { useSession } from "@/context/authContext";
 import { changePass } from "@/utils/auth";
 import { toastify } from "@/constants/utils";
 import Toast from "react-native-toast-message";
+import { useTranslation } from "react-i18next";
 
 export default function Settings() {
+  const { t } = useTranslation();
   const { signOut } = useSession();
   useStatusBar("dark", "#fff", false);
   const [isLogout, setIsLogout] = useState(false);
@@ -174,19 +176,21 @@ export default function Settings() {
         <View className="flex flex-col gap-[1.25rem]">
           <ThemedText
             className="text-[1.25rem]  text-[#101828]"
-            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-            Security
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+          >
+            {t("screens.settings.title")}
           </ThemedText>
           <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
             <TouchableOpacity onPress={handlePhoneNumberChange}>
               <View className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}>
+                    className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}
+                  >
                     <ArrangeHorizontal size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
-                    Change phone number
+                    {t("screens.settings.changePhoneNumber.title")}
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
@@ -194,14 +198,15 @@ export default function Settings() {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handlePasscodeChange}
-              className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+              className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center"
+            >
               <View className="flex items-center flex-row gap-[0.5rem]">
                 <Image
                   source={require("@/assets/code.png")}
                   style={{ width: 30, height: 30 }}
                 />
                 <ThemedText className="text-[#1D2939] text-[14px] capitalize">
-                  Change Passcode
+                  {t("screens.settings.changePasscode.title")}
                 </ThemedText>
               </View>
               <ArrowRight2 size="24" color="#667085" />
@@ -210,11 +215,12 @@ export default function Settings() {
               <View className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+                    className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+                  >
                     <ArrangeHorizontal size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
-                    Change langage
+                    {t("screens.settings.changeLanguage.title")}
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
@@ -224,11 +230,12 @@ export default function Settings() {
               <View className=" border-t border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                 <View className="flex items-center flex-row gap-[0.5rem]">
                   <TouchableOpacity
-                    className={`justify-center items-center w-[30] h-[30] bg-[red] rounded-3xl`}>
+                    className={`justify-center items-center w-[30] h-[30] bg-[red] rounded-3xl`}
+                  >
                     <Trash size="18" color={Colors.textPrimary} />
                   </TouchableOpacity>
                   <ThemedText className="text-[#1D2939] text-[14px] capitalize">
-                    Delete account
+                    {t("screens.settings.deleteAccount")}
                   </ThemedText>
                 </View>
                 <ArrowRight2 size="24" color="#667085" />
@@ -242,20 +249,23 @@ export default function Settings() {
           isVisible={changeLangageModalVisible}
           onClose={closeModal}
           snapPoints={snapPointLangage}
-          index={Platform.OS === "ios" ? 1 : 1}>
+          index={Platform.OS === "ios" ? 1 : 1}
+        >
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}
-            className="w-full px-[4%] ">
+            className="w-full px-[4%] "
+          >
             <View className="pt-[1rem] flex-row justify-between items-center w-full">
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
-                className="text-[20px] text-[#000000]">
-                Change Langage
+                className="text-[20px] text-[#000000]"
+              >
+                {t("screens.settings.changeLanguage.title")}
               </ThemedText>
               <TouchableOpacity onPress={closeModal}>
                 <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
@@ -269,7 +279,8 @@ export default function Settings() {
                 <TouchableOpacity
                   key={item.name}
                   onPress={() => handleSelect(item.name)}
-                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
+                  className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
+                >
                   <View className="flex flex-row gap-[12px] items-center">
                     <Image
                       source={item.image}
@@ -305,20 +316,23 @@ export default function Settings() {
               : Platform.OS === "android"
               ? 1
               : 0
-          }>
+          }
+        >
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}
-            className="w-full px-[4%] ">
+            className="w-full px-[4%] "
+          >
             <View className="pt-[1rem] flex-row justify-between items-center w-full">
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
-                className="text-[20px] text-[#000000]">
-                Change phone number
+                className="text-[20px] text-[#000000]"
+              >
+                {t("screens.settings.changePhoneNumber.title")}
               </ThemedText>
               <TouchableOpacity onPress={closeModal}>
                 <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
@@ -330,7 +344,9 @@ export default function Settings() {
             <View className="flex justify-center gap-[26px] pt-[36px] w-full">
               <View className="flex gap-4 w-full">
                 <TextInput
-                  placeholder="Enter new phone number"
+                  placeholder={t(
+                    "screens.settings.changePhoneNumber.placeholder"
+                  )}
                   keyboardType="numeric"
                   placeholderTextColor={Colors.textSecondary}
                   className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
@@ -342,7 +358,7 @@ export default function Settings() {
                   }}
                 />
                 <CustomButton
-                  title="Update"
+                  title={t("screens.settings.changePhoneNumber.buttonText")}
                   textColor={Colors.textPrimary}
                   onPress={() => {}}
                 />
@@ -363,20 +379,23 @@ export default function Settings() {
               : Platform.OS === "android"
               ? 1
               : 0
-          }>
+          }
+        >
           <View
             style={{
               flex: 1,
               alignItems: "center",
             }}
-            className="w-full px-[4%] ">
+            className="w-full px-[4%] "
+          >
             <View className="pt-[1rem] flex-row justify-between items-center w-full">
               <ThemedText
                 style={{
                   fontFamily: "SpaceGrotesk_600SemiBold",
                 }}
-                className="text-[20px] text-[#000000]">
-                Change Passcode
+                className="text-[20px] text-[#000000]"
+              >
+                {t("screens.settings.changePasscode.title")}
               </ThemedText>
               <TouchableOpacity onPress={closeModal}>
                 <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
@@ -389,7 +408,9 @@ export default function Settings() {
               <View className="flex gap-4 w-full">
                 <View>
                   <TextInput
-                    placeholder="Old Password"
+                    placeholder={t(
+                      "screens.settings.changePasscode.oldPassCodePlaceholder"
+                    )}
                     placeholderTextColor={Colors.textSecondary}
                     className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
                     onPressIn={() => {
@@ -413,7 +434,9 @@ export default function Settings() {
                 </View>
                 <View>
                   <TextInput
-                    placeholder="New Password"
+                    placeholder={t(
+                      "screens.settings.changePasscode.newPassCodePlaceholder"
+                    )}
                     placeholderTextColor={Colors.textSecondary}
                     className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
                     onPressIn={() => {
@@ -438,7 +461,9 @@ export default function Settings() {
 
                 <View>
                   <TextInput
-                    placeholder="Confirm Password"
+                    placeholder={t(
+                      "screens.settings.changePasscode.ConfirmPassCodePlaceholder"
+                    )}
                     placeholderTextColor={Colors.textSecondary}
                     className={`bg-[${Colors.backgroundSecondary}] rounded-[12px] py-[16px] px-[20px]`}
                     onPressIn={() => {
@@ -464,11 +489,12 @@ export default function Settings() {
                 </View>
 
                 <ThemedText
-                  className={`text-[${Colors.textSecondary}] text-[14px]`}>
-                  * Your password should be minimum 8 characters.
+                  className={`text-[${Colors.textSecondary}] text-[14px]`}
+                >
+                  {t("screens.settings.changePasscode.passwordWarnings")}
                 </ThemedText>
                 <CustomButton
-                  title="Change"
+                  title={t("screens.settings.changePasscode.buttonText")}
                   isLoading={loading}
                   textColor={Colors.textPrimary}
                   onPress={handleChangePass}
@@ -480,11 +506,13 @@ export default function Settings() {
         </CustomBottomSheetModal>
         <TouchableOpacity
           onPress={handleLogout}
-          className="border border-[#FF4747]  rounded-[50px] flex items-center">
+          className="border border-[#FF4747]  rounded-[50px] flex items-center"
+        >
           <ThemedText
             className="text-[1rem] text-[#FF4747] py-[1rem]"
-            style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-            Log Out
+            style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+          >
+            {t("screens.settings.logout.title")}
           </ThemedText>
         </TouchableOpacity>
       </View>
@@ -498,6 +526,7 @@ export default function Settings() {
 }
 
 function CustomHeader() {
+  const { t } = useTranslation();
   return (
     <>
       <HeaderSetting>
@@ -505,14 +534,16 @@ function CustomHeader() {
           <Pressable
             onPress={() => {
               router.back();
-            }}>
+            }}
+          >
             <ArrowLeft size="24" color="#101828" />
           </Pressable>
 
           <ThemedText
             className="text-[#101828] text-[24px]"
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-            Settings
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+          >
+            {t("screens.settings.title")}
           </ThemedText>
           <InfoCircle size="24" color="#101828" />
         </View>

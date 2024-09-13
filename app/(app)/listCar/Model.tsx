@@ -17,8 +17,10 @@ import ListingCarHeader from "@/components/ListingCarHeader";
 import { loadModels } from "@/utils/modelsRequest";
 import { useQuery } from "@tanstack/react-query";
 import { useProduct } from "@/context/carContext";
+import { useTranslation } from "react-i18next";
 
 export default function Model() {
+  const { t } = useTranslation();
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
@@ -64,37 +66,37 @@ export default function Model() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex   bg-[#fff] justify-between h-[90%] "
+        className="flex bg-[#fff] justify-between h-[90%]"
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
         <ScrollView className="flex pb-[80px] relative px-[16px]">
-          <View className="flex items-start gap-[12px] mb-[30px] ">
+          <View className="flex items-start gap-[12px] mb-[30px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Model
+              {t("screens.model.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
-              Select the model for your car
+              {t("screens.model.subtitle")}
             </ThemedText>
           </View>
           <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : null}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{ flex: 1 }}
             keyboardVerticalOffset={110}
           >
-            <View className="relative flex-1 flex-row  items-center justify-between bg-[#7878801F] border border-[#D0D5DD]  pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
+            <View className="relative flex-1 flex-row items-center justify-between bg-[#7878801F] border border-[#D0D5DD] pl-[20px] pr-[12px] rounded-[12px] mb-[30px]">
               <TextInput
-                className=" w-full py-[13px]"
-                placeholder="Search a model"
+                className="w-full py-[13px]"
+                placeholder={t("screens.model.searchPlaceholder")}
                 placeholderTextColor="#1D2939"
                 onChangeText={(text) => setSearch(text)}
               />
-              <View style={{ position: "absolute", top: 0, right: 13 }}>
+              <View style={{ position: "absolute", right: 15, top: 10 }}>
                 <SearchNormal1 size="20" color="#000" />
               </View>
             </View>
@@ -102,10 +104,10 @@ export default function Model() {
 
           <View className="flex gap-[20px]">
             <ThemedText
-              className="text-[17px]  font-[600] text-[#101828]"
+              className="text-[17px] font-[600] text-[#101828]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              All Model
+              {t("screens.model.allModels")}
             </ThemedText>
 
             <View className="">
@@ -146,7 +148,7 @@ export default function Model() {
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Continue
+              {t("screens.model.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>

@@ -14,8 +14,9 @@ import Colors from "@/constants/Colors";
 import ListingCarHeader from "@/components/ListingCarHeader";
 import { useKeyboardState } from "@/hooks/useKeyboardState";
 import { useProduct } from "@/context/carContext";
-
+import { useTranslation } from "react-i18next";
 export default function Description() {
+  const { t } = useTranslation();
   const [text, setText] = useState("");
   const { isKeyboardVisible } = useKeyboardState();
 
@@ -23,7 +24,7 @@ export default function Description() {
 
   const handleBrandSelect = () => {
     updateProductData({ note: text });
-    router.navigate('/(app)/listCar/isHelectric')
+    router.navigate("/(app)/listCar/isHelectric");
   };
 
   return (
@@ -32,7 +33,7 @@ export default function Description() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
+        className="flex px-[16px] bg-[#fff] justify-between h-[90%]"
         style={{ paddingTop: 30, paddingBottom: 60 }}
       >
         <View className="flex-1 gap-[30px]">
@@ -41,13 +42,13 @@ export default function Description() {
               className="text-[#101828] text-[20px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Description
+              {t("screens.description.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
               style={{ fontFamily: "SpaceGrotesk_500Medium" }}
             >
-              Enter a description for your car
+              {t("screens.description.subtitle")}
             </ThemedText>
           </View>
 
@@ -80,7 +81,7 @@ export default function Description() {
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Continue
+              {t("screens.description.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>
@@ -90,6 +91,7 @@ export default function Description() {
 }
 
 const TextArea = ({ text, setText }: { text: string; setText: any }) => {
+  const { t } = useTranslation();
   const maxLength = 150;
   const [charCount, setCharCount] = useState(text.length);
 
@@ -108,7 +110,7 @@ const TextArea = ({ text, setText }: { text: string; setText: any }) => {
         numberOfLines={3}
         onChangeText={handleTextChange}
         value={text}
-        placeholder="Enter description"
+        placeholder={t("screens.description.placeholder")}
         placeholderTextColor="#475467"
         blurOnSubmit={true}
         onSubmitEditing={Keyboard.dismiss}

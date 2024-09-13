@@ -18,8 +18,10 @@ import { useProduct } from "@/context/carContext";
 import { useQuery } from "react-query";
 import { loadEngineTypes } from "@/utils/engineTypesRequest";
 import { AntDesign } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 export default function Engine() {
+  const { t } = useTranslation();
   const [selectedDegree, setSelectedDegree] = useState<string | null>(null);
   const { isKeyboardVisible } = useKeyboardState();
   const [engine, setEngine] = useState("");
@@ -46,19 +48,22 @@ export default function Engine() {
         <ListingCarHeader />
       </HeaderListing>
       <View
-        className="flex px-[16px]  bg-[#fff] justify-between h-[90%] "
-        style={{ paddingTop: 30, paddingBottom: 60 }}>
+        className="flex px-[16px] bg-[#fff] justify-between h-[90%]"
+        style={{ paddingTop: 30, paddingBottom: 60 }}
+      >
         <View className="flex-1 gap-[30px]">
           <View className="flex items-start gap-[12px]">
             <ThemedText
               className="text-[#101828] text-[20px]"
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Engine
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.engine.title")}
             </ThemedText>
             <ThemedText
               className="text-[#344054] text-[16px]"
-              style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-              Enter the engine capacity of your car
+              style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+            >
+              {t("screens.engine.subtitle")}
             </ThemedText>
           </View>
 
@@ -82,7 +87,8 @@ export default function Engine() {
                   <TouchableOpacity
                     key={item.name}
                     onPress={() => handleSelect(item.name)}
-                    className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between">
+                    className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
+                  >
                     <ThemedText className="py-[16px] text-[#101828] text-[14px]">
                       {item.name}
                     </ThemedText>
@@ -103,14 +109,17 @@ export default function Engine() {
         <View
           style={{
             paddingBottom: 20,
-          }}>
+          }}
+        >
           <TouchableOpacity
             onPress={handleBrandSelect}
-            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}>
+            className={`bg-[${Colors.background}] px-[20px] py-[14px] rounded-[12px] w-[100%] mt-[30px]`}
+          >
             <ThemedText
               className={`text-[17px] text-center font-[600] text-[${Colors.textPrimary}]`}
-              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Continue
+              style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+            >
+              {t("screens.engine.continue")}
             </ThemedText>
           </TouchableOpacity>
         </View>
