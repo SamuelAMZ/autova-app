@@ -69,7 +69,7 @@ export default function CarItem({
     }
   };
 
-  console.log(car, "car");
+  // console.log(car, "car");
 
   return (
     <TouchableOpacity className={`${className}`} onPress={() => onPress()}>

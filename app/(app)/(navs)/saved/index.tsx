@@ -93,7 +93,7 @@ const CollectionDetails = () => {
     setIsSelectAllCheked(checked);
   };
 
-  console.log(selectedItems, "selectedItems", isSelectAllCheked);
+  // console.log(selectedItems, "selectedItems", isSelectAllCheked);
 
   // Handles removing an item by index
   const handleRemoveItem = async (idx?: number) => {

@@ -193,7 +193,6 @@ export default function MyListing() {
             <TextInput
               value={searchInputValue}
               onChangeText={(value) => {
-                console.log(value);
                 setSearchInputValue(value);
                 handleSearchValueChange(value);
               }}

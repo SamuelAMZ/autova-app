@@ -102,7 +102,6 @@ const CarSearchScreen = () => {
 
   useEffect(() => {
     if (initialized) {
-      console.log(filterData);
       refetchListing();
     }
   }, [initialized]);
@@ -256,7 +255,6 @@ const CarSearchScreen = () => {
               className="px-[4%]"
               data={listingQuery}
               renderItem={({ item }: { item: Car }) => {
-                console.log(item._id);
                 return (
                   <CarItem
                     car={item}
