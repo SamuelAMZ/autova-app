@@ -1,6 +1,5 @@
 import {
   View,
-  ScrollView,
   FlatList,
   TouchableOpacity,
   Platform,
@@ -13,7 +12,7 @@ import ThemedText from "@/components/ThemedText";
 
 import CarItem from "@/components/cars/CarItem";
 import Colors from "@/constants/Colors";
-import { filterCars, loadCars } from "@/utils/carRequest";
+import { filterCars } from "@/utils/carRequest";
 import { useQuery } from "@tanstack/react-query";
 import { getSavedCar } from "@/utils/carRequest";
 import { initialFilterData } from "@/constants";

@@ -1,0 +1,272 @@
+{
+  "language": "English",
+  "screens": {
+    "notFound": {
+      "title": "Oops!",
+      "text": {
+        "screenNotFound": "This screen doesn't exist.",
+        "goToHomeScreen": "Go to home screen!"
+      }
+    },
+    "account": {
+      "title": "Create Your Account",
+      "step": "Step 2 of 2",
+      "text": {
+        "registeringWith": "You are registering with",
+        "wantToChange": "Want to change?",
+        "clickHere": "Click here",
+        "passwordPlaceholder": "Password",
+        "passwordRequirements": "* Your password should be minimum 8 characters.",
+        "createAccountButton": "Create account",
+        "duplicationError": "Duplication error",
+        "accountExists": "Account already exists",
+        "errorWhileCreating": "Error while creating account. Try again",
+        "invalidData": "Invalid data",
+        "fillAllFields": "Fill all fields",
+        "oops": "Ouppss!!"
+      }
+    },
+    "signup": {
+      "title": "Create Your Account",
+      "step": "Step 1 of 2",
+      "text": {
+        "phoneNumber": "Phone number",
+        "continueButton": "Continue"
+      }
+    },
+    "verify": {
+      "title": "We just sent you a code",
+      "text": {
+        "codeSent": "Code sent to ",
+        "unlessAccount": "unless you already have an account",
+        "resendCode": "Resend code",
+        "confirmButton": "Confirm",
+        "backToLogin": "Back to login"
+      }
+    },
+    "notification": {
+      "title": "Never Miss a Deal!",
+      "text": {
+        "enableNotif": "Enable notifications to stay informed about new car listings, special offers, and important updates!",
+        "enableButton": "Enable notifications",
+        "skipButton": "Skip for now"
+      }
+    },
+    "authIndex": {
+      "text": {
+        "verifiedCars": "Verified cars, trusted history, and authentic users—all from your local area.",
+        "createAccountButton": "Create an account",
+        "alreadyHaveAccountButton": "I already have an account"
+      }
+    },
+    "carSearch": {
+      "title": "Search results",
+      "text": {
+        "searchPlaceholder": "Search..."
+      }
+    },
+    "listingScreen": {
+      "title": "Listing",
+      "text": {
+        "searchPlaceholder": "Search..."
+      }
+    },
+
+    "collectionDetails": {
+      "header": {
+        "title": "Used Cars",
+        "backButton": "Back",
+        "deleteButton": "Delete",
+        "moreButton": "More",
+        "modal": {
+          "renamePress": "Rename",
+          "deletePress": "Delete"
+        }
+      },
+      "actions": {
+        "selectAll": "Select all items",
+        "removeItem": "Remove item",
+        "okButton": "OK",
+        "cancelButton": "Cancel",
+        "footer": {
+          "android": "40px height footer",
+          "ios": "60px height footer"
+        }
+      },
+      "modals": {
+        "deleteModal": {
+          "icon": "Trash icon",
+          "title": "You are about to remove this item",
+          "message": "This will remove your product from save. Are you sure?",
+          "rightText": "Delete"
+        },
+        "renameModal": {
+          "title": "Change collection folder name",
+          "previousName": "Previous name was 'Used car'. Type a different name you want to use.",
+          "placeholder": "Collection name",
+          "rightText": "Change"
+        }
+      },
+      "swipeToRemove": {
+        "onRemove": "Delete",
+        "onLongPress": "Select item",
+        "activeIndicator": "Selected"
+      },
+      "checkBox": {
+        "isChecked": "Checked",
+        "isUnchecked": "Unchecked"
+      },
+      "righAction": {
+        "text": "Remove"
+      }
+    },
+
+    "savedCars": {
+      "header": {
+        "title": "Saved"
+      },
+      "savedCarsUI": {
+        "title": "Saved Cars",
+        "selectAllItems": "Select all items",
+        "odometer": "miles",
+        "noCarFound": {
+          "title": "No car found",
+          "retry": "Retry"
+        },
+        "removeItem": {
+          "confirm": "You are about to remove this item",
+          "warning": "This will remove your product from save. Are you sure?",
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "righAction": {
+        "title": "Remove"
+      }
+    },
+    "carDetail": {
+      "textLoading": "Loading",
+      "textContactSeller": "Contact Seller",
+      "textDetails": "Details",
+      "textSpecifications": "Specifications",
+      "contactDealer": {
+        "header": {
+          "title": "Contact Dealer",
+          "closeButton": "Close"
+        },
+        "contactOptions": {
+          "prompt": "How would you like to contact the dealer?",
+          "whatsapp": {
+            "label": "Continue via WhatsApp",
+            "icon": "WhatsApp icon"
+          },
+          "telegram": {
+            "label": "Continue via Telegram",
+            "icon": "Telegram icon"
+          },
+          "phoneCall": {
+            "label": "Contact via phone call",
+            "icon": "Phone call icon"
+          }
+        },
+        "privacyNotice": "* Keep your communication private. Avoid sharing sensitive information with the seller."
+      }
+    },
+    "navsAccount": {
+      "title": "Account",
+      "settings": "Settings",
+      "contactInfo": {
+        "title": "Contact info",
+        "phone": "Phone number",
+        "whatsapp": "Whatsapp number"
+      },
+      "aboutAutova": {
+        "title": "About Autova",
+        "aboutUs": "About us",
+        "termsOfService": "Terms of service",
+        "privacyPolicy": "Privacy Policy",
+        "listingCar": "Listing car"
+      },
+      "section": {
+        "title": "Section",
+        "contactUs": "Contact us",
+        "inviteFriend": "Invite a Friend"
+      },
+      "enjoyingApp": {
+        "title": "Enjoying Carnext+ App?",
+        "referFriend": "Refer a friend"
+      },
+      "loginToUse": "Login to use Autova",
+      "createAccount": {
+        "title": "Create account",
+        "placeholder": "Phone number",
+        "continueBtn": "Continue"
+      }
+    }
+  },
+
+  "components": {
+    "tabBar": {
+      "home": "Home",
+      "listing": "Listing",
+      "saved": "Saved",
+      "account": "Account"
+    },
+    "noCarFound": {
+      "title": "No car found",
+      "retry": "Retry"
+    },
+
+    "filterSearch": {
+      "title": "Filter Search",
+      "makeModel": "Make & Model",
+      "priceRange": "Price Range",
+      "engineTypeTransmission": "Engine Type & Transmission",
+      "searchButton": "Search",
+      "resetButton": "Reset",
+      "makeSelectUI": {
+        "title": "Make",
+        "selectMake": "Select Make",
+        "model": "Model",
+        "selectModel": "Select Model",
+        "clearFilter": "Clear Filter"
+      },
+
+      "engineTypeUI": {
+        "title": "Engine Type",
+        "selectType": "Select Type"
+      },
+      "transmissionUI": {
+        "title": "Transmission",
+        "selectType": "Select Item"
+      },
+      "bottomSheet": {
+        "title": "Choose item"
+      }
+    },
+    "searchCarsBy": {
+      "title": "Search cars by",
+      "buttonTitle": "Search",
+      "makeModel": "Make & Model",
+      "priceRange": "Price Range",
+      "engineTypeTransmission": "Engine Type & Transmission",
+      "bottomSheet": {
+        "title": "Choose item"
+      }
+    },
+    "brands": {
+      "title": "Featured Dealers",
+      "viewAll": "View All",
+      "bottomSheet": {
+        "title": "Top Brands"
+      }
+    },
+    "carsList": {
+      "title": "Featured Dealers",
+      "viewAll": "View All",
+      "bottomSheet": {
+        "title": "List car"
+      }
+    }
+  }
+}

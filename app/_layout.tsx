@@ -43,6 +43,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { SessionProvider } from "@/context/authContext";
 import { UserProvider } from "@/context/userContext";
 import { ProductProvider } from "@/context/carContext";
+import "@/localization/i18n";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

@@ -4,10 +4,12 @@ import ThemedText from "../ThemedText";
 import { AntDesign } from "@expo/vector-icons";
 import { Chainlink, TickCircle } from "iconsax-react-native";
 import { searchTypesData } from "@/constants/searchTypes";
+import { useTranslation } from "react-i18next";
 
-export interface  SearchTypeProps {
+export interface SearchTypeProps {
   label: string;
   value: string;
+  translateKey: string;
 }
 
 interface SelectSearchTypeModalProps {
@@ -25,6 +27,7 @@ const SelectSearchTypeModal = ({
   selected,
   handleTypeChange,
 }: SelectSearchTypeModalProps) => {
+  const { t } = useTranslation();
   return (
     <CustomBottomSheetModal
       isVisible={isModalVisible}
@@ -34,7 +37,9 @@ const SelectSearchTypeModal = ({
     >
       <View className="w-full px-[4%]">
         <View className="p-3 flex-row justify-between items-center">
-          <ThemedText className="text-[18px]">Choose item</ThemedText>
+          <ThemedText className="text-[18px]">
+            {t("components.searchCarsBy.bottomSheet.title")}
+          </ThemedText>
           <TouchableOpacity onPress={handleCloseModal}>
             <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
               <AntDesign name="close" size={16} color="#3D3D3D" />
@@ -56,7 +61,7 @@ const SelectSearchTypeModal = ({
                     variant="Bold"
                   />
                   <ThemedText className="text-[#475467]">
-                    {item.item.label}
+                    {t(`components.searchCarsBy.${item.item.translateKey}`)}
                   </ThemedText>
                 </View>
                 {isSelected && <TickCircle color="#5856D6" />}

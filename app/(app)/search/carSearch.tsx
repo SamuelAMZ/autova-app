@@ -8,27 +8,22 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
+  KeyboardAvoidingView,
   ScrollView,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import Icon from "@expo/vector-icons/AntDesign";
 import CarItem from "@/components/cars/CarItem";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
-import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
 import Colors from "@/constants/Colors";
-import CustomButton from "@/components/CustomButton";
 import {
   defaultRangeHighValue,
   defaultRangeLowValue,
   initialFilterData,
 } from "@/constants";
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import { useQuery } from "@tanstack/react-query";
 import { filterCars, getSavedCar } from "@/utils/carRequest";
@@ -36,7 +31,8 @@ import Car from "@/models/car.model";
 import { CarItemSkeleton } from "@/components/skeleton/CarItemSkeleton";
 import { debounce } from "@/constants/utils";
 import NoCarFound from "@/components/cars/__NoCarFound";
-import OtherFilterSearch from "@/components/searchCard/OtherFilterSearch";
+import { useTranslation } from "react-i18next";
+import FiltersCarComponent from "@/components/cars/FiltersCar";
 
 const initialItemIsOpenData = {
   makeModel: true,
@@ -45,6 +41,7 @@ const initialItemIsOpenData = {
 };
 
 const CarSearchScreen = () => {
+  const { t } = useTranslation();
   const textIinputRef = useRef(null);
   const { searchData } = useLocalSearchParams();
   const [searchInputValue, setSearchInputValue] = useState<string>("");
@@ -203,7 +200,7 @@ const CarSearchScreen = () => {
             <ThemedText
               className={`text-[${Colors.textPrimary}] text-[20px] font-[600]`}
             >
-              Search results
+              {t("screens.carSearch.title")}
             </ThemedText>
           </View>
         </Header>
@@ -223,7 +220,7 @@ const CarSearchScreen = () => {
                   handleSearchValueChange(value);
                 }}
                 className="flex-1"
-                placeholder="Search..."
+                placeholder={t("screens.carSearch.text.searchPlaceholder")}
                 placeholderTextColor="#000"
                 ref={textIinputRef}
                 focusable={true}
@@ -293,90 +290,20 @@ const CarSearchScreen = () => {
           snapPoints={snapPoints}
           index={1}
         >
-          <View className="flex-1 w-full z-0">
-            <View className="py-5 px-[4%] flex-row justify-between items-center ">
-              <ThemedText
-                className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}
-              >
-                Filter Search
-              </ThemedText>
-              <TouchableOpacity onPress={handleCloseModal}>
-                <View
-                  className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}
-                >
-                  <AntDesign
-                    name="close"
-                    size={16}
-                    color={Colors.iconPrimary}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-            <BottomSheetScrollView
-              className={`pb-4 bg-[${Colors.backgroundQuaternary}]`}
-            >
-              <View
-                className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
-              >
-                <OpenCloseItem
-                  title="Make & Model"
-                  onPress={() => handleOpenItem("makeModel")}
-                />
-                {itemIsOpen.makeModel && (
-                  <MakeModelsSearch
-                    selectedModel={filterData.selectedModel}
-                    selectedMake={filterData.selectedMake}
-                    onChange={handleMakeModalChange}
-                  />
-                )}
-
-                {/* Price Range */}
-                <OpenCloseItem
-                  title="Price Range"
-                  onPress={() => handleOpenItem("priceRange")}
-                />
-                <View className="z-20">
-                  {itemIsOpen.priceRange && (
-                    <PriceRangeSearch
-                      style={{ zIndex: 30 }}
-                      rangeValue={filterData.rangeValue}
-                      onValueChange={handlePriceRangeChange}
-                    />
-                  )}
-                </View>
-
-                {/* E Type, Trans */}
-                <OpenCloseItem
-                  title="Engine Type & Transmission"
-                  onPress={() => handleOpenItem("others")}
-                />
-                {itemIsOpen.others && (
-                  <OtherFilterSearch
-                    selectedTransmission={filterData.selectedTransmission}
-                    selectedEngineType={filterData.selectedEngineType}
-                    onChange={handleEngTransChange}
-                  />
-                )}
-              </View>
-            </BottomSheetScrollView>
-            <View className="px-4 py-5 flex-row gap-3 self-center">
-              <View className="flex-1">
-                <CustomButton
-                  onPress={() => {
-                    refetchListing();
-                    setIsModalVisible(false);
-                  }}
-                  title={"Search"}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() => onReset()}
-                className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center"
-              >
-                <Icon name="close" size={26} color="white" />
-              </TouchableOpacity>
-            </View>
-          </View>
+          <KeyboardAvoidingView className="flex-1">
+            <FiltersCarComponent
+              filterData={filterData}
+              itemIsOpen={itemIsOpen}
+              handleOpenItem={handleOpenItem}
+              handleMakeModalChange={handleMakeModalChange}
+              handleEngTransChange={handleEngTransChange}
+              handlePriceRangeChange={handlePriceRangeChange}
+              onReset={onReset}
+              refetchListing={refetchListing}
+              setIsModalVisible={setIsModalVisible}
+              handleCloseModal={handleCloseModal}
+            />
+          </KeyboardAvoidingView>
         </CustomBottomSheetModal>
       )}
     </>

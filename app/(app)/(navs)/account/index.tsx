@@ -32,8 +32,10 @@ import TogoFlag from "@/assets/icons/togo.svg";
 import { VerifyCode } from "@/app/auth/verify";
 import { toastify } from "@/constants/utils";
 import { supabaseClient } from "@/services/supabase.service";
+import { useTranslation } from "react-i18next";
 
 const AccountPage = () => {
+  const { t } = useTranslation();
   const [image, setImage] = useState("");
   const [userData, setUserData] = useState({
     username: "",
@@ -197,10 +199,12 @@ const AccountPage = () => {
                   <Pressable
                     onPress={pickImage}
                     className="bg-[#fff] p-[16px] rounded-full absolute"
-                    style={{ left: 40, top: 35 }}>
+                    style={{ left: 40, top: 35 }}
+                  >
                     <View
                       className={`bg-[${Colors.background}] p-[5px] rounded-full absolute`}
-                      style={{ left: 2, top: 2 }}>
+                      style={{ left: 2, top: 2 }}
+                    >
                       <Camera
                         className=" absolute"
                         size={18}
@@ -214,7 +218,8 @@ const AccountPage = () => {
                 <View className="flex ">
                   <ThemedText
                     className="text-[#101828] text-[18px]"
-                    style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
+                    style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                  >
                     +{userData.phone}
                   </ThemedText>
                 </View>
@@ -226,16 +231,19 @@ const AccountPage = () => {
                     onPress={() => {
                       router.navigate("/(app)/listCar/condition");
                     }}
-                    className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
+                    className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center"
+                  >
                     <View className="flex items-center flex-row gap-[0.5rem]">
                       <TouchableOpacity
-                        className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+                        className={`justify-center items-center w-[30] h-[30] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+                      >
                         <Car size="18" color={Colors.textPrimary} />
                       </TouchableOpacity>
                       <ThemedText
                         className="text-[#1D2939] text-[14px] capitalize"
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        Listing car
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.aboutAutova.listingCar")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -243,21 +251,24 @@ const AccountPage = () => {
                 </View>
                 <ThemedText
                   className="text-[1.25rem]  text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  Contact info
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  {t("screens.navsAccount.contactInfo.title")}
                 </ThemedText>
 
                 <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
                   <TouchableOpacity className=" border-b border-[#D0D5DD] px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                     <View className="flex items-center flex-row gap-[0.5rem]">
                       <TouchableOpacity
-                        className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}>
+                        className={`justify-center items-center w-[30] h-[30] bg-[#114F5A] rounded-3xl`}
+                      >
                         <Call size="18" color={Colors.textPrimary} />
                       </TouchableOpacity>
                       <ThemedText
                         className="text-[#1D2939] text-[14px] capitalize"
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        Phone number
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.contactInfo.phone")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -265,13 +276,15 @@ const AccountPage = () => {
                   <TouchableOpacity className="  px-[1rem] py-[0.8125rem] flex flex-row justify-between items-center">
                     <View className="flex items-center flex-row gap-[0.5rem]">
                       <TouchableOpacity
-                        className={`justify-center items-center w-[30] h-[30] bg-[#799418] rounded-3xl`}>
+                        className={`justify-center items-center w-[30] h-[30] bg-[#799418] rounded-3xl`}
+                      >
                         <Whatsapp size="18" color={Colors.textPrimary} />
                       </TouchableOpacity>
                       <ThemedText
                         className="text-[#1D2939] text-[14px] "
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        Whatsapp number
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.contactInfo.whatsapp")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -279,8 +292,9 @@ const AccountPage = () => {
                 </View>
                 <ThemedText
                   className="text-[1.25rem]  text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  About Autova
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  {t("screens.navsAccount.aboutAutova.title")}
                 </ThemedText>
 
                 <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
@@ -292,8 +306,9 @@ const AccountPage = () => {
                       />
                       <ThemedText
                         className="text-[#1D2939] text-[14px] "
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        About us
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.aboutAutova.aboutUs")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -306,8 +321,9 @@ const AccountPage = () => {
                       />
                       <ThemedText
                         className="text-[#1D2939] text-[14px] "
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        Terms of service
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.aboutAutova.termsOfService")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -321,8 +337,9 @@ const AccountPage = () => {
                       />
                       <ThemedText
                         className="text-[#1D2939] text-[14px] capitalize"
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        Privacy Policy
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.aboutAutova.privacyPolicy")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -331,8 +348,9 @@ const AccountPage = () => {
 
                 <ThemedText
                   className="text-[1.25rem]  text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  Section
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  {t("screens.navsAccount.section.title")}
                 </ThemedText>
 
                 <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
@@ -344,8 +362,9 @@ const AccountPage = () => {
                       />
                       <ThemedText
                         className="text-[#1D2939] text-[14px] capitalize"
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        contact us
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.section.contactUs")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -358,8 +377,9 @@ const AccountPage = () => {
                       />
                       <ThemedText
                         className="text-[#1D2939] text-[14px] "
-                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                        Invite a Friend
+                        style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                      >
+                        {t("screens.navsAccount.section.inviteFriend")}
                       </ThemedText>
                     </View>
                     <ArrowRight2 size="24" color="#667085" />
@@ -369,8 +389,9 @@ const AccountPage = () => {
               <View className="items-center flex gap-[20px]">
                 <ThemedText
                   className="text-[20px] text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
-                  Enjoying Carnext+ App?
+                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                >
+                  {t("screens.navsAccount.enjoyingApp.title")}
                 </ThemedText>
 
                 <Image
@@ -380,11 +401,13 @@ const AccountPage = () => {
 
                 <TouchableOpacity
                   onPress={() => {}}
-                  className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`}>
+                  className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`}
+                >
                   <ThemedText
                     className="text-[17px] text-center font-[600] text-[#fff]"
-                    style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                    Refer a friend
+                    style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+                  >
+                    {t("screens.navsAccount.enjoyingApp.referFriend")}
                   </ThemedText>
                 </TouchableOpacity>
               </View>
@@ -397,14 +420,16 @@ const AccountPage = () => {
             <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
               <ThemedText
                 className={`text-[${Colors.textPrimary}] text-[22px]`}
-                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                Account
+                style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+              >
+                {t("screens.navsAccount.title")}
               </ThemedText>
               <TouchableOpacity
                 onPress={() => {
                   router.navigate("/(app)/listCar/settings");
                 }}
-                className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+                className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+              >
                 <Setting2 size="24" color={Colors.textPrimary} />
               </TouchableOpacity>
             </View>
@@ -413,17 +438,20 @@ const AccountPage = () => {
             <View className="flex flex-col gap-[1.25rem] px-[16px] py-[30px]">
               <TouchableOpacity
                 onPress={handleAccountCreate}
-                className="border border-[#FF4747]  rounded-[50px] flex items-center">
+                className="border border-[#FF4747]  rounded-[50px] flex items-center"
+              >
                 <ThemedText
                   className="text-[1rem] text-[#FF4747] py-[1rem]"
-                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                  Login to use Autova
+                  style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                >
+                  {t("screens.navsAccount.loginToUse")}
                 </ThemedText>
               </TouchableOpacity>
               <ThemedText
                 className="text-[1.25rem]  text-[#101828]"
-                style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                About Autova
+                style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+              >
+                {t("screens.navsAccount.aboutAutova.title")}
               </ThemedText>
 
               <View className="bg-[#F9FAFB] border border-[#D0D5DD] rounded-[12px]">
@@ -435,8 +463,9 @@ const AccountPage = () => {
                     />
                     <ThemedText
                       className="text-[#1D2939] text-[14px] "
-                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                      About us
+                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                    >
+                      {t("screens.navsAccount.aboutAutova.aboutUs")}
                     </ThemedText>
                   </View>
                   <ArrowRight2 size="24" color="#667085" />
@@ -449,8 +478,9 @@ const AccountPage = () => {
                     />
                     <ThemedText
                       className="text-[#1D2939] text-[14px] "
-                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                      Contact us
+                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                    >
+                      {t("screens.navsAccount.section.contactUs")}
                     </ThemedText>
                   </View>
                   <ArrowRight2 size="24" color="#667085" />
@@ -463,8 +493,9 @@ const AccountPage = () => {
                     />
                     <ThemedText
                       className="text-[#1D2939] text-[14px] "
-                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                      Terms of service
+                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                    >
+                      {t("screens.navsAccount.aboutAutova.termsOfService")}
                     </ThemedText>
                   </View>
                   <ArrowRight2 size="24" color="#667085" />
@@ -478,8 +509,9 @@ const AccountPage = () => {
                     />
                     <ThemedText
                       className="text-[#1D2939] text-[14px] capitalize"
-                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}>
-                      Privacy Policy
+                      style={{ fontFamily: "SpaceGrotesk_500Medium" }}
+                    >
+                      {t("screens.navsAccount.aboutAutova.privacyPolicy")}
                     </ThemedText>
                   </View>
                   <ArrowRight2 size="24" color="#667085" />
@@ -488,8 +520,9 @@ const AccountPage = () => {
               <View className="items-center flex gap-[20px]">
                 <ThemedText
                   className="text-[20px] text-[#101828]"
-                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}>
-                  Enjoying Carnext+ App?
+                  style={{ fontFamily: "SpaceGrotesk_700Bold" }}
+                >
+                  {t("screens.navsAccount.enjoyingApp.title")}
                 </ThemedText>
                 <Image
                   source={require("@/assets/refer.png")}
@@ -497,11 +530,13 @@ const AccountPage = () => {
                 />
                 <TouchableOpacity
                   onPress={() => {}}
-                  className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`}>
+                  className={`bg-[${Colors.background}] px-[20px] py-[12px] rounded-[12px]`}
+                >
                   <ThemedText
                     className="text-[17px] text-center font-[600] text-[#fff]"
-                    style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-                    Refer a friend
+                    style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+                  >
+                    {t("screens.navsAccount.enjoyingApp.referFriend")}
                   </ThemedText>
                 </TouchableOpacity>
               </View>
@@ -518,20 +553,23 @@ const AccountPage = () => {
                   : Platform.OS === "android"
                   ? 1
                   : 0
-              }>
+              }
+            >
               <View
                 style={{
                   flex: 1,
                   alignItems: "center",
                 }}
-                className="w-full px-[4%] ">
+                className="w-full px-[4%] "
+              >
                 <View className="pt-[1rem] flex-row justify-between items-center w-full">
                   <ThemedText
                     style={{
                       fontFamily: "SpaceGrotesk_600SemiBold",
                     }}
-                    className="text-[20px] text-[#000000]">
-                    Create account
+                    className="text-[20px] text-[#000000]"
+                  >
+                    {t("screens.navsAccount.createAccount.title")}
                   </ThemedText>
                   <TouchableOpacity onPress={closeModal}>
                     <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
@@ -544,7 +582,8 @@ const AccountPage = () => {
                   <View className="flex gap-4 w-full">
                     <View className="flex flex-row items-center">
                       <View
-                        className={`flex-row gap-2 bg-[${Colors.backgroundSecondary}] h-[50px] items-center justify-center pl-3 rounded-l-lg`}>
+                        className={`flex-row gap-2 bg-[${Colors.backgroundSecondary}] h-[50px] items-center justify-center pl-3 rounded-l-lg`}
+                      >
                         <TogoFlag
                           height={24}
                           width={24}
@@ -564,14 +603,16 @@ const AccountPage = () => {
                           handleBlurModal("accountSnapPoint");
                         }}
                         keyboardType="numeric"
-                        placeholder="Phone number"
+                        placeholder={t(
+                          "screens.navsAccount.createAccount.placeholder"
+                        )}
                         placeholderTextColor={Colors.textSecondary}
                         className={`bg-[${Colors.backgroundSecondary}] h-[50px] flex-1 rounded-r-lg py-[16px] px-[20px]`}
                       />
                     </View>
                     <CustomButton
                       isLoading={isLoading}
-                      title="Continue"
+                      title={t("screens.navsAccount.createAccount.continueBtn")}
                       onPress={handleSendOtpCode}
                     />
                   </View>
@@ -588,20 +629,23 @@ const AccountPage = () => {
 export default AccountPage;
 
 function CustomHeader() {
+  const { t } = useTranslation();
   return (
     <>
       <Header>
         <View className="flex flex-row justify-between w-full items-center px-[4%] py-[22px]">
           <ThemedText
             className={`text-[${Colors.textPrimary}] text-[22px]`}
-            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-            Account
+            style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
+          >
+            {t("screens.navsAccount.title")}
           </ThemedText>
           <TouchableOpacity
             onPress={() => {
               router.navigate("/(app)/listCar/settings");
             }}
-            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}>
+            className={`justify-center items-center w-[40] h-[40] bg-[${Colors.buttonSecondary}] rounded-3xl`}
+          >
             <Setting2 size="24" color={Colors.textPrimary} />
           </TouchableOpacity>
         </View>

@@ -21,12 +21,15 @@ import { ErrorLoadingData } from "@/components/ErrorLoading";
 import NoCarFound from "@/assets/icons/no-car.svg";
 import Car from "@/models/car.model";
 import AntDesign from "@expo/vector-icons/AntDesign";
+
+import { useTranslation } from "react-i18next";
 interface modalInitialState {
   type: string;
   visible: boolean;
 }
 
 const CollectionDetails = () => {
+  const { t } = useTranslation();
   const [allItems, setAllItems] = useState<string[]>([]);
   const [moreVisible, setMoreVisible] = useState(false);
   const [modalVisible, setmodalVisible] = useState<modalInitialState>();
@@ -164,7 +167,7 @@ const CollectionDetails = () => {
               className="text-[#fff] text-[22px]"
               style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
             >
-              Saved
+              {t("screens.savedCars.header.title")}
             </ThemedText>
           </View>
           <TouchableOpacity
@@ -192,7 +195,7 @@ const CollectionDetails = () => {
           className=" text-[18px] mt-5"
           style={{ fontFamily: "SpaceGrotesk_700Bold" }}
         >
-          Saved Cars
+          {t("screens.savedCars.savedCarsUI.title")}
         </ThemedText>
         {!itemsEmpty || displaySelectAll ? (
           <TouchableOpacity
@@ -201,7 +204,7 @@ const CollectionDetails = () => {
           >
             <CustomCheckBox isChecked={isSelectAllCheked} />
             <ThemedText style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}>
-              Select all items
+              {t("screens.savedCars.savedCarsUI.selectAllItems")}
             </ThemedText>
           </TouchableOpacity>
         ) : null}
@@ -260,7 +263,7 @@ const CollectionDetails = () => {
                     style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                     className="text-[16px]"
                   >
-                    No car found
+                    {t("screens.savedCars.savedCarsUI.noCarFound.title")}
                   </ThemedText>
                   <TouchableOpacity
                     onPress={() => getSavedCarsQueryList.refetch()}
@@ -270,7 +273,7 @@ const CollectionDetails = () => {
                       style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
                       className="text-[blue] text-[16px]"
                     >
-                      Retry
+                      {t("screens.savedCars.savedCarsUI.noCarFound.retry")}
                     </ThemedText>
                   </TouchableOpacity>
                 </View>
@@ -296,17 +299,18 @@ const CollectionDetails = () => {
           childrenCenter={
             <View className="py-4 items-center">
               <ThemedText
-                className="text-[18px]"
+                className="text-[18px] text-center mb-2"
                 style={{ fontFamily: "SpaceGrotesk_700Bold" }}
               >
-                You are about to remove this item
+                {t("screens.savedCars.savedCarsUI.removeItem.confirm")}
               </ThemedText>
-              <ThemedText className="text-center">
-                This will remove your product from save Are you sure?
+              <ThemedText className="text-center mb-2">
+                {t("screens.savedCars.savedCarsUI.removeItem.warning")}
               </ThemedText>
             </View>
           }
-          rightText="Delete"
+          leftText={t("screens.savedCars.savedCarsUI.removeItem.cancel")}
+          rightText={t("screens.savedCars.savedCarsUI.removeItem.delete")}
           visible={modalVisible?.type == "delete" && modalVisible.visible}
         />
       ) : null}
@@ -327,6 +331,7 @@ const SavedCarItem = ({
   onPress: () => void;
   isActive: boolean;
 }) => {
+  const { t } = useTranslation();
   const date = new Date(car?.updatedAt);
   // Get the day of the month
   const day = date.getDate();
@@ -382,7 +387,8 @@ const SavedCarItem = ({
           {car?.name}
         </ThemedText>
         <ThemedText numberOfLines={1} className="text-[#667085]">
-          {car?.odometer} miles | {car?.city?.name}, {car?.country?.name}
+          {car?.odometer} {t("screens.savedCars.savedCarsUI.odometer")}|{" "}
+          {car?.city?.name}, {car?.country?.name}
         </ThemedText>
         <View className="w-[100%] flex-row justify-between items-center">
           <ThemedText
@@ -460,6 +466,7 @@ const SwipeToRemove = ({
 };
 
 const RighAction = ({ onRemove }: { onRemove: () => void }) => {
+  const { t } = useTranslation();
   return (
     <TouchableOpacity onPress={onRemove}>
       <View className="w-full items-center justify-center h-[100%] flex-1 bg-[#6C6BDB] px-4 rounded-lg">
@@ -467,7 +474,7 @@ const RighAction = ({ onRemove }: { onRemove: () => void }) => {
         <ThemedText
           style={{ fontFamily: "SpaceGrotesk_600SemiBold", color: "white" }}
         >
-          Remove
+          {t("screens.savedCars.righAction.title")}
         </ThemedText>
       </View>
     </TouchableOpacity>

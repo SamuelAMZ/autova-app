@@ -26,8 +26,10 @@ import { BrandItemSkeleton } from "@/components/skeleton/BrandItemSkeleton";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import { initialFilterData } from "@/constants";
 import HomeIndicator from "@/components/HomeIndicator";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const snapPoints = useMemo(() => ["70%", "80%", "90%"], []);
   const [shwoHomeIndicator, setShowHomeIndicator] = useState(true);
@@ -113,11 +115,11 @@ const HomePage = () => {
                   }}
                   className="font-semibold text-[18px]"
                 >
-                  Featured Dealers
+                  {t("components.brands.title")}
                 </ThemedText>
                 <TouchableOpacity onPress={handlePresentModalPress}>
                   <ThemedText className="text-[#007AFF] font-medium">
-                    View All
+                    {t("components.brands.viewAll")}
                   </ThemedText>
                 </TouchableOpacity>
               </View>
@@ -197,7 +199,7 @@ const HomePage = () => {
                 }}
                 className="font-semibold text-[18px]"
               >
-                Top Brands
+                {t("components.brands.bottomSheet.title")}
               </ThemedText>
               <TouchableOpacity onPress={handleCloseModal}>
                 <View className="bg-[#7F7F7F33] rounded-full p-[6px]">

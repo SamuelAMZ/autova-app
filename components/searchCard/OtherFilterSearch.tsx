@@ -10,6 +10,7 @@ import { ItemDataProps, selectedTypeProps } from "@/constants/types";
 import { useQuery } from "@tanstack/react-query";
 import { loadEngineTypes } from "@/utils/engineTypesRequest";
 import { loadTransmissions } from "@/utils/transmissionsRequest";
+import { useTranslation } from "react-i18next";
 
 const OtherFilterSearch = ({
   onChange,
@@ -20,6 +21,7 @@ const OtherFilterSearch = ({
   selectedTransmission?: ItemDataProps;
   selectedEngineType?: ItemDataProps;
 }) => {
+  const { t } = useTranslation();
   const snapPoints = useMemo(() => ["40%", "50%", "90%"], []);
   const [selectedType, setSelectedType] = useState<selectedTypeProps>();
 
@@ -73,14 +75,15 @@ const OtherFilterSearch = ({
         >
           <View className="h-[50%] w-full justify-center ml-3">
             <ThemedText className="text-[#344054] font-semibold">
-              Engine Type
+              {t("components.filterSearch.engineTypeUI.title")}
             </ThemedText>
           </View>
           <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
           <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
-                {selectedEngineType?.name ?? "Select Type"}
+                {selectedEngineType?.name ??
+                  t("components.filterSearch.engineTypeUI.selectType")}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
@@ -101,14 +104,15 @@ const OtherFilterSearch = ({
         >
           <View className="h-[50%] w-full justify-center ml-3">
             <ThemedText className="text-[#344054] font-semibold">
-              Transmission
+              {t("components.filterSearch.transmissionUI.title")}
             </ThemedText>
           </View>
           <View className="w-[90%] h-[1] bg-[#F2F4F7] self-center"></View>
           <View className="h-[50%] w-full justify-center ml-3">
             <View className="flex-row gap-3 items-center">
               <ThemedText className="text-[#344054] font-semibold">
-                {selectedTransmission?.name ?? "Select Item"}
+                {selectedTransmission?.name ??
+                  t("components.filterSearch.transmissionUI.selectType")}
               </ThemedText>
               <ArrowDown2 color="#344054" size={16} />
             </View>
@@ -130,7 +134,9 @@ const OtherFilterSearch = ({
         >
           <View className="w-full px-[4%]">
             <View className="px-4 py-3 flex-row justify-between items-center">
-              <ThemedText className="text-[18px]">Choose item</ThemedText>
+              <ThemedText className="text-[18px]">
+                {t("components.filterSearch.bottomSheet.title")}
+              </ThemedText>
               <TouchableOpacity onPress={() => setIsModalVisible(false)}>
                 <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
                   <AntDesign name="close" size={16} color="#3D3D3D" />

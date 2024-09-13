@@ -1,0 +1,269 @@
+{
+  "language": "Français",
+  "screens": {
+    "notFound": {
+      "title": "Oops !",
+      "text": {
+        "screenNotFound": "Cet écran n'existe pas.",
+        "goToHomeScreen": "Aller à l'écran d'accueil !"
+      }
+    },
+    "account": {
+      "title": "Créer votre compte",
+      "step": "Étape 2 sur 2",
+      "text": {
+        "registeringWith": "Vous vous inscrivez avec",
+        "wantToChange": "Vous voulez changer ?",
+        "clickHere": "Cliquez ici",
+        "passwordPlaceholder": "Mot de passe",
+        "passwordRequirements": "* Votre mot de passe doit comporter au moins 8 caractères.",
+        "createAccountButton": "Créer un compte",
+        "duplicationError": "Erreur de duplication",
+        "accountExists": "Le compte existe déjà",
+        "errorWhileCreating": "Erreur lors de la création du compte. Réessayez",
+        "invalidData": "Données non valides",
+        "fillAllFields": "Remplissez tous les champs",
+        "oops": "Oups !!"
+      }
+    },
+    "signup": {
+      "title": "Créer votre compte",
+      "step": "Étape 1 sur 2",
+      "text": {
+        "phoneNumber": "Numéro de téléphone",
+        "continueButton": "Continuer"
+      }
+    },
+    "verify": {
+      "title": "Nous venons de vous envoyer un code",
+      "text": {
+        "codeSent": "Code envoyé à ",
+        "unlessAccount": "sauf si vous avez déjà un compte",
+        "resendCode": "Renvoyer le code",
+        "confirmButton": "Confirmer",
+        "backToLogin": "Retour à la connexion"
+      }
+    },
+    "notification": {
+      "title": "Ne ratez plus aucune offre !",
+      "text": {
+        "enableNotif": "Activez les notifications pour rester informé des nouvelles annonces, des offres spéciales et des mises à jour importantes !",
+        "enableButton": "Activer les notifications",
+        "skipButton": "Passer pour l'instant"
+      }
+    },
+    "authIndex": {
+      "text": {
+        "verifiedCars": "Voitures vérifiées, historique de confiance et utilisateurs authentiques - tous de votre région.",
+        "createAccountButton": "Créer un compte",
+        "alreadyHaveAccountButton": "J'ai déjà un compte"
+      }
+    },
+    "carSearch": {
+      "title": "Résultats de recherche",
+      "text": {
+        "searchPlaceholder": "Rechercher..."
+      }
+    },
+    "listingScreen": {
+      "title": "Annonce",
+      "text": {
+        "searchPlaceholder": "Rechercher..."
+      }
+    },
+
+    "collectionDetails": {
+      "header": {
+        "title": "Voitures d'occasion",
+        "backButton": "Retour",
+        "deleteButton": "Supprimer",
+        "moreButton": "Plus",
+        "modal": {
+          "renamePress": "Renommer",
+          "deletePress": "Supprimer"
+        }
+      },
+      "actions": {
+        "selectAll": "Sélectionner tous les éléments",
+        "removeItem": "Supprimer l'élément",
+        "okButton": "OK",
+        "cancelButton": "Annuler",
+        "footer": {
+          "android": "hauteur du pied de page de 40 px",
+          "ios": "hauteur du pied de page de 60 px"
+        }
+      },
+      "modals": {
+        "deleteModal": {
+          "icon": "Icône de la poubelle",
+          "title": "Vous êtes sur le point de supprimer cet élément",
+          "message": "Cela supprimera votre produit de la sauvegarde. Êtes-vous sûr ?",
+          "rightText": "Supprimer"
+        },
+        "renameModal": {
+          "title": "Modifier le nom du dossier de la collection",
+          "previousName": "Le nom précédent était 'Voiture d'occasion'. Tapez un nom différent que vous voulez utiliser.",
+          "placeholder": "Nom de la collection",
+          "rightText": "Modifier"
+        }
+      },
+      "swipeToRemove": {
+        "onRemove": "Supprimer",
+        "onLongPress": "Sélectionner l'élément",
+        "activeIndicator": "Sélectionné"
+      },
+      "checkBox": {
+        "isChecked": "Coché",
+        "isUnchecked": "Non coché"
+      },
+      "righAction": {
+        "text": "Supprimer"
+      }
+    },
+    "savedCars": {
+      "header": {
+        "title": "Enregistré"
+      },
+      "savedCarsUI": {
+        "title": "Voitures enregistrées",
+        "selectAllItems": "Sélectionner tous les éléments",
+        "odometer": "km",
+        "noCarFound": {
+          "title": "Aucune voiture trouvée",
+          "retry": "Réessayer"
+        },
+        "removeItem": {
+          "confirm": "Vous êtes sur le point de supprimer cet élément",
+          "warning": "Cela supprimera votre produit de la sauvegarde. Êtes-vous sûr ?",
+          "delete": "Supprimer",
+          "cancel": "Annuler"
+        }
+      },
+      "righAction": {
+        "title": "Supprimer"
+      }
+    },
+    "carDetail": {
+      "textLoading": "Chargement",
+      "textContactSeller": "Contacter le vendeur",
+      "textDetails": "Détails",
+      "textSpecifications": "Caractéristiques",
+      "contactDealer": {
+        "header": {
+          "title": "Contacter le concessionnaire",
+          "closeButton": "Fermer"
+        },
+        "contactOptions": {
+          "prompt": "Comment voulez-vous contacter le concessionnaire ?",
+          "whatsapp": {
+            "label": "Continuer via WhatsApp",
+            "icon": "Icône WhatsApp"
+          },
+          "telegram": {
+            "label": "Continuer via Telegram",
+            "icon": "Icône Telegram"
+          },
+          "phoneCall": {
+            "label": "Contacter par téléphone",
+            "icon": "Icône d'appel téléphonique"
+          }
+        },
+        "privacyNotice": "* Gardez votre communication privée. Évitez de partager des informations sensibles avec le vendeur."
+      }
+    },
+    "navsAccount": {
+      "title": "Compte",
+      "settings": "Paramètres",
+      "contactInfo": {
+        "title": "Coordonnées",
+        "phone": "Numéro de téléphone",
+        "whatsapp": "Numéro WhatsApp"
+      },
+      "aboutAutova": {
+        "title": "À propos d'Autova",
+        "aboutUs": "À propos de nous",
+        "termsOfService": "Conditions d'utilisation",
+        "privacyPolicy": "Politique de confidentialité",
+        "listingCar": "Liste des voitures"
+      },
+      "section": {
+        "title": "Section",
+        "contactUs": "Nous contacter",
+        "inviteFriend": "Inviter un ami"
+      },
+      "enjoyingApp": {
+        "title": "Vous aimez l'application Carnext+ ?",
+        "referFriend": "Recommandez un ami"
+      },
+      "loginToUse": "Connectez-vous pour utiliser Autova",
+      "createAccount": {
+        "title": "Créer un compte",
+        "placeholder": "Numéro de téléphone",
+        "continueBtn": "Continuer"
+      }
+    }
+  },
+
+  "components": {
+    "tabBar": {
+      "home": "Accueil",
+      "listing": "Annonces",
+      "saved": "Enregistré",
+      "account": "Compte"
+    },
+    "noCarFound": {
+      "title": "Aucune voiture trouvée",
+      "retry": "Réessayer"
+    },
+    "filterSearch": {
+      "title": "Filtre de recherche",
+      "makeModel": "Marque et modèle",
+      "priceRange": "Fourchette de prix",
+      "engineTypeTransmission": "Type de moteur et transmission",
+      "searchButton": "Rechercher",
+      "resetButton": "Réinitialiser",
+      "makeSelectUI": {
+        "title": "Marque",
+        "selectMake": "Sélectionner une marque",
+        "model": "Modèle",
+        "selectModel": "Sélectionner un modèle",
+        "clearFilter": "Effacer le filtre"
+      },
+      "engineTypeUI": {
+        "title": "Type de moteur",
+        "selectType": "Sélectionner un type"
+      },
+      "transmissionUI": {
+        "title": "Transmission",
+        "selectType": "Sélectionner un élément"
+      },
+      "bottomSheet": {
+        "title": "Choisir un élément"
+      }
+    },
+    "searchCarsBy": {
+      "title": "Rechercher des voitures par",
+      "buttonTitle": "Rechercher",
+      "makeModel": "Marque et modèle",
+      "priceRange": "Fourchette de prix",
+      "engineTypeTransmission": "Type de moteur et transmission",
+      "bottomSheet": {
+        "title": "Choisir un élément"
+      }
+    },
+    "brands": {
+      "title": "Concessionnaires vedettes",
+      "viewAll": "Voir tout",
+      "bottomSheet": {
+        "title": "Principales marques"
+      }
+    },
+    "carsList": {
+      "title": "Concessionnaires vedettes",
+      "viewAll": "Voir tout",
+      "bottomSheet": {
+        "title": "Liste des voitures"
+      }
+    }
+  }
+}

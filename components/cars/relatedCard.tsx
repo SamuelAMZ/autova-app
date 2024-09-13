@@ -14,8 +14,10 @@ import ThemedText from "@/components/ThemedText";
 import { loadRelatedCars } from "@/utils/carRequest";
 import { useQuery } from "@tanstack/react-query";
 import { getSavedCar, loadCars } from "@/utils/carRequest";
+import { useTranslation } from "react-i18next";
 
 export default function RelatedCar({ carId }: { carId: string }) {
+  const { t } = useTranslation();
   const width = Dimensions.get("window").width;
   const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -80,11 +82,11 @@ export default function RelatedCar({ carId }: { carId: string }) {
           }}
           className="font-semibold text-[18px]"
         >
-          Featured Dealers
+          {t("components.carsList.title")}
         </ThemedText>
         <TouchableOpacity>
           <ThemedText className="text-[#007AFF] font-medium">
-            View All
+            {t("components.carsList.viewAll")}
           </ThemedText>
         </TouchableOpacity>
       </View>
@@ -115,21 +117,3 @@ export default function RelatedCar({ carId }: { carId: string }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    marginVertical: 10,
-
-    // Different borders for each side
-    borderTopWidth: 1,
-    borderTopColor: "#0000001D",
-    borderRightWidth: 1.5,
-    borderRightColor: "#0000001D",
-    borderBottomWidth: 2.5,
-    borderBottomColor: "#0000001D",
-    borderLeftWidth: 1.5,
-    borderLeftColor: "#0000001D",
-  },
-});

@@ -47,7 +47,10 @@ import { extractLastDigits } from "@/utils/extractLastDigits";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import Colors from "@/constants/Colors";
 
+import { useTranslation } from "react-i18next";
+
 export default function CarDetail() {
+  const { t } = useTranslation();
   const { width, height } = useWindowDimensions();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -222,10 +225,11 @@ export default function CarDetail() {
   }
 
   function CarDetails() {
+    const { t } = useTranslation();
     return (
       <View className="py-[10px] flex gap-4">
         <ThemedText className="text-[#1D2939] text-[20px] font-[600]">
-          Details
+          {t("screens.carDetail.textDetails")}
         </ThemedText>
         {
           <View>
@@ -250,7 +254,7 @@ export default function CarDetail() {
               }}
               className="text-[17px]"
             >
-              Loading...
+              {t("screens.carDetail.textLoading")}...
             </ThemedText>
           </View>
         </View>
@@ -484,7 +488,7 @@ export default function CarDetail() {
                   className={`bg-[${colors.background}] p-[12px_20px] rounded-[12px] border border-solid border-[${colors.background}]`}
                 >
                   <ThemedText className="text-[#FFFFFF] font-[600] text-[17px] text-center">
-                    Contact Seller
+                    {t("screens.carDetail.contactDealer.header.title")}
                   </ThemedText>
                 </TouchableOpacity>
               </View>
@@ -518,6 +522,7 @@ function CarInformationButtons({
   handleDetailsView: () => void;
   selected: string;
 }) {
+  const { t } = useTranslation();
   return (
     <View className="flex-row items-center justify-between gap-[8px]">
       <TouchableOpacity
@@ -536,7 +541,7 @@ function CarInformationButtons({
           }}
           className="p-[10px_20px] text-[16px]"
         >
-          Specifications
+          {t("screens.carDetail.textSpecifications")}
         </ThemedText>
       </TouchableOpacity>
       <TouchableOpacity
@@ -555,7 +560,7 @@ function CarInformationButtons({
           }}
           className="p-[10px_20px] text-[16px]"
         >
-          Details
+          {t("screens.carDetail.textDetails")}
         </ThemedText>
       </TouchableOpacity>
     </View>
@@ -563,6 +568,7 @@ function CarInformationButtons({
 }
 
 function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
+  const { t } = useTranslation();
   return (
     <View
       style={{
@@ -578,7 +584,7 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
           }}
           className="text-[20px] text-[#000000]"
         >
-          Contact Dealer
+          {t("screens.carDetail.contactDealer.header.title")}
         </ThemedText>
         <TouchableOpacity onPress={handleCloseModal}>
           <View className="bg-[#7F7F7F33] rounded-full p-[6px]">
@@ -594,7 +600,7 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
           }}
           className="text-[#101828] text-[17px] text-center"
         >
-          How would you like to contact the dealer?
+          {t("screens.carDetail.contactDealer.contactOptions.prompt")}
         </ThemedText>
         <View className="flex items-start justify-center gap-[16px]">
           <TouchableOpacity
@@ -609,7 +615,9 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
               source={require("@/assets/logos_whatsapp-icon.png")}
             />
             <ThemedText className="text-[#344054] text-[17px]  font-[500]">
-              Continue via WhatsApp
+              {t(
+                "screens.carDetail.contactDealer.contactOptions.whatsapp.label"
+              )}
             </ThemedText>
           </TouchableOpacity>
           <TouchableOpacity
@@ -624,7 +632,9 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
               source={require("@/assets/logos_telegram.png")}
             />
             <ThemedText className="text-[#344054] text-[17px]  font-[500]">
-              Continue via Telegram
+              {t(
+                "screens.carDetail.contactDealer.contactOptions.telegram.label"
+              )}
             </ThemedText>
           </TouchableOpacity>
           <TouchableOpacity
@@ -639,14 +649,15 @@ function ContactDealer({ handleCloseModal }: { handleCloseModal: () => void }) {
               source={require("@/assets/ion_call.png")}
             />
             <ThemedText className="text-[#344054] text-[17px]  font-[500]">
-              Contact via phone call
+              {t(
+                "screens.carDetail.contactDealer.contactOptions.phoneCall.label"
+              )}
             </ThemedText>
           </TouchableOpacity>
         </View>
 
         <ThemedText className="text-[#101828] text-[14px] font-[400] text-center text-clip">
-          * Keep your communication private. Avoid sharing sensitive information
-          with the seller.
+          {t("screens.carDetail.contactDealer.privacyNotice")}
         </ThemedText>
       </View>
     </View>

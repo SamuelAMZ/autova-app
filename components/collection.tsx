@@ -135,6 +135,7 @@ interface ActionProps {
   childrenTop: React.ReactNode;
   childrenCenter: React.ReactNode;
   rightText: string;
+  leftText?: string;
   visible: boolean;
   cancelPress: () => void;
   okPress?: () => void;
@@ -144,6 +145,7 @@ export const CollectionActionModal = ({
   childrenTop,
   childrenCenter,
   rightText,
+  leftText,
   visible,
   cancelPress,
   okPress,
@@ -170,7 +172,7 @@ export const CollectionActionModal = ({
                       color: "#101828",
                     }}
                   >
-                    Cancel
+                    {leftText ? leftText : "Cancel"}
                   </ThemedText>
                 </TouchableOpacity>
                 <TouchableOpacity

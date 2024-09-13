@@ -9,8 +9,10 @@ import { initialFilterData } from "@/constants";
 import { FilterDataProps, ItemDataProps } from "@/constants/types";
 import SearchContent from "./searchContent";
 import ThemedText from "../ThemedText";
+import { useTranslation } from "react-i18next";
 
 function SearchCard() {
+  const { t } = useTranslation();
   const snapPoints = useMemo(() => ["25%", "35%", "50%", "90%"], []);
   const [filterData, setFilterData] =
     useState<FilterDataProps>(initialFilterData);
@@ -72,14 +74,14 @@ function SearchCard() {
     <View className="bg-[#F2F4F7] w-full p-4 rounded-xl">
       <View className="w-full mb-3 flex-row items-center gap-3">
         <ThemedText className="text-[#101828] text-[18px] font-semibold">
-          Search cars by:
+          {t("components.searchCarsBy.title")}:
         </ThemedText>
         <TouchableOpacity
           onPress={handlePresentModalPress}
           className="flex-1 flex-row gap-2 items-center z-10 py-2 "
         >
           <ThemedText className="text-[#475467] text-[15px]">
-            {searchType.label}
+            {t(`components.searchCarsBy.${searchType.translateKey}`)}
           </ThemedText>
           <ArrowDown2 color="#475467" variant="Bold" size={18} />
         </TouchableOpacity>
@@ -94,7 +96,7 @@ function SearchCard() {
       <View className="mt-1"></View>
       {/* Search */}
       <CustomButton
-        title="Search"
+        title={t("components.searchCarsBy.buttonTitle")}
         onPress={() =>
           router.navigate({
             pathname: "/(app)/search/carSearch",

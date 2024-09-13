@@ -20,8 +20,10 @@ import { getSavedCar } from "@/utils/carRequest";
 import { router } from "expo-router";
 import { ErrorLoadingData } from "../ErrorLoading";
 import Colors from "@/constants/Colors";
+import { useTranslation } from "react-i18next";
 
 export default function CarHome({ imgHeight }: { imgHeight?: number }) {
+  const { t } = useTranslation();
   const width = Dimensions.get("window").width;
   const [loop, setLoop] = useState<boolean>(false);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -126,11 +128,11 @@ export default function CarHome({ imgHeight }: { imgHeight?: number }) {
           }}
           className="font-semibold text-[18px]"
         >
-          Featured Dealers
+          {t("components.carsList.title")}
         </ThemedText>
         <TouchableOpacity>
           <ThemedText className="text-[#007AFF] font-medium">
-            View All
+            {t("components.carsList.viewAll")}
           </ThemedText>
         </TouchableOpacity>
       </View>

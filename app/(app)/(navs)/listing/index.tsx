@@ -5,22 +5,15 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  Platform,
-  StyleSheet,
   KeyboardAvoidingView,
   ActivityIndicator,
 } from "react-native";
 import Header from "@/components/Header";
 import ThemedText from "@/components/ThemedText";
-import { Add, ArrowDown2, SearchNormal, Setting5 } from "iconsax-react-native";
-import Icon from "@expo/vector-icons/AntDesign";
+import { Add, SearchNormal, Setting5 } from "iconsax-react-native";
 import { router } from "expo-router";
 import Colors from "@/constants/Colors";
 import CustomBottomSheetModal from "@/components/BottomSheetModal";
-import CustomButton from "@/components/CustomButton";
-import MakeModelsSearch from "@/components/searchCard/makeModelSearch";
-import PriceRangeSearch from "@/components/searchCard/priceRangeSearch";
-import { AntDesign } from "@expo/vector-icons";
 import {
   defaultRangeHighValue,
   defaultRangeLowValue,
@@ -35,7 +28,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ErrorLoadingData } from "@/components/ErrorLoading";
 import { debounce } from "@/constants/utils";
 import NoCarFound from "@/components/cars/__NoCarFound";
-import OtherFilterSearch from "@/components/searchCard/OtherFilterSearch";
+import FiltersCarComponent from "@/components/cars/FiltersCar";
+import { useTranslation } from "react-i18next";
 
 const initialItemIsOpen = {
   makeModel: true,
@@ -44,6 +38,7 @@ const initialItemIsOpen = {
 };
 
 export default function MyListing() {
+  const { t } = useTranslation();
   const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const snapPoints = useMemo(() => ["90%", "92%"], []);
@@ -203,7 +198,7 @@ export default function MyListing() {
                 handleSearchValueChange(value);
               }}
               className="flex-1"
-              placeholder="Search..."
+              placeholder={t("screens.listingScreen.text.searchPlaceholder")}
               placeholderTextColor="#000"
               // ref={textIinputRef}
             />
@@ -281,89 +276,18 @@ export default function MyListing() {
         index={1}
       >
         <KeyboardAvoidingView className="flex-1">
-          <View className="flex-1 w-full z-0">
-            <View className="py-5 px-[4%] flex-row justify-between items-center ">
-              <ThemedText
-                className={`text-[20px] font-[600] text-[${Colors.textSenary}]`}
-              >
-                Filter Search
-              </ThemedText>
-              <TouchableOpacity onPress={handleCloseModal}>
-                <View
-                  className={`bg-[${Colors.backgroundTertiary}] rounded-full p-[6px]`}
-                >
-                  <AntDesign
-                    name="close"
-                    size={16}
-                    color={Colors.iconPrimary}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View
-              className={`flex-1 bg-[${Colors.backgroundQuaternary}] p2-3 px-4 w-full`}
-            >
-              <OpenCloseItem
-                title="Make & Model"
-                onPress={() => handleOpenItem("makeModel")}
-              />
-              {itemIsOpen.makeModel && (
-                <MakeModelsSearch
-                  selectedModel={filterData.selectedModel}
-                  selectedMake={filterData.selectedMake}
-                  onChange={handleMakeModalChange}
-                />
-              )}
-
-              {/* Price Range */}
-              <OpenCloseItem
-                title="Price Range"
-                onPress={() => handleOpenItem("priceRange")}
-              />
-              <View className="z-20">
-                {itemIsOpen.priceRange && (
-                  <PriceRangeSearch
-                    style={{ zIndex: 30 }}
-                    rangeValue={filterData.rangeValue}
-                    onValueChange={handlePriceRangeChange}
-                  />
-                )}
-              </View>
-
-              {/* E Type, Trans */}
-              <OpenCloseItem
-                title="Engine Type & Transmission"
-                onPress={() => handleOpenItem("others")}
-              />
-              {itemIsOpen.others && (
-                <OtherFilterSearch
-                  selectedTransmission={filterData.selectedTransmission}
-                  selectedEngineType={filterData.selectedEngineType}
-                  onChange={handleEngTransChange}
-                />
-              )}
-            </View>
-            <View
-              style={{ bottom: Platform.OS == "ios" ? 40 : 30 }}
-              className="px-4 flex-row mt-4 gap-3 absolute self-center"
-            >
-              <View className="flex-1">
-                <CustomButton
-                  onPress={() => {
-                    refetchListing();
-                    setIsModalVisible(false);
-                  }}
-                  title={"Search"}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() => onReset()}
-                className="h-[48] w-[48] bg-[red] rounded-xl justify-center items-center"
-              >
-                <Icon name="close" size={26} color="white" />
-              </TouchableOpacity>
-            </View>
-          </View>
+          <FiltersCarComponent
+            filterData={filterData}
+            itemIsOpen={itemIsOpen}
+            handleOpenItem={handleOpenItem}
+            handleMakeModalChange={handleMakeModalChange}
+            handleEngTransChange={handleEngTransChange}
+            handlePriceRangeChange={handlePriceRangeChange}
+            onReset={onReset}
+            refetchListing={refetchListing}
+            setIsModalVisible={setIsModalVisible}
+            handleCloseModal={handleCloseModal}
+          />
         </KeyboardAvoidingView>
       </CustomBottomSheetModal>
     </>
@@ -371,6 +295,7 @@ export default function MyListing() {
 }
 
 function CustomHeader() {
+  const { t } = useTranslation();
   return (
     <>
       <Header>
@@ -379,7 +304,7 @@ function CustomHeader() {
             className={`text-[${Colors.textPrimary}] text-[22px]`}
             style={{ fontFamily: "SpaceGrotesk_600SemiBold" }}
           >
-            Listing
+            {t("screens.listingScreen.title")}
           </ThemedText>
           <TouchableOpacity
             onPress={() => {
@@ -394,39 +319,3 @@ function CustomHeader() {
     </>
   );
 }
-
-const OpenCloseItem = ({
-  title,
-  onPress,
-}: {
-  title: string;
-  onPress: () => void;
-}) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      className="w-full flex-row items-center justify-between my-4"
-    >
-      <ThemedText
-        className={`text-[${Colors.textSecondary}] font-semibold text-[16px] `}
-      >
-        {title}
-      </ThemedText>
-      <ArrowDown2 variant="Bold" color="#101828" size={18} />
-    </TouchableOpacity>
-  );
-};
-
-const styles = StyleSheet.create({
-  card: {
-    // Different borders for each side
-    borderTopWidth: 1,
-    borderTopColor: "#0000001D",
-    borderRightWidth: 1.5,
-    borderRightColor: "#0000001D",
-    borderBottomWidth: 2.5,
-    borderBottomColor: "#0000001D",
-    borderLeftWidth: 1.5,
-    borderLeftColor: "#0000001D",
-  },
-});
