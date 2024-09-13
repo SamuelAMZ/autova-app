@@ -1,4 +1,4 @@
-const frImage =  require("@/assets/fr.png");
+const frImage = require("@/assets/fr.png");
 const enImage = require("@/assets/en.png");
 
 export const carsData = [
@@ -28,8 +28,8 @@ export const modelData = [
 ];
 
 export const LangageData = [
-  { name: "Français", image: frImage },
-  { name: "Anglais", image: enImage },
+  { name: "Français", image: frImage, code: "fr" },
+  { name: "Anglais", image: enImage, code: "en" },
 ];
 
 export const fuel = [

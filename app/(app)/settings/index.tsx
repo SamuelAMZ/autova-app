@@ -32,7 +32,7 @@ import Toast from "react-native-toast-message";
 import { useTranslation } from "react-i18next";
 
 export default function Settings() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { signOut } = useSession();
   useStatusBar("dark", "#fff", false);
   const [isLogout, setIsLogout] = useState(false);
@@ -169,6 +169,11 @@ export default function Settings() {
     }
   };
 
+  // change langage
+  const setLangage = (code: string) => {
+    i18n.changeLanguage(code || "en");
+  };
+
   return (
     <>
       <CustomHeader />
@@ -278,7 +283,10 @@ export default function Settings() {
               {LangageData.map((item) => (
                 <TouchableOpacity
                   key={item.name}
-                  onPress={() => handleSelect(item.name)}
+                  onPress={() => {
+                    handleSelect(item.name);
+                    setLangage(item.code);
+                  }}
                   className="flex items-center border-b border-[#EAECF0] flex-row w-full justify-between"
                 >
                   <View className="flex flex-row gap-[12px] items-center">
